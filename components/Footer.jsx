@@ -8,29 +8,33 @@ export default function Footer() {
         <div>
           <Image src="public/WANAC N 8 Old Glory.svg"  width={100} height={40} className="mb-6" />
           <ul className="space-y-3 text-sm font-semibold">
-            <li>WAYS TO SUPPORT</li>
-            <li>WISHBOOK</li>
-            <li>VOLUNTEER</li>
+          <li>SHOP MERCH</li>
+          <li>HELP CENTER</li>
           </ul>
         </div>
 
         <div>
           <ul className="space-y-3 text-sm font-semibold">
-            <li>WANAC ADMISSIONS POLICY</li>
-            <li>MEDIA ROOM</li>
-            <li>SHARE YOUR STORY</li>
+          <li class="text-[#ff5e1a]">VOLUNTEER</li>
+              <li>CORPORATE PARTNERS</li>
+              <li>LEADERSHIP GIVING</li>
+              <li>WAYS TO SUPPORT</li>
+              <li>TESTIMONIALS</li>
           </ul>
         </div>
 
         <div>
           <ul className="space-y-3 text-sm font-semibold">
-            <li>CAREERS</li>
-            <li>FIND A WANAC</li>
+          <li class="text-[#ff5e1a]">WHY DO WE ALL NEED A COACH</li>
+              <li>OUR APPROACH</li>
+              <li>SUCCESSFUL PLANNING AND COACHING</li>
+              <li>HIGH PERFORMANCE COACHING</li>
+              <li>BOOTS TO COACHING BUSINESS</li>
           </ul>
         </div>
 
         <div>
-          <h3 className="font-bold text-base mb-3">FOLLOW</h3>
+          <h3 className="font-bold text-[#ff5e1a] text-base mb-3">FOLLOW</h3>
           <div className="flex items-center gap-4 text-xl">
             <FaFacebookF />
             <FaXTwitter />
