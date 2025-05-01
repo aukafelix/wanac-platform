@@ -24,7 +24,7 @@ export default function Home() {
         Empowering Service Members and Veterans through couching and community support
         </h1>
         <p className="text-lg mt-4 max-w-xl text-white">
-        Personalised coaching, AI tools and community to help you thrive after Service.
+        Personalized coaching, AI tools and community to help you thrive after Service.
         </p>
         <div className="mt-6 space-x-4">
           <Link href="/signup" className="bg-accent text-white px-6 py-3 rounded-md font-semibold uppercase tracking-wide hover:bg-hover transition-all">
@@ -52,7 +52,7 @@ export default function Home() {
       title: 'Transition Coaching',
       desc: 'Helping veterans navigate life after service with clarity and confidence.',
       icon: '🎯',
-      image: '/images/transition-coaching.jpg', // Add your image path
+      image: '/Transitioncoaching.png', // Add your image path
       alt: 'Transition Coaching Session',
       highlights: ['Career Planning', 'Life Skills', 'Personal Growth']
     }, {

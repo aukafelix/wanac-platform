@@ -3,10 +3,10 @@ import Image from 'next/image';
 
 export default function Footer() {
   return (
-    <footer className="bg-white text[#002147] pt-16 pb-10 px-6">
+    <footer className=" bg-white text[#002147] pt-16 pb-10 px-6">
       <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-8">
         <div>
-          <Image src="public/WANAC N 8 Old Glory.svg"  width={100} height={40} className="mb-6" />
+          <Image src="/WANAC N 8 Old Glory.svg"  width={300} height={120} className="mb-6" />
           <ul className="space-y-3 text-sm font-semibold">
           <li>SHOP MERCH</li>
           <li>HELP CENTER</li>
