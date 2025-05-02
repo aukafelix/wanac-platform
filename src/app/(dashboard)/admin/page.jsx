@@ -23,7 +23,7 @@ import {
                 <FaUsers /> Users
               </h2>
               <p className="text-brand-blue text-sm mb-2">View, edit, or remove coaches and clients.</p>
-              <button className="bg-brand-orange text-white px-4 py-2 rounded hover:bg-orange-500 transition">
+              <button className="mt-4 bg-[#002147] text-white px-4 py-2 rounded hover:bg-orange-500 transition">
                 Manage Users
               </button>
             </div>
@@ -34,7 +34,7 @@ import {
                 <FaCalendarAlt /> Sessions
               </h2>
               <p className="text-brand-blue text-sm mb-2">Monitor all upcoming and past sessions.</p>
-              <button className="bg-brand-navy text-white px-4 py-2 rounded hover:bg-blue-800 transition">
+              <button className="mt-4 bg-[#002147] text-white px-4 py-2 rounded hover:bg-orange-500 transition">
                 View Sessions
               </button>
             </div>
@@ -45,7 +45,7 @@ import {
                 <FaChartPie /> Analytics
               </h2>
               <p className="text-brand-blue text-sm mb-2">Platform usage, engagement, and growth stats.</p>
-              <button className="bg-brand-orange text-white px-4 py-2 rounded hover:bg-orange-500 transition">
+              <button className="mt-4 bg-[#002147] text-white px-4 py-2 rounded hover:bg-orange-500 transition">
                 View Reports
               </button>
             </div>
@@ -56,7 +56,7 @@ import {
                 <FaUserTie /> Coaches
               </h2>
               <p className="text-brand-blue text-sm mb-2">Manage coach profiles and activity.</p>
-              <button className="bg-brand-navy text-white px-4 py-2 rounded hover:bg-blue-800 transition">
+              <button className="mt-4 bg-[#002147] text-white px-4 py-2 rounded hover:bg-orange-500 transition">
                 View Coaches
               </button>
             </div>
@@ -67,7 +67,7 @@ import {
                 <FaClipboardCheck /> Feedback
               </h2>
               <p className="text-brand-blue text-sm mb-2">Review session feedback from clients.</p>
-              <button className="bg-brand-orange text-white px-4 py-2 rounded hover:bg-orange-500 transition">
+              <button className="mt-4 bg-[#002147] text-white px-4 py-2 rounded hover:bg-orange-500 transition">
                 View Feedback
               </button>
             </div>
@@ -78,7 +78,7 @@ import {
                 <FaBook /> Resources
               </h2>
               <p className="text-brand-blue text-sm mb-2">Upload or update coaching resources.</p>
-              <button className="bg-brand-navy text-white px-4 py-2 rounded hover:bg-blue-800 transition">
+              <button className="mt-4 bg-[#002147] text-white px-4 py-2 rounded hover:bg-orange-500 transition">
                 Manage Library
               </button>
             </div>
@@ -89,7 +89,7 @@ import {
                 <FaEnvelope /> Announcements
               </h2>
               <p className="text-brand-blue text-sm mb-2">Send platform-wide updates or emails.</p>
-              <button className="bg-brand-orange text-white px-4 py-2 rounded hover:bg-orange-500 transition">
+              <button className="mt-4 bg-[#002147] text-white px-4 py-2 rounded hover:bg-orange-500 transition">
                 Send Message
               </button>
             </div>
@@ -100,7 +100,7 @@ import {
                 <FaCogs /> Settings
               </h2>
               <p className="text-brand-blue text-sm mb-2">Platform settings and configurations.</p>
-              <button className="bg-brand-navy text-white px-4 py-2 rounded hover:bg-blue-800 transition">
+              <button className="mt-4 bg-[#002147] text-white px-4 py-2 rounded hover:bg-orange-500 transition">
                 Open Settings
               </button>
             </div>
