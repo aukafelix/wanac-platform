@@ -217,101 +217,102 @@ export default function Navbar({ hideNavbar = false }) {
 
       {/* Full-width Dropdowns */}
       {activeDropdown === "are" && (
-        <div 
-          className="absolute left-0 top-full w-screen bg-white backdrop-blur-md border-t border-gray-200 shadow-md z-40 transition-all duration-200 ease-in-out"
-          role="menu"
-        >
-          <div className="max-w-7xl mx-auto px-4 py-3 grid grid-cols-2 md:grid-cols-4 gap-x-2 gap-y-0.5 text-black">
-            <Link href="/Our Story" className="text-sm hover:text-orange-500 whitespace-nowrap py-1" role="menuitem">
-              ★ Our Story 
-            </Link>
-            <Link href="/board" className="text-sm hover:text-orange-500 whitespace-nowrap py-1" role="menuitem">
-              ★ Board of Directors
-            </Link>
-            <Link href="/advisory-board" className="text-sm hover:text-orange-500 whitespace-nowrap py-1" role="menuitem">
-              ★ Advisory Board
-            </Link>
-            <Link href="/veteran-board" className="text-sm hover:text-orange-500 whitespace-nowrap py-1" role="menuitem">
-              ★ Veteran Advisory Board
-            </Link>
-            <Link href="/executive-staff" className="text-sm hover:text-orange-500 whitespace-nowrap py-1" role="menuitem">
-              ★ Executive Staff
-            </Link>
-          </div>
-        </div>
-      )}
+  <div 
+    className="absolute left-0 top-full w-screen bg-white backdrop-blur-md border-t border-gray-200 shadow-md z-40 transition-all duration-200 ease-in-out"
+    role="menu"
+  >
+    <div className="max-w-7xl mx-auto px-4 py-2 grid grid-cols-2 md:grid-cols-5 gap-x-2 gap-y-0 text-black">
+      <Link href="/Our Story" className="text-sm hover:text-orange-500 whitespace-nowrap py-0" role="menuitem">
+        ★ Our Story 
+      </Link>
+      <Link href="/board" className="text-sm hover:text-orange-500 whitespace-nowrap py-0" role="menuitem">
+        ★ Board of Directors
+      </Link>
+      <Link href="/advisory-board" className="text-sm hover:text-orange-500 whitespace-nowrap py-0" role="menuitem">
+        ★ Advisory Board
+      </Link>
+      <Link href="/veteran-board" className="text-sm hover:text-orange-500 whitespace-nowrap py-0" role="menuitem">
+        ★ Veteran Advisory Board
+      </Link>
+      <Link href="/executive-staff" className="text-sm hover:text-orange-500 whitespace-nowrap py-0" role="menuitem">
+        ★ Executive Staff
+      </Link>
+    </div>
+  </div>
+)}
 
-      {activeDropdown === "help" && (
-        <div 
-          className="absolute left-0 top-full w-screen bg-white backdrop-blur-md border-t border-gray-200 shadow-md z-40 transition-all duration-200 ease-in-out"
-          role="menu"
-        >
-          <div className="max-w-7xl mx-auto px-4 py-3 grid grid-cols-2 md:grid-cols-4 gap-x-2 gap-y-0.5 text-black">
-            <Link href="/why-coaching" className="text-sm hover:text-orange-500 whitespace-nowrap py-1" role="menuitem">
-              ★ Why You Need a Coach
-            </Link>
-            <Link href="/approach" className="text-sm hover:text-orange-500 whitespace-nowrap py-1" role="menuitem">
-              ★ Our Approach
-            </Link>
-            <Link href="/phase-1" className="text-sm hover:text-orange-500 whitespace-nowrap py-1" role="menuitem">
-              ★ Phase 1
-            </Link>
-            <Link href="/phase-2" className="text-sm hover:text-orange-500 whitespace-nowrap py-1" role="menuitem">
-              ★ Phase 2
-            </Link>
-            <Link href="/phase-3" className="text-sm hover:text-orange-500 whitespace-nowrap py-1" role="menuitem">
-              ★ Phase 3
-            </Link>
-          </div>
-        </div>
-      )}
+{activeDropdown === "help" && (
+  <div 
+    className="absolute left-0 top-full w-screen bg-white backdrop-blur-md border-t border-gray-200 shadow-md z-40 transition-all duration-200 ease-in-out"
+    role="menu"
+  >
+    <div className="max-w-7xl mx-auto px-4 py-3 grid grid-cols-2 md:grid-cols-5 gap-x-2 gap-y-0.5 text-black">
+      <Link href="/why-coaching" className="text-sm hover:text-orange-500 whitespace-nowrap py-1" role="menuitem">
+        ★ Why You Need a Coach
+      </Link>
+      <Link href="/approach" className="text-sm hover:text-orange-500 whitespace-nowrap py-1" role="menuitem">
+        ★ Our Approach
+      </Link>
+      <Link href="/phase-1" className="text-sm hover:text-orange-500 whitespace-nowrap py-1" role="menuitem">
+        ★ Phase 1
+      </Link>
+      <Link href="/phase-2" className="text-sm hover:text-orange-500 whitespace-nowrap py-1" role="menuitem">
+        ★ Phase 2
+      </Link>
+      <Link href="/phase-3" className="text-sm hover:text-orange-500 whitespace-nowrap py-1" role="menuitem">
+        ★ Phase 3
+      </Link>
+    </div>
+  </div>
+)}
 
-      {activeDropdown === "action" && (
-        <div 
-          className="absolute left-0 top-full w-screen bg-white backdrop-blur-md border-t border-gray-200 shadow-md z-40 transition-all duration-200 ease-in-out"
-          role="menu"
-        >
-          <div className="max-w-7xl mx-auto px-4 py-3 grid grid-cols-2 md:grid-cols-3 gap-x-2 gap-y-0.5 text-black">
-            <Link href="/volunteer" className="text-sm hover:text-orange-500 whitespace-nowrap py-1" role="menuitem">
-              ★ Volunteer
-            </Link>
-            <Link href="/partners" className="text-sm hover:text-orange-500 whitespace-nowrap py-1" role="menuitem">
-              ★ Corporate Partners
-            </Link>
-            <Link href="/leadership" className="text-sm hover:text-orange-500 whitespace-nowrap py-1" role="menuitem">
-              ★ Leadership Giving
-            </Link>
-            <Link href="/support" className="text-sm hover:text-orange-500 whitespace-nowrap py-1" role="menuitem">
-              ★ Ways to Support
-            </Link>
-            <Link href="/testimonials" className="text-sm hover:text-orange-500 whitespace-nowrap py-1" role="menuitem">
-              ★ Testimonials
-            </Link>
-          </div>
-        </div>
-      )}
+{activeDropdown === "action" && (
+  <div 
+    className="absolute left-0 top-full w-screen bg-white backdrop-blur-md border-t border-gray-200 shadow-md z-40 transition-all duration-200 ease-in-out"
+    role="menu"
+  >
+    <div className="max-w-7xl mx-auto px-4 py-3 grid grid-cols-2 md:grid-cols-5 gap-x-1 gap-y-0.1 text-black">
+      <Link href="/volunteer" className="text-sm hover:text-orange-500 whitespace-nowrap py-0" role="menuitem">
+        ★ Volunteer
+      </Link>
+      <Link href="/partners" className="text-sm hover:text-orange-500 whitespace-nowrap py-1" role="menuitem">
+        ★ Corporate Partners
+      </Link>
+      <Link href="/leadership" className="text-sm hover:text-orange-500 whitespace-nowrap py-1" role="menuitem">
+        ★ Leadership Giving
+      </Link>
+      <Link href="/support" className="text-sm hover:text-orange-500 whitespace-nowrap py-1" role="menuitem">
+        ★ Ways to Support
+      </Link>
+      <Link href="/testimonials" className="text-sm hover:text-orange-500 whitespace-nowrap py-1" role="menuitem">
+        ★ Testimonials
+      </Link>
+    </div>
+  </div>
+)}
 
-      {activeDropdown === "resources" && (
-        <div 
-          className="absolute left-0 top-full w-screen bg-white backdrop-blur-md border-t border-gray-200 shadow-md z-40 transition-all duration-200 ease-in-out"
-          role="menu"
-        >
-          <div className="max-w-7xl mx-auto px-4 py-3 grid grid-cols-2 md:grid-cols-3 gap-x-2 gap-y-0.5 text-black">
-            <Link href="/workshops" className="text-sm hover:text-orange-500 whitespace-nowrap py-1" role="menuitem">
-              ★ Free Workshops
-            </Link>
-            <Link href="/guides" className="text-sm hover:text-orange-500 whitespace-nowrap py-1" role="menuitem">
-              ★ Guides
-            </Link>
-            <Link href="/blog" className="text-sm hover:text-orange-500 whitespace-nowrap py-1" role="menuitem">
-              ★ Blog
-            </Link>
-            <Link href="/help" className="text-sm hover:text-orange-500 whitespace-nowrap py-1" role="menuitem">
-              ★ Help Center
-            </Link>
-          </div>
-        </div>
-      )}
+
+{activeDropdown === "resources" && (
+  <div 
+    className="absolute left-0 top-full w-screen bg-white backdrop-blur-md border-t border-gray-200 shadow-md z-40 transition-all duration-200 ease-in-out"
+    role="menu"
+  >
+    <div className="max-w-7xl mx-auto px-4 py-3 grid grid-cols-2 md:grid-cols-4 gap-x-2 gap-y-0.5 text-black">
+      <Link href="/workshops" className="text-sm hover:text-orange-500 whitespace-nowrap py-1" role="menuitem">
+        ★ Free Workshops
+      </Link>
+      <Link href="/guides" className="text-sm hover:text-orange-500 whitespace-nowrap py-1" role="menuitem">
+        ★ Guides
+      </Link>
+      <Link href="/blog" className="text-sm hover:text-orange-500 whitespace-nowrap py-1" role="menuitem">
+        ★ Blog
+      </Link>
+      <Link href="/help" className="text-sm hover:text-orange-500 whitespace-nowrap py-1" role="menuitem">
+        ★ Help Center
+      </Link>
+    </div>
+  </div>
+)}
 
       {/* Mobile Menu Content */}
       {isMobileMenuOpen && (
