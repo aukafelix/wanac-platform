@@ -25,7 +25,163 @@ import {
   FaHandsHelping,
   FaGraduationCap,
   FaChartLine,
+  FaCalendar,
+  FaClock,
 } from 'react-icons/fa';
+
+// Widget Components
+const TimeWidget = () => {
+  const [time, setTime] = useState(new Date());
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTime(new Date());
+    }, 1000);
+    
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
+
+  const formattedTime = time.toLocaleTimeString([], { 
+    hour: '2-digit', 
+    minute: '2-digit',
+    second: '2-digit'
+  });
+  
+  const formattedDate = time.toLocaleDateString([], {
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric'
+  });
+
+  return (
+    <div className="bg-white rounded-xl shadow p-4 mb-4">
+      <h3 className="text-lg font-semibold text-blue-800 mb-2 flex items-center gap-2">
+        <FaClock /> Current Time
+      </h3>
+      <div className="text-center">
+        <div className="text-2xl font-bold text-blue-700">{formattedTime}</div>
+        <div className="text-sm text-gray-600">{formattedDate}</div>
+      </div>
+    </div>
+  );
+};
+
+const CalendarWidget = () => {
+  const [currentDate] = useState(new Date());
+  
+  // Get current month and year
+  const month = currentDate.toLocaleString('default', { month: 'long' });
+  const year = currentDate.getFullYear();
+  
+  // Get days in current month
+  const daysInMonth = new Date(year, currentDate.getMonth() + 1, 0).getDate();
+  
+  // Get first day of month (0 = Sunday, 1 = Monday, etc.)
+  const firstDayOfMonth = new Date(year, currentDate.getMonth(), 1).getDay();
+  
+  // Create calendar grid
+  const calendarDays = [];
+  const dayNames = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+  
+  // Add empty cells for days before the first day of the month
+  for (let i = 0; i < firstDayOfMonth; i++) {
+    calendarDays.push(<div key={`empty-${i}`} className="text-center text-gray-300"></div>);
+  }
+  
+  // Add cells for each day of the month
+  for (let day = 1; day <= daysInMonth; day++) {
+    const isToday = day === currentDate.getDate();
+    calendarDays.push(
+      <div 
+        key={day} 
+        className={`text-center p-1 text-sm ${
+          isToday ? 'bg-blue-500 text-white rounded-full' : ''
+        }`}
+      >
+        {day}
+      </div>
+    );
+  }
+
+  return (
+    <div className="bg-white rounded-xl shadow p-4 mb-4">
+      <h3 className="text-lg font-semibold text-blue-800 mb-2 flex items-center gap-2">
+        <FaCalendar /> Calendar
+      </h3>
+      <div className="text-center mb-2 text-blue-700 font-medium">
+        {month} {year}
+      </div>
+      <div className="grid grid-cols-7 gap-1 mb-1">
+        {dayNames.map(day => (
+          <div key={day} className="text-center text-xs font-medium text-gray-500">
+            {day}
+          </div>
+        ))}
+      </div>
+      <div className="grid grid-cols-7 gap-1">
+        {calendarDays}
+      </div>
+    </div>
+  );
+};
+
+const CommunityFeedWidget = () => {
+  // Mock data for community feed
+  const feedItems = [
+    {
+      id: 1,
+      user: 'John D.',
+      action: 'posted in Veterans Support',
+      time: '10 min ago',
+      content: 'Just completed my first week of the transition program!'
+    },
+    {
+      id: 2,
+      user: 'Sarah M.',
+      action: 'shared a resource',
+      time: '1 hour ago',
+      content: 'Found this great article on resume building for veterans.'
+    },
+    {
+      id: 3,
+      user: 'Michael T.',
+      action: 'created an event',
+      time: '3 hours ago',
+      content: 'Virtual coffee meetup this Friday at 10am PT.'
+    }
+  ];
+
+  return (
+    <div className="bg-white rounded-xl shadow p-4">
+      <h3 className="text-lg font-semibold text-blue-800 mb-3 flex items-center gap-2">
+        <FaUsers /> Community Feed
+      </h3>
+      <div className="space-y-3">
+        {feedItems.map(item => (
+          <div key={item.id} className="border-b pb-2 last:border-0">
+            <div className="flex items-start">
+              <div className="bg-blue-700 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm mr-2">
+                {item.user.charAt(0)}
+              </div>
+              <div>
+                <p className="text-sm">
+                  <span className="font-medium">{item.user}</span> {item.action}
+                </p>
+                <p className="text-xs text-gray-500">{item.time}</p>
+                <p className="text-sm mt-1">{item.content}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+      <button className="w-full mt-3 bg-blue-700 text-white px-3 py-1 rounded text-sm hover:bg-blue-800 transition">
+        View All Updates
+      </button>
+    </div>
+  );
+};
 
 const navItemsByRole = {
   admin: [
@@ -171,7 +327,18 @@ export default function DashboardLayout({ children }) {
             {userRole.charAt(0).toUpperCase() + userRole.slice(1)} Dashboard
           </h1>
         </div>
-        <div className="p-4">{children}</div>
+        <div className="p-4 flex flex-col lg:flex-row">
+          <div className="flex-1">
+            {children}
+          </div>
+          
+          {/* Right Sidebar with Widgets */}
+          <aside className="w-full lg:w-80 mt-4 lg:mt-0 lg:ml-4 hidden lg:block">
+            <TimeWidget />
+            <CalendarWidget />
+            <CommunityFeedWidget />
+          </aside>
+        </div>
       </main>
     </div>
   );

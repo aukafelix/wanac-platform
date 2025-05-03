@@ -18,7 +18,7 @@ export default function Home() {
       </Head>
 
       {/* Hero Section */}
-<section className="min-h-[80vh] bg-[#002147] text-white py-24">
+<section className="min-h-[70vh] bg-[#002147] text-white py-24">
   <div className="container mx-auto grid grid-cols-12 px-6">
     <div className="col-start-3 col-span-8 flex flex-col">
       <h1 className="text-5xl font-extrabold max-w-3xl leading-tight uppercase tracking-wide text-heading">
@@ -30,7 +30,7 @@ export default function Home() {
       <div className="mt-6 space-x-4">
         <Link
           href="/signup"
-          className="border-2 border-white px-6 py-2 rounded font-semibold hover:bg-white hover:text-background transition-all"
+          className="border-2 border-white px-6 py-2 rounded font-semibold hover:bg-white hover:text-[white] transition-all"
         >
           Get Started
         </Link>
@@ -59,22 +59,22 @@ export default function Home() {
     {[{
       title: 'Transition Coaching',
       desc: 'Helping veterans navigate life after service with clarity and confidence.',
-      icon: '🎯',
+      icon: '',
       image: '/Transitioncoaching.png', // Add your image path
       alt: 'Transition Coaching Session',
       highlights: ['Career Planning', 'Life Skills', 'Personal Growth']
     }, {
-      title: 'Performance Coaching',
+      title: 'Performancecoaching',
       desc: 'Equipping veterans to thrive personally and professionally.',
-      icon: '⭐',
-      image: '/images/performance-coaching.jpg', // Add your image path
+      icon: '',
+      image: '/Performancecoaching.png', // Add your image path
       alt: 'Performance Coaching Session',
       highlights: ['Leadership', 'Communication', 'Goal Setting']
     }, {
       title: 'Coaching Academy',
       desc: 'Training veterans to become certified coaches and mentors.',
-      icon: '🎓',
-      image: '/images/coaching-academy.jpg', // Add your image path
+      icon: '',
+      image: '/Transitioncoaching.png', // Add your image path
       alt: 'Coaching Academy Training',
       highlights: ['Certification', 'Mentorship', 'Community']
     }].map(({ title, desc, icon, image, alt, highlights }) => (

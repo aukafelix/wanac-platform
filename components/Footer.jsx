@@ -77,8 +77,8 @@ export default function Footer({ hideFooter = false }) {
             <h4 className="font-semibold mb-1">Service member or family?</h4>
             <p className="text-sm mb-4">Download our app to find events, locations and programs near you.</p>
             <div className="flex gap-4">
-              <Image src="/app-store.svg" alt="App Store" width={120} height={40} />
-              <Image src="/google-play.svg" alt="Google Play" width={120} height={40} />
+              <Image src="/png-transparent-app-store-apple-google-play-apple-text-logo-mobile-phones.png" alt="App Store" width={120} height={40} />
+              <Image src="/png-transparent-get-it-on-google-play-button.png" alt="Google Play" width={120} height={40} />
             </div>
           </div>
         </div>

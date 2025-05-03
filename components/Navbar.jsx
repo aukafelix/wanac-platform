@@ -29,6 +29,8 @@ export default function Navbar({ hideNavbar = false }) {
     '/journal',
     '/aichatbot',
     '/lifescore',
+    '/resources',
+    '/settings',
   ];
   
   // Check if current path starts with any of the excluded paths
@@ -189,13 +191,13 @@ export default function Navbar({ hideNavbar = false }) {
             DONATE
           </Link>
           <Link
-            href="/strategy-session"
+            href="/donate"
             className="bg-orange-500 text-white px-4 py-2 rounded-xl font-semibold hover:bg-orange-600"
           >
             FREE STRATEGY SESSION
           </Link>
           <Link
-            href="/shop"
+            href="/workshops"
             className="bg-orange-500 text-white px-4 py-2 rounded-xl font-semibold hover:bg-orange-600"
           >
             SHOP
@@ -222,19 +224,19 @@ export default function Navbar({ hideNavbar = false }) {
     role="menu"
   >
     <div className="max-w-7xl mx-auto px-4 py-2 grid grid-cols-2 md:grid-cols-5 gap-x-2 gap-y-0 text-black">
-      <Link href="/Our Story" className="text-sm hover:text-orange-500 whitespace-nowrap py-0" role="menuitem">
+      <Link href="/ourstory" className="text-sm hover:text-orange-500 whitespace-nowrap py-0" role="menuitem">
         ★ Our Story 
       </Link>
-      <Link href="/board" className="text-sm hover:text-orange-500 whitespace-nowrap py-0" role="menuitem">
+      <Link href="/ourstory" className="text-sm hover:text-orange-500 whitespace-nowrap py-0" role="menuitem">
         ★ Board of Directors
       </Link>
-      <Link href="/advisory-board" className="text-sm hover:text-orange-500 whitespace-nowrap py-0" role="menuitem">
+      <Link href="/ourstory" className="text-sm hover:text-orange-500 whitespace-nowrap py-0" role="menuitem">
         ★ Advisory Board
       </Link>
-      <Link href="/veteran-board" className="text-sm hover:text-orange-500 whitespace-nowrap py-0" role="menuitem">
+      <Link href="/ourstory" className="text-sm hover:text-orange-500 whitespace-nowrap py-0" role="menuitem">
         ★ Veteran Advisory Board
       </Link>
-      <Link href="/executive-staff" className="text-sm hover:text-orange-500 whitespace-nowrap py-0" role="menuitem">
+      <Link href="/ourstory" className="text-sm hover:text-orange-500 whitespace-nowrap py-0" role="menuitem">
         ★ Executive Staff
       </Link>
     </div>
@@ -247,19 +249,19 @@ export default function Navbar({ hideNavbar = false }) {
     role="menu"
   >
     <div className="max-w-7xl mx-auto px-4 py-3 grid grid-cols-2 md:grid-cols-5 gap-x-2 gap-y-0.5 text-black">
-      <Link href="/why-coaching" className="text-sm hover:text-orange-500 whitespace-nowrap py-1" role="menuitem">
+      <Link href="/howwehelp" className="text-sm hover:text-orange-500 whitespace-nowrap py-1" role="menuitem">
         ★ Why You Need a Coach
       </Link>
-      <Link href="/approach" className="text-sm hover:text-orange-500 whitespace-nowrap py-1" role="menuitem">
+      <Link href="/howwehelp" className="text-sm hover:text-orange-500 whitespace-nowrap py-1" role="menuitem">
         ★ Our Approach
       </Link>
-      <Link href="/phase-1" className="text-sm hover:text-orange-500 whitespace-nowrap py-1" role="menuitem">
+      <Link href="/howwehelp" className="text-sm hover:text-orange-500 whitespace-nowrap py-1" role="menuitem">
         ★ Phase 1
       </Link>
-      <Link href="/phase-2" className="text-sm hover:text-orange-500 whitespace-nowrap py-1" role="menuitem">
+      <Link href="/howwehelp" className="text-sm hover:text-orange-500 whitespace-nowrap py-1" role="menuitem">
         ★ Phase 2
       </Link>
-      <Link href="/phase-3" className="text-sm hover:text-orange-500 whitespace-nowrap py-1" role="menuitem">
+      <Link href="/howwehelp" className="text-sm hover:text-orange-500 whitespace-nowrap py-1" role="menuitem">
         ★ Phase 3
       </Link>
     </div>
@@ -275,7 +277,7 @@ export default function Navbar({ hideNavbar = false }) {
       <Link href="/volunteer" className="text-sm hover:text-orange-500 whitespace-nowrap py-0" role="menuitem">
         ★ Volunteer
       </Link>
-      <Link href="/partners" className="text-sm hover:text-orange-500 whitespace-nowrap py-1" role="menuitem">
+      <Link href="/corporatepartners" className="text-sm hover:text-orange-500 whitespace-nowrap py-1" role="menuitem">
         ★ Corporate Partners
       </Link>
       <Link href="/leadership" className="text-sm hover:text-orange-500 whitespace-nowrap py-1" role="menuitem">
