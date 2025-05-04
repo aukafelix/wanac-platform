@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const HelpCenterPage = () => {
   // Sample FAQ data - in a real application, this would come from a CMS or API
@@ -9,7 +9,7 @@ const HelpCenterPage = () => {
     {
       id: 1,
       name: "Getting Started",
-      icon: "🚀",
+      icon: "",
       questions: [
         {
           id: 101,
@@ -63,7 +63,7 @@ const HelpCenterPage = () => {
     {
       id: 3,
       name: "Technical Support",
-      icon: "💻",
+      icon: "",
       questions: [
         {
           id: 301,
@@ -90,7 +90,7 @@ const HelpCenterPage = () => {
     {
       id: 4,
       name: "Benefits & Resources",
-      icon: "📚",
+      icon: "",
       questions: [
         {
           id: 401,
@@ -117,7 +117,7 @@ const HelpCenterPage = () => {
     {
       id: 5,
       name: "Community & Events",
-      icon: "🤝",
+      icon: "",
       questions: [
         {
           id: 501,

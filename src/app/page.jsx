@@ -20,7 +20,7 @@ export default function Home() {
       {/* Hero Section */}
 <section className="min-h-[65vh] bg-[#002147] text-white py-24">
   <div className="container mx-auto grid grid-cols-12 px-6">
-    <div className="col-start-3 col-span-8 flex flex-col">
+    <div className="col-start-2 col-span-8 flex flex-col">
       <h1 className="text-5xl font-extrabold max-w-3xl leading-tight uppercase tracking-wide text-heading">
         Empowering Service Members and Veterans through couching and community support
       </h1>
