@@ -8,21 +8,36 @@ import AIAssistantDemo from '../../components/AIAssistantDemo';
 import SessionBookingPreview from '../../components/SessionBookingPreview';
 import CommunitySnapshot from '../../components/CommunitySnapshot';
 import { FaUserTie, FaQuoteLeft } from 'react-icons/fa';
+import Script from 'next/script';
 
-export default function Home() {
+export default function Homepage() {
   return (
     <div className="bg-background text-foreground">
       <Head>
         <title>WANAC Coaching Platform</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
+      <Script src="https://cdn.lordicon.com/lordicon.js" />
 
       {/* Hero Section */}
-<section className="min-h-[65vh] bg-[#002147] text-white py-24">
-  <div className="container mx-auto grid grid-cols-12 px-6">
+<section className="min-h-[65vh] bg-[#002147] text-white py-24 relative object-cover z-0">
+  {/* Hero Background Image */}
+  <div className="absolute inset-0 w-full h-full">
+    <Image
+      src="/landingpage2.jpg"
+      alt="Military Service Members"
+      fill
+      priority
+      className="object-cover z-0 opacity-20"
+      style={{ objectPosition: '150% right' }}
+      quality={100}
+    />
+  </div>
+  <div className="container mx-auto grid grid-cols-10 px-6 relative z-10">
     <div className="col-start-2 col-span-8 flex flex-col">
       <h1 className="text-5xl font-extrabold max-w-3xl leading-tight uppercase tracking-wide text-heading">
-        Empowering Service Members and Veterans through couching and community support
+        Empowering Service Members and Veterans through coaching
+        <h1 className="text-orange-500">AND COMMUNITY SUPPORT.</h1>
       </h1>
       <p className="text-lg mt-4 max-w-xl text-white">
         Personalized coaching, AI tools and community to help you thrive after Service.
@@ -42,8 +57,6 @@ export default function Home() {
   </div>
 </section>
 
-
-
       <section id="how-we-help" className="py-20 px-6 bg-white text-center relative">
   {/* Background Pattern */}
   <div className="absolute inset-0 opacity-5 bg-[url('data:image/svg+xml,...')] pointer-events-none" />
@@ -60,7 +73,7 @@ export default function Home() {
       title: 'Transition Coaching',
       desc: 'Helping veterans navigate life after service with clarity and confidence.',
       icon: '',
-      image: '/Transitioncoaching.png', // Add your image path
+      image: '/Transitioncoaching.jpg', // Add your image path
       alt: 'Transition Coaching Session',
       highlights: ['Career Planning', 'Life Skills', 'Personal Growth']
     }, {
@@ -74,7 +87,7 @@ export default function Home() {
       title: 'Coaching Academy',
       desc: 'Training veterans to become certified coaches and mentors.',
       icon: '',
-      image: '/Transitioncoaching.png', // Add your image path
+      image: '/Coachingacademy.png', // Add your image path
       alt: 'Coaching Academy Training',
       highlights: ['Certification', 'Mentorship', 'Community']
     }].map(({ title, desc, icon, image, alt, highlights }) => (
@@ -95,7 +108,7 @@ export default function Home() {
         {/* Content Container */}
         <div className="p-8">
           {/* Icon */}
-          <div className="w-16 h-16 bg-[#002147] text-white rounded-full flex items-center justify-center text-2xl mx-auto -mt-16 relative z-10 border-4 border-white group-hover:scale-110 transition-transform">
+          <div className="w-16 h-16 bg-orange-400 text-white rounded-full flex items-center justify-center text-2xl mx-auto -mt-16 relative z-10 border-4 border-white group-hover:scale-110 transition-transform">
             {icon}
           </div>
 
@@ -127,124 +140,194 @@ export default function Home() {
     <p className="text-lg mb-12">Discover the powerful features that make our web app the best choice for your needs.</p>
 
     {/* Features Grid */}
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 px-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-4 max-w-7xl mx-auto">
       {/* Feature 1 */}
-      <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out">
-        <div className="mb-6">
-          <img src="/icons/session-booking.svg" alt="Session Booking" className="w-16 h-16 mx-auto" />
+      <div className="bg-white/10 backdrop-blur-sm p-8 rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 border border-white/10">
+        <div className="mb-8 relative">
+          <div className="absolute -inset-1 bg-orange-500/30 rounded-lg blur"></div>
+          <lord-icon
+            src="https://cdn.lordicon.com/uoljexdg.json"
+            trigger="hover"
+            colors="primary:#ee8220,secondary:#ffffff"
+            style={{ width: '80px', height: '80px' }}
+            class="mx-auto relative z-10"
+          />
         </div>
-        <h3 className="text-2xl font-semibold mb-4">Session Booking</h3>
-        <p className="text-lg text-gray-700">Easily book your sessions with a simple, intuitive interface that guarantees a smooth user experience.</p>
+        <h3 className="text-2xl font-bold mb-4 text-center text-white">Session Booking</h3>
+        <p className="text-lg text-gray-300 text-center leading-relaxed">
+          Easily book your sessions with a simple, intuitive interface that guarantees a smooth user experience.
+        </p>
       </div>
 
       {/* Feature 2 */}
-      <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out">
-        <div className="mb-6">
-          <img src="/icons/ai-assistant.svg" alt="AI Assistant" className="w-16 h-16 mx-auto" />
+      <div className="bg-white/10 backdrop-blur-sm p-8 rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 border border-white/10">
+        <div className="mb-8 relative">
+          <div className="absolute -inset-1 bg-orange-500/30 rounded-lg blur"></div>
+          <lord-icon
+            src="https://cdn.lordicon.com/qvbrkejx.json"
+            trigger="hover"
+            colors="primary:#ee8220,secondary:#ffffff"
+            style={{ width: '80px', height: '80px' }}
+            class="mx-auto relative z-10"
+          />
         </div>
-        <h3 className="text-2xl font-semibold mb-4">AI Assistant</h3>
-        <p className="text-lg text-gray-700">Get personalized assistance with our AI-driven assistant, designed to streamline your tasks and improve productivity.</p>
+        <h3 className="text-2xl font-bold mb-4 text-center text-white">AI Assistant</h3>
+        <p className="text-lg text-gray-300 text-center leading-relaxed">
+          Get personalized assistance with our AI-driven assistant, designed to streamline your tasks and improve productivity.
+        </p>
       </div>
 
       {/* Feature 3 */}
-      <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out">
-        <div className="mb-6">
-          <img src="/icons/real-time-updates.svg" alt="Real-Time Updates" className="w-16 h-16 mx-auto" />
+      <div className="bg-white/10 backdrop-blur-sm p-8 rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 border border-white/10">
+        <div className="mb-8 relative">
+          <div className="absolute -inset-1 bg-orange-500/30 rounded-lg blur"></div>
+          <lord-icon
+            src="https://cdn.lordicon.com/nayeills.json"
+            trigger="hover"
+            colors="primary:#ee8220,secondary:#ffffff"
+            style={{ width: '80px', height: '80px' }}
+            class="mx-auto relative z-10"
+          />
         </div>
-        <h3 className="text-2xl font-semibold mb-4">Real-Time Updates</h3>
-        <p className="text-lg text-gray-700">Stay informed with real-time notifications and updates, ensuring you're always in the loop.</p>
+        <h3 className="text-2xl font-bold mb-4 text-center text-white">Real-Time Updates</h3>
+        <p className="text-lg text-gray-300 text-center leading-relaxed">
+          Stay informed with real-time notifications and updates, ensuring you're always in the loop.
+        </p>
       </div>
     </div>
   </div>
 </section>
 
       {/* Community and Testimonial */}
-      <section className="py-20 px-6 bg-white text-[#002147]">
-        <h2 className="text-4xl font-bold mb-12 text-center uppercase">Testimonials</h2>
-        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-8 items-center">
-          <div className="bg-white p-6 rounded-xl shadow flex flex-col gap-4">
-  <div className="flex items-center gap-2">
-    <FaUserTie className="text-xl text-heading" />
-    <h2 className="text-2xl font-semibold text-heading">Veteran Voices</h2>
-  </div>
-  <blockquote className="italic text-foreground relative pl-8">
-    <FaQuoteLeft className="absolute left-0 top-0 text-gray-400" />
-    “WANAC helped me rediscover my strength and purpose after leaving the military.”
-    <footer className="mt-4 font-semibold">— U.S. Army Veteran</footer>
-  </blockquote>
-</div>
-<div className="bg-white p-6 rounded-xl shadow flex flex-col gap-4">
-  <div className="flex items-center gap-2">
-    <FaUserTie className="text-xl text-heading" />
-    <h2 className="text-2xl font-semibold text-heading">Veteran Voices</h2>
-  </div>
-  <blockquote className="italic text-foreground relative pl-8">
-    <FaQuoteLeft className="absolute left-0 top-0 text-gray-400" />
-    “WANAC helped me rediscover my strength and purpose after leaving the military.”
-    <footer className="mt-4 font-semibold">— U.S. Army Veteran</footer>
-  </blockquote>
-</div>
+      <section className="py-20 px-6 bg-white text-[#002147] relative overflow-hidden">
+        <div className="absolute inset-0 opacity-5 bg-[url('/testimonials-bg-pattern.jpg')] bg-cover bg-center"></div>
+        <h2 className="text-4xl font-bold mb-12 text-center uppercase relative z-10">Testimonials</h2>
+        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-8 items-center relative z-10">
+          {/* Testimonial 1 */}
+          <div className="group bg-white/80 backdrop-blur-sm p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-500 border border-gray-100 relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-r from-orange-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div className="relative z-10">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-orange-500">
+                  <Image
+                    src="/veteran1.jpg"
+                    alt="Veteran Portrait"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div>
+                  <h2 className="text-2xl font-semibold text-heading">Veteran Voices</h2>
+                  <p className="text-orange-500 font-medium">U.S. Army Veteran</p>
+                </div>
+              </div>
+              <blockquote className="italic text-foreground relative pl-8">
+                <FaQuoteLeft className="absolute left-0 top-0 text-orange-500 opacity-50" />
+                <p className="text-lg leading-relaxed">"WANAC helped me rediscover my strength and purpose after leaving the military."</p>
+                <footer className="mt-4 font-semibold text-right">— Clarence </footer>
+              </blockquote>
+            </div>
+          </div>
+
+          {/* Testimonial 2 */}
+          <div className="group bg-white/80 backdrop-blur-sm p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-500 border border-gray-100 relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-r from-orange-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div className="relative z-10">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-orange-500">
+                  <Image
+                    src="/veteran2.jpg"
+                    alt="Veteran Portrait"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div>
+                  <h2 className="text-2xl font-semibold text-heading">Veteran Voices</h2>
+                  <p className="text-orange-500 font-medium">U.S. Marine Corps Veteran</p>
+                </div>
+              </div>
+              <blockquote className="italic text-foreground relative pl-8">
+                <FaQuoteLeft className="absolute left-0 top-0 text-orange-500 opacity-50" />
+                <p className="text-lg leading-relaxed">"WANAC helped me rediscover my strength and purpose after leaving the military."</p>
+                <footer className="mt-4 font-semibold text-right">— Sarah M.</footer>
+              </blockquote>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* Community CTA */}
-<section id="community" className="bg-background text-white text-center py-20 px-6">
-  <h2 className="text-4xl font-bold mb-4 uppercase">Join Our Community</h2>
-  <p className="mb-6 max-w-2xl mx-auto">
-    Discover upcoming events, connect with fellow veterans, and make an impact.
-  </p>
-  <div className="flex justify-center gap-4 mb-12">
-    <Link href="/signup" className="bg-accent text-white px-6 py-3 rounded font-semibold hover:bg-hover transition-all">
-      Sign Up
-    </Link>
-    <Link href="/donate" className="bg-white text-[#002147] text-heading px-6 py-3 rounded font-semibold hover:bg-gray-200 transition-all">
-      Donate
-    </Link>
-  </div>
+      <section id="community" className="relative bg-[#002147] text-white text-center py-32 px-6 overflow-hidden">
+        {/* Background Elements */}
+        <div className="absolute inset-0 bg-[url('/community-bg.jpg')] bg-cover bg-center opacity-10"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#002147]/50 to-[#002147]"></div>
+        
+        {/* Animated Shapes */}
+        <div className="absolute inset-0">
+          <div className="absolute top-10 left-10 w-32 h-32 bg-orange-500/10 rounded-full blur-xl animate-pulse"></div>
+          <div className="absolute bottom-10 right-10 w-40 h-40 bg-blue-500/10 rounded-full blur-xl animate-pulse delay-700"></div>
+        </div>
 
-  {/* Video Grid */}
-  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-6xl mx-auto mt-16">
-    <div className="aspect-w-16 aspect-h-9">
-      <iframe
-        src="https://www.youtube.com/embed/VIDEO_ID_1?autoplay=1&mute=1&loop=1&playlist=VIDEO_ID_1"
-        title="Community Video 1"
-        className="w-full h-full rounded"
-        allow="autoplay; encrypted-media"
-        allowFullScreen
-      ></iframe>
-    </div>
-    <div className="aspect-w-16 aspect-h-9">
-      <iframe
-        src="https://www.youtube.com/embed/VIDEO_ID_2?autoplay=1&mute=1&loop=1&playlist=VIDEO_ID_2"
-        title="Community Video 2"
-        className="w-full h-full rounded"
-        allow="autoplay; encrypted-media"
-        allowFullScreen
-      ></iframe>
-    </div>
-    <div className="aspect-w-16 aspect-h-9">
-      <iframe
-        src="https://www.youtube.com/embed/VIDEO_ID_3?autoplay=1&mute=1&loop=1&playlist=VIDEO_ID_3"
-        title="Community Video 3"
-        className="w-full h-full rounded"
-        allow="autoplay; encrypted-media"
-        allowFullScreen
-      ></iframe>
-    </div>
-    <div className="aspect-w-16 aspect-h-9">
-      <iframe
-        src="https://www.youtube.com/embed/VIDEO_ID_4?autoplay=1&mute=1&loop=1&playlist=VIDEO_ID_4"
-        title="Community Video 4"
-        className="w-full h-full rounded"
-        allow="autoplay; encrypted-media"
-        allowFullScreen
-      ></iframe>
-    </div>
-  </div>
-</section>
+        {/* Content Container */}
+        <div className="relative z-10 max-w-4xl mx-auto">
+          <h2 className="text-5xl font-bold mb-6 uppercase bg-clip-text text-transparent bg-gradient-to-r from-white to-orange-200">
+            Join Our Community
+          </h2>
+          <p className="mb-8 text-xl text-gray-200 max-w-2xl mx-auto leading-relaxed">
+            Discover upcoming events, connect with fellow veterans, and make an impact.
+          </p>
+          
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row justify-center gap-6 mb-16">
+            <Link 
+              href="/signup" 
+              className="group relative px-8 py-4 bg-orange-500 rounded-lg overflow-hidden shadow-xl hover:shadow-orange-500/20 transition-all duration-300"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-orange-600 to-orange-500 transform transition-transform group-hover:scale-105 duration-300 ease-out"></div>
+              <span className="relative flex items-center justify-center gap-2 text-lg font-semibold">
+                Sign Up
+                <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </span>
+            </Link>
+            
+            <Link 
+              href="/donate" 
+              className="group relative px-8 py-4 bg-white rounded-lg overflow-hidden shadow-xl hover:shadow-white/20 transition-all duration-300"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-white to-gray-100 transform transition-transform group-hover:scale-105 duration-300 ease-out"></div>
+              <span className="relative flex items-center justify-center gap-2 text-lg font-semibold text-[#002147] group-hover:text-orange-500 transition-colors">
+                Donate
+                <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </span>
+            </Link>
+          </div>
+
+
+          {/* Stats or Additional Info */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-3xl mx-auto">
+            <div className="group bg-white/5 backdrop-blur-sm rounded-lg p-6 hover:bg-white/10 transition-all duration-300">
+              <h3 className="text-3xl font-bold text-orange-400 mb-2">5000+</h3>
+              <p className="text-gray-300">Active Community Members</p>
+            </div>
+            <div className="group bg-white/5 backdrop-blur-sm rounded-lg p-6 hover:bg-white/10 transition-all duration-300">
+              <h3 className="text-3xl font-bold text-orange-400 mb-2">200+</h3>
+              <p className="text-gray-300">Monthly Events</p>
+            </div>
+            <div className="group bg-white/5 backdrop-blur-sm rounded-lg p-6 hover:bg-white/10 transition-all duration-300">
+              <h3 className="text-3xl font-bold text-orange-400 mb-2">50+</h3>
+              <p className="text-gray-300">Local Chapters</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Final Section */}
-<section className="py-20 px-6 text-center bg-[#002147]">
+<section className="py-20 px-6 text-center bg-black">
   <h2 className="text-3xl font-bold mb-12 uppercase text-white text-heading relative">
     Manage Your Experience
     <span className="block h-1 w-20 bg-blue-400 mx-auto mt-4"></span>
@@ -252,38 +335,92 @@ export default function Home() {
   
   <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
     {/* Card 1 */}
-    <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 transition-transform hover:transform hover:-translate-y-2 cursor-pointer">
+    <div className="group bg-white/10 backdrop-blur-sm rounded-xl p-8 transition-all duration-500 hover:bg-orange-500/20 hover:scale-105 cursor-pointer border border-white/10 hover:border-orange-500/50">
       <div className="flex flex-col items-center text-white">
-        <svg className="w-12 h-12 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-        <h3 className="text-xl font-semibold mb-3">Coaching Preferences</h3>
-        <p className="text-gray-300">Customize your coaching experience and set your learning goals</p>
+        <div className="relative mb-6">
+          <div className="absolute -inset-1 bg-orange-500/30 rounded-full blur group-hover:bg-orange-500/50 transition-all duration-500"></div>
+          <lord-icon
+            src="https://cdn.lordicon.com/dqxvvqzi.json"
+            trigger="hover"
+            colors="primary:#ee8220,secondary:#ffffff"
+            style={{ width: '64px', height: '64px' }}
+            class="relative z-10"
+          />
+        </div>
+        <h3 className="text-2xl font-bold mb-4 group-hover:text-orange-400 transition-colors duration-300">Coaching Preferences</h3>
+        <p className="text-gray-300 text-center leading-relaxed group-hover:text-white transition-colors duration-300">
+          Customize your coaching experience and set your learning goals
+        </p>
+        <div className="mt-6 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+          <span className="text-orange-400 flex items-center gap-2">
+            Learn More 
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </span>
+        </div>
       </div>
     </div>
 
     {/* Card 2 */}
-    <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 transition-transform hover:transform hover:-translate-y-2 cursor-pointer">
+    <div className="group bg-white/10 backdrop-blur-sm rounded-xl p-8 transition-all duration-500 hover:bg-orange-500/20 hover:scale-105 cursor-pointer border border-white/10 hover:border-orange-500/50">
       <div className="flex flex-col items-center text-white">
-        <svg className="w-12 h-12 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-        <h3 className="text-xl font-semibold mb-3">Subscriptions & Sessions</h3>
-        <p className="text-gray-300">Track and manage your subscriptions and upcoming sessions</p>
+        <div className="relative mb-6">
+          <div className="absolute -inset-1 bg-orange-500/30 rounded-full blur group-hover:bg-orange-500/50 transition-all duration-500"></div>
+          <lord-icon
+            src="https://cdn.lordicon.com/kbtmbyzy.json"
+            trigger="hover"
+            colors="primary:#ee8220,secondary:#ffffff"
+            style={{ width: '64px', height: '64px' }}
+            class="relative z-10"
+          />
+        </div>
+        <h3 className="text-2xl font-bold mb-4 group-hover:text-orange-400 transition-colors duration-300">Subscriptions & Sessions</h3>
+        <p className="text-gray-300 text-center leading-relaxed group-hover:text-white transition-colors duration-300">
+          Track and manage your subscriptions and upcoming sessions
+        </p>
+        <div className="mt-6 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+          <span className="text-orange-400 flex items-center gap-2">
+            Learn More 
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </span>
+        </div>
       </div>
     </div>
 
     {/* Card 3 */}
-    <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 transition-transform hover:transform hover:-translate-y-2 cursor-pointer">
+    <div className="group bg-white/10 backdrop-blur-sm rounded-xl p-8 transition-all duration-500 hover:bg-orange-500/20 hover:scale-105 cursor-pointer border border-white/10 hover:border-orange-500/50">
       <div className="flex flex-col items-center text-white">
-        <svg className="w-12 h-12 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-        </svg>
-        <h3 className="text-xl font-semibold mb-3">Notification Settings</h3>
-        <p className="text-gray-300">Set up your preferred notification preferences</p>
+        <div className="relative mb-6">
+          <div className="absolute -inset-1 bg-orange-500/30 rounded-full blur group-hover:bg-orange-500/50 transition-all duration-500"></div>
+          <lord-icon
+            src="https://cdn.lordicon.com/psnhyobz.json"
+            trigger="hover"
+            colors="primary:#ee8220,secondary:#ffffff"
+            style={{ width: '64px', height: '64px' }}
+            class="relative z-10"
+          />
+        </div>
+        <h3 className="text-2xl font-bold mb-4 group-hover:text-orange-400 transition-colors duration-300">Notification Settings</h3>
+        <p className="text-gray-300 text-center leading-relaxed group-hover:text-white transition-colors duration-300">
+          Set up your preferred notification preferences
+        </p>
+        <div className="mt-6 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+          <span className="text-orange-400 flex items-center gap-2">
+            Learn More 
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </span>
+        </div>
       </div>
     </div>
   </div>
+</section>
+<section>
+  
 </section>
 
     </div>
