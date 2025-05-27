@@ -9,6 +9,7 @@ import { authService } from "@/services/api/auth.service";
 import { toast } from "react-hot-toast";
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import { googleAuthService } from '@/services/api/google-auth.service';
+import { handleValidationErrors } from "@/lib/error";
 
 export default function Signup() {
   const router = useRouter();
@@ -256,51 +257,15 @@ export default function Signup() {
           router.push(userType === "client" ? "/client" : "/coach");
         }
       } catch (error) {
-        console.error("Registration error:", error);
-        
-        // Handle network errors
-        if (!error.response) {
-          toast.error('Network error. Please check your internet connection and try again.');
-          setErrors(prev => ({ 
-            ...prev, 
-            submit: "Unable to connect to the server. Please check your internet connection." 
-          }));
-          return;
-        }
-        
-        // Handle specific error cases
-        if (error.response?.status === 409) {
-          toast.error('This email is already registered. Please try logging in instead.');
-          setErrors(prev => ({ 
-            ...prev, 
-            email: "This email is already registered. Please try logging in instead."
-          }));
-        } else if (error.response?.status === 400) {
-          // Handle validation errors from the backend
-          const backendErrors = error.response.data.errors;
-          if (backendErrors) {
-            setErrors(prev => ({
-              ...prev,
-              ...Object.keys(backendErrors).reduce((acc, key) => {
-                acc[key] = backendErrors[key][0];
-                return acc;
-              }, {})
-            }));
-            toast.error('Please check the form for errors.');
+        if (error.response && error.response.data) {
+          if (error.response?.data?.errors) {
+            handleValidationErrors(error.response.data.errors);
+          }
+          if (error.response?.data?.error) {
+            push.error(error.response.data.error);
           }
         } else {
-          // Handle other error cases
-          const errorMessage = error.response?.data?.message || "Registration failed. Please try again.";
-          setErrors(prev => ({ 
-            ...prev, 
-            submit: errorMessage
-          }));
-          toast.error(errorMessage);
-        }
-        
-        // If we're getting a server error, notify the user
-        if (error.response?.status >= 500) {
-          toast.error("We're experiencing technical difficulties. Please try again later.");
+          console.log(error);
         }
       } finally {
         setIsLoading(false);
