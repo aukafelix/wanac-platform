@@ -74,7 +74,7 @@ export default function HowWeHelp() {
   ];
 
   return (
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div>
         
       {/*   Hero Section */}
       <header className="relative bg-[#002147] text-white">
@@ -127,7 +127,7 @@ export default function HowWeHelp() {
 
         {/* Support Areas Section */}
         <section id="our-support-pillars" className="bg-gradient-to-b from-white via-gray-50 to-white py-24">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-20">
               <span className="text-orange-400 font-semibold text-lg mb-4 block">Our Comprehensive Approach</span>
               <h2 className="text-4xl font-bold text-brand-navy mb-6">
@@ -199,7 +199,7 @@ export default function HowWeHelp() {
 
         {/* Coaching Phases Section */}
         <section id="your-coaching-journey" className="bg-gradient-to-br from-white via-gray-50 to-white py-24">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-20">
               <span className="text-orange-400 font-semibold text-lg mb-4 block">Transform Your Future</span>
               <h2 className="text-4xl font-bold text-brand-navy mb-6">
