@@ -286,7 +286,7 @@ const OurStory = () => {
           <div className="space-x-4">
             <a
               href="/donate"
-              className="inline-block bg-orange-400 text-blue-900 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition"
+              className="inline-block bg-orange-400 text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition"
               target="_blank"
               rel="noreferrer"
             >

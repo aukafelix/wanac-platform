@@ -2,12 +2,30 @@
 
 import React from "react";
 import Link from "next/link";
+import { FaSearch } from "react-icons/fa";
+import { FaWpforms } from "react-icons/fa";
+import { FaHandsHelping } from "react-icons/fa";
 
 const VolunteerPage = () => {
   const volunteerSteps = [
-    { step: 1, title: "Explore Opportunities", desc: "Find volunteer roles near you that match your interests." },
-    { step: 2, title: "Apply Online", desc: "Submit your application through our secure platform." },
-    { step: 3, title: "Start Making a Difference", desc: "Receive training and begin your journey." }
+    { 
+      step: 1, 
+      title: "Explore Opportunities", 
+      desc: "Find volunteer roles near you that match your interests.",
+      icon: FaSearch
+    },
+    { 
+      step: 2, 
+      title: "Apply Online", 
+      desc: "Submit your application through our secure platform.",
+      icon: FaWpforms
+    },
+    { 
+      step: 3, 
+      title: "Start Making a Difference", 
+      desc: "Receive training and begin your journey.",
+      icon: FaHandsHelping
+    }
   ];
 
   const volunteerStories = [
@@ -96,19 +114,23 @@ const VolunteerPage = () => {
           <h2 className="text-3xl md:text-4xl font-semibold mb-12 text-center">
             How to Volunteer
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {volunteerSteps.map(({ step, title, desc }) => (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 px-4">
+            {volunteerSteps.map(({ step, title, desc, icon: Icon }) => (
               <div
                 key={step}
-                className="bg-white shadow-lg rounded-xl p-8 transform hover:scale-105 transition-transform duration-300"
+                className="bg-white rounded-2xl p-8 transition-all duration-300 ease-in-out
+                hover:shadow-[orange-400]
+                hover:-translate-y-2 border border-gray-100"
               >
                 <div
-                  className="w-12 h-12 bg-orange-500 text-white rounded-full flex items-center justify-center mb-4 mx-auto"
+                  className="w-16 h-16 bg-gradient-to-br from-orange-400 to-orange-600 
+                  text-white rounded-2xl flex items-center justify-center mb-6 mx-auto
+                  shadow-lg transform rotate-3 hover:rotate-6 transition-transform duration-300"
                 >
-                  <span className="text-xl font-bold">{step}</span>
+                  <Icon className="text-3xl" />
                 </div>
-                <h3 className="text-xl font-bold mb-4 text-center">{title}</h3>
-                <p className="text-gray-600 text-center">{desc}</p>
+                <h3 className="text-2xl font-bold mb-4 text-center text-gray-800">{title}</h3>
+                <p className="text-gray-600 text-center leading-relaxed">{desc}</p>
               </div>
             ))}
           </div>

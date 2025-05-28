@@ -16,7 +16,7 @@ const GuidesPage = () => {
       downloadLink: "/downloads/military-civilian-transition-guide.pdf",
       lastUpdated: "March 2024",
       pages: 42,
-      image: "/images/guides/transition-guide.jpg"
+      image: "/transitionguide.jpg"
     },
     {
       id: 2,
@@ -61,50 +61,6 @@ const GuidesPage = () => {
       lastUpdated: "December 2023",
       pages: 29,
       image: "/images/guides/spouse-employment.jpg"
-    },
-    {
-      id: 6,
-      title: "Post-9/11 GI Bill Education Guide",
-      description: "Maximize your education benefits with this detailed guide to the Post-9/11 GI Bill, including eligibility, application process, and school selection.",
-      category: "Education",
-      icon: "",
-      downloadLink: "/downloads/gi-bill-education-guide.pdf",
-      lastUpdated: "February 2024",
-      pages: 47,
-      image: "/images/guides/education-guide.jpg"
-    },
-    {
-      id: 7,
-      title: "Veteran Entrepreneurship Manual",
-      description: "A step-by-step guide for veterans looking to start their own business, including funding resources, business planning, and mentorship opportunities.",
-      category: "Career & Employment",
-      icon: "",
-      downloadLink: "/downloads/veteran-entrepreneurship-manual.pdf",
-      lastUpdated: "March 2024",
-      pages: 61,
-      image: "/images/guides/entrepreneurship.jpg"
-    },
-    {
-      id: 8,
-      title: "Military Children's Education Support Guide",
-      description: "Resources for helping military children thrive academically during transitions, including school liaison information and special education services.",
-      category: "Family Support",
-      icon: "",
-      downloadLink: "/downloads/military-children-education.pdf",
-      lastUpdated: "January 2024",
-      pages: 38,
-      image: "/images/guides/children-education.jpg"
-    },
-    {
-      id: 9,
-      title: "Veteran Housing and Home Loans Guide",
-      description: "Navigate VA home loans, housing benefits, and resources for veterans experiencing housing insecurity with this comprehensive guide.",
-      category: "Benefits & Resources",
-      icon: "",
-      downloadLink: "/downloads/veteran-housing-guide.pdf",
-      lastUpdated: "April 2024",
-      pages: 44,
-      image: "/images/guides/housing-guide.jpg"
     }
   ];
 

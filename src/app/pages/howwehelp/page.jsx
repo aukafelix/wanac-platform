@@ -39,7 +39,7 @@ export default function HowWeHelp() {
       id: 1,
       title: "Phase 1: Promise Land Transition",
       description: "Begin your journey with our foundational program designed specifically for military transition.",
-      icon: "",
+      imagePath: "/promiselandtransition.jpg",
       features: [
         "Military to civilian transition strategy",
         "Identity transformation",
@@ -51,7 +51,7 @@ export default function HowWeHelp() {
       id: 2,
       title: "Phase 2: High Performance Coaching",
       description: "Elevate your potential and achieve excellence in your chosen path.",
-      icon: "",
+      imagePath: "/highperfomacecoaching.jpg",
       features: [
         "Advanced performance techniques",
         "Leadership development",
@@ -63,7 +63,7 @@ export default function HowWeHelp() {
       id: 3,
       title: "Phase 3: Coaching Business Academy",
       description: "Transform your experience into a successful coaching business.",
-      icon: "",
+      imagePath: "/bussinessacademyphase1.jpg",
       features: [
         "Business model development",
         "Marketing strategies",
@@ -129,12 +129,11 @@ export default function HowWeHelp() {
         <section id="our-support-pillars" className="bg-gradient-to-b from-white via-gray-50 to-white py-24">
           <div className="mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-20">
-              <span className="text-orange-400 font-semibold text-lg mb-4 block">Our Comprehensive Approach</span>
               <h2 className="text-4xl font-bold text-brand-navy mb-6">
-                Our Support Pillars
+                Support Pillars
               </h2>
               <p className="text-xl text-brand-blue">
-                Comprehensive support designed to guide you through every step of your transition journey
+                Designed to guide you through every step of your transition journey into the community
               </p>
             </div>
             <div className="grid lg:grid-cols-2 gap-10 max-w-6xl mx-auto">
@@ -223,7 +222,7 @@ export default function HowWeHelp() {
                       index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'
                     } gap-8 lg:gap-16`}
                   >
-                    {/* Phase Number & Icon */}
+                    {/* Phase Image & Content */}
                     <div className="flex-shrink-0 w-full lg:w-1/3">
                       <div className="relative group">
                         <div className="absolute inset-0 bg-gradient-to-r from-orange-400/20 to-[#002147]/20 transform -rotate-3 rounded-2xl transition-transform group-hover:rotate-0 duration-300" />
@@ -231,9 +230,13 @@ export default function HowWeHelp() {
                           <div className="absolute top-0 right-0 w-32 h-32 bg-orange-400/10 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-150 duration-500" />
                           <div className="relative">
                             <div className="flex items-center justify-center mb-6">
-                              <span className="text-5xl bg-gradient-to-br from-[#002147] to-orange-400 text-white p-6 rounded-2xl shadow-lg">
-                                {phase.icon}
-                              </span>
+                              <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-lg">
+                                <img
+                                  src={phase.imagePath}
+                                  alt={phase.title}
+                                  className="object-cover w-full h-full transform transition-transform duration-300 group-hover:scale-110"
+                                />
+                              </div>
                             </div>
                             <h3 className="text-2xl font-bold text-brand-navy text-center mb-4 group-hover:text-orange-400 transition-colors duration-300">
                               {phase.title}

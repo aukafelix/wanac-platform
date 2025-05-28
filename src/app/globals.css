@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./responsive-utils.css";
 
 /* Light Theme Defaults  */
 :root {

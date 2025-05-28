@@ -7,6 +7,7 @@ import { usePathname } from 'next/navigation'; // Import usePathname for route d
 import { Toaster } from 'react-hot-toast';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
+import ChatComponent from '../../components/ChatComponent';
 
 export default function RootLayout({ children }) {
   const pathname = usePathname(); // Get the current route
@@ -28,7 +29,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="bg-[#002147] text-gray-800">
       <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
       </head>
       <body className="min-h-screen flex flex-col">
         <Toaster position="top-center" toastOptions={{
@@ -51,6 +52,7 @@ export default function RootLayout({ children }) {
         {!shouldExclude && <Navbar />}
         <main className="flex-grow">{children}</main>
         {!shouldExclude && <Footer />}
+        {!shouldExclude && <ChatComponent />}
       </body>
     </html>
   );

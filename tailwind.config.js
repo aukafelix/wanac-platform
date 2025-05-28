@@ -5,6 +5,22 @@ module.exports = {
     "./components/**/*.{js,jsx,ts,tsx}", // Add this to include your components folder
   ],
   theme: {
+    screens: {
+      // Small phones (common in India, Southeast Asia)
+      'xs': '320px',
+      // Standard mobile (global)
+      'sm': '640px',
+      // Tablets and larger phones (global)
+      'md': '768px',
+      // Small laptops (global)
+      'lg': '1024px',
+      // Desktops (global)
+      'xl': '1280px',
+      // Large screens (common in North America, Europe)
+      '2xl': '1536px',
+      // Ultra-wide screens (Korea, Japan, gaming markets)
+      '3xl': '1920px',
+    },
     extend: {
       colors: {
         background: "#ffffff",

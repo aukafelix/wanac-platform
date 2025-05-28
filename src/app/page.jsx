@@ -77,7 +77,7 @@ export default function Homepage() {
       alt: 'Transition Coaching Session',
       highlights: ['Career Planning', 'Life Skills', 'Personal Growth']
     }, {
-      title: 'Performancecoaching',
+      title: 'Performance Coaching',
       desc: 'Equipping veterans to thrive personally and professionally.',
       icon: '',
       image: '/Performancecoaching.png', // Add your image path

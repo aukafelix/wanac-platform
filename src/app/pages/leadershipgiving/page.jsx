@@ -57,7 +57,7 @@ const LeadershipGivingPage = () => {
           <p className="text-gray-700 mb-8">
             Join a dedicated community of supporters through meaningful gift opportunities.
           </p>
-          <div className=" text-left">
+          <div className=" items-center justify-center text-left">
             <p>
             The WANAC Leadership Circle honors individuals and family foundations who annually contribute $10,000 or more to support our mission of empowering veterans through personalized coaching and transition support. Leadership-level giving plays a vital role in ensuring WANAC has the flexibility to deliver consistent, high-impact programming while also responding swiftly to urgent needs within the veteran community.
 
@@ -105,7 +105,7 @@ Together, we can ensure no veteran navigates transition alone—and that every s
                 <ul className="space-y-4">
                   <li className="flex items-start group-hover:transform group-hover:translate-x-2 transition-transform duration-300">
                     <span className="text-orange-500 mr-3 mt-1">•</span>
-                    <span>Premier recognition at an annual USO Stewardship event</span>
+                    <span>Premier recognition at an annual WANAC Stewardship event</span>
                   </li>
                   <li className="flex items-start group-hover:transform group-hover:translate-x-2 transition-transform duration-300">
                     <span className="text-orange-500 mr-3 mt-1">•</span>
@@ -124,7 +124,7 @@ Together, we can ensure no veteran navigates transition alone—and that every s
                 <ul className="space-y-4">
                   <li className="flex items-start group-hover:transform group-hover:translate-x-2 transition-transform duration-300">
                     <span className="text-orange-500 mr-3 mt-1">•</span>
-                    <span>Special invitation to attend a USO VIP Lunch/Dinner</span>
+                    <span>Special invitation to attend a WANAC VIP Lunch/Dinner</span>
                   </li>
                 </ul>
               </div>

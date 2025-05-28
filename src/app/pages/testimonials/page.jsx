@@ -8,7 +8,7 @@ const TestimonialsPage = () => {
       name: "Captain Sarah Johnson",
       role: "US Army Veteran",
       quote: "WANAC provided me with the support and resources I needed during my transition to civilian life. Their coaching program helped me discover a new career path that leverages my military experience.",
-      image: "/images/testimonials/sarah-johnson.jpg",
+      image: "/testimonial4.jpg",
       category: "Veterans"
     },
     {
@@ -16,7 +16,7 @@ const TestimonialsPage = () => {
       name: "Michael Rodriguez",
       role: "Military Spouse",
       quote: "When my wife was deployed, WANAC's family support programs were a lifeline for our children and me. The community they've built truly understands the unique challenges military families face.",
-      image: "/images/testimonials/michael-rodriguez.jpg",
+      image: "/testimonial1.jpg",
       category: "Military Families"
     },
     {
@@ -24,57 +24,10 @@ const TestimonialsPage = () => {
       name: "Lieutenant Commander David Chen",
       role: "Active Duty Navy",
       quote: "The mental health resources provided by WANAC have been invaluable for my unit. Their understanding of military culture makes their programs particularly effective.",
-      image: "/images/testimonials/david-chen.jpg",
+      image: "/community1.jpg",
       category: "Active Duty"
-    },
-    {
-      id: 4,
-      name: "Emily Williams",
-      role: "Program Participant",
-      quote: "After struggling with adjustment issues, WANAC's coaching program helped me rebuild my confidence and find purpose. I'm now helping other veterans navigate similar challenges.",
-      image: "/images/testimonials/emily-williams.jpg",
-      category: "Program Participants"
-    },
-    {
-      id: 5,
-      name: "Sergeant James Thompson",
-      role: "National Guard",
-      quote: "The career transition workshops were exactly what I needed to translate my military skills into civilian terms. Within two months, I had multiple job offers.",
-      image: "/images/testimonials/james-thompson.jpg",
-      category: "Career Development"
-    },
-    {
-      id: 6,
-      name: "Rebecca Martinez",
-      role: "Military Child",
-      quote: "Growing up in a military family wasn't always easy, but WANAC's youth programs gave me a place to connect with others who understood. Now as an adult, I volunteer to give back.",
-      image: "/images/testimonials/rebecca-martinez.jpg",
-      category: "Youth Programs"
-    },
-    {
-      id: 7,
-      name: "Colonel Robert Wilson",
-      role: "Retired Air Force",
-      quote: "After 25 years of service, I wasn't sure what was next. WANAC's mentorship program paired me with someone who had walked the same path, making all the difference in my transition.",
-      image: "/images/testimonials/robert-wilson.jpg",
-      category: "Mentorship"
-    },
-    {
-      id: 8,
-      name: "Lisa Anderson",
-      role: "Corporate Partner",
-      quote: "Partnering with WANAC has allowed our company to meaningfully support veterans while also gaining exceptional talent. Their approach to corporate partnerships is thoughtful and impactful.",
-      image: "/images/testimonials/lisa-anderson.jpg",
-      category: "Partners"
-    },
-    {
-      id: 9,
-      name: "Dr. Thomas Parker",
-      role: "WANAC Volunteer",
-      quote: "Volunteering with WANAC has been one of the most rewarding experiences of my life. Seeing the direct impact of our programs on service members and their families is incredibly fulfilling.",
-      image: "/images/testimonials/thomas-parker.jpg",
-      category: "Volunteers"
     }
+   
   ];
 
   const categories = [
@@ -170,7 +123,7 @@ const TestimonialsPage = () => {
               <div className="md:w-1/2">
                 <div className="h-full relative">
                   <img 
-                    src="/images/testimonials/featured-testimonial.jpg" 
+                    src="/testimonial2.jpg" 
                     alt="Featured testimonial" 
                     className="w-full h-full object-cover"
                     style={{ minHeight: "400px" }}

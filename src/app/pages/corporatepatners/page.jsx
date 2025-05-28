@@ -49,9 +49,9 @@ const CorporatePartnersPage = () => {
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-gray-50 to-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#002147] relative inline-block pb-4">
-              Why Partner With Us?
-            </h2>
+          <h2 className="text-3xl md:text-4xl font-semibold mb-12 text-center">
+            Why Partner With Us
+          </h2>
             <p className="mt-6 text-base sm:text-lg lg:text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed px-4">
               By partnering with the WANAC, your company demonstrates its commitment to the men and women who serve our country. 
               <span className="block mt-2">We offer meaningful opportunities for engagement, recognition, and impact.</span>

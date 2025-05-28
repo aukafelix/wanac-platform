@@ -14,7 +14,7 @@ const WorkshopsPage = () => {
       instructor: "James Wilson, Career Coach",
       category: "Career Development",
       spots: "25 spots available",
-      image: "/images/workshops/career-transition.jpg",
+      image: "/promiselandtransition.jpg",
       registrationLink: "/workshops/register/1"
     },
     {
@@ -28,7 +28,7 @@ const WorkshopsPage = () => {
       instructor: "Maria Rodriguez, Financial Advisor",
       category: "Financial Wellness",
       spots: "15 spots available",
-      image: "/images/workshops/financial-planning.jpg",
+      image: "/Performancecoaching.png",
       registrationLink: "/workshops/register/2"
     },
     {
@@ -41,49 +41,8 @@ const WorkshopsPage = () => {
       instructor: "Dr. Sarah Thompson, Psychologist",
       category: "Mental Health",
       spots: "Unlimited spots",
-      image: "/images/workshops/mindfulness.jpg",
+      image: "/landingpage1.jpg",
       registrationLink: "/workshops/register/3"
-    },
-    {
-      id: 4,
-      title: "Navigating VA Benefits",
-      description: "A comprehensive overview of VA benefits and how to effectively access the resources available to you.",
-      date: "July 12, 2024",
-      time: "11:00 AM - 1:00 PM ET",
-      format: "Hybrid",
-      location: "WANAC Center, San Antonio & Online",
-      instructor: "Robert Johnson, VA Benefits Specialist",
-      category: "Benefits & Resources",
-      spots: "30 spots available",
-      image: "/images/workshops/va-benefits.jpg",
-      registrationLink: "/workshops/register/4"
-    },
-    {
-      id: 5,
-      title: "Military Spouse Employment Workshop",
-      description: "Career strategies for military spouses, including remote work opportunities, portable careers, and networking.",
-      date: "July 19, 2024",
-      time: "2:00 PM - 4:00 PM ET",
-      format: "Virtual",
-      instructor: "Emily Davis, Employment Specialist",
-      category: "Career Development",
-      spots: "20 spots available",
-      image: "/images/workshops/spouse-employment.jpg",
-      registrationLink: "/workshops/register/5"
-    },
-    {
-      id: 6,
-      title: "Entrepreneurship for Veterans",
-      description: "Learn how to start and grow your own business using skills gained from your military experience.",
-      date: "August 3, 2024",
-      time: "9:00 AM - 3:00 PM ET",
-      format: "In-Person",
-      location: "WANAC Center, Chicago",
-      instructor: "Michael Chen, Veteran Entrepreneur",
-      category: "Business",
-      spots: "12 spots available",
-      image: "/images/workshops/entrepreneurship.jpg",
-      registrationLink: "/workshops/register/6"
     }
   ];
 

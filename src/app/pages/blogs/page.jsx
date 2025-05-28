@@ -15,7 +15,7 @@ const BlogsPage = () => {
       date: "June 15, 2023",
       category: "Family Support",
       readTime: "5 min read",
-      image: "/images/blogs/military-family-support.jpg",
+      image: "/background4.jpg",
       slug: "support-military-families-deployment"
     },
     {
@@ -26,7 +26,7 @@ const BlogsPage = () => {
       date: "July 3, 2023",
       category: "Career Development",
       readTime: "8 min read",
-      image: "/images/blogs/veteran-transition.jpg",
+      image: "/pilot-6395368_1280.jpg",
       slug: "transitioning-civilian-life-guide"
     },
     {
@@ -37,74 +37,8 @@ const BlogsPage = () => {
       date: "August 12, 2023",
       category: "Mental Health",
       readTime: "6 min read",
-      image: "/images/blogs/veteran-mental-health.jpg",
+      image: "/Coachingacademy.jpg",
       slug: "mental-health-resources-veterans"
-    },
-    {
-      id: 4,
-      title: "How Corporate America Can Better Support Veteran Employees",
-      excerpt: "Companies are increasingly recognizing the unique skills veterans bring to the workplace. Learn how businesses can create more supportive environments.",
-      author: "Michael Chen, HR Director",
-      date: "September 5, 2023",
-      category: "Employment",
-      readTime: "7 min read",
-      image: "/images/blogs/corporate-veteran-support.jpg",
-      slug: "corporate-support-veteran-employees"
-    },
-    {
-      id: 5,
-      title: "The Impact of Community Service on Veteran Reintegration",
-      excerpt: "Research shows that community service can play a crucial role in helping veterans reintegrate into civilian life. Here's why it matters.",
-      author: "Dr. Robert Johnson",
-      date: "October 18, 2023",
-      category: "Community",
-      readTime: "4 min read",
-      image: "/images/blogs/veteran-community-service.jpg",
-      slug: "community-service-veteran-reintegration"
-    },
-    {
-      id: 6,
-      title: "Financial Planning Tips for Military Families",
-      excerpt: "Military life comes with unique financial challenges and opportunities. These planning strategies can help secure your family's financial future.",
-      author: "Lisa Martinez, Financial Advisor",
-      date: "November 10, 2023",
-      category: "Financial Wellness",
-      readTime: "9 min read",
-      image: "/images/blogs/military-financial-planning.jpg",
-      slug: "financial-planning-military-families"
-    },
-    {
-      id: 7,
-      title: "The Role of Technology in Modern Veteran Support Services",
-      excerpt: "From telehealth to online communities, technology is transforming how veterans receive support. Explore the latest innovations making a difference.",
-      author: "Tech Specialist David Park",
-      date: "December 7, 2023",
-      category: "Technology",
-      readTime: "6 min read",
-      image: "/images/blogs/veteran-tech-support.jpg",
-      slug: "technology-veteran-support-services"
-    },
-    {
-      id: 8,
-      title: "Supporting Children of Military Personnel: School Resources",
-      excerpt: "Children in military families face unique educational challenges. Discover what resources schools are providing to support these students.",
-      author: "Education Specialist Emily Taylor",
-      date: "January 22, 2024",
-      category: "Education",
-      readTime: "5 min read",
-      image: "/images/blogs/military-children-education.jpg",
-      slug: "supporting-military-children-school"
-    },
-    {
-      id: 9,
-      title: "WANAC's Impact: 2023 Year in Review",
-      excerpt: "A look back at the programs, initiatives, and lives changed through WANAC's work over the past year, with stories from those we've served.",
-      author: "WANAC Leadership Team",
-      date: "February 1, 2024",
-      category: "Organization News",
-      readTime: "10 min read",
-      image: "/images/blogs/wanac-year-review.jpg",
-      slug: "wanac-impact-year-review"
     }
   ];
 
@@ -121,7 +55,7 @@ const BlogsPage = () => {
     "Organization News"
   ];
 
-  const featuredPost = blogPosts[8]; // Using the Year in Review post as featured
+  const featuredPost = blogPosts[1]; // Using the Year in Review post as featured
 
   return (
     <div className="bg-white text-gray-800">
