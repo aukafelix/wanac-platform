@@ -4,6 +4,7 @@ export interface RegisterRequest {
   email: string;
   role: string;
   password: string;
+  password_confirmation: string;
   phone?: string;
   timezone?: string;
   bio?: string;
