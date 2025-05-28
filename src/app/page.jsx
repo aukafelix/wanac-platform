@@ -14,7 +14,7 @@ export default function Homepage() {
   return (
     <div className="bg-background text-foreground">
       <Head>
-        <title>WANAC Coaching Platform</title>
+        <title>WANAC COACHING PLATFORM</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <Script src="https://cdn.lordicon.com/lordicon.js" />
@@ -36,21 +36,21 @@ export default function Homepage() {
   <div className="container mx-auto grid grid-cols-10 px-6 relative z-10">
     <div className="col-start-2 col-span-8 flex flex-col">
       <h1 className="text-5xl font-extrabold max-w-3xl leading-tight uppercase tracking-wide text-heading">
-        Empowering Service Members and Veterans through coaching
+      Empowering Veterans to Thrive After Service
         <h1 className="text-orange-500">AND COMMUNITY SUPPORT.</h1>
       </h1>
       <p className="text-lg mt-4 max-w-xl text-white">
-        Personalized coaching, AI tools and community to help you thrive after Service.
+      Get tailored coaching, smart tools, and a community that truly understands your journey.
       </p>
       <div className="mt-6 space-x-4">
         <Link
           href="/signup"
           className="border-2 border-white px-6 py-2 rounded font-semibold hover:bg-white hover:text-[white] transition-all"
         >
-          Get Started
+          Get Started for Free
         </Link>
         <Link href="/login" className="border-2 border-white px-6 py-2 rounded font-semibold hover:bg-white hover:text-background transition-all">
-          Log In
+        How it Works
         </Link>
       </div>
     </div>

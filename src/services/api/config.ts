@@ -10,6 +10,9 @@ export const apiClient = axios.create({
     'Accept': 'application/json',
   },
   withCredentials: true // Enable sending cookies in cross-origin requests
+  // NOTE: When withCredentials is true, the server MUST specify an explicit
+  // Access-Control-Allow-Origin value and cannot use wildcard (*)
+  // The server must also set Access-Control-Allow-Credentials: true
 });
 
 // Add a request interceptor for authentication
