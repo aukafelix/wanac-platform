@@ -57,79 +57,99 @@ export default function Homepage() {
   </div>
 </section>
 
-      <section id="how-we-help" className="py-20 px-6 bg-white text-center relative">
+      <section id="how-we-help" className="py-16 px-4 bg-white text-center relative overflow-hidden">
   {/* Background Pattern */}
-  <div className="absolute inset-0 opacity-5 bg-[url('data:image/svg+xml,...')] pointer-events-none" />
-  
-  {/* Section Header */}
-  <div className="mb-16">
-    <h2 className="text-4xl font-bold mt-2 mb-4 uppercase text-[#002147]">How We Help</h2>
-    <div className="w-20 h-1 bg-[#002147] mx-auto rounded-full"/>
+  <div className="absolute inset-0 opacity-5">
+    <div className="absolute inset-0" style={{
+      backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23002147' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+      backgroundSize: '60px 60px'
+    }} />
+    <div className="absolute inset-0 bg-gradient-to-br from-white/80 via-white/90 to-white/80" />
   </div>
 
-  {/* Cards Grid */}
-  <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-    {[{
-      title: 'Transition Coaching',
-      desc: 'Helping veterans navigate life after service with clarity and confidence.',
-      icon: '',
-      image: '/Transitioncoaching.jpg', // Add your image path
-      alt: 'Transition Coaching Session',
-      highlights: ['Career Planning', 'Life Skills', 'Personal Growth']
-    }, {
-      title: 'Performance Coaching',
-      desc: 'Equipping veterans to thrive personally and professionally.',
-      icon: '',
-      image: '/Performancecoaching.png', // Add your image path
-      alt: 'Performance Coaching Session',
-      highlights: ['Leadership', 'Communication', 'Goal Setting']
-    }, {
-      title: 'Coaching Academy',
-      desc: 'Training veterans to become certified coaches and mentors.',
-      icon: '',
-      image: '/Coachingacademy.png', // Add your image path
-      alt: 'Coaching Academy Training',
-      highlights: ['Certification', 'Mentorship', 'Community']
-    }].map(({ title, desc, icon, image, alt, highlights }) => (
-      <div 
-        key={title} 
-        className="group bg-white border border-gray-200 rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
-      >
-        {/* Image Container */}
-        <div className="relative h-48 overflow-hidden">
-          <img
-            src={image}
-            alt={alt}
-            className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#002147]/50 to-transparent"/>
-        </div>
+  {/* Decorative Elements */}
+  <div className="absolute top-0 left-0 w-64 h-64 bg-orange-500/5 rounded-full blur-3xl transform -translate-x-1/2 -translate-y-1/2" />
+  <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#002147]/5 rounded-full blur-3xl transform translate-x-1/2 translate-y-1/2" />
+  
+  {/* Content Container */}
+  <div className="relative z-10">
+    {/* Section Header */}
+    <div className="mb-12">
+      <h2 className="text-3xl font-bold mt-2 mb-3 uppercase text-[#002147]">How We Help</h2>
+      <div className="w-16 h-1 bg-[#002147] mx-auto rounded-full"/>
+    </div>
 
-        {/* Content Container */}
-        <div className="p-8">
-          {/* Icon */}
-          <div className="w-16 h-16 bg-orange-400 text-white rounded-full flex items-center justify-center text-2xl mx-auto -mt-16 relative z-10 border-4 border-white group-hover:scale-110 transition-transform">
-            {icon}
+    {/* Cards Grid */}
+    <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+      {[{
+        title: 'Promise Land Education Pathway (PLEP)',
+        desc: 'Navigate your educational journey with structured academic transition support.',
+        icon: '',
+        image: '/promiselandtransition.jpg',
+        alt: 'Education Pathway Program',
+        highlights: ['Academic Support', 'Mentoring']
+      }, {
+        title: 'Promise Land Career Accelerator (PLCA)',
+        desc: 'Accelerate your professional success with comprehensive career management.',
+        icon: '',
+        image: '/transitioncoaching11.jpg',
+        alt: 'Career Accelerator Program',
+        highlights: ['Career Growth', 'Strategy']
+      }, {
+        title: 'Peak Performance Coaching (PPC)',
+        desc: 'Master excellence through our structured 12-session coaching model.',
+        icon: '',
+        image: '/transitionguide.jpg',
+        alt: 'Peak Performance Coaching',
+        highlights: ['12-Sessions', 'Development']
+      }, {
+        title: 'Vetrepreneurship Academy (VETA)',
+        desc: 'Build your entrepreneurial legacy with business planning and mentorship.',
+        icon: '',
+        image: '/Performancecoaching.png',
+        alt: 'Vetrepreneurship Academy',
+        highlights: ['Business', 'Mentorship']
+      }].map(({ title, desc, icon, image, alt, highlights }) => (
+        <div 
+          key={title} 
+          className="group bg-white/90 backdrop-blur-sm border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
+        >
+          {/* Image Container */}
+          <div className="relative h-40 overflow-hidden">
+            <img
+              src={image}
+              alt={alt}
+              className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#002147]/50 to-transparent"/>
           </div>
 
-          {/* Content */}
-          <h3 className="text-2xl font-semibold my-4 text-[#002147]">{title}</h3>
-          <p className="text-gray-600 mb-6">{desc}</p>
+          {/* Content Container */}
+          <div className="p-6">
+            {/* Icon */}
+            <div className="w-12 h-12 bg-orange-400 text-white rounded-full flex items-center justify-center text-xl mx-auto -mt-12 relative z-10 border-3 border-white group-hover:scale-110 transition-transform">
+              {icon}
+            </div>
 
-          {/* Highlights */}
-          <div className="flex flex-wrap justify-center gap-2">
-            {highlights.map((item) => (
-              <span 
-                key={item} 
-                className="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-sm font-medium"
-              >
-                {item}
-              </span>
-            ))}
+            {/* Content */}
+            <h3 className="text-lg font-semibold mt-3 mb-2 text-[#002147]">{title}</h3>
+            <p className="text-gray-600 text-sm mb-4 line-clamp-2">{desc}</p>
+
+            {/* Highlights */}
+            <div className="flex flex-wrap justify-center gap-2">
+              {highlights.map((item) => (
+                <span 
+                  key={item} 
+                  className="bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full text-xs font-medium"
+                >
+                  {item}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
-    ))}
+      ))}
+    </div>
   </div>
 </section>
 
@@ -260,7 +280,7 @@ export default function Homepage() {
       {/* Community CTA */}
       <section id="community" className="relative bg-[#002147] text-white text-center py-32 px-6 overflow-hidden">
         {/* Background Elements */}
-        <div className="absolute inset-0 bg-[url('/community-bg.jpg')] bg-cover bg-center opacity-10"></div>
+        <div className="absolute inset-0 bg-[url('/community1.jpg')] bg-cover bg-center opacity-10"></div>
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#002147]/50 to-[#002147]"></div>
         
         {/* Animated Shapes */}

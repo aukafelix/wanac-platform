@@ -1,74 +1,94 @@
-import { MdAssessment, MdGroups } from 'react-icons/md';
-import { FaUserTie } from 'react-icons/fa';
+import { MdSchool, MdWork, MdStar, MdBusiness } from 'react-icons/md';
+import { FaUserGraduate } from 'react-icons/fa';
 import { BsJournalText } from 'react-icons/bs';
 
 export default function HowWeHelp() {
   const supportAreas = [
     {
       id: 1,
-      title: "Personal Growth Assessment",
-      description: "Take our comprehensive Life Score Assessment to identify your strengths and areas for development in your transition journey.",
-      icon: <MdAssessment size={32} />,
-      features: ["Personalized insights", "Progress tracking", "Action recommendations"]
+      title: "Promise Land Education Pathway (PLEP)",
+      description: "Navigate your educational journey with structured academic transition support and personalized mentoring.",
+      icon: <MdSchool size={32} />,
+      features: [
+        "Structured academic transition support",
+        "Personalized mentoring for admissions",
+        "Veteran-specific resources",
+        "Academic networking support"
+      ]
     },
     {
       id: 2,
-      title: "Transition Coaching",
-      description: "Work one-on-one with experienced coaches who understand the unique challenges of military transition.",
-      icon: <FaUserTie size={32} />,
-      features: ["Customized coaching plans", "Goal setting", "Career guidance"]
+      title: "Promise Land Career Accelerator (PLCA)",
+      description: "Accelerate your professional success with comprehensive career management skills and strategies.",
+      icon: <MdWork size={32} />,
+      features: [
+        "Career management skills",
+        "Internship search strategies",
+        "Personal branding",
+        "Strategic career planning"
+      ]
     },
     {
       id: 3,
-      title: "Reflective Journaling",
-      description: "Document your journey and insights with our structured journaling platform designed for personal growth.",
-      icon: <BsJournalText size={32} />,
-      features: ["Guided prompts", "Progress tracking", "Private space for reflection"]
+      title: "Peak Performance Coaching (PPC)",
+      description: "Master personal and professional excellence through our structured 12-session coaching model.",
+      icon: <MdStar size={32} />,
+      features: [
+        "12-session structured model",
+        "Personalized coaching",
+        "Peer group workshops",
+        "High-performance outcomes"
+      ]
     },
     {
       id: 4,
-      title: "Veteran Community",
-      description: "Connect with fellow veterans who understand your journey and share experiences in a supportive environment.",
-      icon: <MdGroups size={32} />,
-      features: ["Peer support", "Networking", "Shared experiences"]
+      title: "Vetrepreneurship Academy (VETA)",
+      description: "Build your entrepreneurial legacy with comprehensive business planning and mentorship.",
+      icon: <MdBusiness size={32} />,
+      features: [
+        "Business planning curriculum",
+        "Financial modeling",
+        "Market research",
+        "Entrepreneur mentorship"
+      ]
     }
   ];
 
   const coachingPhases = [
     {
       id: 1,
-      title: "Phase 1: Promise Land Transition",
-      description: "Begin your journey with our foundational program designed specifically for military transition.",
+      title: "Promise Land Education & Career Programs",
+      description: "Begin your journey with our specialized education and career transition programs.",
       imagePath: "/promiselandtransition.jpg",
       features: [
-        "Military to civilian transition strategy",
-        "Identity transformation",
-        "Core values alignment",
-        "Goal setting framework"
+        "Structured academic transition support",
+        "Career management skills",
+        "Personalized mentoring",
+        "Strategic planning"
       ]
     },
     {
       id: 2,
-      title: "Phase 2: High Performance Coaching",
-      description: "Elevate your potential and achieve excellence in your chosen path.",
+      title: "Peak Performance Coaching",
+      description: "Master personal and professional excellence through our comprehensive coaching program.",
       imagePath: "/highperfomacecoaching.jpg",
       features: [
-        "Advanced performance techniques",
-        "Leadership development",
-        "Strategic decision making",
-        "Personal brand building"
+        "12-session coaching model",
+        "Enhanced clarity and productivity",
+        "Personal development",
+        "Performance optimization"
       ]
     },
     {
       id: 3,
-      title: "Phase 3: Coaching Business Academy",
-      description: "Transform your experience into a successful coaching business.",
+      title: "Certified Peak Performance Coach (CPPC)",
+      description: "Become a recognized coaching leader with our professional certification program.",
       imagePath: "/bussinessacademyphase1.jpg",
       features: [
-        "Business model development",
-        "Marketing strategies",
-        "Client acquisition",
-        "Sustainable practice building"
+        "Professional certification",
+        "Core coaching strategies",
+        "Practice development",
+        "Industry credibility"
       ]
     }
   ];
@@ -89,9 +109,10 @@ export default function HowWeHelp() {
         />
         <div className="absolute inset-0 bg-[#002147] opacity-75"></div>
         <div className="relative z-10 py-16 text-center">
-          <h1 className="text-5xl font-bold mb-4">YOUR JOURNEY TO SUCCESS START </h1>
+          <h1 className="text-5xl font-bold mb-4">Empowering Your Next Chapter</h1>
           <p className="text-xl max-w-3xl mx-auto px-4">
-            The WANAC platform provides comprehensive support through our four-pillar approach and three phase coaching program.
+            At WANAC, we proudly offer specialized programs designed to equip transitioning service members, veterans, and
+            aspiring coaches with the skills and knowledge required to succeed personally, professionally, and entrepreneurially.
           </p>
         </div>
       </header>
@@ -99,19 +120,19 @@ export default function HowWeHelp() {
           <div className="relative w-full h-10 bg-[#002147] overflow-hidden flex items-center justify-center">
             <nav className="relative z-10 flex space-x-16 px-4">
               <a href="#our-support-pillars" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
-                Our Support Pillars
+                Program Offerings
               </a>
               <a href="#your-coaching-journey" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
-                Your Coaching Journey
+                Program Pathways
               </a>
               <a href="#phase-1" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
-                Phase 1: Promise Land Transition
+                Education & Career
               </a>
               <a href="#phase-2" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
-                Phase 2: High Performance Coaching
+                Peak Performance
               </a>
               <a href="#phase-3" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
-                Phase 3: Coaching Business Academy
+                Certification
               </a>
             </nav>
             <div 
@@ -126,48 +147,48 @@ export default function HowWeHelp() {
         </section>
 
         {/* Support Areas Section */}
-        <section id="our-support-pillars" className="bg-gradient-to-b from-white via-gray-50 to-white py-24">
+        <section id="our-support-pillars" className="bg-gradient-to-b from-white via-gray-50 to-white py-16">
           <div className="mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center max-w-3xl mx-auto mb-20">
-              <h2 className="text-4xl font-bold text-brand-navy mb-6">
-                Support Pillars
+            <div className="text-center max-w-3xl mx-auto mb-12">
+              <h2 className="text-3xl font-bold text-brand-navy mb-4">
+                Program Offerings
               </h2>
-              <p className="text-xl text-brand-blue">
-                Designed to guide you through every step of your transition journey into the community
+              <p className="text-lg text-brand-blue">
+                Comprehensive programs tailored for veterans, transitioning service members, and aspiring coaches
               </p>
             </div>
-            <div className="grid lg:grid-cols-2 gap-10 max-w-6xl mx-auto">
+            <div className="grid lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
               {supportAreas.map((area, index) => (
                 <div
                   key={area.id}
-                  className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 p-8 border border-gray-100 overflow-hidden"
+                  className="group relative bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-500 p-6 border border-gray-100 overflow-hidden"
                 >
                   {/* Decorative Background Element */}
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-orange-400/10 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-150 duration-500"></div>
+                  <div className="absolute top-0 right-0 w-24 h-24 bg-orange-400/10 rounded-full -mr-12 -mt-12 transition-transform group-hover:scale-150 duration-500"></div>
                   
-                  <div className="relative space-y-6">
-                    <div className="flex items-center space-x-4">
+                  <div className="relative space-y-4">
+                    <div className="flex items-center space-x-3">
                       <div 
-                        className="p-4 rounded-xl bg-gradient-to-br from-[#002147] to-orange-400 text-white group-hover:scale-110 transition-transform duration-300 shadow-lg"
+                        className="p-3 rounded-lg bg-gradient-to-br from-[#002147] to-orange-400 text-white group-hover:scale-110 transition-transform duration-300 shadow-md"
                         role="img" 
                         aria-label={area.title}
                       >
                         {area.icon}
                       </div>
-                      <h3 className="text-2xl font-bold text-brand-navy group-hover:text-orange-400 transition-colors duration-300">
+                      <h3 className="text-xl font-bold text-brand-navy group-hover:text-orange-400 transition-colors duration-300">
                         {area.title}
                       </h3>
                     </div>
-                    <p className="text-lg text-brand-blue leading-relaxed">{area.description}</p>
-                    <ul className="space-y-3">
+                    <p className="text-base text-brand-blue leading-relaxed">{area.description}</p>
+                    <ul className="space-y-2">
                       {area.features.map((feature, index) => (
                         <li 
                           key={index} 
-                          className="flex items-center space-x-3 p-3 rounded-lg hover:bg-orange-50 transition-colors duration-200 group/item"
+                          className="flex items-center space-x-2 p-2 rounded-lg hover:bg-orange-50 transition-colors duration-200 group/item"
                         >
-                          <span className="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-orange-400/10 group-hover/item:bg-orange-400/20 transition-colors duration-200">
+                          <span className="flex-shrink-0 w-6 h-6 flex items-center justify-center rounded-full bg-orange-400/10 group-hover/item:bg-orange-400/20 transition-colors duration-200">
                             <svg 
-                              className="w-5 h-5 text-orange-400" 
+                              className="w-4 h-4 text-orange-400" 
                               fill="none" 
                               stroke="currentColor" 
                               viewBox="0 0 24 24"
@@ -180,16 +201,27 @@ export default function HowWeHelp() {
                               />
                             </svg>
                           </span>
-                          <span className="text-gray-700 group-hover/item:text-orange-600 transition-colors duration-200">
+                          <span className="text-sm text-gray-700 group-hover/item:text-orange-600 transition-colors duration-200">
                             {feature}
                           </span>
                         </li>
                       ))}
                     </ul>
+                    <a 
+                      href={`/pages/${area.title === "Promise Land Education Pathway (PLEP)" ? "plep" :
+                             area.title === "Promise Land Career Accelerator (PLCA)" ? "plca" :
+                             area.title === "Peak Performance Coaching (PPC)" ? "ppc" : "veta"}`}
+                      className="inline-block mt-4 px-5 py-2 bg-[#002147] text-white rounded-lg hover:bg-orange-400 transition-colors duration-300 shadow-md hover:shadow-lg transform hover:scale-105 text-sm"
+                    >
+                      Learn More
+                      <span className="ml-2 inline-block transform group-hover:translate-x-1 transition-transform duration-200">
+                        →
+                      </span>
+                    </a>
                   </div>
 
                   {/* Bottom Decorative Line */}
-                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#002147] to-orange-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
+                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#002147] to-orange-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
                 </div>
               ))}
             </div>
@@ -197,23 +229,23 @@ export default function HowWeHelp() {
         </section>
 
         {/* Coaching Phases Section */}
-        <section id="your-coaching-journey" className="bg-gradient-to-br from-white via-gray-50 to-white py-24">
+        <section id="your-coaching-journey" className="bg-gradient-to-br from-white via-gray-50 to-white py-16">
           <div className="mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center max-w-3xl mx-auto mb-20">
-              <span className="text-orange-400 font-semibold text-lg mb-4 block">Transform Your Future</span>
-              <h2 className="text-4xl font-bold text-brand-navy mb-6">
+            <div className="text-center max-w-3xl mx-auto mb-12">
+              <span className="text-orange-400 font-semibold text-base mb-3 block">Transform Your Future</span>
+              <h2 className="text-3xl font-bold text-brand-navy mb-4">
                 Your Coaching Journey
               </h2>
-              <p className="text-xl text-brand-blue">
+              <p className="text-lg text-brand-blue">
                 A structured three-phase approach designed to transform your military experience into civilian success
               </p>
             </div>
 
             <div className="relative">
               {/* Connection Line */}
-              <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-[#002147] via-orange-400 to-[#002147] hidden lg:block" />
+              <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-gradient-to-b from-[#002147] via-orange-400 to-[#002147] hidden lg:block" />
 
-              <div className="space-y-16">
+              <div className="space-y-12">
                 {coachingPhases.map((phase, index) => (
                   <div
                     key={phase.id}
@@ -225,12 +257,12 @@ export default function HowWeHelp() {
                     {/* Phase Image & Content */}
                     <div className="flex-shrink-0 w-full lg:w-1/3">
                       <div className="relative group">
-                        <div className="absolute inset-0 bg-gradient-to-r from-orange-400/20 to-[#002147]/20 transform -rotate-3 rounded-2xl transition-transform group-hover:rotate-0 duration-300" />
-                        <div className="relative bg-white rounded-2xl shadow-xl p-8 transform transition-all duration-300 hover:scale-105 border border-gray-100">
-                          <div className="absolute top-0 right-0 w-32 h-32 bg-orange-400/10 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-150 duration-500" />
+                        <div className="absolute inset-0 bg-gradient-to-r from-orange-400/20 to-[#002147]/20 transform -rotate-2 rounded-xl transition-transform group-hover:rotate-0 duration-300" />
+                        <div className="relative bg-white rounded-xl shadow-lg p-6 transform transition-all duration-300 hover:scale-105 border border-gray-100">
+                          <div className="absolute top-0 right-0 w-24 h-24 bg-orange-400/10 rounded-full -mr-12 -mt-12 transition-transform group-hover:scale-150 duration-500" />
                           <div className="relative">
-                            <div className="flex items-center justify-center mb-6">
-                              <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-lg">
+                            <div className="flex items-center justify-center mb-4">
+                              <div className="relative w-full aspect-video rounded-xl overflow-hidden shadow-md">
                                 <img
                                   src={phase.imagePath}
                                   alt={phase.title}
@@ -238,10 +270,10 @@ export default function HowWeHelp() {
                                 />
                               </div>
                             </div>
-                            <h3 className="text-2xl font-bold text-brand-navy text-center mb-4 group-hover:text-orange-400 transition-colors duration-300">
+                            <h3 className="text-xl font-bold text-brand-navy text-center mb-3 group-hover:text-orange-400 transition-colors duration-300">
                               {phase.title}
                             </h3>
-                            <p className="text-lg text-brand-blue text-center">
+                            <p className="text-base text-brand-blue text-center">
                               {phase.description}
                             </p>
                           </div>
@@ -251,19 +283,19 @@ export default function HowWeHelp() {
 
                     {/* Features */}
                     <div className="w-full lg:w-2/3">
-                      <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100 relative group overflow-hidden">
+                      <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100 relative group overflow-hidden">
                         {/* Decorative Elements */}
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-orange-400/10 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-150 duration-500" />
+                        <div className="absolute top-0 right-0 w-24 h-24 bg-orange-400/10 rounded-full -mr-12 -mt-12 transition-transform group-hover:scale-150 duration-500" />
                         <div className="relative">
-                          <div className="grid sm:grid-cols-2 gap-6">
+                          <div className="grid sm:grid-cols-2 gap-4">
                             {phase.features.map((feature, featureIndex) => (
                               <div 
                                 key={featureIndex}
-                                className="flex items-start space-x-3 p-4 rounded-lg bg-gray-50 hover:bg-orange-50 transition-all duration-200 group/item"
+                                className="flex items-start space-x-2 p-3 rounded-lg bg-gray-50 hover:bg-orange-50 transition-all duration-200 group/item"
                               >
-                                <span className="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-orange-400/10 group-hover/item:bg-orange-400/20">
+                                <span className="flex-shrink-0 w-6 h-6 flex items-center justify-center rounded-full bg-orange-400/10 group-hover/item:bg-orange-400/20">
                                   <svg 
-                                    className="w-5 h-5 text-orange-400" 
+                                    className="w-4 h-4 text-orange-400" 
                                     fill="none" 
                                     stroke="currentColor" 
                                     viewBox="0 0 24 24"
@@ -276,7 +308,7 @@ export default function HowWeHelp() {
                                     />
                                   </svg>
                                 </span>
-                                <span className="text-lg text-gray-700 font-medium group-hover/item:text-orange-600 transition-colors duration-200">
+                                <span className="text-sm text-gray-700 font-medium group-hover/item:text-orange-600 transition-colors duration-200">
                                   {feature}
                                 </span>
                               </div>
@@ -284,7 +316,7 @@ export default function HowWeHelp() {
                           </div>
                         </div>
                         {/* Bottom Gradient Line */}
-                        <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#002147] to-orange-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
+                        <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#002147] to-orange-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
                       </div>
                     </div>
 
@@ -307,23 +339,34 @@ export default function HowWeHelp() {
             <div className="text-center">
               <div className="max-w-3xl mx-auto">
                 <h3 className="text-3xl md:text-4xl font-bold text-white mb-8">
-                  Ready to Begin Your Transformation?
+                  Why Choose WANAC?
                 </h3>
-                <p className="text-lg md:text-xl text-gray-300 mb-12">
-                  Take the first step towards your new journey. Our team is here to support you every step of the way.
-                </p>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                  <div className="text-gray-300">
+                    <h4 className="font-semibold text-xl mb-2">Tailored Programs</h4>
+                    <p>Specifically designed for transitioning service members, veterans, and professionals.</p>
+                  </div>
+                  <div className="text-gray-300">
+                    <h4 className="font-semibold text-xl mb-2">Proven Results</h4>
+                    <p>Structured, actionable frameworks delivering measurable outcomes.</p>
+                  </div>
+                  <div className="text-gray-300">
+                    <h4 className="font-semibold text-xl mb-2">Dedicated Support</h4>
+                    <p>Ongoing mentorship, community connections, and robust resources.</p>
+                  </div>
+                </div>
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
                   <button
                     className="w-full sm:w-auto bg-white text-[#002147] px-8 py-4 rounded-lg font-semibold hover:bg-[#ff5e1a] hover:text-white transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
-                    aria-label="Start your assessment"
+                    aria-label="Contact WANAC"
                   >
-                    Take Life Score Assessment
+                    Contact WANAC
                   </button>
                   <button
                     className="w-full sm:w-auto bg-transparent text-white border-2 border-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-[#002147] transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
-                    aria-label="Schedule a consultation"
+                    aria-label="Explore Programs"
                   >
-                    Schedule Free Consultation
+                    Explore Programs
                   </button>
                 </div>
               </div>

@@ -49,28 +49,27 @@ export default function Navbar({ hideNavbar = false }) {
       title: "WHO WE ARE",
       items: [
         { label: "Our Story", href: "/pages/ourstory" },
-        { label: "Board of Directors", href: "/pages/ourstory#board" },
-        { label: "Advisory Board", href: "/pages/ourstory#advisory" },
-        { label: "Veteran Advisory Board", href: "/pages/ourstory#veteran" },
-        { label: "Executive Staff", href: "/pages/ourstory#executive" }
+        { label: "Core Pillars", href: "/pages/ourstory#corepillars" },
+        { label: "Strategic Aspirations", href: "/pages/ourstory#strategicaspirations" },
+        { label: "Board of Directors", href: "/pages/ourstory#boardofdirectors" },
+        { label: "Executive Staff", href: "/pages/ourstory#executivestaff" }
       ]
     },
     help: {
       title: "HOW WE HELP",
       items: [
-        { label: "Why You Need a Coach", href: "/pages/howwehelp#why" },
+        
         { label: "Our Approach", href: "/pages/howwehelp#approach" },
-        { label: "Phase 1", href: "/pages/howwehelp#phase1" },
-        { label: "Phase 2", href: "/pages/howwehelp#phase2" },
-        { label: "Phase 3", href: "/pages/howwehelp#phase3" }
+        { label: "PLEP", href: "/pages/plep" },
+        { label: "PLCA", href: "/pages/plca" },
+        { label: "PPC", href: "/pages/ppc" },
+        { label: "VETA", href: "/pages/veta" }
       ]
     },
     action: {
       title: "TAKE ACTION",
       items: [
         { label: "Volunteer", href: "/pages/volunteer" },
-        { label: "Corporate Partners", href: "/pages/corporatepatners" },
-        { label: "Leadership Giving", href: "/pages/leadershipgiving" },
         { label: "Ways to Support", href: "/pages/donate" },
         { label: "Testimonials", href: "/pages/testimonials" }
       ]
@@ -79,8 +78,6 @@ export default function Navbar({ hideNavbar = false }) {
       title: "RESOURCES",
       items: [
         { label: "Free Workshops", href: "/pages/workshops" },
-        { label: "Guides", href: "/pages/guides" },
-        { label: "Blogs", href: "/pages/blogs" },
         { label: "Help Center", href: "/pages/helpcenter" }
       ]
     }

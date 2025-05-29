@@ -23,51 +23,6 @@ const OurStory = () => {
         image: "path-to-image.jpg",
         bio: "Founder and Executive Chairman"
       },
-      // Add more board members
-    ],
-    advisoryBoard: [
-      {
-        name: "John Smith",
-        title: "Strategic Advisor",
-        expertise: "Veteran Affairs & Business Development",
-        image: "path-to-image.jpg"
-      },
-      {
-        name: "John Smith",
-        title: "Strategic Advisor",
-        expertise: "Veteran Affairs & Business Development",
-        image: "path-to-image.jpg"
-      },
-      {
-        name: "John Smith",
-        title: "Strategic Advisor",
-        expertise: "Veteran Affairs & Business Development",
-        image: "path-to-image.jpg"
-      },
-      // Add more advisory board members
-    ],
-    veteranAdvisoryBoard: [
-      {
-        name: "Sarah Johnson",
-        title: "Veteran Advisor",
-        service: "U.S. Marine Corps",
-        expertise: "Entrepreneurship",
-        image: "path-to-image.jpg"
-      },{
-        name: "Sarah Johnson",
-        title: "Veteran Advisor",
-        service: "U.S. Marine Corps",
-        expertise: "Entrepreneurship",
-        image: "path-to-image.jpg"
-      },
-      {
-        name: "Sarah Johnson",
-        title: "Veteran Advisor",
-        service: "U.S. Marine Corps",
-        expertise: "Entrepreneurship",
-        image: "path-to-image.jpg"
-      },
-      // Add more veteran advisors
     ],
     executiveStaff: [
       {
@@ -88,38 +43,70 @@ const OurStory = () => {
         image: "path-to-image.jpg",
         bio: "Leading operations and strategic initiatives"
       },
-      // Add more executive staff
     ]
   };
 
-  const LeadershipSection = ({ title, members, type }) => (
-    <section className="py-8">
-      <h2 className="text-3xl text-center font-bold text-[#002147] mb-6 border-b-2 border-blue-600 pb-2">
-        {title}
-      </h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {members.map((member, index) => (
-          <div key={index} className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
-            <div className="aspect-w-1 aspect-h-1 mb-4">
-              <img
-                src={member.image}
-                alt={member.name}
-                className="w-full h-48 object-cover rounded-lg"
-              />
+  const LeadershipSection = ({ title, members }) => (
+    <section className="py-12 bg-white rounded-lg shadow-sm mb-8">
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="text-center mb-10">
+          <h2 className="text-3xl font-bold text-[#002147] relative inline-block">
+            {title}
+            <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-blue-600 rounded-full"></div>
+          </h2>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {members.map((member, index) => (
+            <div 
+              key={index} 
+              className="group relative bg-white rounded-lg overflow-hidden transition-all duration-300 hover:shadow-xl"
+            >
+              <div className="aspect-w-4 aspect-h-5 relative">
+                <img
+                  src={member.image}
+                  alt={member.name}
+                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#002147]/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              </div>
+              
+              <div className="p-6 bg-white relative">
+                <div className="absolute -top-4 right-6 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center transform rotate-45">
+                  <div className="transform -rotate-45">
+                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                  </div>
+                </div>
+                
+                <h3 className="text-xl font-bold text-[#002147] mb-2">{member.name}</h3>
+                <p className="text-blue-600 font-medium text-sm mb-3">{member.title}</p>
+                
+                <div className="h-px w-16 bg-gray-200 mb-3"></div>
+                
+                {member.bio && (
+                  <p className="text-gray-600 text-sm leading-relaxed">{member.bio}</p>
+                )}
+                
+                <div className="mt-4 flex space-x-3">
+                  <button className="text-sm text-gray-600 hover:text-blue-600 transition-colors flex items-center">
+                    <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    </svg>
+                    Contact
+                  </button>
+                  <button className="text-sm text-gray-600 hover:text-blue-600 transition-colors flex items-center">
+                    <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                    </svg>
+                    LinkedIn
+                  </button>
+                </div>
+              </div>
             </div>
-            <h3 className="text-xl font-semibold text-gray-800">{member.name}</h3>
-            <p className="text-blue-600 font-medium">{member.title}</p>
-            {type === 'veteran' && (
-              <p className="text-gray-600 mt-2">{member.service}</p>
-            )}
-            {member.expertise && (
-              <p className="text-gray-700 mt-2">{member.expertise}</p>
-            )}
-            {member.bio && (
-              <p className="text-gray-600 mt-2 text-sm">{member.bio}</p>
-            )}
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -154,12 +141,6 @@ const OurStory = () => {
               <a href="#board" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
                 Board of Directors
               </a>
-              <a href="#advisory" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
-                Advisory Board
-              </a>
-              <a href="#veteran" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
-                Veteran Advisory
-              </a>
               <a href="#executive" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
                 Executive Staff
               </a>
@@ -181,101 +162,174 @@ const OurStory = () => {
         {/* Mission Section */}
         <section id="about" className="bg-white p-8 rounded-xl shadow-lg mb-12">
           <div className="grid md:grid-cols-2 gap-8">
-            <div>
-              <h2 className="text-3xl font-bold text-[#002147] mb-6 border-l-4 border-blue-600 pl-4">
-                ABOUT WANAC
-              </h2>
-              <div className="prose prose-lg max-w-none">
-                <p className="text-gray-700 leading-relaxed">
-                  <span className="font-semibold">WANAC </span> is a 
-                  purpose-driven coaching platform designed to empower military veterans as they transition 
-                  into civilian life. As a <span className="text-blue-600 font-medium">nonprofit created by 
-                  veterans, for veterans</span>, we understand the unique challenges faced by veterans—from 
-                  adapting to civilian culture to navigating mental health and career reintegration.
-                </p>
-                <p className="text-gray-700 leading-relaxed mt-4">
-                  Our mission is to provide tailored coaching services that address the personal, professional, 
-                  and emotional needs of transitioning veterans, enabling them to thrive beyond military service.
-                </p>
-                <div className="mt-6">
-                  <h3 className="text-2xl font-semibold text-[#002147] mb-4">What We Offer</h3>
-                  <ul className="space-y-4">
-                    <li className="flex items-start">
-                      <span className="text-blue-600 font-bold mr-2"></span>
-                      <div>
-                        <span className="font-semibold">Personalized Coaching Services:</span> One-on-one coaching 
-                        sessions tailored to specific goals, from career advancement to entrepreneurship.
+            <div className="space-y-6">
+              <div className="border-l-4 border-blue-600 pl-4">
+                <h2 className="text-3xl font-bold text-[#002147] tracking-tight">
+                  ABOUT WANAC
+                </h2>
+                <p className="text-gray-600 mt-1 text-base">Empowering Veterans Through Excellence</p>
+              </div>
+              
+              <div className="prose prose-base max-w-none space-y-6">
+                <div>
+                  <h3 className="text-xl font-bold text-[#002147] mb-3 flex items-center">
+                    <span className="w-6 h-0.5 bg-blue-600 mr-2"></span>
+                    Our Mission
+                  </h3>
+                  <p className="text-gray-700 leading-relaxed">
+                    WANAC is committed to empowering transitioning service members, veterans, and professionals by delivering
+                    transformative coaching and training that fosters personal growth, professional excellence, and entrepreneurial
+                    success. Our innovative programs and resources are carefully designed to enable participants to lead impactful lives in
+                    their communities and beyond.
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="text-xl font-bold text-[#002147] mb-3 flex items-center">
+                    <span className="w-6 h-0.5 bg-blue-600 mr-2"></span>
+                    What Sets WANAC Apart
+                  </h3>
+                  <div className="bg-gray-50 p-4 rounded-lg border border-gray-100">
+                    <p className="text-gray-700 leading-relaxed">
+                      In today's rapidly evolving world, the ability to adapt, lead, and inspire others is more important than ever. At WANAC,
+                      we cultivate forward-thinking leaders who not only possess strategic insight and adaptability but also excel in
+                      emotional intelligence and resilience—key traits of transformative leadership.
+                    </p>
+                    <p className="text-gray-700 leading-relaxed mt-3">
+                      Our distinctive approach combines rigorous academic insights with real-world experiences, preparing our participants
+                      to confidently navigate life's transitions and professional challenges.
+                    </p>
+                  </div>
+                </div>
+
+                <div>
+                  <h3 className="text-xl font-bold text-[#002147] mb-3 flex items-center">
+                    <span className="w-6 h-0.5 bg-blue-600 mr-2"></span>
+                    Core Pillars of WANAC
+                  </h3>
+                  <div className="grid grid-cols-1 gap-3">
+                    {[
+                      {
+                        title: "Clarity and Vision",
+                        desc: "Establishing clear personal and professional pathways."
+                      },
+                      {
+                        title: "Energy and Resilience",
+                        desc: "Optimizing physical, emotional, and mental well-being."
+                      },
+                      {
+                        title: "Courage and Confidence",
+                        desc: "Building the ability to navigate challenges with strength."
+                      },
+                      {
+                        title: "Productivity and Excellence",
+                        desc: "Empowering individuals to achieve exceptional results."
+                      },
+                      {
+                        title: "Influence and Leadership",
+                        desc: "Enhancing interpersonal skills to inspire and drive change."
+                      }
+                    ].map((pillar, index) => (
+                      <div key={index} className="flex items-start p-3 bg-white rounded-lg border border-gray-100 hover:shadow-sm transition-shadow">
+                        <span className="text-blue-600 font-bold mr-2 text-base">0{index + 1}</span>
+                        <div>
+                          <span className="font-bold text-gray-900">{pillar.title}:</span>
+                          <span className="text-gray-700 ml-1 text-sm">{pillar.desc}</span>
+                        </div>
                       </div>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="text-blue-600 font-bold mr-2"></span>
-                      <div>
-                        <span className="font-semibold">Group Workshops:</span> Interactive sessions on key topics 
-                        such as translating military skills, resume writing, and leadership development.
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <h3 className="text-xl font-bold text-[#002147] mb-3 flex items-center">
+                    <span className="w-6 h-0.5 bg-blue-600 mr-2"></span>
+                    Our Strategic Aspirations
+                  </h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    {[
+                      {
+                        title: "Attain Excellence",
+                        desc: "We are dedicated to excellence in every program, resource, and initiative we undertake."
+                      },
+                      {
+                        title: "Empower Lifelong Success",
+                        desc: "We provide comprehensive tools and support to ensure sustainable success."
+                      },
+                      {
+                        title: "Drive Innovation",
+                        desc: "We continuously innovate our methodologies to deliver cutting-edge coaching and training solutions."
+                      },
+                      {
+                        title: "Build Strong Community",
+                        desc: "We foster an inclusive community, creating meaningful connections among veterans, professionals, and industry leaders."
+                      },
+                      {
+                        title: "Create Opportunity and Access",
+                        desc: "We strive to remove barriers, promoting opportunities for personal and professional advancement for traditionally underserved groups."
+                      }
+                    ].map((aspiration, index) => (
+                      <div key={index} className="p-3 bg-white rounded-lg border border-gray-100 hover:shadow-sm transition-shadow">
+                        <h4 className="font-semibold text-[#002147] mb-1 text-sm">{aspiration.title}</h4>
+                        <p className="text-gray-700 text-sm">{aspiration.desc}</p>
                       </div>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="text-blue-600 font-bold mr-2"></span>
-                      <div>
-                        <span className="font-semibold">Peer Support Network:</span> A vibrant community where 
-                        veterans can connect, share experiences, and build lasting camaraderie.
-                      </div>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="text-blue-600 font-bold mr-2"></span>
-                      <div>
-                        <span className="font-semibold">Resource Hub:</span> An extensive library of digital 
-                        resources, including articles, guides, videos, and webinars.
-                      </div>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="text-blue-600 font-bold mr-2"></span>
-                      <div>
-                        <span className="font-semibold">Mentorship Programs:</span> Connect with trained mentors—many 
-                        of whom are veterans themselves—offering guidance through lived experience.
-                      </div>
-                    </li>
-                  </ul>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
-            <div className="relative h-full flex items-center">
-              <img
-                src="/veteran1.jpg"
-                alt="Veterans in professional setting"
-                className="w-full h-ful object-cover rounded-lg shadow-lg"
-              />
-              <div className="absolute inset-0 bg-blue-900 opacity-20 rounded-lg"></div>
+            <div className="relative h-full flex flex-col gap-4">
+              <div className="relative h-2/3 overflow-hidden rounded-lg shadow-lg">
+                <img
+                  src="/veteran1.jpg"
+                  alt="Veterans in professional setting"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#002147]/60 to-transparent"></div>
+                <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
+                  <h4 className="text-xl font-bold mb-1">Transforming Lives</h4>
+                  <p className="text-xs opacity-90">Building tomorrow's leaders through veteran empowerment</p>
+                </div>
+              </div>
+              <div className="relative h-1/3 overflow-hidden rounded-lg bg-[#002147] p-4 text-white flex items-center">
+                <div>
+                  <h4 className="text-lg font-bold mb-2">Join Our Mission</h4>
+                  <p className="text-xs opacity-90 mb-3">Be part of our journey in empowering veterans and creating future leaders.</p>
+                  <a href="/contact" className="inline-flex items-center text-xs font-semibold text-white hover:text-blue-200 transition-colors">
+                    Learn More 
+                    <svg className="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
         {/* Leadership Sections */}
-        <section id="board">
-          <LeadershipSection 
-            title="BOARD OF DIRECTORS" 
-            members={leadershipTeams.boardOfDirectors} 
-          />
-        </section>
-        <section id="advisory">
-          <LeadershipSection 
-            title="ADVISORY BOARD" 
-            members={leadershipTeams.advisoryBoard} 
-          />
-        </section>
-        <section id="veteran">
-          <LeadershipSection 
-            title="VETERAN ADVISORY BOARD" 
-            members={leadershipTeams.veteranAdvisoryBoard} 
-            type="veteran"
-          />
-        </section>
-        <section id="executive">
-          <LeadershipSection 
-            title="EXECUTIVE STAFF" 
-            members={leadershipTeams.executiveStaff} 
-          />
-        </section>
+        <div className="space-y-8">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-[#002147] mb-4">Our Leadership</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Meet the dedicated individuals who guide our mission and drive our success in empowering veterans and professionals.
+            </p>
+          </div>
+
+          <section id="board">
+            <LeadershipSection 
+              title="BOARD OF DIRECTORS" 
+              members={leadershipTeams.boardOfDirectors} 
+            />
+          </section>
+          
+          <section id="executive">
+            <LeadershipSection 
+              title="EXECUTIVE STAFF" 
+              members={leadershipTeams.executiveStaff} 
+            />
+          </section>
+        </div>
 
         {/* Call to Action */}
         <section className="bg-[#002147] text-white rounded-xl p-8 mt-12 text-center">

@@ -53,108 +53,108 @@ export default function Footer({ hideFooter = false }) {
   if (shouldHideFooter) return null;
 
   return (
-    <footer className="relative bg-gradient-to-b from-white via-gray-50 to-gray-100 text-[#002147] pt-20 pb-12 px-6 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-orange-100/30 via-transparent to-blue-100/40 pointer-events-none animate-gradient"></div>
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,140,50,0.08),transparent_50%)] pointer-events-none"></div>
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(0,33,71,0.08),transparent_50%)] pointer-events-none"></div>
-      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-500 via-blue-500 to-orange-500"></div>
+    <footer className="relative bg-gradient-to-b from-slate-50 via-white to-slate-100 text-[#002147] pt-16 pb-12 px-4 sm:px-6 overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-100/20 via-transparent to-orange-100/20 pointer-events-none animate-gradient"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(0,33,71,0.08),transparent_50%)] pointer-events-none"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(255,94,26,0.08),transparent_50%)] pointer-events-none"></div>
+      <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-[#002147] via-[#ff5e1a] to-[#002147]"></div>
 
       <div className="relative z-10">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-12 lg:gap-16">
-          <div className="space-y-8">
+        <div className="max-w-6xl mx-auto grid md:grid-cols-4 gap-8">
+          <div className="space-y-6">
             <div className="transform hover:scale-105 transition-transform duration-300 group">
               <Image 
                 src="/WANAC N 8 Old Glory.svg" 
-                width={300} 
-                height={120} 
-                className="mb-6 drop-shadow-lg group-hover:drop-shadow-2xl transition-all duration-300" 
+                width={240} 
+                height={100} 
+                className="mb-6 drop-shadow-xl group-hover:drop-shadow-2xl transition-all duration-300" 
                 alt="WANAC Logo" 
               />
             </div>
-            <ul className="space-y-4 text-sm font-semibold">
-              <li className="hover:text-orange-500 transition-all duration-300 cursor-pointer flex items-center gap-2 group">
-                <span className="w-0 h-[2px] bg-orange-500 transition-all duration-300 group-hover:w-4"></span>
+            <ul className="space-y-3 text-sm font-medium border-l border-[#002147]/10">
+              <li className="hover:text-[#002147] transition-all duration-300 cursor-pointer flex items-center gap-2 pl-3 group">
+                <span className="w-0 h-[1px] bg-[#002147] transition-all duration-300 group-hover:w-3"></span>
                 SHOP MERCH
               </li>
-              <li className="hover:text-orange-500 transition-all duration-300 cursor-pointer flex items-center gap-2 group">
-                <span className="w-0 h-[2px] bg-orange-500 transition-all duration-300 group-hover:w-4"></span>
+              <li className="hover:text-[#002147] transition-all duration-300 cursor-pointer flex items-center gap-2 pl-3 group">
+                <span className="w-0 h-[1px] bg-[#002147] transition-all duration-300 group-hover:w-3"></span>
                 HELP CENTER
               </li>
             </ul>
           </div>
 
-          <div className="backdrop-blur-sm bg-white/30 p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
-            <ul className="space-y-4 text-sm font-semibold">
-              <li className="text-[#ff5e1a] hover:text-orange-600 transition-all duration-300 cursor-pointer flex items-center gap-2 group">
+          <div className="backdrop-blur-sm bg-white/40 p-6 rounded-lg shadow-sm hover:shadow-md border border-slate-100 transition-all duration-300">
+            <ul className="space-y-3 text-sm">
+              <li className="text-[#002147] font-bold mb-4 pb-2 border-b border-[#002147]/10">
                 VOLUNTEER
               </li>
-              <li className="hover:text-orange-500 transition-all duration-300 cursor-pointer pl-6 hover:pl-8">CORPORATE PARTNERS</li>
-              <li className="hover:text-orange-500 transition-all duration-300 cursor-pointer pl-6 hover:pl-8">LEADERSHIP GIVING</li>
-              <li className="hover:text-orange-500 transition-all duration-300 cursor-pointer pl-6 hover:pl-8">WAYS TO SUPPORT</li>
-              <li className="hover:text-orange-500 transition-all duration-300 cursor-pointer pl-6 hover:pl-8">TESTIMONIALS</li>
+              <li className="hover:text-[#002147] text-slate-600 transition-all duration-300 cursor-pointer pl-3 hover:pl-4 border-l border-transparent hover:border-[#002147]/20">CORPORATE PARTNERS</li>
+              <li className="hover:text-[#002147] text-slate-600 transition-all duration-300 cursor-pointer pl-3 hover:pl-4 border-l border-transparent hover:border-[#002147]/20">LEADERSHIP GIVING</li>
+              <li className="hover:text-[#002147] text-slate-600 transition-all duration-300 cursor-pointer pl-3 hover:pl-4 border-l border-transparent hover:border-[#002147]/20">WAYS TO SUPPORT</li>
+              <li className="hover:text-[#002147] text-slate-600 transition-all duration-300 cursor-pointer pl-3 hover:pl-4 border-l border-transparent hover:border-[#002147]/20">TESTIMONIALS</li>
             </ul>
           </div>
 
-          <div className="backdrop-blur-sm bg-white/30 p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
-            <ul className="space-y-4 text-sm font-semibold">
-              <li className="text-[#ff5e1a] hover:text-orange-600 transition-all duration-300 cursor-pointer flex items-center gap-2 group">
+          <div className="backdrop-blur-sm bg-white/40 p-6 rounded-lg shadow-sm hover:shadow-md border border-slate-100 transition-all duration-300">
+            <ul className="space-y-3 text-sm">
+              <li className="text-[#002147] font-bold mb-4 pb-2 border-b border-[#002147]/10">
                 WHY DO WE ALL NEED A COACH
               </li>
-              <li className="hover:text-orange-500 transition-all duration-300 cursor-pointer pl-6 hover:pl-8">OUR APPROACH</li>
-              <li className="hover:text-orange-500 transition-all duration-300 cursor-pointer pl-6 hover:pl-8">SUCCESSFUL PLANNING AND COACHING</li>
-              <li className="hover:text-orange-500 transition-all duration-300 cursor-pointer pl-6 hover:pl-8">HIGH PERFORMANCE COACHING</li>
-              <li className="hover:text-orange-500 transition-all duration-300 cursor-pointer pl-6 hover:pl-8">BOOTS TO COACHING BUSINESS</li>
+              <li className="hover:text-[#002147] text-slate-600 transition-all duration-300 cursor-pointer pl-3 hover:pl-4 border-l border-transparent hover:border-[#002147]/20">OUR APPROACH</li>
+              <li className="hover:text-[#002147] text-slate-600 transition-all duration-300 cursor-pointer pl-3 hover:pl-4 border-l border-transparent hover:border-[#002147]/20">SUCCESSFUL PLANNING AND COACHING</li>
+              <li className="hover:text-[#002147] text-slate-600 transition-all duration-300 cursor-pointer pl-3 hover:pl-4 border-l border-transparent hover:border-[#002147]/20">HIGH PERFORMANCE COACHING</li>
+              <li className="hover:text-[#002147] text-slate-600 transition-all duration-300 cursor-pointer pl-3 hover:pl-4 border-l border-transparent hover:border-[#002147]/20">BOOTS TO COACHING BUSINESS</li>
             </ul>
           </div>
 
-          <div className="space-y-8">
-            <div className="backdrop-blur-sm bg-white/30 p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
-              <h3 className="font-bold text-[#ff5e1a] text-base mb-6">CONNECT WITH US</h3>
-              <div className="flex items-center gap-6 text-xl">
+          <div className="space-y-6">
+            <div className="backdrop-blur-sm bg-white/40 p-6 rounded-lg shadow-sm hover:shadow-md border border-slate-100 transition-all duration-300">
+              <h3 className="font-bold text-[#002147] text-sm mb-4 pb-2 border-b border-[#002147]/10">CONNECT WITH US</h3>
+              <div className="flex items-center gap-6 text-lg justify-center">
                 <div className="group">
-                  <FaFacebookF className="hover:text-orange-500 transform group-hover:scale-125 transition-all duration-300 cursor-pointer" />
-                  <div className="w-full h-0.5 bg-orange-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
+                  <FaFacebookF className="text-slate-600 hover:text-[#002147] transform group-hover:scale-110 transition-all duration-300 cursor-pointer" />
+                  <div className="w-full h-0.5 bg-[#002147] scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
                 </div>
                 <div className="group">
-                  <FaXTwitter className="hover:text-orange-500 transform group-hover:scale-125 transition-all duration-300 cursor-pointer" />
-                  <div className="w-full h-0.5 bg-orange-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
+                  <FaXTwitter className="text-slate-600 hover:text-[#002147] transform group-hover:scale-110 transition-all duration-300 cursor-pointer" />
+                  <div className="w-full h-0.5 bg-[#002147] scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
                 </div>
                 <div className="group">
-                  <FaYoutube className="hover:text-orange-500 transform group-hover:scale-125 transition-all duration-300 cursor-pointer" />
-                  <div className="w-full h-0.5 bg-orange-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
+                  <FaYoutube className="text-slate-600 hover:text-[#002147] transform group-hover:scale-110 transition-all duration-300 cursor-pointer" />
+                  <div className="w-full h-0.5 bg-[#002147] scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
                 </div>
                 <div className="group">
-                  <FaInstagram className="hover:text-orange-500 transform group-hover:scale-125 transition-all duration-300 cursor-pointer" />
-                  <div className="w-full h-0.5 bg-orange-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
+                  <FaInstagram className="text-slate-600 hover:text-[#002147] transform group-hover:scale-110 transition-all duration-300 cursor-pointer" />
+                  <div className="w-full h-0.5 bg-[#002147] scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
                 </div>
                 <div className="group">
-                  <FaLinkedinIn className="hover:text-orange-500 transform group-hover:scale-125 transition-all duration-300 cursor-pointer" />
-                  <div className="w-full h-0.5 bg-orange-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
+                  <FaLinkedinIn className="text-slate-600 hover:text-[#002147] transform group-hover:scale-110 transition-all duration-300 cursor-pointer" />
+                  <div className="w-full h-0.5 bg-[#002147] scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
                 </div>
               </div>
             </div>
-            <div className="bg-gradient-to-br from-orange-50 to-blue-50 p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100">
-              <h4 className="font-bold mb-3 text-[#002147]">Service member or family?</h4>
-              <p className="text-sm mb-6 text-gray-600">Download our app to find events, locations and programs near you.</p>
-              <div className="flex gap-4 justify-center">
+            <div className="bg-gradient-to-br from-slate-50 to-white p-6 rounded-lg shadow-sm hover:shadow-md border border-slate-100 transition-all duration-300">
+              <h4 className="font-bold mb-3 text-[#002147] text-sm border-b border-[#002147]/10 pb-2">Service member or family?</h4>
+              <p className="text-xs text-slate-600 mb-6">Download our app to find events, locations and programs near you.</p>
+              <div className="flex gap-3 justify-center">
                 <div className="transform hover:scale-105 transition-all duration-300">
-                  <Image src="/png-transparent-app-store-apple-google-play-apple-text-logo-mobile-phones.png" alt="App Store" width={120} height={40} className="hover:opacity-90 transition-opacity duration-300" />
+                  <Image src="/png-transparent-app-store-apple-google-play-apple-text-logo-mobile-phones.png" alt="App Store" width={100} height={35} className="hover:opacity-90 transition-opacity duration-300" />
                 </div>
                 <div className="transform hover:scale-105 transition-all duration-300">
-                  <Image src="/png-transparent-get-it-on-google-play-button.png" alt="Google Play" width={120} height={40} className="hover:opacity-90 transition-opacity duration-300" />
+                  <Image src="/png-transparent-get-it-on-google-play-button.png" alt="Google Play" width={100} height={35} className="hover:opacity-90 transition-opacity duration-300" />
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="mt-20 max-w-2xl mx-auto text-center">
-          <div className="bg-gradient-to-br from-white to-gray-50 rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300">
-            <h3 className="text-xl font-bold mb-3 text-[#002147]">Subscribe to our Newsletter</h3>
-            <p className="text-sm text-gray-600 mb-6">Stay updated with our latest programs and initiatives.</p>
+        <div className="mt-16 max-w-xl mx-auto text-center">
+          <div className="bg-gradient-to-br from-white to-slate-50 rounded-lg p-6 shadow-sm hover:shadow-md border border-slate-100 transition-all duration-300">
+            <h3 className="text-lg font-bold mb-3 text-[#002147] border-b border-[#002147]/10 pb-2">Subscribe to our Newsletter</h3>
+            <p className="text-xs text-slate-600 mb-6">Stay updated with our latest programs and initiatives.</p>
             <form
               onSubmit={handleNewsletterSubmit}
-              className="flex flex-col sm:flex-row items-center gap-4 justify-center"
+              className="flex flex-col sm:flex-row items-center gap-3 justify-center"
             >
               <input
                 type="email"
@@ -162,16 +162,16 @@ export default function Footer({ hideFooter = false }) {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email"
                 required
-                className="w-full sm:w-auto px-6 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-all duration-300 shadow-sm hover:shadow-md"
+                className="w-full sm:w-auto px-4 py-2 text-sm rounded-md border border-slate-200 focus:outline-none focus:ring-1 focus:ring-[#002147] focus:border-transparent transition-all duration-300 shadow-sm hover:shadow-md"
               />
               <button
                 type="submit"
                 disabled={loading}
-                className="bg-gradient-to-r from-[#ff5e1a] to-orange-600 text-white px-8 py-3 rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:hover:scale-100"
+                className="bg-[#002147] hover:bg-[#002147]/90 text-white px-6 py-2 text-sm rounded-md hover:shadow-md transition-all duration-300 disabled:opacity-50 disabled:hover:scale-100"
               >
                 {loading ? (
                   <span className="flex items-center gap-2">
-                    <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                    <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"/>
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
                     </svg>
@@ -181,21 +181,21 @@ export default function Footer({ hideFooter = false }) {
               </button>
             </form>
             {message && (
-              <p className={`text-sm mt-4 ${error ? 'text-red-500' : 'text-green-600'} bg-white/80 p-3 rounded-lg inline-block`}>
+              <p className={`text-xs mt-4 ${error ? 'text-red-500' : 'text-green-600'} bg-white/80 p-2 rounded-md inline-block shadow-sm`}>
                 {message}
               </p>
             )}
           </div>
         </div>
 
-        <div className="text-center text-sm text-gray-600 mt-16 border-t border-gray-200 pt-8">
-          <p className="mb-3 hover:text-[#002147] transition-colors duration-300">
+        <div className="text-center text-xs text-slate-600 mt-12 border-t border-slate-200 pt-6">
+          <p className="mb-2 hover:text-[#002147] transition-colors duration-300">
             The WANAC Platform is a not-for-profit organization.
           </p>
-          <p className="mb-4 hover:text-[#002147] transition-colors duration-300 flex items-center justify-center gap-2">
-            <span className="hover:text-orange-500">+1 (888) 484 3876</span>
-            <span className="text-gray-300">|</span>
-            <span className="hover:text-orange-500">PO Box 968</span>
+          <p className="mb-3 hover:text-[#002147] transition-colors duration-300 flex items-center justify-center gap-3">
+            <span className="hover:text-[#002147]">+1 (888) 484 3876</span>
+            <span className="text-slate-300">|</span>
+            <span className="hover:text-[#002147]">PO Box 968</span>
           </p>
         </div>
       </div>
