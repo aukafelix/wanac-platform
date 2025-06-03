@@ -6,6 +6,8 @@ import { FaFacebook } from "react-icons/fa";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import toast from "react-hot-toast";
+import { handleValidationErrors } from "@/lib/error";
 
 export default function Login() {
   const router = useRouter();
@@ -25,11 +27,11 @@ export default function Login() {
       ...prev,
       [name]: type === "checkbox" ? checked : value,
     }));
-    
+
     // Clear error when user starts typing
     if (errors[name]) {
-      setErrors(prev => {
-        const newErrors = {...prev};
+      setErrors((prev) => {
+        const newErrors = { ...prev };
         delete newErrors[name];
         return newErrors;
       });
@@ -43,7 +45,7 @@ export default function Login() {
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
       newErrors.email = "Invalid email format.";
     }
-    
+
     if (!form.password) {
       newErrors.password = "Password is required.";
     }
@@ -57,58 +59,63 @@ export default function Login() {
 
     if (Object.keys(validationErrors).length === 0) {
       setIsLoading(true);
-      
+
       try {
-        // TODO: Replace with actual API call
-        const response = await fetch('/api/v1/auth/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            email: form.email,
-            password: form.password,
-            userType: userType,
-          }),
-        });
+        const response = await fetch(
+          "https://wanac-api.kuzasports.com/api/v1/auth/login",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              email: form.email,
+              password: form.password,
+              role: userType,
+            }),
+          }
+        );
 
         const data = await response.json();
-        
+
         if (!response.ok) {
-          // Handle specific error messages from the server
-          throw new Error(data.message || 'Login failed. Please try again.');
+          // Display API error message
+          if (data?.errors) {
+            handleValidationErrors(data.errors);
+          } else if (data?.error) {
+            toast.error(data.error);
+          } else {
+            toast.error("Login failed");
+          }
+          return;
         }
 
-        // Verify that we received the expected user data
-        if (!data.user) {
-          throw new Error('Invalid response from server');
-        }
-        
         // Store user data in localStorage
-        localStorage.setItem('wanacUser', JSON.stringify({
-          ...data.user,
-          userType: userType,
-        }));
-        
-        // Role-based redirection
+        localStorage.setItem(
+          "wanacUser",
+          JSON.stringify({
+            ...data.user,
+            userType: userType,
+          })
+        );
+        localStorage.setItem("auth_token", data.token);
+        toast.success(data.message);
+
         const dashboardPaths = {
           client: '/pages/client',
           coach: '/pages/coach',
           admin: '/pages/admin'
         };
-        
+
         const dashboardPath = dashboardPaths[userType];
         if (!dashboardPath) {
-          throw new Error('Invalid user type');
+          throw new Error("Invalid user type");
         }
-            
+
         router.push(dashboardPath);
       } catch (error) {
-        console.error("Login error:", error);
-        setErrors(prev => ({ 
-          ...prev, 
-          submit: "Login failed. Please check your credentials and try again." 
-        }));
+        console.error("Unexpected error:", error);
+        toast.error("An unexpected error occurred. Please try again.");
       } finally {
         setIsLoading(false);
       }
@@ -127,15 +134,19 @@ export default function Login() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#f5f5f5] px-4">
       <div className="bg-white shadow-md rounded-lg p-8 max-w-md w-full">
-        <h1 className="text-2xl font-bold text-brand-navy mb-2">Welcome Back</h1>
-        
+        <h1 className="text-2xl font-bold text-brand-navy mb-2">
+          Welcome Back
+        </h1>
+
         {/* User Type Selection */}
         <div className="flex mb-6 border bg-[#002147] rounded-md overflow-hidden">
           <button
             type="button"
-            className={`flex-1 py-2 text-center ${userType === "client" 
-              ? "bg-brand-orange text-white" 
-              : "bg-gray-100 text-brand-blue hover:bg-gray-200"}`}
+            className={`flex-1 py-2 text-center ${
+              userType === "client"
+                ? "bg-brand-orange text-white"
+                : "bg-gray-100 text-brand-blue hover:bg-gray-200"
+            }`}
             onClick={() => setUserType("client")}
             aria-pressed={userType === "client"}
           >
@@ -143,9 +154,11 @@ export default function Login() {
           </button>
           <button
             type="button"
-            className={`flex-1 py-2 text-center ${userType === "coach" 
-              ? "bg-brand-orange text-white" 
-              : "bg-gray-100 text-brand-blue hover:bg-gray-200"}`}
+            className={`flex-1 py-2 text-center ${
+              userType === "coach"
+                ? "bg-brand-orange text-white"
+                : "bg-gray-100 text-brand-blue hover:bg-gray-200"
+            }`}
             onClick={() => setUserType("coach")}
             aria-pressed={userType === "coach"}
           >
@@ -153,9 +166,11 @@ export default function Login() {
           </button>
           <button
             type="button"
-            className={`flex-1 py-2 text-center ${userType === "admin" 
-              ? "bg-brand-orange text-white" 
-              : "bg-gray-100 text-brand-blue hover:bg-gray-200"}`}
+            className={`flex-1 py-2 text-center ${
+              userType === "admin"
+                ? "bg-brand-orange text-white"
+                : "bg-gray-100 text-brand-blue hover:bg-gray-200"
+            }`}
             onClick={() => setUserType("admin")}
             aria-pressed={userType === "admin"}
           >
@@ -172,7 +187,10 @@ export default function Login() {
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Email */}
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-brand-blue mb-1">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-brand-blue mb-1"
+            >
               Email <span className="text-red-500">*</span>
             </label>
             <input
@@ -186,11 +204,17 @@ export default function Login() {
               aria-invalid={!!errors.email}
               aria-describedby={errors.email ? "email-error" : undefined}
               className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 ${
-                errors.email ? "border-red-500 focus:ring-red-500" : "focus:ring-brand-orange"
+                errors.email
+                  ? "border-red-500 focus:ring-red-500"
+                  : "focus:ring-brand-orange"
               }`}
             />
             {errors.email && (
-              <p id="email-error" className="text-red-500 text-sm mt-1" role="alert">
+              <p
+                id="email-error"
+                className="text-red-500 text-sm mt-1"
+                role="alert"
+              >
                 {errors.email}
               </p>
             )}
@@ -198,7 +222,10 @@ export default function Login() {
 
           {/* Password */}
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-brand-blue mb-1">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-brand-blue mb-1"
+            >
               Password <span className="text-red-500">*</span>
             </label>
             <div className="relative">
@@ -211,9 +238,13 @@ export default function Login() {
                 placeholder="••••••••"
                 aria-required="true"
                 aria-invalid={!!errors.password}
-                aria-describedby={errors.password ? "password-error" : undefined}
+                aria-describedby={
+                  errors.password ? "password-error" : undefined
+                }
                 className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 ${
-                  errors.password ? "border-red-500 focus:ring-red-500" : "focus:ring-brand-orange"
+                  errors.password
+                    ? "border-red-500 focus:ring-red-500"
+                    : "focus:ring-brand-orange"
                 } pr-10`}
               />
               <button
@@ -226,7 +257,11 @@ export default function Login() {
               </button>
             </div>
             {errors.password && (
-              <p id="password-error" className="text-red-500 text-sm mt-1" role="alert">
+              <p
+                id="password-error"
+                className="text-red-500 text-sm mt-1"
+                role="alert"
+              >
                 {errors.password}
               </p>
             )}
@@ -234,7 +269,10 @@ export default function Login() {
 
           {/* Remember Me + Forgot */}
           <div className="flex items-center justify-between">
-            <label htmlFor="remember" className="flex items-center text-sm text-brand-blue">
+            <label
+              htmlFor="remember"
+              className="flex items-center text-sm text-brand-blue"
+            >
               <input
                 id="remember"
                 type="checkbox"
@@ -245,7 +283,7 @@ export default function Login() {
               />
               Remember me
             </label>
-            <button 
+            <button
               type="button"
               onClick={handleForgotPassword}
               className="text-sm text-brand-orange hover:underline"
@@ -262,9 +300,25 @@ export default function Login() {
           >
             {isLoading ? (
               <>
-                <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="/WANAC N 8 Old Glory.png" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                <svg
+                  className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                  xmlns="/WANAC N 8 Old Glory.png"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  ></path>
                 </svg>
                 Logging in...
               </>
@@ -281,7 +335,9 @@ export default function Login() {
               <div className="w-full border-t border-gray-300"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-gray-500">Or continue with</span>
+              <span className="px-2 bg-white text-gray-500">
+                Or continue with
+              </span>
             </div>
           </div>
 
@@ -313,4 +369,4 @@ export default function Login() {
       </div>
     </div>
   );
-} 
+}
