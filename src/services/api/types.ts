@@ -73,6 +73,13 @@ export interface SessionResource {
   // Add other resource fields as needed
 }
 
+// Eisenhower Matrix Priority Type
+export type Priority =
+  | 'urgent_important'
+  | 'not_urgent_important'
+  | 'urgent_not_important'
+  | 'not_urgent_not_important';
+
 // Task Types
 export interface Task {
   id: string;
@@ -80,6 +87,15 @@ export interface Task {
   description: string;
   status: string;
   due_date: string;
+  who?: string;
+  what?: string;
+  when?: string;
+  where?: string;
+  why?: string;
+  how?: string;
+  priority?: Priority;
+  priority_justification?: string;
+  notes?: string;
   // Add other task fields as needed
 }
 

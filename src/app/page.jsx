@@ -2,11 +2,6 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import GuidedBoardingIntro from '../../components/GuidedBoardingIntro';
-import LifeScorePreview from '../../components/LifeScorePreview';
-import AIAssistantDemo from '../../components/AIAssistantDemo';
-import SessionBookingPreview from '../../components/SessionBookingPreview';
-import CommunitySnapshot from '../../components/CommunitySnapshot';
 import { FaUserTie, FaQuoteLeft } from 'react-icons/fa';
 import Script from 'next/script';
 
@@ -22,22 +17,22 @@ export default function Homepage() {
       {/* Hero Section */}
 <section className="min-h-[65vh] bg-[#002147] text-white py-24 relative object-cover z-0">
   {/* Hero Background Image */}
-  <div className="absolute inset-0 w-full h-full">
-    <Image
-      src="/landingpage4.jpg"
-      alt="Military Service Members"
-      fill
-      priority
-      className="object-cover z-0 opacity-20"
-      style={{ objectPosition: '150% right' }}
-      quality={100}
-    />
-  </div>
+   <div 
+          className="absolute inset-0 w-full h-full z-0"
+          style={{
+            backgroundImage: `linear-gradient(150deg, rgba(0,33,71,0.85) 10%, rgba(255,94,26,0.60) 300%, rgba(255,255,255,0.90) 100%), url('/landingpage4.jpg')`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            pointerEvents: 'none',
+          }}
+          aria-hidden="true"
+        />
   <div className="container mx-auto grid grid-cols-10 px-6 relative z-10">
     <div className="col-start-2 col-span-8 flex flex-col">
       <h1 className="text-5xl font-extrabold max-w-3xl leading-tight uppercase tracking-wide text-heading">
       Empowering Veterans to Thrive After Service
-        <h1 className="text-orange-500">AND COMMUNITY SUPPORT.</h1>
+        <span className="text-orange-500">AND COMMUNITY SUPPORT.</span>
       </h1>
       <p className="text-lg mt-4 max-w-xl text-white">
       Get tailored coaching, smart tools, and a community that truly understands your journey.
@@ -57,15 +52,7 @@ export default function Homepage() {
   </div>
 </section>
 
-      <section id="how-we-help" className="py-16 px-4 bg-white text-center relative overflow-hidden">
-  {/* Background Pattern */}
-  <div className="absolute inset-0 opacity-5">
-    <div className="absolute inset-0" style={{
-      backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23002147' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-      backgroundSize: '60px 60px'
-    }} />
-    <div className="absolute inset-0 bg-gradient-to-br from-white/80 via-white/90 to-white/80" />
-  </div>
+<section id="how-we-help" className="py-16 px-4 text-center relative overflow-hidden" style={{ background: 'linear-gradient(155deg, #f8fafc 0%, #ffedd5 50%, #e0e7ff 100%)' }}>
 
   {/* Decorative Elements */}
   <div className="absolute top-0 left-0 w-64 h-64 bg-orange-500/5 rounded-full blur-3xl transform -translate-x-1/2 -translate-y-1/2" />
@@ -153,8 +140,18 @@ export default function Homepage() {
   </div>
 </section>
 
-      <section className="py-20 px-6 bg-[#002147] text-white">
-  <div className="max-w-7xl mx-auto text-center">
+      <section className="py-20 px-6 bg-[#002147] text-white relative overflow-hidden">
+  {/* Background Image */}
+  <div className="absolute inset-0 w-full h-full z-0">
+    <img
+      src="/aIandfeatires.jpg"
+      alt="Background"
+      className="w-full h-full object-cover opacity-20"
+    />
+    {/* Optional overlay for better contrast */}
+    <div className="absolute inset-0 bg-[#002147] opacity-80"></div>
+  </div>
+  <div className="max-w-7xl mx-auto text-center relative z-10">
     {/* Section Title */}
     <h2 className="text-3xl font-semibold mb-8">KEY WEB APP FEATURES</h2>
     <p className="text-lg mb-12">Discover the powerful features that make our web app the best choice for your needs.</p>
@@ -219,7 +216,7 @@ export default function Homepage() {
 </section>
 
       {/* Community and Testimonial */}
-      <section className="py-20 px-6 bg-white text-[#002147] relative overflow-hidden">
+      <section className="py-20 px-6 bg-white text-[#002147] relative overflow-hidden"style={{ background: 'linear-gradient(155deg, #f8fafc 0%, #ffedd5 50%, #e0e7ff 100%)' }}>
         <div className="absolute inset-0 opacity-5 bg-[url('/testimonials-bg-pattern.jpg')] bg-cover bg-center"></div>
         <h2 className="text-4xl font-bold mb-12 text-center uppercase relative z-10">Testimonials</h2>
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-8 items-center relative z-10">

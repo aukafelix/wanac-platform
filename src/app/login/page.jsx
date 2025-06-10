@@ -102,7 +102,7 @@ export default function Login() {
         toast.success(data.message);
 
         const dashboardPaths = {
-          client: '/pages/client',
+          client: '/pages/client/dashboard',
           coach: '/pages/coach',
           admin: '/pages/admin'
         };

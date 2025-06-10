@@ -3,31 +3,10 @@
 import './globals.css';
 import './fonts.css'; // Add this line to import the fonts
 import React from 'react';
-import { usePathname } from 'next/navigation'; // Import usePathname for route detection
 import { Toaster } from 'react-hot-toast';
-import Navbar from '../../components/Navbar';
-import Footer from '../../components/Footer';
-import ChatComponent from '../../components/ChatComponent';
+import ClientLayoutWrapper from './ClientLayoutWrapper';
 
 export default function RootLayout({ children }) {
-  const pathname = usePathname(); // Get the current route
-  const excludedPaths = [
-    '/login',
-    '/signup',
-    '/pages/(dashboard)',
-    '/pages/(dashboard)/client',
-    '/pages/(dashboard)/coach',
-    '/pages/(dashboard)/admin',
-    '/onboarding',
-    '/life-score',
-    '/pages/client',
-    '/pages/breakoutroom',
-  ];
-
-  const shouldExclude = excludedPaths.some((path) => 
-    pathname.startsWith(path) || pathname === path
-  );
-
   return (
     <html lang="en" className="bg-[#002147] text-gray-800">
       <head>
@@ -51,10 +30,7 @@ export default function RootLayout({ children }) {
             },
           },
         }} />
-        {!shouldExclude && <Navbar />}
-        <main className="flex-grow">{children}</main>
-        {!shouldExclude && <Footer />}
-        {!shouldExclude && <ChatComponent />}
+        <ClientLayoutWrapper>{children}</ClientLayoutWrapper>
       </body>
     </html>
   );

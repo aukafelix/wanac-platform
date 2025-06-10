@@ -11,9 +11,9 @@ export default function HowWeHelp() {
       icon: <MdSchool size={32} />,
       features: [
         "Structured academic transition support",
-        "Personalized mentoring for admissions",
-        "Veteran-specific resources",
-        "Academic networking support"
+        "Personalized mentoring through admissions and financial aid",
+        "Veteran-specific resources and academic planning",
+        "Community-focused academic networking and support"
       ]
     },
     {
@@ -22,10 +22,10 @@ export default function HowWeHelp() {
       description: "Accelerate your professional success with comprehensive career management skills and strategies.",
       icon: <MdWork size={32} />,
       features: [
-        "Career management skills",
-        "Internship search strategies",
-        "Personal branding",
-        "Strategic career planning"
+        "Comprehensive career management skills",
+        "Internship and targeted job search strategies",
+        "Personal branding, networking, and interviewing mastery",
+        "Strategic career decision-making and goal achievement"
       ]
     },
     {
@@ -34,10 +34,10 @@ export default function HowWeHelp() {
       description: "Master personal and professional excellence through our structured 12-session coaching model.",
       icon: <MdStar size={32} />,
       features: [
-        "12-session structured model",
-        "Personalized coaching",
-        "Peer group workshops",
-        "High-performance outcomes"
+        "12-session structured coaching model",
+        "Enhances clarity, energy, courage, productivity, and influence",
+        "Personalized sessions and peer group workshops",
+        "Proven methodologies for sustained high-performance outcomes"
       ]
     },
     {
@@ -46,35 +46,31 @@ export default function HowWeHelp() {
       description: "Build your entrepreneurial legacy with comprehensive business planning and mentorship.",
       icon: <MdBusiness size={32} />,
       features: [
-        "Business planning curriculum",
-        "Financial modeling",
-        "Market research",
-        "Entrepreneur mentorship"
+        "Comprehensive entrepreneurship and business planning curriculum",
+        "Financial modeling, market research, and competitive analysis",
+        "Business model evaluation and customer discovery methods",
+        "Extensive mentorship from successful entrepreneurs"
       ]
-    }
-  ];
-
-  const coachingPhases = [
-    
+    },
     {
-      id: 3,
+      id: 4,
       title: "Certified Peak Performance Coach (CPPC)",
-      description: "Become a recognized coaching leader with our professional certification program.",
-      imagePath: "/bussinessacademyphase1.jpg",
+      description: "Become a Recognized Coaching Leader",
+      icon: <MdBusiness size={32} />,
       features: [
-        "Professional certification",
-        "Core coaching strategies",
-        "Practice development",
-        "Industry credibility"
+        "In-depth professional certification in peak performance coaching",
+        "Master core psychological, physiological, and productivity strategies",
+        "Expand your professional opportunities and coaching practice",
+        "Gain credibility as a certified performance expert"
       ]
     }
   ];
 
   return (
-      <div>
-        
-      {/*   Hero Section */}
-      <header className="relative bg-[#002147] text-white">
+    <div>
+
+      {/* Hero Section */}
+      <header className="relative bg-[#002147] text-white min-h-[420px] flex items-center justify-center overflow-hidden">
         <div 
           className="absolute inset-0 w-full h-full"
           style={{
@@ -84,88 +80,127 @@ export default function HowWeHelp() {
             backgroundRepeat: 'no-repeat'
           }}
         />
-        <div className="absolute inset-0 bg-[#002147] opacity-75"></div>
-        <div className="relative z-10 py-16 text-center">
-          <h1 className="text-5xl font-bold mb-4">Empowering Your Next Chapter</h1>
-          <p className="text-xl max-w-3xl mx-auto px-4">
-            At WANAC, we proudly offer specialized programs designed to equip transitioning service members, veterans, and
-            aspiring coaches with the skills and knowledge required to succeed personally, professionally, and entrepreneurially.
+        <div className="absolute inset-0 bg-gradient-to-br from-[#002147]/90 via-[#002147]/80 to-[#ff5e1a]/40"></div>
+        <div className="relative z-10 py-20 px-4 w-full max-w-4xl mx-auto text-center flex flex-col items-center">
+          <h1 className="text-4xl md:text-5xl font-extrabold mb-4 leading-tight drop-shadow-lg">
+            Empowering Your Next Chapter
+          </h1>
+          <p className="text-lg md:text-2xl max-w-2xl mx-auto mb-6 text-blue-100 font-medium drop-shadow">
+            WANAC offers specialized programs to equip transitioning service members, veterans, and aspiring coaches with the skills and knowledge to thrive personally, professionally, and entrepreneurially.
           </p>
         </div>
       </header>
-      <section>
-          <div className="relative w-full h-10 bg-[#002147] overflow-hidden flex items-center justify-center">
-            <nav className="relative z-10 flex space-x-16 px-4">
-              <a href="#our-support-pillars" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
-                Program Offerings
-              </a>
-              <a href="#your-coaching-journey" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
-                Program Pathways
-              </a>
-              <a href="#phase-1" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
-                Education & Career
-              </a>
-              <a href="#phase-2" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
-                Peak Performance
-              </a>
-              <a href="#phase-3" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
-                Certification
-              </a>
-            </nav>
-            <div 
-              className="absolute inset-0 w-full" 
-              style={{
-                animation: 'slide 20s linear infinite',
-              }}
-            >
-              <div className="h-full bg-gradient-to-r from-blue-600 via-[#002147] to-blue-600 w-[200%]"></div>
+
+      {/* Sticky Navigation Bar */}
+      <div clasnsName="relative w-full h-10 bg-[#002147] overflow-hidden flex items-center justify-center">
+        <nav className="sticky top-0 z-30 bg-[#002147] bg-opacity-95 shadow-md">
+        <div className="flex items-center justify-center px-4 py-2 space-x-4 md:space-x-10 overflow-x-auto">
+          <a href="#our-support-pillars" className="text-white hover:text-orange-400 transition-colors text-sm font-semibold py-1 px-2 border-b-2 border-transparent hover:border-orange-400">
+            Program Offerings
+          </a>
+          <a href="#your-coaching-journey" className="text-white hover:text-orange-400 transition-colors text-sm font-semibold py-1 px-2 border-b-2 border-transparent hover:border-orange-400">
+            Program Pathways
+          </a>
+          <a href="#phase-1" className="text-white hover:text-orange-400 transition-colors text-sm font-semibold py-1 px-2 border-b-2 border-transparent hover:border-orange-400">
+            Education & Career
+          </a>
+          <a href="#phase-2" className="text-white hover:text-orange-400 transition-colors text-sm font-semibold py-1 px-2 border-b-2 border-transparent hover:border-orange-400">
+            Peak Performance
+          </a>
+          <a href="#phase-3" className="text-white hover:text-orange-400 transition-colors text-sm font-semibold py-1 px-2 border-b-2 border-transparent hover:border-orange-400">
+            Certification
+          </a>
+        </div>
+      </nav>
+      </div>
+      
+
+      {/* Understanding Your Challenges Section */}
+      <section className="bg-white relative py-16 overflow-hidden">
+    
+        <div className="relative z-20 max-w-4xl mx-auto px-4 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-[#002147] mb-4">
+            Understanding Your Challenges
+          </h2>
+          <p className="text-lg text-[#002147] mb-8">
+            We recognize the unique obstacles faced by our participants:
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
+            <div className="flex items-start bg-white/90 rounded-xl shadow p-5 border border-gray-100 space-x-4 hover:shadow-lg transition">
+              <span className="mt-1 w-4 h-4 bg-orange-400 rounded-full flex-shrink-0"></span>
+              <span className="text-gray-800 font-medium">Navigating complex career transitions</span>
+            </div>
+            <div className="flex items-start bg-white/90 rounded-xl shadow p-5 border border-gray-100 space-x-4 hover:shadow-lg transition">
+              <span className="mt-1 w-4 h-4 bg-orange-400 rounded-full flex-shrink-0"></span>
+              <span className="text-gray-800 font-medium">Overcoming uncertainty about educational paths</span>
+            </div>
+            <div className="flex items-start bg-white/90 rounded-xl shadow p-5 border border-gray-100 space-x-4 hover:shadow-lg transition">
+              <span className="mt-1 w-4 h-4 bg-orange-400 rounded-full flex-shrink-0"></span>
+              <span className="text-gray-800 font-medium">Developing entrepreneurial ventures</span>
+            </div>
+            <div className="flex items-start bg-white/90 rounded-xl shadow p-5 border border-gray-100 space-x-4 hover:shadow-lg transition">
+              <span className="mt-1 w-4 h-4 bg-orange-400 rounded-full flex-shrink-0"></span>
+              <span className="text-gray-800 font-medium">Sustaining high performance personally and professionally</span>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Support Areas Section */}
-        <section id="our-support-pillars" className="bg-gradient-to-b from-white via-gray-50 to-white py-16">
-          <div className="mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center max-w-3xl mx-auto mb-12">
-              <h2 className="text-3xl font-bold text-brand-navy mb-4">
-                Program Offerings
-              </h2>
-              <p className="text-lg text-brand-blue">
-                Comprehensive programs tailored for veterans, transitioning service members, and aspiring coaches
-              </p>
-            </div>
-            <div className="grid lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
-              {supportAreas.map((area, index) => (
-                <div
-                  key={area.id}
-                  className="group relative bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-500 p-6 border border-gray-100 overflow-hidden"
-                >
-                  {/* Decorative Background Element */}
-                  <div className="absolute top-0 right-0 w-24 h-24 bg-orange-400/10 rounded-full -mr-12 -mt-12 transition-transform group-hover:scale-150 duration-500"></div>
-                  
-                  <div className="relative space-y-4">
-                    <div className="flex items-center space-x-3">
+      <section id="Program offerings" className="relative py-16">
+        {/* Background image with gradient overlay */}
+        <div 
+          className="absolute inset-0 w-full h-full z-0"
+          style={{
+            backgroundImage: `linear-gradient(150deg, rgba(0,33,71,0.85) 10%, rgba(255,94,26,0.60) 300%, rgba(255,255,255,0.90) 100%), url('/landingpage4.jpg')`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            pointerEvents: 'none',
+          }}
+          aria-hidden="true"
+        />
+        <div className="relative z-10">
+        <div className="mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-12">
+            <h2 className="text-3xl font-bold text-white mb-4">
+              Program Offerings
+            </h2>
+            <p className="text-lg text-white">
+              Comprehensive programs tailored for veterans, transitioning service members, and aspiring coaches
+            </p>
+          </div>
+          <div className="grid lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            {supportAreas.map((area, index) => (
+              <div
+                key={area.id}
+                className="group relative bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-500 p-3 border border-gray-100 overflow-hidden min-h-[220px]"
+                style={{ minWidth: '0' }}
+              >
+                {/* Decorative Background Element */}
+                  <div className="absolute top-0 right-0 w-16 h-16 bg-orange-400/10 rounded-full -mr-6 -mt-6 transition-transform group-hover:scale-125 duration-500"></div>
+                  <div className="relative space-y-2">
+                    <div className="flex items-center space-x-2">
                       <div 
-                        className="p-3 rounded-lg bg-gradient-to-br from-[#002147] to-orange-400 text-white group-hover:scale-110 transition-transform duration-300 shadow-md"
+                        className="p-2 rounded-md bg-gradient-to-br from-[#002147] to-orange-400 text-white group-hover:scale-105 transition-transform duration-300 shadow"
                         role="img" 
                         aria-label={area.title}
                       >
                         {area.icon}
                       </div>
-                      <h3 className="text-xl font-bold text-brand-navy group-hover:text-orange-400 transition-colors duration-300">
+                      <h3 className="text-base font-bold text-brand-navy group-hover:text-orange-400 transition-colors duration-300">
                         {area.title}
                       </h3>
                     </div>
-                    <p className="text-base text-brand-blue leading-relaxed">{area.description}</p>
-                    <ul className="space-y-2">
+                    <p className="text-xs text-brand-blue leading-snug">{area.description}</p>
+                    <ul className="space-y-1">
                       {area.features.map((feature, index) => (
                         <li 
                           key={index} 
-                          className="flex items-center space-x-2 p-2 rounded-lg hover:bg-orange-50 transition-colors duration-200 group/item"
+                          className="flex items-center space-x-1 p-1 rounded hover:bg-orange-50 transition-colors duration-200 group/item"
                         >
-                          <span className="flex-shrink-0 w-6 h-6 flex items-center justify-center rounded-full bg-orange-400/10 group-hover/item:bg-orange-400/20 transition-colors duration-200">
+                          <span className="flex-shrink-0 w-4 h-4 flex items-center justify-center rounded-full bg-orange-400/10 group-hover/item:bg-orange-400/20 transition-colors duration-200">
                             <svg 
-                              className="w-4 h-4 text-orange-400" 
+                              className="w-3 h-3 text-orange-400" 
                               fill="none" 
                               stroke="currentColor" 
                               viewBox="0 0 24 24"
@@ -178,7 +213,7 @@ export default function HowWeHelp() {
                               />
                             </svg>
                           </span>
-                          <span className="text-sm text-gray-700 group-hover/item:text-orange-600 transition-colors duration-200">
+                          <span className="text-xs text-gray-700 group-hover/item:text-orange-600 transition-colors duration-200">
                             {feature}
                           </span>
                         </li>
@@ -188,126 +223,47 @@ export default function HowWeHelp() {
                       href={`/pages/${area.title === "Promise Land Education Pathway (PLEP)" ? "plep" :
                              area.title === "Promise Land Career Accelerator (PLCA)" ? "plca" :
                              area.title === "Peak Performance Coaching (PPC)" ? "ppc" : "veta"}`}
-                      className="inline-block mt-4 px-5 py-2 bg-[#002147] text-white rounded-lg hover:bg-orange-400 transition-colors duration-300 shadow-md hover:shadow-lg transform hover:scale-105 text-sm"
+                      className="inline-block mt-2 px-3 py-1 bg-[#002147] text-white rounded hover:bg-orange-400 transition-colors duration-300 shadow text-xs"
                     >
                       Learn More
-                      <span className="ml-2 inline-block transform group-hover:translate-x-1 transition-transform duration-200">
+                      <span className="ml-1 inline-block transform group-hover:translate-x-1 transition-transform duration-200">
                         →
                       </span>
                     </a>
                   </div>
-
                   {/* Bottom Decorative Line */}
                   <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#002147] to-orange-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
                 </div>
               ))}
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Coaching Phases Section */}
-        <section id="your-coaching-journey" className="bg-gradient-to-br from-white via-gray-50 to-white py-16">
-          <div className="mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center max-w-3xl mx-auto mb-12">
-              <span className="text-orange-400 font-semibold text-base mb-3 block">Transform Your Future</span>
-              <h2 className="text-3xl font-bold text-brand-navy mb-4">
-                Your Coaching Journey
-              </h2>
-              <p className="text-lg text-brand-blue">
-                A structured three-phase approach designed to transform your military experience into civilian success
-              </p>
+        
+        {/* VSO Claim Support Section */}
+        <section className="bg-gradient-to-b from-white via-gray-50 to-white py-16">
+          <div className="max-w-4xl mx-auto px-4">
+            <div className="text-center mb-10">
+              <h2 className="text-3xl font-bold text-brand-navy mb-4">VSO Claim Support</h2>
+              <p className="text-lg text-brand-blue mb-4">Streamlined Support for VA Claims</p>
             </div>
-
-            <div className="relative">
-              {/* Connection Line */}
-              <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-gradient-to-b from-[#002147] via-orange-400 to-[#002147] hidden lg:block" />
-
-              <div className="space-y-12">
-                {coachingPhases.map((phase, index) => (
-                  <div
-                    key={phase.id}
-                    id={`phase-${phase.id}`}
-                    className={`relative z-10 flex flex-col lg:flex-row items-center ${
-                      index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'
-                    } gap-8 lg:gap-16`}
-                  >
-                    {/* Phase Image & Content */}
-                    <div className="flex-shrink-0 w-full lg:w-1/3">
-                      <div className="relative group">
-                        <div className="absolute inset-0 bg-gradient-to-r from-orange-400/20 to-[#002147]/20 transform -rotate-2 rounded-xl transition-transform group-hover:rotate-0 duration-300" />
-                        <div className="relative bg-white rounded-xl shadow-lg p-6 transform transition-all duration-300 hover:scale-105 border border-gray-100">
-                          <div className="absolute top-0 right-0 w-24 h-24 bg-orange-400/10 rounded-full -mr-12 -mt-12 transition-transform group-hover:scale-150 duration-500" />
-                          <div className="relative">
-                            <div className="flex items-center justify-center mb-4">
-                              <div className="relative w-full aspect-video rounded-xl overflow-hidden shadow-md">
-                                <img
-                                  src={phase.imagePath}
-                                  alt={phase.title}
-                                  className="object-cover w-full h-full transform transition-transform duration-300 group-hover:scale-110"
-                                />
-                              </div>
-                            </div>
-                            <h3 className="text-xl font-bold text-brand-navy text-center mb-3 group-hover:text-orange-400 transition-colors duration-300">
-                              {phase.title}
-                            </h3>
-                            <p className="text-base text-brand-blue text-center">
-                              {phase.description}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Features */}
-                    <div className="w-full lg:w-2/3">
-                      <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100 relative group overflow-hidden">
-                        {/* Decorative Elements */}
-                        <div className="absolute top-0 right-0 w-24 h-24 bg-orange-400/10 rounded-full -mr-12 -mt-12 transition-transform group-hover:scale-150 duration-500" />
-                        <div className="relative">
-                          <div className="grid sm:grid-cols-2 gap-4">
-                            {phase.features.map((feature, featureIndex) => (
-                              <div 
-                                key={featureIndex}
-                                className="flex items-start space-x-2 p-3 rounded-lg bg-gray-50 hover:bg-orange-50 transition-all duration-200 group/item"
-                              >
-                                <span className="flex-shrink-0 w-6 h-6 flex items-center justify-center rounded-full bg-orange-400/10 group-hover/item:bg-orange-400/20">
-                                  <svg 
-                                    className="w-4 h-4 text-orange-400" 
-                                    fill="none" 
-                                    stroke="currentColor" 
-                                    viewBox="0 0 24 24"
-                                  >
-                                    <path 
-                                      strokeLinecap="round" 
-                                      strokeLinejoin="round" 
-                                      strokeWidth="2" 
-                                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                                    />
-                                  </svg>
-                                </span>
-                                <span className="text-sm text-gray-700 font-medium group-hover/item:text-orange-600 transition-colors duration-200">
-                                  {feature}
-                                </span>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                        {/* Bottom Gradient Line */}
-                        <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#002147] to-orange-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
-                      </div>
-                    </div>
-
-                    {/* Connection Dot */}
-                    <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-orange-400 hidden lg:block">
-                      <div className="absolute inset-0 rounded-full bg-orange-400 animate-ping opacity-75" />
-                    </div>
-                  </div>
-                ))}
+            <div className="grid md:grid-cols-2 gap-8">
+              <div className="bg-white rounded-lg shadow p-6 border border-gray-100 flex flex-col justify-center">
+                <h3 className="text-xl font-semibold text-brand-navy mb-2">Expert assistance from accredited Veteran Service Officers (VSOs)</h3>
+                <ul className="list-disc list-inside text-gray-700 space-y-2 mt-2">
+                  <li>Comprehensive help for disability compensation, appeals, and benefits</li>
+                  <li>Seamless integration with WANAC’s education and career programs</li>
+                  <li>Tailored support exclusively for transitioning service members and recently separated veterans</li>
+                </ul>
+              </div>
+              <div className="flex items-center justify-center">
+                <img src="/veteran1.jpg" alt="VSO Claim Support" className="rounded-xl shadow-lg w-full max-w-xs object-cover" />
               </div>
             </div>
           </div>
         </section>
-        
+
         {/* CTA Section */}
         <section className="relative overflow-hidden">
           <div className="absolute inset-0 bg-[#002147] transform -skew-y-3 origin-top-right"></div>
