@@ -86,7 +86,18 @@ export default function LifeScoresPage() {
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="text-xl font-bold text-brand-navy">Whole Life Habits (Last 6 Months)</h3>
                     <Button variant="contained" color="primary" size="small">Take Assessment</Button>
-                  </div>
+                    <Button 
+  variant="contained" 
+  color="primary" 
+  size="small"
+  onClick={() => {
+    // Open assessment popup
+    setAssessmentStep(1); // Reset to first step
+    document.getElementById('assessmentModal').showModal();
+  }}
+>
+  Take Assessment
+</Button>                  </div>
                   <Typography variant="body2" className="mb-2 text-gray-600">See your overall life habits and trends for the past 6 months.</Typography>
                   <ResponsiveContainer width="100%" height={180}>
                     <LineChart data={wholeLifeData} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>

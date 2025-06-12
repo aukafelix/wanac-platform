@@ -1,7 +1,7 @@
 "use client";
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Home, BarChart2, Settings, LogOut, Users, Calendar, HeartPulse, BookOpen, CheckSquare, Brain, MessageCircle, Bot, UserCog, CalendarDays, Briefcase, GraduationCap, Video } from 'lucide-react'
+import { Home, BarChart2, Settings, LogOut, Users, Calendar, HeartPulse, BookOpen, CheckSquare, Brain, MessageCircle, Bot, UserCog, CalendarDays, Briefcase, GraduationCap } from 'lucide-react'
 import { useState } from 'react'
 
 const navItems = [
@@ -16,7 +16,7 @@ const navItems = [
   { name: 'AI Chat Bot', href: '/pages/client/aichatbot', icon: <Bot size={18} /> },
   { name: 'Account Settings', href: '/pages/client/accountsettings', icon: <UserCog size={18} /> },
   { name: 'Events', href: '/pages/client/upcomingevents', icon: <CalendarDays size={18} /> },
-  { name: 'Sessions', href: '/pages/client/sessions', icon: <Video size={18} /> }, // <-- Changed to Video icon
+  { name: 'Sessions', href: '/pages/client/sessions', icon: <Users size={18} /> }, // <-- Added Sessions
   { name: 'My Career Compass', href: '/client/career-compass', icon: <Briefcase size={18} /> },
   { name: 'My Education Compass', href: '/client/education-compass', icon: <GraduationCap size={18} /> },
   { name: 'Reports', href: '/client/reports', icon: <BarChart2 size={18} /> },

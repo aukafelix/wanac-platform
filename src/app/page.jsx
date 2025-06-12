@@ -7,7 +7,7 @@ import Script from 'next/script';
 
 export default function Homepage() {
   return (
-    <div className="bg-background text-foreground">
+    <div className="bg-background text-foreground relative overflow-x-hidden">
       <Head>
         <title>WANAC COACHING PLATFORM</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -15,19 +15,22 @@ export default function Homepage() {
       <Script src="https://cdn.lordicon.com/lordicon.js" />
 
       {/* Hero Section */}
-<section className="min-h-[65vh] bg-[#002147] text-white py-24 relative object-cover z-0">
-  {/* Hero Background Image */}
-   <div 
-          className="absolute inset-0 w-full h-full z-0"
-          style={{
-            backgroundImage: `linear-gradient(150deg, rgba(0,33,71,0.85) 10%, rgba(255,94,26,0.60) 300%, rgba(255,255,255,0.90) 100%), url('/landingpage4.jpg')`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat',
-            pointerEvents: 'none',
-          }}
-          aria-hidden="true"
-        />
+<section className="min-h-[65vh] bg-[#002147] text-white py-24 relative object-cover z-0 overflow-hidden">
+  {/* Hero Background Image + Extra Gradients */}
+  <div 
+    className="absolute inset-0 w-full h-full z-0"
+    style={{
+      backgroundImage: `linear-gradient(150deg, rgba(0,33,71,0.85) 10%, rgba(255,94,26,0.60) 300%, rgba(255,255,255,0.90) 100%), url('/landingpage4.jpg')`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
+      pointerEvents: 'none',
+    }}
+    aria-hidden="true"
+  />
+  {/* Animated/blurred gradients for extra pop */}
+  <div className="absolute -top-32 -left-32 w-[32rem] h-[32rem] bg-gradient-to-br from-orange-400/30 via-orange-500/20 to-blue-400/20 rounded-full blur-3xl animate-pulse z-0" />
+  <div className="absolute bottom-0 right-0 w-[28rem] h-[28rem] bg-gradient-to-tr from-blue-400/20 via-white/10 to-orange-400/20 rounded-full blur-2xl animate-pulse z-0" />
   <div className="container mx-auto grid grid-cols-10 px-6 relative z-10">
     <div className="col-start-2 col-span-8 flex flex-col">
       <h1 className="text-5xl font-extrabold max-w-3xl leading-tight uppercase tracking-wide text-heading">
@@ -53,6 +56,9 @@ export default function Homepage() {
 </section>
 
 <section id="how-we-help" className="py-16 px-4 text-center relative overflow-hidden" style={{ background: 'linear-gradient(155deg, #f8fafc 0%, #ffedd5 50%, #e0e7ff 100%)' }}>
+  {/* Extra gradients for visual layering */}
+  <div className="absolute top-1/3 left-0 w-96 h-96 bg-gradient-to-br from-orange-400/10 via-orange-200/10 to-blue-400/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 z-0" />
+  <div className="absolute bottom-10 right-1/4 w-80 h-80 bg-gradient-to-tr from-blue-400/10 via-white/10 to-orange-400/10 rounded-full blur-2xl z-0" />
 
   {/* Decorative Elements */}
   <div className="absolute top-0 left-0 w-64 h-64 bg-orange-500/5 rounded-full blur-3xl transform -translate-x-1/2 -translate-y-1/2" />
@@ -141,6 +147,9 @@ export default function Homepage() {
 </section>
 
       <section className="py-20 px-6 bg-[#002147] text-white relative overflow-hidden">
+        {/* Extra gradients for features section */}
+        <div className="absolute -top-24 left-1/2 w-[36rem] h-[36rem] bg-gradient-to-br from-orange-400/20 via-blue-400/10 to-white/10 rounded-full blur-3xl -translate-x-1/2 z-0 animate-pulse" />
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-tr from-blue-400/10 via-white/10 to-orange-400/10 rounded-full blur-2xl z-0" />
   {/* Background Image */}
   <div className="absolute inset-0 w-full h-full z-0">
     <img
@@ -216,7 +225,10 @@ export default function Homepage() {
 </section>
 
       {/* Community and Testimonial */}
-      <section className="py-20 px-6 bg-white text-[#002147] relative overflow-hidden"style={{ background: 'linear-gradient(155deg, #f8fafc 0%, #ffedd5 50%, #e0e7ff 100%)' }}>
+      <section className="py-20 px-6 bg-white text-[#002147] relative overflow-hidden" style={{ background: 'linear-gradient(155deg, #f8fafc 0%, #ffedd5 50%, #e0e7ff 100%)' }}>
+        {/* Extra gradients for testimonials */}
+        <div className="absolute top-0 left-1/3 w-96 h-96 bg-gradient-to-br from-orange-400/10 via-orange-200/10 to-blue-400/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 z-0" />
+        <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-gradient-to-tr from-blue-400/10 via-white/10 to-orange-400/10 rounded-full blur-2xl z-0" />
         <div className="absolute inset-0 opacity-5 bg-[url('/testimonials-bg-pattern.jpg')] bg-cover bg-center"></div>
         <h2 className="text-4xl font-bold mb-12 text-center uppercase relative z-10">Testimonials</h2>
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-8 items-center relative z-10">
@@ -344,7 +356,10 @@ export default function Homepage() {
       </section>
 
       {/* Final Section */}
-<section className="py-20 px-6 text-center bg-black">
+<section className="py-20 px-6 text-center bg-black relative overflow-hidden">
+  {/* Extra gradients for final section */}
+  <div className="absolute -top-24 left-1/2 w-[36rem] h-[36rem] bg-gradient-to-br from-orange-400/20 via-blue-400/10 to-white/10 rounded-full blur-3xl -translate-x-1/2 z-0 animate-pulse" />
+  <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-tr from-blue-400/10 via-white/10 to-orange-400/10 rounded-full blur-2xl z-0" />
   <h2 className="text-3xl font-bold mb-12 uppercase text-white text-heading relative">
     Manage Your Experience
     <span className="block h-1 w-20 bg-blue-400 mx-auto mt-4"></span>

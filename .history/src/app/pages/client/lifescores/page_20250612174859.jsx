@@ -104,7 +104,45 @@ export default function LifeScoresPage() {
                   </div>
                 </section>
 
-                
+                {/* Assessment Progress Example (Daily Habits) */}
+                <section className="bg-white border border-gray-200 rounded-lg p-6 shadow-none mb-8">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-lg font-semibold text-brand-navy">Daily Habits Assessment</h3>
+                    <span className="text-sm text-gray-500">{assessmentStep} of {totalAssessmentSteps}</span>
+                  </div>
+                  <Typography variant="body2" className="mb-2 text-gray-600">Rate yourself on each dimension below. Click a number to select your rating.</Typography>
+                  <Box sx={{ width: '100%', mb: 2 }}>
+                    <LinearProgress variant="determinate" value={(assessmentStep / totalAssessmentSteps) * 100} />
+                  </Box>
+                  {/* Example assessment item */}
+                  
+                  {/* Add more assessment items as needed */}
+                  <Button variant="contained" color="primary" size="small" className="mt-2">Next</Button>
+                </section>
+
+                {/* Whole Life Assessment Progress Example */}
+                <section className="bg-white border border-gray-200 rounded-lg p-6 shadow-none mb-8">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-lg font-semibold text-brand-navy">Whole Life Assessment</h3>
+                    <span className="text-sm text-gray-500">2 of 10</span>
+                  </div>
+                  <Typography variant="body2" className="mb-2 text-gray-600">Rate yourself on each life area below. Click a number to select your rating.</Typography>
+                  <Box sx={{ width: '100%', mb: 2 }}>
+                    <LinearProgress variant="determinate" value={20} />
+                  </Box>
+                  {/* Example assessment item */}
+                  <div className="mb-4">
+                    <Typography variant="subtitle1" className="mb-1">Health</Typography>
+                    <Typography variant="caption" className="mb-2 text-gray-500">How would you rate your overall physical health?</Typography>
+                    <div className="flex gap-2 mt-2">
+                      {[1,2,3,4,5,6,7,8,9,10].map(val => (
+                        <Button key={val} variant="outlined" color="primary" size="small">{val}</Button>
+                      ))}
+                    </div>
+                  </div>
+                  {/* Add more assessment items as needed */}
+                  <Button variant="contained" color="primary" size="small" className="mt-2">Next</Button>
+                </section>
 
                 {/* Historical Trends & Progress Visualization */}
                 <section className="bg-white border border-gray-200 rounded-lg p-6 shadow-none mb-8">

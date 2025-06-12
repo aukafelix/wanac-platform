@@ -12,8 +12,9 @@ import {
   FaUserShield,
   FaUserEdit,
 } from 'react-icons/fa';
-import Sidebar from '../../../../components/dashboardcomponents/sidebar';
+import Sidebar from '../../../../components/dashboardcomponents/adminsidebar';
 import { useState, useEffect } from 'react';
+import AdminSidebar from '../../../../components/dashboardcomponents/adminsidebar';
   
 export default function AdminDashboard() {
   const [user, setUser] = useState(null);
@@ -31,7 +32,7 @@ export default function AdminDashboard() {
   return (
     <div className="h-screen flex bg-gray-50 font-serif">
       {/* Sidebar */}
-      <Sidebar />
+      <AdminSidebar />
       {/* Main Area */}
       <div className="flex-1 flex flex-col h-full transition-all duration-300">
         {/* Top Bar */}

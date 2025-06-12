@@ -246,12 +246,13 @@ export default function Signup() {
           profilePic: form.profilePic || undefined
         };
 
-        console.log('Sending registration data:', registrationData);
-
         // Call the registration API
         const response = await authService.register(registrationData);
-        toast.success(response.message);
-        router.push("/login");
+        toast.success(response.message || 'Registration successful! Please log in.');
+        // Redirect to login after a short delay for user to see the toast
+        setTimeout(() => {
+          router.push("/login");
+        }, 1200);
 
       } catch (error) {
         if (error.response && error.response.data) {
