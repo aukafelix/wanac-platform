@@ -113,7 +113,27 @@ const OurStory = () => {
 
   return (
     <div className="bg-gray-50">
-    
+    {/*   Hero Section */}
+     <header className="relative bg-[#002147] text-white min-h-[420px] flex items-center justify-center overflow-hidden">
+        <div 
+          className="absolute inset-0 w-full h-full"
+          style={{
+            backgroundImage: 'url("/landingpage1.jpg")',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#002147]/90 via-[#002147]/80 to-[#ff5e1a]/40"></div>
+        <div className="relative z-10 py-20 px-4 w-full max-w-4xl mx-auto text-center flex flex-col items-center">
+          <h1 className="text-4xl md:text-5xl font-extrabold mb-4 leading-tight drop-shadow-lg">
+            ABOUT WANAC
+          </h1>
+          <p className="text-lg md:text-2xl max-w-2xl mx-auto mb-6 text-blue-100 font-medium drop-shadow">
+            WANAC offers specialized programs to equip transitioning service members, veterans, and aspiring coaches with the skills and knowledge to thrive personally, professionally, and entrepreneurially.
+          </p>
+        </div>
+      </header>
       <section>
         <div className="relative w-full h-10 bg-[#002147] overflow-hidden flex items-center justify-center">
           <nav className="relative z-10 flex space-x-8 px-4">
@@ -167,31 +187,36 @@ const OurStory = () => {
             OUR MISSION
           </h1>
           <p className="text-lg md:text-2xl max-w-2xl mx-auto mb-6 text-blue-100 font-medium drop-shadow">
-            WANAC is committed to empowering transitioning service members, veterans, and professionals by delivering
-transformative coaching and training that fosters personal growth, professional excellence, and entrepreneurial
-success. Our innovative programs and resources are carefully designed to enable participants to lead impactful lives in
-their communities and beyond.
+            WANAC offers specialized programs to equip transitioning service members, veterans, and aspiring coaches with the skills and knowledge to thrive personally, professionally, and entrepreneurially.
           </p>
         </div>
       </section>
 
+        <section>
+          <div className="w-full">
+            <img 
+              src="/veterancommunity.png" 
+              alt="WANAC Community" 
+              className="w-full h-[260px] md:h-[340px] object-cover object-center mb-6"
+              style={{ display: 'block', borderRadius: 0, boxShadow: 'none' }}
+            />
+          </div>
+        </section>
+
         <section id="what-sets-apart" className="p-8 mb-12 text-center">
-          
-          <h1 className="text-4xl md:text-5xl font-extrabold mb-4 leading-tight drop-shadow-lg">
+          <h3 className="text-xl font-bold text-[#002147] mb-3 flex items-center justify-center">
             What Sets WANAC Apart
-          </h1>
-           
+          </h3>
           <div className="mx-auto max-w-2xl">
-            <p className="text-lg md:text-2xl max-w-2xl mx-auto mb-6 text-black font-medium drop-shadow">In today's rapidly evolving world, the ability to adapt, lead, and inspire others is more important than ever. At WANAC,
+            <p className="text-gray-700 leading-relaxed">In today's rapidly evolving world, the ability to adapt, lead, and inspire others is more important than ever. At WANAC,
 we cultivate forward-thinking leaders who not only possess strategic insight and adaptability but also excel in
 emotional intelligence and resilience—key traits of transformative leadership.
             </p>
-            <p className="text-lg md:text-2xl max-w-2xl mx-auto mb-6 text-black font-medium drop-shadow">Our distinctive approach combines rigorous academic insights with real-world experiences, preparing our participants
+            <p className="text-gray-700 leading-relaxed mt-3">Our distinctive approach combines rigorous academic insights with real-world experiences, preparing our participants
             to confidently navigate life's transitions and professional challenges.
             </p>
           </div>
         </section>
-        
 
         {/* Core Pillars Section */}
         <section id="core-pillars" className="p-7 mb-12 bg-[#002147] relative" style={{
@@ -281,12 +306,12 @@ emotional intelligence and resilience—key traits of transformative leadership.
 
         {/* Strategic Aspirations Section */}
         <section id="aspirations" className="p-8 mb-12">
-          <h1 className="text-xl font-bold text-[#002147] mb-8 text-center">Our Strategic Aspirations</h1>
+          <h3 className="text-xl font-bold text-[#002147] mb-8 text-center">Our Strategic Aspirations</h3>
           {/* Simple Infographic Row */}
           <div className="w-full overflow-x-auto">
             <div className="flex md:grid md:grid-cols-5 gap-6 md:gap-8 items-stretch justify-center min-w-[600px] md:min-w-0">
               {[
-                { 
+                {
                   title: "Attain Excellence",
                   desc: "We are dedicated to excellence in every program, resource, and initiative we undertake.",
                   icon: (

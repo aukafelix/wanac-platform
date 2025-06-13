@@ -176,10 +176,9 @@ their communities and beyond.
       </section>
 
         <section id="what-sets-apart" className="p-8 mb-12 text-center">
-          
-          <h1 className="text-4xl md:text-5xl font-extrabold mb-4 leading-tight drop-shadow-lg">
+          <h3 className="text-4xl md:text-5xl font-extrabold mb-4 leading-tight drop-shadow-lg">
             What Sets WANAC Apart
-          </h1>
+          </h3>
            
           <div className="mx-auto max-w-2xl">
             <p className="text-lg md:text-2xl max-w-2xl mx-auto mb-6 text-black font-medium drop-shadow">In today's rapidly evolving world, the ability to adapt, lead, and inspire others is more important than ever. At WANAC,
@@ -191,7 +190,41 @@ emotional intelligence and resilience—key traits of transformative leadership.
             </p>
           </div>
         </section>
-        
+        <section>
+        <div className="relative w-full h-10 bg-[#002147] overflow-hidden flex items-center justify-center">
+          <nav className="relative z-10 flex space-x-8 px-4">
+            <a href="#about" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
+              About
+            </a>
+            <a href="#mission" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
+              Mission
+            </a>
+            <a href="#what-sets-apart" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
+              What Sets Apart
+            </a>
+            <a href="#core-pillars" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
+              Core Pillars
+            </a>
+            <a href="#aspirations" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
+              Aspirations
+            </a>
+            <a href="#board" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
+              Board of Directors
+            </a>
+            <a href="#executive" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
+              Executive Staff
+            </a>
+          </nav>
+          <div 
+            className="absolute inset-0 w-full" 
+            style={{
+              animation: 'slide 20s linear infinite',
+            }}
+          >
+            <div className="h-full bg-gradient-to-r from-blue-600 via-[#002147] to-blue-600 w-[200%]"></div>
+          </div>
+        </div>
+      </section>
 
         {/* Core Pillars Section */}
         <section id="core-pillars" className="p-7 mb-12 bg-[#002147] relative" style={{
@@ -281,12 +314,12 @@ emotional intelligence and resilience—key traits of transformative leadership.
 
         {/* Strategic Aspirations Section */}
         <section id="aspirations" className="p-8 mb-12">
-          <h1 className="text-xl font-bold text-[#002147] mb-8 text-center">Our Strategic Aspirations</h1>
+          <h3 className="text-xl font-bold text-[#002147] mb-8 text-center">Our Strategic Aspirations</h3>
           {/* Simple Infographic Row */}
           <div className="w-full overflow-x-auto">
             <div className="flex md:grid md:grid-cols-5 gap-6 md:gap-8 items-stretch justify-center min-w-[600px] md:min-w-0">
               {[
-                { 
+                {
                   title: "Attain Excellence",
                   desc: "We are dedicated to excellence in every program, resource, and initiative we undertake.",
                   icon: (

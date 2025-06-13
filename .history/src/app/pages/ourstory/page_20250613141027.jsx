@@ -176,10 +176,18 @@ their communities and beyond.
       </section>
 
         <section id="what-sets-apart" className="p-8 mb-12 text-center">
-          
-          <h1 className="text-4xl md:text-5xl font-extrabold mb-4 leading-tight drop-shadow-lg">
+          <div 
+          className="absolute inset-0 w-full h-full"
+          style={{
+            backgroundImage: 'url("/landingpage1.jpg")',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}
+        />
+          <h3 className="text-4xl md:text-5xl font-extrabold mb-4 leading-tight drop-shadow-lg">
             What Sets WANAC Apart
-          </h1>
+          </h3>
            
           <div className="mx-auto max-w-2xl">
             <p className="text-lg md:text-2xl max-w-2xl mx-auto mb-6 text-black font-medium drop-shadow">In today's rapidly evolving world, the ability to adapt, lead, and inspire others is more important than ever. At WANAC,
@@ -281,7 +289,7 @@ emotional intelligence and resilience—key traits of transformative leadership.
 
         {/* Strategic Aspirations Section */}
         <section id="aspirations" className="p-8 mb-12">
-          <h1 className="text-xl font-bold text-[#002147] mb-8 text-center">Our Strategic Aspirations</h1>
+          <h3 className="text-xl font-bold text-[#002147] mb-8 text-center">Our Strategic Aspirations</h3>
           {/* Simple Infographic Row */}
           <div className="w-full overflow-x-auto">
             <div className="flex md:grid md:grid-cols-5 gap-6 md:gap-8 items-stretch justify-center min-w-[600px] md:min-w-0">

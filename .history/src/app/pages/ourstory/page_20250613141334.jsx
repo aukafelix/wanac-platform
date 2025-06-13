@@ -281,7 +281,7 @@ emotional intelligence and resilience—key traits of transformative leadership.
 
         {/* Strategic Aspirations Section */}
         <section id="aspirations" className="p-8 mb-12">
-          <h1 className="text-xl font-bold text-[#002147] mb-8 text-center">Our Strategic Aspirations</h1>
+          <h3 className="text-xl font-bold text-[#002147] mb-8 text-center">Our Strategic Aspirations</h3>
           {/* Simple Infographic Row */}
           <div className="w-full overflow-x-auto">
             <div className="flex md:grid md:grid-cols-5 gap-6 md:gap-8 items-stretch justify-center min-w-[600px] md:min-w-0">
