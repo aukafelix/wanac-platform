@@ -13,10 +13,10 @@ import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 
 // Constants
 const PRIORITY_MATRIX = [
-  { value: 'urgent_important', label: 'Urgent & Important' },
-  { value: 'not_urgent_important', label: 'Not Urgent & Important' },
-  { value: 'urgent_not_important', label: 'Urgent & Not Important' },
-  { value: 'not_urgent_not_important', label: 'Not Urgent & Not Important' },
+  { value: 'urgent-important', label: 'Urgent & Important' },
+  { value: 'not-urgent-important', label: 'Not Urgent & Important' },
+  { value: 'urgent-not-important', label: 'Urgent & Not Important' },
+  { value: 'not-urgent-not-important', label: 'Not Urgent & Not Important' },
 ];
 
 const INITIAL_FORM_STATE = {
@@ -30,7 +30,7 @@ const INITIAL_FORM_STATE = {
   where: '',
   why: '',
   how: '',
-  priority: 'urgent_important',
+  priority: 'urgent-important',
   priority_justification: '',
   notes: '',
 };
@@ -119,8 +119,16 @@ export default function TaskManagementPage() {
       fetchTasks();
       handleCloseDialog();
     } catch (error) {
-      setFormError('Failed to save task.');
-      console.error('Error saving task:', error);
+        if (error.response && error.response.data) {
+          if (error.response?.data?.errors) {
+            handleValidationErrors(error.response.data.errors);
+          }
+          if (error.response?.data?.error) {
+            toast.error(error.response.data.error);
+          }
+        } else {
+          console.log(error);
+        }
     }
   }, [form, editTask, fetchTasks, handleCloseDialog]);
 
