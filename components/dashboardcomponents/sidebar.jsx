@@ -1,7 +1,7 @@
 "use client";
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Home, BarChart2, Settings, LogOut, Users, Calendar, HeartPulse, BookOpen, CheckSquare, Brain, MessageCircle, Bot, UserCog, CalendarDays, Briefcase, GraduationCap, Video } from 'lucide-react'
+import { Home, BarChart2, Settings, LogOut, Users, Calendar, HeartPulse, BookOpen, CheckSquare, Brain, MessageCircle, Bot, UserCog, CalendarDays, Briefcase, GraduationCap, Video, Menu } from 'lucide-react'
 import { useState } from 'react'
 
 const navItems = [
@@ -25,40 +25,113 @@ const navItems = [
 export default function Sidebar() {
   const pathname = usePathname()
   const [collapsed, setCollapsed] = useState(true)
+  const [mobileOpen, setMobileOpen] = useState(false)
 
   return (
-    <aside
-      className={`bg-white border-r border-gray-200 hidden md:flex flex-col h-screen transition-all duration-300 ${collapsed ? 'w-16' : 'w-56'}`}
-      onMouseEnter={() => setCollapsed(false)}
-      onMouseLeave={() => setCollapsed(true)}
-    >
-      <div className={`p-3 ${collapsed ? 'justify-center flex' : ''}`}>
-        {!collapsed && <h1 className="text-base font-semibold text-gray-800">WANAC</h1>}
-        {collapsed && <span className="sr-only">WANAC</span>}
-      </div>
-      <nav className="flex-1 p-1 space-y-1">
-        {navItems.map((item) => (
-          <Link
-            key={item.name}
-            href={item.href}
-            className={`flex items-center gap-2 px-2 py-2 rounded-md text-xs font-medium transition-all 
-              ${
-                pathname === item.href
-                  ? 'bg-blue-100 text-blue-600'
-                  : 'text-gray-700 hover:bg-gray-100'
-              } ${collapsed ? 'justify-center' : ''}`}
+    <>
+      {/* Hamburger for mobile */}
+      <button
+        className="md:hidden fixed top-4 left-4 z-50 bg-white p-2 rounded shadow"
+        aria-label="Open sidebar"
+        onClick={() => setMobileOpen(true)}
+      >
+        <Menu size={24} />
+      </button>
+      {/* Sidebar overlay for mobile */}
+      {mobileOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-40 z-40 transition-opacity duration-300 md:hidden"
+          onClick={() => setMobileOpen(false)}
+          aria-hidden="true"
+        />
+      )}
+      {/* Sidebar */}
+      <aside
+        className={`bg-white border-r border-gray-200 flex-col h-screen transition-all duration-300
+          ${collapsed ? 'w-16' : 'w-56'}
+          z-50
+          ${mobileOpen ? 'fixed top-0 left-0 flex md:hidden' : 'hidden'}
+          md:flex md:static md:translate-x-0
+        `}
+        onMouseEnter={() => setCollapsed(false)}
+        onMouseLeave={() => setCollapsed(true)}
+        role="navigation"
+        aria-label="Sidebar"
+        tabIndex={-1}
+        style={{ outline: mobileOpen ? '2px solid #2563eb' : 'none' }}
+      >
+        <div className={`p-3 ${collapsed ? 'justify-center flex' : ''}`}>
+          {!collapsed && <h1 className="text-base font-semibold text-gray-800">WANAC</h1>}
+          {collapsed && <span className="sr-only">WANAC</span>}
+        </div>
+        <nav className="flex-1 p-1 space-y-1">
+          {navItems.map((item) => (
+            <Link
+              key={item.name}
+              href={item.href}
+              className={`flex items-center gap-2 px-2 py-2 rounded-md text-xs font-medium transition-all 
+                ${
+                  pathname === item.href
+                    ? 'bg-blue-100 text-blue-600'
+                    : 'text-gray-700 hover:bg-gray-100'
+                } ${collapsed ? 'justify-center' : ''}`}
+              onClick={() => setMobileOpen(false)}
+            >
+              {item.icon}
+              {collapsed ? null : item.name}
+            </Link>
+          ))}
+        </nav>
+        <div className="p-2 border-t flex flex-col gap-1">
+          <button className={`flex items-center gap-2 px-2 py-2 text-xs text-gray-600 hover:bg-gray-100 w-full rounded-md ${collapsed ? 'justify-center' : ''}`}
+            onClick={() => setMobileOpen(false)}
           >
-            {item.icon}
-            {collapsed ? null : item.name}
-          </Link>
-        ))}
-      </nav>
-      <div className="p-2 border-t flex flex-col gap-1">
-        <button className={`flex items-center gap-2 px-2 py-2 text-xs text-gray-600 hover:bg-gray-100 w-full rounded-md ${collapsed ? 'justify-center' : ''}`}>
-          <LogOut size={18} />
-          {!collapsed && 'Log Out'}
-        </button>
-      </div>
-    </aside>
+            <LogOut size={18} />
+            {!collapsed && 'Log Out'}
+          </button>
+        </div>
+      </aside>
+      {/* Sidebar for desktop */}
+      <aside
+        className={`bg-white border-r border-gray-200 flex-col h-screen transition-all duration-300
+          ${collapsed ? 'w-16' : 'w-56'}
+          hidden md:flex md:static md:z-0
+        `}
+        onMouseEnter={() => setCollapsed(false)}
+        onMouseLeave={() => setCollapsed(true)}
+        role="navigation"
+        aria-label="Sidebar"
+        tabIndex={-1}
+      >
+        <div className={`p-3 ${collapsed ? 'justify-center flex' : ''}`}>
+          {!collapsed && <h1 className="text-base font-semibold text-gray-800">WANAC</h1>}
+          {collapsed && <span className="sr-only">WANAC</span>}
+        </div>
+        <nav className="flex-1 p-1 space-y-1">
+          {navItems.map((item) => (
+            <Link
+              key={item.name}
+              href={item.href}
+              className={`flex items-center gap-2 px-2 py-2 rounded-md text-xs font-medium transition-all 
+                ${
+                  pathname === item.href
+                    ? 'bg-blue-100 text-blue-600'
+                    : 'text-gray-700 hover:bg-gray-100'
+                } ${collapsed ? 'justify-center' : ''}`}
+            >
+              {item.icon}
+              {collapsed ? null : item.name}
+            </Link>
+          ))}
+        </nav>
+        <div className="p-2 border-t flex flex-col gap-1">
+          <button className={`flex items-center gap-2 px-2 py-2 text-xs text-gray-600 hover:bg-gray-100 w-full rounded-md ${collapsed ? 'justify-center' : ''}`}
+          >
+            <LogOut size={18} />
+            {!collapsed && 'Log Out'}
+          </button>
+        </div>
+      </aside>
+    </>
   )
 }
