@@ -197,9 +197,9 @@ export default function Footer({ hideFooter = false }) {
             The WANAC Platform is a not-for-profit organization.
           </p>
           <p className="mb-3 hover:text-[#002147] transition-colors duration-300 flex items-center justify-center gap-3">
-            <span className="hover:text-[#002147]">+1 (888) 484 3876</span>
+            <span className="hover:text-[#002147]">400 Continental Blvd Ste 6025</span>
             <span className="text-slate-300">|</span>
-            <span className="hover:text-[#002147]">PO Box 968</span>
+            <span className="hover:text-[#002147]">El Segundo, CA 90245</span>
           </p>
         </div>
       </div>
