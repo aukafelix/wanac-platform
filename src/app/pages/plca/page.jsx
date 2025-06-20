@@ -43,7 +43,7 @@ participants with the essential skills needed to thrive professionally in divers
 
      {/* Navigation Bar */}
      <section>
-        <div className="relative w-full h-10 bg-[#002147] overflow-hidden flex items-center justify-center">
+        <div className="relative w-full h-16 bg-[#002147] overflow-hidden flex items-center justify-center">
           <nav className="relative z-10 flex space-x-16 px-4">
             <a href="#program-overview" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
               Program Overview
@@ -70,68 +70,57 @@ participants with the essential skills needed to thrive professionally in divers
       <section id="overview" className="py-20">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold mb-12 text-center text-[#002147]">Program Overview</h2>
-          <div className="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
-            <div className="space-y-8">
-              <div className="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition-all">
-                <h3 className="text-xl font-semibold mb-4 text-[#002147]">Strategic Career Readiness</h3>
-                <ul className="space-y-3">
-                  <li className="flex items-start">
-                    <span className="text-orange-500 mr-2">•</span>
+          <div className="max-w-5xl mx-auto px-4">
+            <div className="flex flex-col md:flex-row gap-8 items-stretch">
+              {/* Strategic Career Readiness Card */}
+              <div className="flex-1 bg-white border border-orange-100 rounded-2xl shadow-lg p-8 flex flex-col items-center text-center hover:shadow-orange-200 transition-shadow duration-300">
+                <div className="mb-4">
+                  {/* Icon: Briefcase */}
+                  <svg className="w-12 h-12 text-orange-500 mx-auto" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <rect x="2" y="7" width="20" height="14" rx="2" />
+                    <path d="M16 7V5a4 4 0 0 0-8 0v2" />
+                  </svg>
+                </div>
+                <h3 className="text-2xl font-bold mb-4 text-[#002147]">Strategic Career Readiness</h3>
+                <ul className="space-y-3 text-gray-700 text-base text-left mx-auto max-w-xs">
+                  <li className="flex items-start gap-2">
+                    <span className="text-orange-500 mt-1">•</span>
                     <span>Comprehensive career management skills training</span>
                   </li>
-                  <li className="flex items-start">
-                    <span className="text-orange-500 mr-2">•</span>
+                  <li className="flex items-start gap-2">
+                    <span className="text-orange-500 mt-1">•</span>
                     <span>Personalized coaching to define clear career objectives</span>
                   </li>
-                  <li className="flex items-start">
-                    <span className="text-orange-500 mr-2">•</span>
+                  <li className="flex items-start gap-2">
+                    <span className="text-orange-500 mt-1">•</span>
                     <span>Targeted strategies for securing internships and job placements</span>
                   </li>
                 </ul>
               </div>
-              <div className="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition-all">
-                <h3 className="text-xl font-semibold mb-4 text-[#002147]">Expert-Designed Curriculum</h3>
-                <ul className="space-y-3">
-                  <li className="flex items-start">
-                    <span className="text-orange-500 mr-2">•</span>
+              {/* Expert-Designed Curriculum Card */}
+              <div className="flex-1 bg-white border border-blue-100 rounded-2xl shadow-lg p-8 flex flex-col items-center text-center hover:shadow-blue-200 transition-shadow duration-300">
+                <div className="mb-4">
+                  {/* Icon: Academic Cap */}
+                  <svg className="w-12 h-12 text-blue-500 mx-auto" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <path d="M12 3L2 9l10 6 10-6-10-6z" />
+                    <path d="M2 9v6c0 2.21 4.48 4 10 4s10-1.79 10-4V9" />
+                  </svg>
+                </div>
+                <h3 className="text-2xl font-bold mb-4 text-[#002147]">Expert-Designed Curriculum</h3>
+                <ul className="space-y-3 text-gray-700 text-base text-left mx-auto max-w-xs">
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-500 mt-1">•</span>
                     <span>Personal branding and professional identity development</span>
                   </li>
-                  <li className="flex items-start">
-                    <span className="text-orange-500 mr-2">•</span>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-500 mt-1">•</span>
                     <span>Strategic networking techniques and relationship building</span>
                   </li>
-                  <li className="flex items-start">
-                    <span className="text-orange-500 mr-2">•</span>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-500 mt-1">•</span>
                     <span>Advanced interview preparation and confidence building</span>
                   </li>
                 </ul>
-              </div>
-            </div>
-            <div className="relative">
-              <div className="sticky top-8">
-                <div className="bg-white p-8 rounded-xl shadow-md">
-                  <h3 className="text-xl font-semibold mb-6 text-[#002147]">Program Highlights</h3>
-                  <div className="space-y-6">
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
-                        <span className="text-2xl text-orange-500">93%</span>
-                      </div>
-                      <p className="text-gray-600">Success rate in career placement</p>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
-                        <span className="text-2xl text-orange-500">12</span>
-                      </div>
-                      <p className="text-gray-600">Weeks of intensive training</p>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
-                        <span className="text-2xl text-orange-500">1:1</span>
-                      </div>
-                      <p className="text-gray-600">Personalized coaching sessions</p>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
@@ -139,30 +128,37 @@ participants with the essential skills needed to thrive professionally in divers
       </section>
 
       {/* How It Works Section */}
-      <section id="process" className="py-20 bg-white">
-        <div className="container mx-auto px-4">
+      <section id="process" className="py-20 bg-gradient-to-r from-orange-100 via-white to-blue-100 relative overflow-hidden">
+      <div className="absolute inset-0 w-full h-full z-0" style={{
+          backgroundImage: 'url("/background4.jpg")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          opacity: 0.05
+        }}></div>
+        <div className="container mx-auto px-4 relative z-10">
           <h2 className="text-3xl font-bold mb-12 text-center text-[#002147]">How PLCA Works</h2>
           <div className="grid md:grid-cols-4 gap-8 max-w-6xl mx-auto">
             {[
               {
                 step: 1,
                 title: "Initial Career Assessment",
-                description: "Complete a comprehensive career assessment to identify your goals and strengths"
+                description: "Clarify and define professional goals and career direction Develop a personalized roadmap tailored to your professional aspirations"
               },
               {
                 step: 2,
                 title: "Targeted Career Coaching",
-                description: "Receive a customized development plan tailored to your career objectives"
+                description: "One-on-one sessions with career experts focused on veteran transitions Hands-on support to build robust resumes, LinkedIn profiles, and cover letters"
               },
               {
                 step: 3,
-                title: "Targeted Career Coaching",
-                description: "Engage in intensive training modules and hands-on workshops"
+                title: "Professional Development Workshops",
+                description: "Interactive workshops on networking, interviewing, and personal branding Veteran-specific resources and guidance for career exploration and advancement"
               },
               {
                 step: 4,
                 title: "Networking and Placement Opportunities",
-                description: "Get support in job search, placement, and ongoing career growth"
+                description: "Access to veteran-friendly employers and job placement networks Structured events to connect with industry leaders and successful veteran professionals"
               }
             ].map((item) => (
               <div key={item.step} className="text-center">
@@ -236,17 +232,15 @@ participants with the essential skills needed to thrive professionally in divers
           <div className="text-center">
             <div className="max-w-3xl mx-auto">
               <h3 className="text-3xl font-bold text-white mb-8">
-                Ready to Transform Your Career?
+              Launch Your Civilian Career Today
               </h3>
               <p className="text-lg text-gray-300 mb-8">
-                Take the first step towards your successful civilian career. Apply now to join our next cohort.
+              Ready to take your next career step with confidence? Schedule your complimentary consultation and discover how
+              WANAC’s Promise Land Career Accelerator can accelerate your professional success.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <button className="w-full sm:w-auto bg-white text-[#002147] px-8 py-4 rounded-lg font-semibold hover:bg-orange-500 hover:text-white transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
-                  Apply Now
-                </button>
-                <button className="w-full sm:w-auto bg-transparent text-white border-2 border-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-[#002147] transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
-                  Schedule Consultation
+                <button className="w-full sm:w-auto bg-orange-500 text-white px-8 py-4 rounded-lg font-semibold hover:bg-orange-600 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
+                  Schedule Your Consultation 
                 </button>
               </div>
             </div>

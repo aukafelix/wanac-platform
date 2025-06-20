@@ -64,7 +64,7 @@ const VetaPage = () => {
           <h1 className="text-5xl font-bold mb-4">
             Vetrepreneurship Academy (VETA)
           </h1>
-          <p className="text-xl max-w-3xl mx-auto px-4">
+          <p className="text-xl font-bold max-w-3xl mx-auto px-4">
             Launch and Scale Your Veteran-Led Business
           </p>
           <p className="text-xl max-w-3xl mx-auto px-4">
@@ -76,9 +76,6 @@ thriving enterprises.
           <div className="mt-8 flex justify-center gap-4">
             <button className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-full font-semibold transition-colors">
               Apply Now
-            </button>
-            <button className="bg-transparent border-2 border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-[#002147] transition-colors">
-              Learn More
             </button>
           </div>
         </div>
@@ -197,11 +194,11 @@ thriving enterprises.
           <h2 className="text-3xl font-bold mb-8 text-center text-[#002147]">Success Stories</h2>
           <div className="max-w-3xl mx-auto space-y-8">
             <blockquote className="bg-white rounded-xl shadow-md p-6 text-lg italic text-gray-800 border-l-4 border-orange-500">
-              “Vetrepreneurship Academy gave me the critical tools and support to launch my startup confidently. The mentorship was invaluable.”<br/>
+              "Vetrepreneurship Academy gave me the critical tools and support to launch my startup confidently. The mentorship was invaluable."<br/>
               <span className="block mt-4 font-semibold text-[#002147]">– Veteran Entrepreneur</span>
             </blockquote>
             <blockquote className="bg-white rounded-xl shadow-md p-6 text-lg italic text-gray-800 border-l-4 border-orange-500">
-              “The structured guidance and resources provided by the academy were key in scaling my business successfully.”<br/>
+              "The structured guidance and resources provided by the academy were key in scaling my business successfully."<br/>
               <span className="block mt-4 font-semibold text-[#002147]">– Program Alumnus</span>
             </blockquote>
           </div>
@@ -209,10 +206,23 @@ thriving enterprises.
       </section>
 
       {/* Begin Your Entrepreneurial Journey Section */}
-      <section id="begin-journey" className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-6 text-center text-[#002147]">Begin Your Entrepreneurial Journey</h2>
-          <p className="max-w-2xl mx-auto text-lg text-center text-gray-700 mb-8">
+      <section id="begin-journey" className="relative py-16 bg-gray-50 overflow-hidden">
+        {/* Background image */}
+        <div 
+          className="absolute inset-0 w-full h-full z-0"
+          style={{
+            backgroundImage: 'url("/landingpage4.jpg")', // Change to your preferred image
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            opacity: 0.7
+          }}
+        />
+        {/* Gradient overlay */}
+        <div className="absolute inset-0 z-0" style={{background: 'linear-gradient(135deg, rgba(0,33,71,0.85) 0%, rgba(255,140,0,0.6) 100%)', opacity: 0.85}} />
+        <div className="container mx-auto px-4 relative z-10">
+          <h2 className="text-3xl font-bold mb-6 text-center text-white drop-shadow-lg">Begin Your Entrepreneurial Journey</h2>
+          <p className="max-w-2xl mx-auto text-lg text-center text-white mb-8 drop-shadow">
             Ready to build your entrepreneurial legacy? Schedule your complimentary consultation today and discover how WANAC's Vetrepreneurship Academy can support your journey to business success.
           </p>
           <div className="flex justify-center">

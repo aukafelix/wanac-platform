@@ -24,7 +24,7 @@ const PpcPage = () => {
           <h1 className="text-5xl font-bold mb-4">
             Peak Performance Coaching (PPC)
           </h1>
-          <p className="text-xl max-w-3xl mx-auto px-4">
+          <p className="text-xl max-w-3xl font-bold text-center mx-auto px-4">
             Transform Your Potential into Exceptional Results
           </p>
           <p className="text-xl max-w-3xl mx-auto px-4">
@@ -45,7 +45,7 @@ combines cutting-edge coaching methodologies with comprehensive support to help 
 
       {/* Navigation Bar */}
       <section>
-        <div className="relative w-full h-10 bg-[#002147] overflow-hidden flex items-center justify-center">
+        <div className="relative w-full h-16 bg-[#002147] overflow-hidden flex items-center justify-center">
           <nav className="relative z-10 flex space-x-16 px-4">
             <a href="#program-overview" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
               Program Overview
@@ -73,7 +73,7 @@ combines cutting-edge coaching methodologies with comprehensive support to help 
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold mb-8 text-center text-[#002147]">Program Overview</h2>
           <div className="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-md hover:shadow-lg transition-all">
-            <h3 className="text-xl font-semibold mb-6 text-[#002147]">Unlock Your Peak Potential</h3>
+            <h3 className="text-xl text-center font-semibold mb-6 text-[#002147]">Unlock Your Peak Potential</h3>
             <div className="grid md:grid-cols-2 gap-6">
               <ul className="space-y-4">
                 <li className="flex items-start">
@@ -99,8 +99,6 @@ combines cutting-edge coaching methodologies with comprehensive support to help 
                   <span>Improve influence and leadership capabilities to achieve impactful outcomes</span>
                 </li>
                 <li className="flex items-start">
-                  <span className="text-orange-500 mr-2">•</span>
-                  <span>Develop sustainable high-performance habits and mindsets</span>
                 </li>
               </ul>
             </div>
@@ -191,37 +189,6 @@ combines cutting-edge coaching methodologies with comprehensive support to help 
         </div>
       </section>
 
-      {/* Who Should Apply Section */}
-      <section id="who-should-apply" className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-8 text-center text-[#002147]">Who Should Apply?</h2>
-          <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-lg p-8">
-            <p className="text-lg mb-6 text-[#002147] font-semibold">Peak Performance Coaching is ideally suited for:</p>
-            <ul className="list-disc pl-6 space-y-4 text-gray-700 text-base">
-              <li>Veterans transitioning to civilian careers</li>
-              <li>Professionals striving for elevated performance in demanding roles</li>
-              <li>Individuals looking to significantly enhance their leadership and influence</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      {/* Proven Outcomes Section */}
-      <section id="proven-outcomes" className="py-16 bg-white">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-8 text-center text-[#002147]">Proven Outcomes</h2>
-          <div className="max-w-3xl mx-auto bg-gray-50 rounded-xl shadow-lg p-8">
-            <ul className="list-disc pl-6 space-y-4 text-gray-700 text-base">
-              <li>Enhanced clarity and strategic goal-setting</li>
-              <li>Sustained increases in personal and professional energy</li>
-              <li>Stronger courage, resilience, and problem-solving capabilities</li>
-              <li>Higher productivity, efficiency, and results-driven outcomes</li>
-              <li>Advanced interpersonal skills and influential leadership</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
       {/* Interactive Experience Section */}
       <section id="experience" className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
@@ -270,6 +237,36 @@ combines cutting-edge coaching methodologies with comprehensive support to help 
           </div>
         </div>
       </section>
+      {/* Who Should Apply Section */}
+      <section id="who-should-apply" className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold mb-8 text-center text-[#002147]">Who Should Apply?</h2>
+          <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-lg p-8">
+            <p className="text-lg mb-6 text-[#002147] font-semibold">Peak Performance Coaching is ideally suited for:</p>
+            <ul className="list-disc pl-6 space-y-4 text-gray-700 text-base">
+              <li>Veterans transitioning to civilian careers</li>
+              <li>Professionals striving for elevated performance in demanding roles</li>
+              <li>Individuals looking to significantly enhance their leadership and influence</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* Proven Outcomes Section */}
+      <section id="proven-outcomes" className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold mb-8 text-center text-[#002147]">Proven Outcomes</h2>
+          <div className="max-w-3xl mx-auto bg-gray-50 rounded-xl shadow-lg p-8">
+            <ul className="list-disc pl-6 space-y-4 text-gray-700 text-base">
+              <li>Enhanced clarity and strategic goal-setting</li>
+              <li>Sustained increases in personal and professional energy</li>
+              <li>Stronger courage, resilience, and problem-solving capabilities</li>
+              <li>Higher productivity, efficiency, and results-driven outcomes</li>
+              <li>Advanced interpersonal skills and influential leadership</li>
+            </ul>
+          </div>
+        </div>
+      </section>
 
       {/* CTA Section */}
       <section className="relative overflow-hidden py-20">
@@ -281,20 +278,15 @@ combines cutting-edge coaching methodologies with comprehensive support to help 
                 Take the First Step Towards Excellence
               </h3>
               <p className="text-lg text-gray-300 mb-8">
-                Ready to redefine your limits and achieve lasting success? Schedule your complimentary consultation today.
+              Ready to redefine your limits and achieve lasting success? Schedule your complimentary consultation today and
+explore how Peak Performance Coaching can transform your trajectory.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
                 <Link 
                   href="/consultation"
-                  className="w-full sm:w-auto bg-white text-[#002147] px-8 py-4 rounded-lg font-semibold hover:bg-orange-500 hover:text-white transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
+                  className="w-full sm:w-auto bg-orange-500 text-white px-8 py-4 rounded-lg font-semibold hover:bg-orange-600 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
                 >
-                  Schedule Consultation
-                </Link>
-                <Link 
-                  href="/contact"
-                  className="w-full sm:w-auto bg-transparent text-white border-2 border-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-[#002147] transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
-                >
-                  Contact Us
+                  Schedule Your Consultation
                 </Link>
               </div>
             </div>

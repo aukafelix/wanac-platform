@@ -89,7 +89,7 @@ export default function HowWeHelp() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mt-4">
             <a
               href="/pages/vsointakeform"
-              className="w-full sm:w-auto bg-white text-[#002147] px-8 py-4 rounded-lg font-semibold hover:bg-[#ff5e1a] hover:text-white transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl text-center"
+              className="w-full sm:w-auto bg-orange-500 text-white px-8 py-4 rounded-lg font-semibold hover:bg-orange-600 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl text-center"
               aria-label="Intake Form"
             >
               Intake Form
@@ -135,9 +135,13 @@ export default function HowWeHelp() {
       
 
       {/* Understanding Your Challenges Section */}
-      <section className="bg-white relative py-16 overflow-hidden">
-    
-        <div className="relative z-20 max-w-4xl mx-auto px-4 text-center">
+      <section className="relative py-16 overflow-hidden" style={{ background: 'linear-gradient(160deg, #FFFDF9)' }}>
+        {/* Flowing/animated gradient blobs for visual effect */}
+        <div className="absolute top-0 left-1/3 w-96 h-96 bg-gradient-to-br from-orange-400/10 via-orange-200/10 to-blue-400/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 z-0 animate-pulse" />
+        <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-gradient-to-tr from-blue-400/10 via-white/10 to-orange-400/10 rounded-full blur-2xl z-0 animate-pulse delay-700" />
+        {/* Optional: subtle pattern overlay for extra depth */}
+        {/* <div className="absolute inset-0 opacity-5 bg-[url('/testimonials-bg-pattern.jpg')] bg-cover bg-center"></div> */}
+        <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-[#002147] mb-4">
             Understanding Your Challenges
           </h2>
@@ -287,32 +291,42 @@ export default function HowWeHelp() {
         
 
         {/* CTA Section */}
-        <section className="relative overflow-hidden">
-          <div className="absolute inset-0 bg-[#002147] transform -skew-y-3 origin-top-right"></div>
-          
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <section className="relative overflow-hidden" style={{ background: 'linear-gradient(120deg, #FF7D33 0%, #FF5E1A 30%, #002147 100%)' }}>
+          {/* Gradient + background image overlay */}
+          <div 
+            className="absolute inset-0 w-full h-full z-0"
+            style={{
+              backgroundImage: `linear-gradient(300deg, rgba(255,125,51,0.85) 0%, rgba(255,94,26,0.70) 20%, rgba(0,33,71,0.90) 100%), url('/jamesthompson.jpg')`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center 20%',
+              backgroundRepeat: 'no-repeat',
+              pointerEvents: 'none',
+            }}
+            aria-hidden="true"
+          />
+          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 z-10">
             <div className="text-center">
               <div className="max-w-3xl mx-auto">
                 <h3 className="text-3xl md:text-4xl font-bold text-white mb-8">
                   Why Choose WANAC?
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-                  <div className="text-gray-300">
-                    <h4 className="font-semibold text-xl mb-2">Tailored Programs</h4>
-                    <p>Specifically designed for transitioning service members, veterans, and professionals.</p>
+                  <div className="bg-white rounded-xl shadow p-6 border border-gray-100 text-left flex flex-col justify-between">
+                    <h4 className="font-semibold text-xl mb-2 text-[#002147]">Tailored Programs</h4>
+                    <p className="text-gray-700">Specifically designed for transitioning service members, veterans, and professionals.</p>
                   </div>
-                  <div className="text-gray-300">
-                    <h4 className="font-semibold text-xl mb-2">Proven Results</h4>
-                    <p>Structured, actionable frameworks delivering measurable outcomes.</p>
+                  <div className="bg-white rounded-xl shadow p-6 border border-gray-100 text-left flex flex-col justify-between">
+                    <h4 className="font-semibold text-xl mb-2 text-[#002147]">Proven Results</h4>
+                    <p className="text-gray-700">Structured, actionable frameworks delivering measurable outcomes.</p>
                   </div>
-                  <div className="text-gray-300">
-                    <h4 className="font-semibold text-xl mb-2">Dedicated Support</h4>
-                    <p>Ongoing mentorship, community connections, and robust resources.</p>
+                  <div className="bg-white rounded-xl shadow p-6 border border-gray-100 text-left flex flex-col justify-between">
+                    <h4 className="font-semibold text-xl mb-2 text-[#002147]">Dedicated Support</h4>
+                    <p className="text-gray-700">Ongoing mentorship, community connections, and robust resources.</p>
                   </div>
                 </div>
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
                   <button
-                    className="w-full sm:w-auto bg-white text-[#002147] px-8 py-4 rounded-lg font-semibold hover:bg-[#ff5e1a] hover:text-white transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
+                    className="w-full sm:w-auto bg-[#ff5e1a] text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-[#ff5e1a] transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
                     aria-label="Contact WANAC"
                   >
                     Contact WANAC

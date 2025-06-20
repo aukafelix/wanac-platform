@@ -8,13 +8,7 @@ import {
   FaChartLine,
   FaUsers,
 } from 'react-icons/fa';
-import Sidebar from '../../../../../components/dashboardcomponents/sidebar';
-import ClientNavbar from '../../../../../components/dashboardcomponents/ClientNav';
-import TimeWidget from '../../../../../components/dashboardcomponents/widgets/TimeWidget';
-import CalendarWidget from '../../../../../components/dashboardcomponents/widgets/CalendarWidget';
-import CommunityFeedWidget from '../../../../../components/dashboardcomponents/widgets/CommunityFeedWidget';
-import Messages from '../../../../../components/dashboardcomponents/Messages';
-import Discover from '../../../../../components/dashboardcomponents/Discover';
+import Sidebar from '../../../../../components/dashboardcomponents/sidebar'
 import ClientTopbar from '../../../../../components/dashboardcomponents/clienttopbar';
 
 // Simple Notifications Widget

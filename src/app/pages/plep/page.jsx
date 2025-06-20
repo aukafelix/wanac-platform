@@ -117,7 +117,7 @@ journey.
 
       {/* Navigation Bar */}
       <section>
-        <div className="relative w-full h-10 bg-[#002147] overflow-hidden flex items-center justify-center">
+        <div className="relative w-full h-16 bg-[#002147] overflow-hidden flex items-center justify-center">
           <nav className="relative z-10 flex space-x-8 px-4">
             <a href="#program-overview" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
               Program Overview
@@ -146,32 +146,30 @@ journey.
       {/* Program Overview Section */}
       <section id="program-overview" className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-8 text-center">Program Overview</h2>
-          <h3 className="text-xl font-semibold mb-6 text-center text-[#002147]">
-            A Structured Approach to Your Academic Future
-          </h3>
+          <h2 className="text-3xl font-bold mb-2 text-center">Program Overview</h2>
+          <h3 className="text-xl font-semibold mb-6 text-center text-[#002147] border-b-2 border-orange-400 text-center pb-1 mx-auto">A Structured Approach to Your Academic Future</h3>
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-orange-200 transition-shadow">
+              <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mb-4">
+                <svg className="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                 </svg>
               </div>
               <h4 className="font-semibold mb-3">Personalized Planning</h4>
               <p className="text-gray-600">Personalized educational planning aligned with your goals</p>
             </div>
-            <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-orange-200 transition-shadow">
+              <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mb-4">
+                <svg className="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                 </svg>
               </div>
               <h4 className="font-semibold mb-3">Veteran-Centric Guidance</h4>
               <p className="text-gray-600">Veteran-centric guidance for admissions, financial aid, and academic transitions</p>
             </div>
-            <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-orange-200 transition-shadow">
+              <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mb-4">
+                <svg className="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2M7 7h10" />
                 </svg>
               </div>
@@ -182,31 +180,31 @@ journey.
           
         </div>
         <div className="container mx-auto px-4 mt-12">
-          <h3 className="text-xl font-semibold mb-6 text-center text-[#002147]">
+          <h3 className="text-xl font-semibold mb-6 text-center text-[#002147] border-b-2 border-orange-400 text-center pb-1 mx-auto">
             Comprehensive Support Network
           </h3>
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-orange-200 transition-shadow">
+              <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mb-4">
+                <svg className="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
               </div>
               <h4 className="font-semibold mb-3">Dedicated Mentors</h4>
               <p className="text-gray-600">Dedicated mentors experienced in veteran-specific educational transitions</p>
             </div>
-            <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-orange-200 transition-shadow">
+              <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mb-4">
+                <svg className="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
                 </svg>
               </div>
               <h4 className="font-semibold mb-3">Strategic Workshops</h4>
               <p className="text-gray-600">Access to strategic academic workshops and webinars</p>
             </div>
-            <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-orange-200 transition-shadow">
+              <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mb-4">
+                <svg className="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
                 </svg>
               </div>
@@ -255,11 +253,19 @@ journey.
 </section>
 
       {/* Who Should Enroll Section */}
-      <section id="who-should-enroll" className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
+      <section id="who-should-enroll" className="py-16 bg-gradient-to-r from-orange-100 via-white to-blue-100 relative overflow-hidden">
+        {/* Background image overlay */}
+        <div className="absolute inset-0 w-full h-full z-0" style={{
+          backgroundImage: 'url("/background4.jpg")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          opacity: 0.15
+        }}></div>
+        <div className="container mx-auto px-4 relative z-10">
           <h2 className="text-3xl font-bold mb-8 text-center">Who Should Enroll?</h2>
           <p className="text-lg text-center text-gray-600 mb-10 max-w-3xl mx-auto">
-            PLEP is specifically designed for:
+            PLEP is specifically designed for
           </p>
           
           <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
@@ -340,11 +346,20 @@ journey.
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-[#002147] text-white relative overflow-hidden">
-        <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-72 h-72 bg-orange-500 rounded-full opacity-10 blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/2 w-72 h-72 bg-white rounded-full opacity-10 blur-3xl"></div>
+      <section className="py-16 bg-gradient-to-r from-orange-500 to-[#002147] text-white relative overflow-hidden">
+        {/* Background image overlay */}
+        <div className="absolute inset-0 w-full h-full z-0" style={{
+          backgroundImage: 'url("/background4.jpg")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          opacity: 0.25
+        }}></div>
+        {/* Orange and white blurred circles for extra effect */}
+        <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-72 h-72 bg-orange-500 rounded-full opacity-10 blur-3xl z-10"></div>
+        <div className="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/2 w-72 h-72 bg-white rounded-full opacity-10 blur-3xl z-10"></div>
         
-        <div className="container mx-auto px-4 text-center relative z-10">
+        <div className="container mx-auto px-4 text-center relative z-20">
           <h2 className="text-3xl font-bold mb-6">Start Your Academic Journey Today</h2>
           <p className="mb-8 text-lg max-w-2xl mx-auto">
             Ready to pave your path to academic success? Schedule your free consultation to explore how WANAC's Promise Land

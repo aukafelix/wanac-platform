@@ -58,7 +58,7 @@ export default function Homepage() {
   </div>
 </section>
 
-<section id="how-we-help" className="py-16 px-4 text-center relative overflow-hidden" style={{ background: 'linear-gradient(160deg, #FFFDF9 0%, #FF7D33 15%, #FF5E1A 50%, #002147 60%)' }}>
+<section id="how-we-help" className="py-16 px-4 text-center relative overflow-hidden" style={{ background: 'linear-gradient(160deg, #FFFDF9 0%, #FF7D33 15%, #FF5E1A 30%, #002147 50%)' }}>
   {/* Extra gradients for visual layering */}
   <div className="absolute top-1/3 left-0 w-96 h-96 bg-gradient-to-br from-orange-400/10 via-orange-200/10 to-blue-400/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 z-0" />
   <div className="absolute bottom-10 right-1/4 w-80 h-80 bg-gradient-to-tr from-blue-400/10 via-white/10 to-orange-400/10 rounded-full blur-2xl z-0" />
@@ -71,7 +71,7 @@ export default function Homepage() {
   <div className="relative z-10">
     {/* Section Header */}
     <div className="mb-12">
-      <h2 className="text-3xl font-bold mt-2 mb-3 uppercase text-white">How We Help</h2>
+      <h2 className="text-3xl font-bold mt-2 mb-3 uppercase text-white">Our Programs</h2>
       <div className="w-16 h-1 bg-white mx-auto rounded-full"/>
     </div>
 
@@ -236,6 +236,15 @@ export default function Homepage() {
               </p>
             </div>
           </div>
+          {/* Learn More Button */}
+   <div className="mt-10 flex justify-center">
+      <Link
+        href="/login"
+        className="inline-block px-8 py-3 bg-orange-500 text-white font-semibold rounded-lg shadow-lg hover:bg-orange-600 transition-colors duration-300 text-lg"
+      >
+        Start Free Trial Now
+      </Link>
+    </div>
         </div>
       </section>
 

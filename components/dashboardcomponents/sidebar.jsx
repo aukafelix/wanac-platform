@@ -35,7 +35,6 @@ export default function Sidebar() {
         aria-label="Open sidebar"
         onClick={() => setMobileOpen(true)}
       >
-        
         <Menu size={24} />
       </button>
       {/* Sidebar overlay for mobile */}
@@ -46,58 +45,49 @@ export default function Sidebar() {
           aria-hidden="true"
         />
       )}
-      {/* Sidebar */}
-      <aside
-        className={`bg-white border-r border-gray-200 flex-col h-screen transition-all duration-300
-          ${collapsed ? 'w-16' : 'w-56'}
-          z-50
-          ${mobileOpen ? 'fixed top-0 left-0 flex md:hidden' : 'hidden'}
-          md:flex md:static md:translate-x-0
-        `}
-        onMouseEnter={() => setCollapsed(false)}
-        onMouseLeave={() => setCollapsed(true)}
-        role="navigation"
-        aria-label="Sidebar"
-        tabIndex={-1}
-        style={{ outline: mobileOpen ? '2px solid #2563eb' : 'none' }}
-      >
-        <div className={`p-3 ${collapsed ? 'justify-center flex' : ''}`}>
-          {!collapsed && <h1 className="text-base font-semibold text-gray-800">WANAC</h1>}
-          {collapsed && <span className="sr-only">WANAC</span>}
-        </div>
-        <nav className="flex-1 p-1 space-y-1">
-          {navItems.map((item) => (
-            <Link
-              key={item.name}
-              href={item.href}
-              className={`flex items-center gap-2 px-2 py-2 rounded-md text-xs font-medium transition-all 
-                ${
-                  pathname === item.href
-                    ? 'bg-blue-100 text-blue-600'
-                    : 'text-gray-700 hover:bg-gray-100'
-                } ${collapsed ? 'justify-center' : ''}`}
+      {/* Sidebar for mobile */}
+      {mobileOpen && (
+        <aside
+          className={`bg-white border-r border-gray-200 flex-col h-screen transition-all duration-300 w-56 fixed top-0 left-0 z-50 md:hidden flex`}
+          role="navigation"
+          aria-label="Sidebar"
+          tabIndex={-1}
+          style={{ outline: '2px solid #2563eb' }}
+        >
+          <div className={`p-3`}>
+            <h1 className="text-base font-semibold text-gray-800">WANAC</h1>
+          </div>
+          <nav className="flex-1 p-1 space-y-1">
+            {navItems.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                className={`flex items-center gap-2 px-2 py-2 rounded-md text-xs font-medium transition-all \
+                  ${
+                    pathname === item.href
+                      ? 'bg-blue-100 text-blue-600'
+                      : 'text-gray-700 hover:bg-gray-100'
+                  }`}
+                onClick={() => setMobileOpen(false)}
+              >
+                {item.icon}
+                {item.name}
+              </Link>
+            ))}
+          </nav>
+          <div className="p-2 border-t flex flex-col gap-1">
+            <button className="flex items-center gap-2 px-2 py-2 text-xs text-gray-600 hover:bg-gray-100 w-full rounded-md"
               onClick={() => setMobileOpen(false)}
             >
-              {item.icon}
-              {collapsed ? null : item.name}
-            </Link>
-          ))}
-        </nav>
-        <div className="p-2 border-t flex flex-col gap-1">
-          <button className={`flex items-center gap-2 px-2 py-2 text-xs text-gray-600 hover:bg-gray-100 w-full rounded-md ${collapsed ? 'justify-center' : ''}`}
-            onClick={() => setMobileOpen(false)}
-          >
-            <LogOut size={18} />
-            {!collapsed && 'Log Out'}
-          </button>
-        </div>
-      </aside>
+              <LogOut size={18} />
+              {'Log Out'}
+            </button>
+          </div>
+        </aside>
+      )}
       {/* Sidebar for desktop */}
       <aside
-        className={`bg-white border-r border-gray-200 flex-col h-screen transition-all duration-300
-          ${collapsed ? 'w-16' : 'w-56'}
-          hidden md:flex md:static md:z-0
-        `}
+        className={`bg-white border-r border-gray-200 flex-col h-screen transition-all duration-300 ${collapsed ? 'w-16' : 'w-56'} hidden md:flex md:static md:z-0`}
         onMouseEnter={() => setCollapsed(false)}
         onMouseLeave={() => setCollapsed(true)}
         role="navigation"
@@ -113,7 +103,7 @@ export default function Sidebar() {
             <Link
               key={item.name}
               href={item.href}
-              className={`flex items-center gap-2 px-2 py-2 rounded-md text-xs font-medium transition-all 
+              className={`flex items-center gap-2 px-2 py-2 rounded-md text-xs font-medium transition-all \
                 ${
                   pathname === item.href
                     ? 'bg-blue-100 text-blue-600'
