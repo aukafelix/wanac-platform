@@ -303,27 +303,33 @@ const handleNavigation = (href) => {
           
           {/* Mobile Action Buttons */}
           <div className="px-4 py-4 space-y-2">
-            <Link
-              href="/pages/donate"
+            <button
               className="block w-full text-center py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600"
-              onClick={() => setIsMobileMenuOpen(false)}
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+                handleNavigation('/pages/donate');
+              }}
             >
               DONATE
-            </Link>
-            <Link
-              href="/pages/howwehelp"
+            </button>
+            <button
               className="block w-full text-center py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600"
-              onClick={() => setIsMobileMenuOpen(false)}
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+                handleNavigation('/pages/howwehelp');
+              }}
             >
               FREE STRATEGY SESSION
-            </Link>
-            <Link
-              href="/pages/(resources)#workshops"
+            </button>
+            <button
               className="block w-full text-center py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-              onClick={() => setIsMobileMenuOpen(false)}
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+                handleNavigation('/pages/workshops');
+              }}
             >
               SHOP
-            </Link>
+            </button>
           </div>
         </div>
       )}

@@ -67,6 +67,12 @@ const VetaPage = () => {
           <p className="text-xl max-w-3xl mx-auto px-4">
             Launch and Scale Your Veteran-Led Business
           </p>
+          <p className="text-xl max-w-3xl mx-auto px-4">
+          WANAC's Vetrepreneurship Academy offers transitioning service members and veterans a robust entrepreneurial
+education, equipping you with essential skills to successfully launch, grow, and sustain your business ventures.
+Through a comprehensive, structured curriculum and expert mentorship, you'll transform your innovative ideas into
+thriving enterprises.
+          </p>
           <div className="mt-8 flex justify-center gap-4">
             <button className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-full font-semibold transition-colors">
               Apply Now
@@ -81,7 +87,7 @@ const VetaPage = () => {
       {/* Navigation Bar */}
       {/* Navigation Bar */}
       <section>
-        <div className="relative w-full h-10 bg-[#002147] overflow-hidden flex items-center justify-center">
+        <div className="relative w-full h-16 bg-[#002147] overflow-hidden flex items-center justify-center">
           <nav className="relative z-10 flex space-x-16 px-4">
             <a href="#program-overview" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
               Program Overview
@@ -108,143 +114,118 @@ const VetaPage = () => {
       <section id="overview" className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold mb-12 text-center text-[#002147]">Why Choose Vetrepreneurship Academy?</h2>
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
-                <FaGraduationCap className="w-6 h-6 text-[#002147]" />
-              </div>
-              <h3 className="font-semibold mb-3 text-[#002147]">Comprehensive Training</h3>
-              <p className="text-gray-600">Master key entrepreneurial skills through our structured curriculum</p>
+              <h3 className="font-semibold mb-3 text-[#002147] text-xl">Comprehensive Entrepreneurial Training</h3>
+              <ul className="list-disc pl-6 space-y-2 text-gray-700">
+                <li>Master key entrepreneurial skills: ideation, business model development, financial modeling</li>
+                <li>Gain practical expertise in customer discovery, market analysis, and competitive strategy</li>
+                <li>Learn effective strategies to secure funding and attract investors</li>
+              </ul>
             </div>
             <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
-                <FaUsers className="w-6 h-6 text-[#002147]" />
-              </div>
-              <h3 className="font-semibold mb-3 text-[#002147]">Expert Mentorship</h3>
-              <p className="text-gray-600">Learn from successful veteran entrepreneurs and industry leaders</p>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
-                <FaHandshake className="w-6 h-6 text-[#002147]" />
-              </div>
-              <h3 className="font-semibold mb-3 text-[#002147]">Network Access</h3>
-              <p className="text-gray-600">Connect with investors, partners, and fellow veteran entrepreneurs</p>
+              <h3 className="font-semibold mb-3 text-[#002147] text-xl">Integrated and Structured Curriculum</h3>
+              <ul className="list-disc pl-6 space-y-2 text-gray-700">
+                <li>The academy covers: Strategic business planning and market entry techniques</li>
+                <li>Rigorous financial planning, projections, and management strategies</li>
+                <li>Effective sales, marketing, and customer engagement methods</li>
+                <li>Proven methodologies for startup success and sustainable business growth</li>
+              </ul>
             </div>
           </div>
         </div>
       </section>
 
       {/* Interactive Program Section */}
-      <section id="program" className="py-16">
+      <section id="how-it-works" className="py-16">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-8 text-center text-[#002147]">Program Journey</h2>
-          <div className="max-w-6xl mx-auto">
-            {/* Step Navigation */}
-            <div className="flex justify-center mb-8">
-              {programSteps.map((step) => (
-                <button
-                  key={step.number}
-                  onClick={() => setActiveStep(step.number)}
-                  className={`mx-2 px-6 py-2 rounded-full transition-all duration-300 ${
-                    activeStep === step.number
-                      ? 'bg-[#002147] text-white'
-                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                  }`}
-                >
-                  Step {step.number}
-                </button>
-              ))}
+          <h2 className="text-3xl font-bold mb-8 text-center text-[#002147]">How the Academy Works</h2>
+          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            {/* Immersive Learning Modules */}
+            <div className="bg-white rounded-xl shadow-lg p-8 flex flex-col h-full">
+              <h3 className="text-xl font-semibold text-[#002147] mb-4">Immersive Learning Modules</h3>
+              <ul className="list-disc pl-6 space-y-3 text-gray-700">
+                <li>Interactive online courses and dynamic in-person workshops</li>
+                <li>Real-world business scenario analyses and hands-on project work</li>
+              </ul>
             </div>
-
-            {/* Step Content */}
-            <div className="bg-white rounded-xl shadow-lg p-8 transition-all duration-300">
-              {programSteps.map((step) => (
-                activeStep === step.number && (
-                  <div key={step.number} className="space-y-6">
-                    <div className="flex items-center space-x-4">
-                      <div className="w-12 h-12 rounded-full bg-[#002147] text-white flex items-center justify-center">
-                        {step.icon}
-                      </div>
-                      <h3 className="text-2xl font-semibold text-[#002147]">{step.title}</h3>
-                    </div>
-                    <p className="text-gray-600 text-lg">{step.description}</p>
-                    <div className="bg-gray-50 rounded-lg p-6">
-                      <h4 className="font-semibold text-[#002147] mb-4">Key Components:</h4>
-                      <ul className="space-y-3">
-                        {step.details.map((detail, index) => (
-                          <li key={index} className="flex items-start space-x-3">
-                            <FaCheckCircle className="w-5 h-5 text-green-500 mt-1 flex-shrink-0" />
-                            <span className="text-gray-700">{detail}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                )
-              ))}
+            {/* Expert-Led Mentorship */}
+            <div className="bg-white rounded-xl shadow-lg p-8 flex flex-col h-full">
+              <h3 className="text-xl font-semibold text-[#002147] mb-4">Expert-Led Mentorship</h3>
+              <ul className="list-disc pl-6 space-y-3 text-gray-700">
+                <li>Personal mentoring from successful veteran entrepreneurs</li>
+                <li>Ongoing coaching and feedback tailored to your specific venture</li>
+              </ul>
+            </div>
+            {/* Practical Application */}
+            <div className="bg-white rounded-xl shadow-lg p-8 flex flex-col h-full">
+              <h3 className="text-xl font-semibold text-[#002147] mb-4">Practical Application</h3>
+              <ul className="list-disc pl-6 space-y-3 text-gray-700">
+                <li>Create investor-ready business plans and pitch decks</li>
+                <li>Participate in practical simulations and real-world business challenges</li>
+              </ul>
+            </div>
+            {/* Access to Networks and Resources */}
+            <div className="bg-white rounded-xl shadow-lg p-8 flex flex-col h-full">
+              <h3 className="text-xl font-semibold text-[#002147] mb-4">Access to Networks and Resources</h3>
+              <ul className="list-disc pl-6 space-y-3 text-gray-700">
+                <li>Connect with veteran-specific funding opportunities and industry leaders</li>
+                <li>Leverage WANAC's extensive entrepreneurial network for growth and collaboration</li>
+              </ul>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Application Section */}
-      <section id="apply" className="py-16 bg-gray-50">
+      {/* Ideal Vetrepreneurship Candidates Section */}
+      <section id="ideal-candidates" className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-12 text-center text-[#002147]">Ready to Begin Your Journey?</h2>
-          <div className="max-w-4xl mx-auto">
-            <div className="grid md:grid-cols-2 gap-8">
-              <div className="bg-white p-8 rounded-xl shadow-md">
-                <h3 className="text-xl font-semibold mb-4 text-[#002147]">Program Requirements</h3>
-                <ul className="space-y-4">
-                  <li className="flex items-start">
-                    <FaCheckCircle className="w-5 h-5 text-green-500 mt-1 mr-3" />
-                    <span>Veteran or transitioning service member status</span>
-                  </li>
-                  <li className="flex items-start">
-                    <FaCheckCircle className="w-5 h-5 text-green-500 mt-1 mr-3" />
-                    <span>Business idea or existing business</span>
-                  </li>
-                  <li className="flex items-start">
-                    <FaCheckCircle className="w-5 h-5 text-green-500 mt-1 mr-3" />
-                    <span>Commitment to full program participation</span>
-                  </li>
-                </ul>
-              </div>
-              <div className="bg-white p-8 rounded-xl shadow-md">
-                <h3 className="text-xl font-semibold mb-4 text-[#002147]">Next Steps</h3>
-                <ul className="space-y-4">
-                  <li className="flex items-start">
-                    <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
-                      <span className="text-[#002147] font-semibold">1</span>
-                    </div>
-                    <span>Complete the online application form</span>
-                  </li>
-                  <li className="flex items-start">
-                    <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
-                      <span className="text-[#002147] font-semibold">2</span>
-                    </div>
-                    <span>Schedule an initial consultation</span>
-                  </li>
-                  <li className="flex items-start">
-                    <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
-                      <span className="text-[#002147] font-semibold">3</span>
-                    </div>
-                    <span>Begin your entrepreneurial journey</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div className="text-center mt-12">
-              <Link 
-                href="/apply/veta"
-                className="inline-flex items-center bg-[#002147] text-white px-8 py-3 rounded-full font-semibold hover:bg-orange-500 transition-colors"
-              >
-                Apply Now <FaArrowRight className="ml-2" />
-              </Link>
-            </div>
+          <h2 className="text-3xl font-bold mb-8 text-center text-[#002147]">Ideal Vetrepreneurship Candidates</h2>
+          <div className="max-w-3xl mx-auto">
+            <ul className="list-disc pl-8 space-y-5 text-lg text-gray-700">
+              <li>Veterans and service members transitioning into entrepreneurship</li>
+              <li>Aspiring veteran entrepreneurs ready to develop and launch their business ideas</li>
+              <li>Existing veteran business owners aiming to scale their enterprises</li>
+            </ul>
           </div>
         </div>
       </section>
+
+      {/* Success Stories Section */}
+      <section id="success-stories" className="py-16">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold mb-8 text-center text-[#002147]">Success Stories</h2>
+          <div className="max-w-3xl mx-auto space-y-8">
+            <blockquote className="bg-white rounded-xl shadow-md p-6 text-lg italic text-gray-800 border-l-4 border-orange-500">
+              “Vetrepreneurship Academy gave me the critical tools and support to launch my startup confidently. The mentorship was invaluable.”<br/>
+              <span className="block mt-4 font-semibold text-[#002147]">– Veteran Entrepreneur</span>
+            </blockquote>
+            <blockquote className="bg-white rounded-xl shadow-md p-6 text-lg italic text-gray-800 border-l-4 border-orange-500">
+              “The structured guidance and resources provided by the academy were key in scaling my business successfully.”<br/>
+              <span className="block mt-4 font-semibold text-[#002147]">– Program Alumnus</span>
+            </blockquote>
+          </div>
+        </div>
+      </section>
+
+      {/* Begin Your Entrepreneurial Journey Section */}
+      <section id="begin-journey" className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold mb-6 text-center text-[#002147]">Begin Your Entrepreneurial Journey</h2>
+          <p className="max-w-2xl mx-auto text-lg text-center text-gray-700 mb-8">
+            Ready to build your entrepreneurial legacy? Schedule your complimentary consultation today and discover how WANAC's Vetrepreneurship Academy can support your journey to business success.
+          </p>
+          <div className="flex justify-center">
+            <a
+              href="#"
+              className="inline-block bg-[#002147] text-white px-8 py-3 rounded-full font-semibold hover:bg-orange-500 transition-colors text-lg shadow-md"
+            >
+              Schedule Your Complimentary Consultation &rarr;
+            </a>
+          </div>
+        </div>
+      </section>
+
     </div>
   );
 };

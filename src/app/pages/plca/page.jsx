@@ -25,6 +25,11 @@ const PlcaPage = () => {
           <p className="text-xl max-w-3xl mx-auto px-4">
             Accelerate your career transition with confidence through WANAC's proven methodologies and comprehensive support system.
           </p>
+          <p className="text-xl max-w-3xl mx-auto px-4">
+          WANAC's Promise Land Career Accelerator (PLCA) is specifically designed to support transitioning service members
+and veterans in achieving successful and fulfilling civilian careers. Utilizing proven methodologies, PLCA prepares
+participants with the essential skills needed to thrive professionally in diverse sectors.
+          </p>
           <div className="mt-8 flex justify-center gap-4">
             <button className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-full font-semibold transition-colors">
               Apply Now
@@ -141,22 +146,22 @@ const PlcaPage = () => {
             {[
               {
                 step: 1,
-                title: "Initial Assessment",
+                title: "Initial Career Assessment",
                 description: "Complete a comprehensive career assessment to identify your goals and strengths"
               },
               {
                 step: 2,
-                title: "Personalized Plan",
+                title: "Targeted Career Coaching",
                 description: "Receive a customized development plan tailored to your career objectives"
               },
               {
                 step: 3,
-                title: "Skills Development",
+                title: "Targeted Career Coaching",
                 description: "Engage in intensive training modules and hands-on workshops"
               },
               {
                 step: 4,
-                title: "Career Launch",
+                title: "Networking and Placement Opportunities",
                 description: "Get support in job search, placement, and ongoing career growth"
               }
             ].map((item) => (
@@ -172,85 +177,17 @@ const PlcaPage = () => {
         </div>
       </section>
 
-      {/* Application Section */}
-      <section id="apply" className="py-20 bg-gray-50">
+      {/* Who Should Enroll Section */}
+      <section id="who-should-enroll" className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-12 text-center text-[#002147]">Start Your Journey</h2>
-          <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-8">
-            <div className="grid md:grid-cols-2 gap-8">
-              <div>
-                <h3 className="text-xl font-semibold mb-4 text-[#002147]">Application Process</h3>
-                <ul className="space-y-4">
-                  <li className="flex items-start">
-                    <span className="text-orange-500 mr-2">1.</span>
-                    <span>Fill out the initial application form</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-orange-500 mr-2">2.</span>
-                    <span>Schedule a consultation call</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-orange-500 mr-2">3.</span>
-                    <span>Complete career assessment</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-orange-500 mr-2">4.</span>
-                    <span>Receive program acceptance decision</span>
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <form className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium mb-2" htmlFor="name">Full Name</label>
-                    <input
-                      type="text"
-                      id="name"
-                      className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#002147]"
-                      placeholder="Enter your full name"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-2" htmlFor="email">Email</label>
-                    <input
-                      type="email"
-                      id="email"
-                      className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#002147]"
-                      placeholder="Enter your email"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-2" htmlFor="phone">Phone Number</label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#002147]"
-                      placeholder="Enter your phone number"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-2" htmlFor="service">Military Service</label>
-                    <select
-                      id="service"
-                      className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#002147]"
-                    >
-                      <option value="">Select your service branch</option>
-                      <option value="army">Army</option>
-                      <option value="navy">Navy</option>
-                      <option value="airforce">Air Force</option>
-                      <option value="marines">Marines</option>
-                      <option value="coastguard">Coast Guard</option>
-                    </select>
-                  </div>
-                  <button
-                    type="submit"
-                    className="w-full bg-[#002147] text-white py-3 rounded-lg font-semibold hover:bg-orange-500 transition-colors"
-                  >
-                    Submit Application
-                  </button>
-                </form>
-              </div>
-            </div>
+          <h2 className="text-3xl font-bold mb-12 text-center text-[#002147]">Who Should Enroll?</h2>
+          <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-lg p-8">
+            <p className="text-lg mb-6 text-[#002147] font-semibold">PLCA is ideal for:</p>
+            <ul className="list-disc pl-6 space-y-4 text-gray-700 text-base">
+              <li>Veterans preparing to enter or re-enter the civilian workforce</li>
+              <li>Transitioning service members seeking clear, structured career guidance</li>
+              <li>Individuals aiming to significantly enhance their professional readiness and employability</li>
+            </ul>
           </div>
         </div>
       </section>

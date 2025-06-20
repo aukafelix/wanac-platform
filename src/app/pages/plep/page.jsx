@@ -96,7 +96,13 @@ const PlepPage = () => {
             Promise Land Education Pathway (PLEP)
           </h1>
           <p className="text-xl max-w-3xl mx-auto px-4">
-            Your Strategic Pathway to Educational Excellence
+            <b>Your Strategic Pathway to Educational Excellence</b>
+          </p>
+          <p className="text-xl max-w-3xl mx-auto px-4">
+          WANAC's Promise Land Education Pathway (PLEP) provides structured, comprehensive guidance and support
+specifically designed for transitioning service members and veterans pursuing higher education. PLEP equips you with
+critical tools, personalized coaching, and tailored resources to successfully navigate and excel in your academic
+journey.
           </p>
           <div className="mt-8 flex justify-center gap-4">
             <button className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-full font-semibold transition-colors">
@@ -112,12 +118,15 @@ const PlepPage = () => {
       {/* Navigation Bar */}
       <section>
         <div className="relative w-full h-10 bg-[#002147] overflow-hidden flex items-center justify-center">
-          <nav className="relative z-10 flex space-x-16 px-4">
+          <nav className="relative z-10 flex space-x-8 px-4">
             <a href="#program-overview" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
               Program Overview
             </a>
             <a href="#how-it-works" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
               How It Works
+            </a>
+            <a href="#who-should-enroll" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
+              Who Should Enroll?
             </a>
             <a href="#success-stories" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
               Success Stories
@@ -149,7 +158,7 @@ const PlepPage = () => {
                 </svg>
               </div>
               <h4 className="font-semibold mb-3">Personalized Planning</h4>
-              <p className="text-gray-600">Educational planning aligned with your personal and professional goals</p>
+              <p className="text-gray-600">Personalized educational planning aligned with your goals</p>
             </div>
             <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
               <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
@@ -158,7 +167,7 @@ const PlepPage = () => {
                 </svg>
               </div>
               <h4 className="font-semibold mb-3">Veteran-Centric Guidance</h4>
-              <p className="text-gray-600">Specialized support for admissions, financial aid, and academic transitions</p>
+              <p className="text-gray-600">Veteran-centric guidance for admissions, financial aid, and academic transitions</p>
             </div>
             <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
               <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
@@ -167,7 +176,42 @@ const PlepPage = () => {
                 </svg>
               </div>
               <h4 className="font-semibold mb-3">Targeted Resources</h4>
-              <p className="text-gray-600">Custom resources designed specifically for transitioning service members and veterans</p>
+              <p className="text-gray-600">Targeted academic resources designed specifically for transitioning service members and veterans</p>
+            </div>
+          </div>
+          
+        </div>
+        <div className="container mx-auto px-4 mt-12">
+          <h3 className="text-xl font-semibold mb-6 text-center text-[#002147]">
+            Comprehensive Support Network
+          </h3>
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+              </div>
+              <h4 className="font-semibold mb-3">Dedicated Mentors</h4>
+              <p className="text-gray-600">Dedicated mentors experienced in veteran-specific educational transitions</p>
+            </div>
+            <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                </svg>
+              </div>
+              <h4 className="font-semibold mb-3">Strategic Workshops</h4>
+              <p className="text-gray-600">Access to strategic academic workshops and webinars</p>
+            </div>
+            <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+              </div>
+              <h4 className="font-semibold mb-3">Peer Support</h4>
+              <p className="text-gray-600">Strong peer support through community networking and shared resources</p>
             </div>
           </div>
         </div>
@@ -210,6 +254,47 @@ const PlepPage = () => {
   </div>
 </section>
 
+      {/* Who Should Enroll Section */}
+      <section id="who-should-enroll" className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold mb-8 text-center">Who Should Enroll?</h2>
+          <p className="text-lg text-center text-gray-600 mb-10 max-w-3xl mx-auto">
+            PLEP is specifically designed for:
+          </p>
+          
+          <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+            <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+              </div>
+              <h4 className="font-semibold mb-3">Veterans</h4>
+              <p className="text-gray-600">Veterans aiming for higher education post-transition</p>
+            </div>
+            
+            <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <h4 className="font-semibold mb-3">Service Members</h4>
+              <p className="text-gray-600">Service members exploring academic opportunities and advancement</p>
+            </div>
+            
+            <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+              </div>
+              <h4 className="font-semibold mb-3">Individuals Seeking Support</h4>
+              <p className="text-gray-600">Individuals requiring structured, tailored support for educational success</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Success Stories Section */}
       <section id="success-stories" className="py-16 bg-gray-50">

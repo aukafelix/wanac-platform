@@ -146,7 +146,17 @@ export default function Homepage() {
         </div>
       ))}
     </div>
+   
   </div>
+   {/* Learn More Button */}
+   <div className="mt-10 flex justify-center">
+      <Link
+        href="/howwehelp"
+        className="inline-block px-8 py-3 bg-orange-500 text-white font-semibold rounded-lg shadow-lg hover:bg-orange-600 transition-colors duration-300 text-lg"
+      >
+        Learn More
+      </Link>
+    </div>
 </section>
 
       <section className="py-20 px-6 bg-[#002147] text-white relative overflow-hidden">
@@ -230,12 +240,12 @@ export default function Homepage() {
       </section>
 
       {/* Community and Testimonial */}
-      <section className="py-20 px-6 bg-white text-[#002147] relative overflow-hidden" style={{ background: 'linear-gradient(155deg, #f8fafc 0%, #ffedd5 50%, #e0e7ff 100%)' }}>
+      <section className="py-20 px-6 bg-white text-[#002147] relative overflow-hidden" style={{ background: 'linear-gradient(160deg, #FFFDF9 0%, #FF7D33 15%, #FF5E1A 50%, #002147 60%)' }}>
         {/* Extra gradients for testimonials */}
         <div className="absolute top-0 left-1/3 w-96 h-96 bg-gradient-to-br from-orange-400/10 via-orange-200/10 to-blue-400/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 z-0" />
         <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-gradient-to-tr from-blue-400/10 via-white/10 to-orange-400/10 rounded-full blur-2xl z-0" />
         <div className="absolute inset-0 opacity-5 bg-[url('/testimonials-bg-pattern.jpg')] bg-cover bg-center"></div>
-        <h2 className="text-4xl font-bold mb-12 text-center uppercase relative z-10">Testimonials</h2>
+        <h2 className="text-4xl font-bold mb-12 text-center uppercase text-white relative z-10">Testimonials</h2>
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-8 items-center relative z-10">
           {/* Testimonial 1 */}
           <div className="group bg-white/80 backdrop-blur-sm p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-500 border border-gray-100 relative overflow-hidden">
@@ -361,15 +371,27 @@ export default function Homepage() {
       </section>
 
       {/* Final Section */}
-<section className="py-20 px-6 text-center bg-black relative overflow-hidden">
-  {/* Extra gradients for final section */}
-  <div className="absolute -top-24 left-1/2 w-[36rem] h-[36rem] bg-gradient-to-br from-orange-400/20 via-blue-400/10 to-white/10 rounded-full blur-3xl -translate-x-1/2 z-0 animate-pulse" />
-  <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-tr from-blue-400/10 via-white/10 to-orange-400/10 rounded-full blur-2xl z-0" />
-  <h2 className="text-3xl font-bold mb-12 uppercase text-white text-heading relative">
+<section className="py-20 px-6 text-center relative overflow-hidden min-h-[65vh] bg-[#002147] text-white object-cover z-0">
+  {/* Hero-style background image + gradient overlay */}
+  <div 
+    className="absolute inset-0 w-full h-full z-0"
+    style={{
+      backgroundImage: `linear-gradient(150deg, rgba(0,33,71,0.85) 10%, rgba(255,94,26,0.60) 200%, rgba(255,255,255,0.90) 100%), url('/pexels-rdne-7467965.jpg')`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center 20%',
+      backgroundRepeat: 'no-repeat',
+      pointerEvents: 'none',
+    }}
+    aria-hidden="true"
+  />
+  {/* Animated/blurred gradients for extra pop */}
+  <div className="absolute -top-32 -left-32 w-[32rem] h-[32rem] bg-gradient-to-br from-orange-400/30 via-orange-500/20 to-blue-400/20 rounded-full blur-3xl animate-pulse z-0" />
+  <div className="absolute bottom-0 right-0 w-[28rem] h-[28rem] bg-gradient-to-tr from-blue-400/20 via-white/10 to-orange-400/20 rounded-full blur-2xl animate-pulse z-0" />
+  <h2 className="text-5xl font-extrabold mb-12 uppercase text-white text-heading relative">
     Manage Your Experience
     <span className="block h-1 w-20 bg-blue-400 mx-auto mt-4"></span>
   </h2>
-  
+  {/* Keep the existing grid and card alignment unchanged */}
   <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
     {/* Card 1 */}
     <div className="group bg-white/10 backdrop-blur-sm rounded-xl p-8 transition-all duration-500 hover:bg-orange-500/20 hover:scale-105 cursor-pointer border border-white/10 hover:border-orange-500/50">
@@ -398,7 +420,6 @@ export default function Homepage() {
         </div>
       </div>
     </div>
-
     {/* Card 2 */}
     <div className="group bg-white/10 backdrop-blur-sm rounded-xl p-8 transition-all duration-500 hover:bg-orange-500/20 hover:scale-105 cursor-pointer border border-white/10 hover:border-orange-500/50">
       <div className="flex flex-col items-center text-white">
@@ -426,7 +447,6 @@ export default function Homepage() {
         </div>
       </div>
     </div>
-
     {/* Card 3 */}
     <div className="group bg-white/10 backdrop-blur-sm rounded-xl p-8 transition-all duration-500 hover:bg-orange-500/20 hover:scale-105 cursor-pointer border border-white/10 hover:border-orange-500/50">
       <div className="flex flex-col items-center text-white">

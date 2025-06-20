@@ -10,10 +10,18 @@ export default function HowWeHelp() {
       description: "Navigate your educational journey with structured academic transition support and personalized mentoring.",
       icon: <MdSchool size={32} />,
       features: [
-        "Structured academic transition support",
-        "Personalized mentoring through admissions and financial aid",
-        "Veteran-specific resources and academic planning",
-        "Community-focused academic networking and support"
+        "\u2605 Initial Personalized Assessment",
+        "Clarify your educational aspirations and objectives",
+        "Develop an individually tailored academic action plan",
+        "\u2605 Guided Coaching",
+        "Expert assistance navigating college applications and admissions",
+        "Tailored guidance on securing veteran-specific financial aid and resources",
+        "\u2605 Academic Preparation and Resources",
+        "Customized academic readiness programs to build essential study skills",
+        "Veteran-friendly tutoring and academic success coaching",
+        "\u2605 Community and Network Development",
+        "Connect with peers on similar academic journeys",
+        "Leverage veteran-specific academic institutions and networks for ongoing support"
       ]
     },
     {
@@ -40,18 +48,7 @@ export default function HowWeHelp() {
         "Proven methodologies for sustained high-performance outcomes"
       ]
     },
-    {
-      id: 4,
-      title: "Vetrepreneurship Academy (VETA)",
-      description: "Build your entrepreneurial legacy with comprehensive business planning and mentorship.",
-      icon: <MdBusiness size={32} />,
-      features: [
-        "Comprehensive entrepreneurship and business planning curriculum",
-        "Financial modeling, market research, and competitive analysis",
-        "Business model evaluation and customer discovery methods",
-        "Extensive mentorship from successful entrepreneurs"
-      ]
-    },
+    
     {
       id: 4,
       title: "Certified Peak Performance Coach (CPPC)",
@@ -86,33 +83,55 @@ export default function HowWeHelp() {
             Empowering Your Next Chapter
           </h1>
           <p className="text-lg md:text-2xl max-w-2xl mx-auto mb-6 text-blue-100 font-medium drop-shadow">
-            WANAC offers specialized programs to equip transitioning service members, veterans, and aspiring coaches with the skills and knowledge to thrive personally, professionally, and entrepreneurially.
+          At WANAC, we proudly offer specialized programs designed to equip transitioning service members, veterans, and
+          aspiring coaches with the skills and knowledge required to succeed personally, professionally, and entrepreneurially.
           </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mt-4">
+            <a
+              href="/pages/vsointakeform"
+              className="w-full sm:w-auto bg-white text-[#002147] px-8 py-4 rounded-lg font-semibold hover:bg-[#ff5e1a] hover:text-white transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl text-center"
+              aria-label="Intake Form"
+            >
+              Intake Form
+            </a>
+            <a
+              href="/pages/programintakeform"
+              className="w-full sm:w-auto bg-transparent text-white border-2 border-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-[#002147] transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl text-center"
+              aria-label="Program Intake Form"
+            >
+              Program Intake Form
+            </a>
+          </div>
         </div>
       </header>
 
-      {/* Sticky Navigation Bar */}
-      <div clasnsName="relative w-full h-10 bg-[#002147] overflow-hidden flex items-center justify-center">
-        <nav className="sticky top-0 z-30 bg-[#002147] bg-opacity-95 shadow-md">
-        <div className="flex items-center justify-center px-4 py-2 space-x-4 md:space-x-10 overflow-x-auto">
-          <a href="#our-support-pillars" className="text-white hover:text-orange-400 transition-colors text-sm font-semibold py-1 px-2 border-b-2 border-transparent hover:border-orange-400">
-            Program Offerings
-          </a>
-          <a href="#your-coaching-journey" className="text-white hover:text-orange-400 transition-colors text-sm font-semibold py-1 px-2 border-b-2 border-transparent hover:border-orange-400">
-            Program Pathways
-          </a>
-          <a href="#phase-1" className="text-white hover:text-orange-400 transition-colors text-sm font-semibold py-1 px-2 border-b-2 border-transparent hover:border-orange-400">
-            Education & Career
-          </a>
-          <a href="#phase-2" className="text-white hover:text-orange-400 transition-colors text-sm font-semibold py-1 px-2 border-b-2 border-transparent hover:border-orange-400">
-            Peak Performance
-          </a>
-          <a href="#phase-3" className="text-white hover:text-orange-400 transition-colors text-sm font-semibold py-1 px-2 border-b-2 border-transparent hover:border-orange-400">
-            Certification
-          </a>
+      {/* section Navigation Bar */}
+      <section>
+        <div className="relative w-full h-16 bg-[#002147] overflow-hidden flex items-center justify-center">
+          <nav className="relative z-10 flex space-x-8 px-4">
+            <a href="#about" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
+              Understanding Challanges
+            </a>
+            <a href="#program-offerings" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
+              Our Programs
+            </a>
+            <a href="#vso-claims-support" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
+              VSO Claims Support
+            </a>
+            <a href="#why-wanac" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
+              Why WANAC
+            </a>
+          </nav>
+          <div 
+            className="absolute inset-0 w-full" 
+            style={{
+              animation: 'slide 20s linear infinite',
+            }}
+          >
+            <div className="h-full bg-gradient-to-r from-blue-600 via-[#002147] to-blue-600 w-[200%]"></div>
+          </div>
         </div>
-      </nav>
-      </div>
+      </section>
       
 
       {/* Understanding Your Challenges Section */}
@@ -126,21 +145,21 @@ export default function HowWeHelp() {
             We recognize the unique obstacles faced by our participants:
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
-            <div className="flex items-start bg-white/90 rounded-xl shadow p-5 border border-gray-100 space-x-4 hover:shadow-lg transition">
-              <span className="mt-1 w-4 h-4 bg-orange-400 rounded-full flex-shrink-0"></span>
-              <span className="text-gray-800 font-medium">Navigating complex career transitions</span>
+            <div className="flex flex-col items-center bg-white/90 rounded-xl shadow p-5 border border-gray-100 hover:shadow-lg transition">
+              <img src="/bussinessacademyphase1.jpg" alt="Career Transitions" className="w-20 h-20 object-cover rounded-full mb-3 shadow" />
+              <span className="text-gray-800 font-medium text-center">Navigating complex career transitions</span>
             </div>
-            <div className="flex items-start bg-white/90 rounded-xl shadow p-5 border border-gray-100 space-x-4 hover:shadow-lg transition">
-              <span className="mt-1 w-4 h-4 bg-orange-400 rounded-full flex-shrink-0"></span>
-              <span className="text-gray-800 font-medium">Overcoming uncertainty about educational paths</span>
+            <div className="flex flex-col items-center bg-white/90 rounded-xl shadow p-5 border border-gray-100 hover:shadow-lg transition">
+              <img src="/aIandfeatires.jpg" alt="Educational Paths" className="w-20 h-20 object-cover rounded-full mb-3 shadow" />
+              <span className="text-gray-800 font-medium text-center">Overcoming uncertainty about educational paths</span>
             </div>
-            <div className="flex items-start bg-white/90 rounded-xl shadow p-5 border border-gray-100 space-x-4 hover:shadow-lg transition">
-              <span className="mt-1 w-4 h-4 bg-orange-400 rounded-full flex-shrink-0"></span>
-              <span className="text-gray-800 font-medium">Developing entrepreneurial ventures</span>
+            <div className="flex flex-col items-center bg-white/90 rounded-xl shadow p-5 border border-gray-100 hover:shadow-lg transition">
+              <img src="/veterancommunity.png" alt="Entrepreneurial Ventures" className="w-20 h-20 object-cover rounded-full mb-3 shadow" />
+              <span className="text-gray-800 font-medium text-center">Developing entrepreneurial ventures</span>
             </div>
-            <div className="flex items-start bg-white/90 rounded-xl shadow p-5 border border-gray-100 space-x-4 hover:shadow-lg transition">
-              <span className="mt-1 w-4 h-4 bg-orange-400 rounded-full flex-shrink-0"></span>
-              <span className="text-gray-800 font-medium">Sustaining high performance personally and professionally</span>
+            <div className="flex flex-col items-center bg-white/90 rounded-xl shadow p-5 border border-gray-100 hover:shadow-lg transition">
+              <img src="/high perfomance coaching.jpg" alt="High Performance" className="w-20 h-20 object-cover rounded-full mb-3 shadow" />
+              <span className="text-gray-800 font-medium text-center">Sustaining high performance personally and professionally</span>
             </div>
           </div>
         </div>
@@ -161,108 +180,111 @@ export default function HowWeHelp() {
         />
         <div className="relative z-10">
         <div className="mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-12">
-            <h2 className="text-3xl font-bold text-white mb-4">
-              Program Offerings
+          <div className="text-center max-w-3xl mx-auto mb-8">
+            <h2 className="text-3xl font-bold text-white mb-2">
+              Our Programs
             </h2>
             <p className="text-lg text-white">
               Comprehensive programs tailored for veterans, transitioning service members, and aspiring coaches
             </p>
           </div>
-          <div className="grid lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            {supportAreas.map((area, index) => (
-              <div
-                key={area.id}
-                className="group relative bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-500 p-3 border border-gray-100 overflow-hidden min-h-[220px]"
-                style={{ minWidth: '0' }}
-              >
-                {/* Decorative Background Element */}
-                  <div className="absolute top-0 right-0 w-16 h-16 bg-orange-400/10 rounded-full -mr-6 -mt-6 transition-transform group-hover:scale-125 duration-500"></div>
-                  <div className="relative space-y-2">
-                    <div className="flex items-center space-x-2">
-                      <div 
-                        className="p-2 rounded-md bg-gradient-to-br from-[#002147] to-orange-400 text-white group-hover:scale-105 transition-transform duration-300 shadow"
-                        role="img" 
-                        aria-label={area.title}
-                      >
-                        {area.icon}
-                      </div>
-                      <h3 className="text-base font-bold text-brand-navy group-hover:text-orange-400 transition-colors duration-300">
-                        {area.title}
-                      </h3>
-                    </div>
-                    <p className="text-xs text-brand-blue leading-snug">{area.description}</p>
-                    <ul className="space-y-1">
-                      {area.features.map((feature, index) => (
-                        <li 
-                          key={index} 
-                          className="flex items-center space-x-1 p-1 rounded hover:bg-orange-50 transition-colors duration-200 group/item"
-                        >
-                          <span className="flex-shrink-0 w-4 h-4 flex items-center justify-center rounded-full bg-orange-400/10 group-hover/item:bg-orange-400/20 transition-colors duration-200">
-                            <svg 
-                              className="w-3 h-3 text-orange-400" 
-                              fill="none" 
-                              stroke="currentColor" 
-                              viewBox="0 0 24 24"
-                            >
-                              <path 
-                                strokeLinecap="round" 
-                                strokeLinejoin="round" 
-                                strokeWidth="2" 
-                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                              />
-                            </svg>
-                          </span>
-                          <span className="text-xs text-gray-700 group-hover/item:text-orange-600 transition-colors duration-200">
-                            {feature}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
-                    <a 
-                      href={`/pages/${area.title === "Promise Land Education Pathway (PLEP)" ? "plep" :
-                             area.title === "Promise Land Career Accelerator (PLCA)" ? "plca" :
-                             area.title === "Peak Performance Coaching (PPC)" ? "ppc" : "veta"}`}
-                      className="inline-block mt-2 px-3 py-1 bg-[#002147] text-white rounded hover:bg-orange-400 transition-colors duration-300 shadow text-xs"
-                    >
-                      Learn More
-                      <span className="ml-1 inline-block transform group-hover:translate-x-1 transition-transform duration-200">
-                        →
-                      </span>
-                    </a>
-                  </div>
-                  {/* Bottom Decorative Line */}
-                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#002147] to-orange-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
-                </div>
-              ))}
+          <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-5 max-w-6xl mx-auto">
+            {/* VSO Claim Support */}
+            <div className="group relative bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-500 p-4 border border-gray-100 overflow-hidden min-h-[220px] flex flex-col justify-between">
+              <div className="flex items-center mb-2">
+                <MdBusiness size={32} className="text-orange-400 mr-2" />
+                <h3 className="text-lg font-bold text-brand-navy">VSO Claim Support</h3>
+              </div>
+              <p className="text-xs text-brand-blue mb-2">Streamlined Support for VA Claims</p>
+              <ul className="list-disc list-inside text-gray-700 space-y-1 mb-2 text-xs">
+                <li>Expert assistance from accredited Veteran Service Officers (VSOs)</li>
+                <li>Comprehensive help for disability compensation, appeals, and benefits</li>
+                <li>Seamless integration with WANAC's education and career programs</li>
+                <li>Tailored support exclusively for transitioning service members and recently separated veterans</li>
+              </ul>
+              <a href="/pages/vsoclaimssupportprogram" className="inline-block mt-2 px-3 py-1 bg-orange-400 text-white rounded hover:bg-[#002147] transition-colors duration-300 shadow text-xs font-semibold">Explore VSO Claim Support &rarr;</a>
+            </div>
+            {/* PLEP */}
+            <div className="group relative bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-500 p-4 border border-gray-100 overflow-hidden min-h-[220px] flex flex-col justify-between">
+              <div className="flex items-center mb-2">
+                <MdSchool size={32} className="text-orange-400 mr-2" />
+                <h3 className="text-lg font-bold text-brand-navy">Promise Land Education Pathway (PLEP)</h3>
+              </div>
+              <p className="text-xs text-brand-blue mb-2">Navigate Your Educational Journey</p>
+              <ul className="list-disc list-inside text-gray-700 space-y-1 mb-2 text-xs">
+                <li>Structured academic transition support</li>
+                <li>Personalized mentoring through admissions and financial aid</li>
+                <li>Veteran-specific resources and academic planning</li>
+                <li>Community-focused academic networking and support</li>
+              </ul>
+              <a href="/pages/plep" className="inline-block mt-2 px-3 py-1 bg-orange-400 text-white rounded hover:bg-[#002147] transition-colors duration-300 shadow text-xs font-semibold">Explore PLEP &rarr;</a>
+            </div>
+            {/* PLCA */}
+            <div className="group relative bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-500 p-4 border border-gray-100 overflow-hidden min-h-[220px] flex flex-col justify-between">
+              <div className="flex items-center mb-2">
+                <MdWork size={32} className="text-orange-400 mr-2" />
+                <h3 className="text-lg font-bold text-brand-navy">Promise Land Career Accelerator (PLCA)</h3>
+              </div>
+              <p className="text-xs text-brand-blue mb-2">Accelerate Your Professional Success</p>
+              <ul className="list-disc list-inside text-gray-700 space-y-1 mb-2 text-xs">
+                <li>Comprehensive career management skills</li>
+                <li>Internship and targeted job search strategies</li>
+                <li>Personal branding, networking, and interviewing mastery</li>
+                <li>Strategic career decision-making and goal achievement</li>
+              </ul>
+              <a href="/pages/plca" className="inline-block mt-2 px-3 py-1 bg-orange-400 text-white rounded hover:bg-[#002147] transition-colors duration-300 shadow text-xs font-semibold">Discover PLCA &rarr;</a>
+            </div>
+            {/* PPC */}
+            <div className="group relative bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-500 p-4 border border-gray-100 overflow-hidden min-h-[220px] flex flex-col justify-between">
+              <div className="flex items-center mb-2">
+                <MdStar size={32} className="text-orange-400 mr-2" />
+                <h3 className="text-lg font-bold text-brand-navy">Peak Performance Coaching (PPC)</h3>
+              </div>
+              <p className="text-xs text-brand-blue mb-2">Master Personal & Professional Excellence</p>
+              <ul className="list-disc list-inside text-gray-700 space-y-1 mb-2 text-xs">
+                <li>12-session structured coaching model</li>
+                <li>Enhances clarity, energy, courage, productivity, and influence</li>
+                <li>Personalized sessions and peer group workshops</li>
+                <li>Proven methodologies for sustained high-performance outcomes</li>
+              </ul>
+              <a href="/pages/ppc" className="inline-block mt-2 px-3 py-1 bg-orange-400 text-white rounded hover:bg-[#002147] transition-colors duration-300 shadow text-xs font-semibold">Learn More &rarr;</a>
+            </div>
+            {/* CPPC */}
+            <div className="group relative bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-500 p-4 border border-gray-100 overflow-hidden min-h-[220px] flex flex-col justify-between">
+              <div className="flex items-center mb-2">
+                <FaUserGraduate size={32} className="text-orange-400 mr-2" />
+                <h3 className="text-lg font-bold text-brand-navy">Certified Peak Performance Coach (CPPC)</h3>
+              </div>
+              <p className="text-xs text-brand-blue mb-2">Become a Recognized Coaching Leader</p>
+              <ul className="list-disc list-inside text-gray-700 space-y-1 mb-2 text-xs">
+                <li>In-depth professional certification in peak performance coaching</li>
+                <li>Master core psychological, physiological, and productivity strategies</li>
+                <li>Expand your professional opportunities and coaching practice</li>
+                <li>Gain credibility as a certified performance expert</li>
+              </ul>
+              <a href="/pages/cppc" className="inline-block mt-2 px-3 py-1 bg-orange-400 text-white rounded hover:bg-[#002147] transition-colors duration-300 shadow text-xs font-semibold">Get Certified &rarr;</a>
+            </div>
+            {/* VETA */}
+            <div className="group relative bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-500 p-4 border border-gray-100 overflow-hidden min-h-[220px] flex flex-col justify-between">
+              <div className="flex items-center mb-2">
+                <MdBusiness size={32} className="text-orange-400 mr-2" />
+                <h3 className="text-lg font-bold text-brand-navy">Vetrepreneurship Academy (VETA)</h3>
+              </div>
+              <p className="text-xs text-brand-blue mb-2">Build Your Entrepreneurial Legacy</p>
+              <ul className="list-disc list-inside text-gray-700 space-y-1 mb-2 text-xs">
+                <li>Comprehensive entrepreneurship and business planning curriculum</li>
+                <li>Financial modeling, market research, and competitive analysis</li>
+                <li>Business model evaluation and customer discovery methods</li>
+                <li>Extensive mentorship from successful entrepreneurs</li>
+              </ul>
+              <a href="/pages/veta" className="inline-block mt-2 px-3 py-1 bg-orange-400 text-white rounded hover:bg-[#002147] transition-colors duration-300 shadow text-xs font-semibold">Join the Academy &rarr;</a>
             </div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
         
-        {/* VSO Claim Support Section */}
-        <section className="bg-gradient-to-b from-white via-gray-50 to-white py-16">
-          <div className="max-w-4xl mx-auto px-4">
-            <div className="text-center mb-10">
-              <h2 className="text-3xl font-bold text-brand-navy mb-4">VSO Claim Support</h2>
-              <p className="text-lg text-brand-blue mb-4">Streamlined Support for VA Claims</p>
-            </div>
-            <div className="grid md:grid-cols-2 gap-8">
-              <div className="bg-white rounded-lg shadow p-6 border border-gray-100 flex flex-col justify-center">
-                <h3 className="text-xl font-semibold text-brand-navy mb-2">Expert assistance from accredited Veteran Service Officers (VSOs)</h3>
-                <ul className="list-disc list-inside text-gray-700 space-y-2 mt-2">
-                  <li>Comprehensive help for disability compensation, appeals, and benefits</li>
-                  <li>Seamless integration with WANAC’s education and career programs</li>
-                  <li>Tailored support exclusively for transitioning service members and recently separated veterans</li>
-                </ul>
-              </div>
-              <div className="flex items-center justify-center">
-                <img src="/veteran1.jpg" alt="VSO Claim Support" className="rounded-xl shadow-lg w-full max-w-xs object-cover" />
-              </div>
-            </div>
-          </div>
-        </section>
 
         {/* CTA Section */}
         <section className="relative overflow-hidden">

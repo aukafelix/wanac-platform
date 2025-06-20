@@ -27,6 +27,11 @@ const PpcPage = () => {
           <p className="text-xl max-w-3xl mx-auto px-4">
             Transform Your Potential into Exceptional Results
           </p>
+          <p className="text-xl max-w-3xl mx-auto px-4">
+          WANAC's Peak Performance Coaching (PPC) program is meticulously crafted to equip transitioning service members,
+veterans, and professionals with powerful, actionable strategies for achieving sustained high performance. PPC
+combines cutting-edge coaching methodologies with comprehensive support to help you redefine your potential and achieve your most ambitious goals.
+          </p>
           <div className="mt-8 flex justify-center gap-4">
             <button className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-full font-semibold transition-colors">
               Apply Now
@@ -182,6 +187,37 @@ const PpcPage = () => {
                 </div>
               </div>
             )}
+          </div>
+        </div>
+      </section>
+
+      {/* Who Should Apply Section */}
+      <section id="who-should-apply" className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold mb-8 text-center text-[#002147]">Who Should Apply?</h2>
+          <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-lg p-8">
+            <p className="text-lg mb-6 text-[#002147] font-semibold">Peak Performance Coaching is ideally suited for:</p>
+            <ul className="list-disc pl-6 space-y-4 text-gray-700 text-base">
+              <li>Veterans transitioning to civilian careers</li>
+              <li>Professionals striving for elevated performance in demanding roles</li>
+              <li>Individuals looking to significantly enhance their leadership and influence</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* Proven Outcomes Section */}
+      <section id="proven-outcomes" className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold mb-8 text-center text-[#002147]">Proven Outcomes</h2>
+          <div className="max-w-3xl mx-auto bg-gray-50 rounded-xl shadow-lg p-8">
+            <ul className="list-disc pl-6 space-y-4 text-gray-700 text-base">
+              <li>Enhanced clarity and strategic goal-setting</li>
+              <li>Sustained increases in personal and professional energy</li>
+              <li>Stronger courage, resilience, and problem-solving capabilities</li>
+              <li>Higher productivity, efficiency, and results-driven outcomes</li>
+              <li>Advanced interpersonal skills and influential leadership</li>
+            </ul>
           </div>
         </div>
       </section>
