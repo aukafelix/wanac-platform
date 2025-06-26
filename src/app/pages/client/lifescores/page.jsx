@@ -3,12 +3,12 @@
 import { useState, useEffect } from "react";
 import Sidebar from '../../../../../components/dashboardcomponents/sidebar';
 import ClientTopbar from '../../../../../components/dashboardcomponents/clienttopbar';
-import CommunityFeedWidget from '../../../../../components/dashboardcomponents/widgets/CommunityFeedWidget';
 import LifeScorePreview from '../../../../../components/LifeScorePreview';
 import InfographicWheel from '../../../../../components/infographicWheel';
 import { FaChartLine, FaHistory } from "react-icons/fa";
 import { Button, LinearProgress, Box, Typography, Dialog, DialogTitle, DialogContent, DialogActions, TextField } from '@mui/material';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, BarChart, Bar } from 'recharts';
+import { habitsService } from '../../../../services/api/habits.service';
 
 // Demo data for charts
 const dailyHabitsData = Array.from({ length: 30 }, (_, i) => ({
@@ -50,16 +50,20 @@ export default function LifeScoresPage() {
   const handleWholeLifeChange = (e) => {
     setWholeLifeForm({ ...wholeLifeForm, [e.target.name]: e.target.value });
   };
-  const handleDailySubmit = (e) => {
+  const handleDailySubmit = async (e) => {
     e.preventDefault();
     const assessmentData = {
       userId: user?.id || user?._id || 'anonymous',
       date: new Date().toISOString(),
       ...dailyForm,
     };
-    console.log('Daily Habits Assessment Submitted:', assessmentData);
-    // TODO: send assessmentData to backend
-    setOpenAssessment(null);
+    try {
+      await habitsService.addDailyHabit(assessmentData);
+      alert('Daily Habits Assessment Submitted!');
+      setOpenAssessment(null);
+    } catch (error) {
+      alert('Failed to submit assessment.');
+    }
   };
   const handleWholeLifeSubmit = (e) => {
     e.preventDefault();
