@@ -26,6 +26,7 @@ module.exports = {
         background: "#ffffff",
         foreground: "#333333",
         accent: "#EE8220",
+        primary: "#3b82f6",
         hover: "#3366FF",
         heading: "#002147",
         muted: "#f9fafb",

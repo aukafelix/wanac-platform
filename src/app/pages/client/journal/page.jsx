@@ -1,215 +1,211 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import Sidebar from '../../../../../components/dashboardcomponents/sidebar';
-import ClientTopbar from '../../../../../components/dashboardcomponents/clienttopbar';
-import CommunityFeedWidget from '../../../../../components/dashboardcomponents/widgets/CommunityFeedWidget';
+import { useState } from "react";
+import Sidebar from "../../../../../components/dashboardcomponents/sidebar";
+import ClientTopbar from "../../../../../components/dashboardcomponents/clienttopbar";
+import {
+  FaBold,
+  FaItalic,
+  FaUnderline,
+  FaListUl,
+  FaListOl,
+  FaLink,
+  FaMinus,
+} from "react-icons/fa";
+import { Tooltip } from "react-tooltip";
 
-const PROMPT_TYPES = [
-  { key: "morning", label: "Morning Prompts" },
-  { key: "evening", label: "Evening Reviews" },
-  { key: "weekly", label: "Weekly Review" },
-  { key: "monthly", label: "Monthly Review" },
-  { key: "ai", label: "AI-driven Prompt" },
+const tabs = [
+  { key: "morning", label: "\u2600\ufe0f Morning Mindset" },
+  { key: "evening", label: "\ud83c\udf1c Evening Review" },
+  { key: "growth", label: "\ud83c\udf3f Growth Prompts" },
+  { key: "weekly", label: "\ud83d\udcd3 Weekly Review" },
+  { key: "monthly", label: "\ud83d\udcc5 Monthly Review" },
 ];
 
-const PROMPTS = {
-  morning: [
-    "What is your main intention for today?",
-    "What are you grateful for this morning?",
-    "What will make today great?",
-  ],
-  evening: [
-    "What went well today?",
-    "What did you learn today?",
-    "What could you improve tomorrow?",
-  ],
-  weekly: [
-    "What was your biggest win this week?",
-    "What challenges did you overcome?",
-    "What will you focus on next week?",
-  ],
-  monthly: [
-    "What are you most proud of this month?",
-    "What did you learn this month?",
-    "What are your goals for next month?",
-  ],
-};
-
-function getRandomPrompt(type) {
-  if (type === "ai") {
-    // Stub AI-driven prompt
-    const aiPrompts = [
-      "Reflect on a recent challenge and how you handled it.",
-      "Describe a moment you felt truly present.",
-      "What is something you want to ask your future self?",
-    ];
-    return aiPrompts[Math.floor(Math.random() * aiPrompts.length)];
-  }
-  const arr = PROMPTS[type];
-  return arr ? arr[Math.floor(Math.random() * arr.length)] : "";
-}
-
-function JournalEntryForm({ onAdd, prompt, setPrompt }) {
+export default function JournalUI() {
+  const [selectedTab, setSelectedTab] = useState("morning");
   const [entry, setEntry] = useState("");
-  useEffect(() => {
-    setEntry(prompt || "");
-  }, [prompt]);
-  return (
-    <form
-      onSubmit={e => {
-        e.preventDefault();
-        if (entry.trim()) {
-          onAdd(entry);
-          setEntry("");
-          setPrompt("");
-        }
-      }}
-      className="mb-6"
-    >
-      <textarea
-        className="w-full border border-gray-300 rounded-lg p-3 mb-2 focus:outline-none focus:ring-2 focus:ring-primary min-h-[80px]"
-        placeholder="Write your thoughts, reflections, or progress..."
-        value={entry}
-        onChange={e => setEntry(e.target.value)}
-        required
-      />
-      <button
-        type="submit"
-        className="bg-primary text-white px-5 py-2 rounded hover:bg-primary/90 transition font-semibold"
-      >
-        Add Entry
-      </button>
-    </form>
-  );
-}
-
-function JournalEntriesList({ entries, filter }) {
-  const filtered = entries.filter(e =>
-    e.text.toLowerCase().includes(filter.toLowerCase())
-  );
-  if (filtered.length === 0) {
-    return <div className="text-gray-500 text-sm">No journal entries found.</div>;
-  }
-  return (
-    <ul className="space-y-4">
-      {filtered.map((entry, idx) => (
-        <li key={idx} className="bg-gray-50 border border-gray-200 rounded-lg p-4">
-          <div className="text-gray-800 whitespace-pre-line">{entry.text}</div>
-          <div className="text-xs text-gray-400 mt-2">{entry.date}</div>
-        </li>
-      ))}
-    </ul>
-  );
-}
-
-export default function JournalPage() {
+  const [search, setSearch] = useState("");
   const [collapsed, setCollapsed] = useState(false);
   const [user, setUser] = useState(null);
-  const [entries, setEntries] = useState([
-    {
-      text: "Had a great session with my coach today. Feeling motivated!",
-      date: "2024-06-01 09:30 AM",
-    },
-    {
-      text: "Reflected on my goals and made a plan for the week.",
-      date: "2024-05-29 07:15 PM",
-    },
-  ]);
-  const [selectedTab, setSelectedTab] = useState("morning");
-  const [prompt, setPrompt] = useState(getRandomPrompt("morning"));
-  const [filter, setFilter] = useState("");
+  const [showReflectionModal, setShowReflectionModal] = useState(false);
+  const [reflectionDraft, setReflectionDraft] = useState("");
 
-  useEffect(() => {
-    const userData = localStorage.getItem('wanacUser');
-    if (userData) {
-      try {
-        setUser(JSON.parse(userData));
-      } catch (e) {
-        setUser(null);
-      }
-    }
-  }, []);
-
-  useEffect(() => {
-    setPrompt(getRandomPrompt(selectedTab));
-  }, [selectedTab]);
-
-  const handleAddEntry = (text) => {
-    setEntries([
-      { text, date: new Date().toLocaleString() },
-      ...entries,
-    ]);
+  const handleOpenReflection = () => {
+    setReflectionDraft("");
+    setShowReflectionModal(true);
   };
-
-  const handleAIPrompt = () => {
-    setPrompt(getRandomPrompt("ai"));
-    setSelectedTab("ai");
+  const handleCloseReflection = () => {
+    setShowReflectionModal(false);
+  };
+  const handleSubmitReflection = () => {
+    setEntry(reflectionDraft);
+    setShowReflectionModal(false);
   };
 
   return (
     <div className="h-screen flex bg-gray-50 font-serif">
-      {/* Sidebar */}
       <Sidebar className="w-56 bg-white border-r border-gray-200" collapsed={collapsed} setCollapsed={setCollapsed} />
-      {/* Main Area */}
       <div className="flex-1 flex flex-col h-full transition-all duration-300">
-        {/* Top Bar */}
         <ClientTopbar user={user} />
-        {/* Main Content */}
         <main className="flex-1 h-0 overflow-y-auto px-4 md:px-12 py-8 bg-gray-50">
           <div className="max-w-6xl mx-auto">
             <div className="flex flex-col lg:flex-row gap-8">
-              {/* Main Content */}
-              <div className="flex-1 space-y-8">
-                <section className="bg-white border border-gray-200 rounded-lg p-6 shadow-none">
-                  <h1 className="text-2xl font-bold mb-2 text-primary">Journal</h1>
-                  <p className="text-gray-600 mb-6">Reflect, record your thoughts, and track your progress on your journey.</p>
-                  {/* Prompt Tabs */}
-                  <div className="flex gap-2 mb-4 flex-wrap">
-                    {PROMPT_TYPES.map(tab => (
-                      <button
-                        key={tab.key}
-                        className={`px-4 py-2 rounded font-medium border transition-all text-sm ${selectedTab === tab.key ? 'bg-accent text-white border-accent' : 'bg-gray-100 text-gray-700 border-gray-200 hover:bg-accent/10 hover:border-accent'} `}
-                        onClick={() => setSelectedTab(tab.key)}
-                        type="button"
-                      >
-                        {tab.label}
-                      </button>
-                    ))}
+              <div className="flex-1 space-y-10">
+                <h1 className="text-2xl md:text-3xl font-bold text-primary mb-4 tracking-tight">Journal</h1>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {tabs.map((tab) => (
                     <button
-                      className="ml-auto px-4 py-2 rounded font-medium border bg-accent text-white border-accent hover:bg-accent/80 transition-all text-sm"
-                      onClick={handleAIPrompt}
-                      type="button"
+                      key={tab.key}
+                      onClick={() => setSelectedTab(tab.key)}
+                      className={`relative px-4 py-1.5 text-sm rounded-full border transition-all font-medium flex items-center gap-2
+                        ${selectedTab === tab.key
+                          ? "bg-white border-primary-500 text-primary-600 shadow-sm"
+                          : "bg-gray-100 text-gray-600 border-transparent hover:bg-white hover:text-primary-500"}
+                      `}
+                      style={{
+                        borderBottom: selectedTab === tab.key ? "3px solid #3b82f6" : "none",
+                      }}
                     >
-                      Generate AI Prompt
+                      {tab.key === "morning" && <span className="text-lg">☀️</span>}
+                      {tab.key === "evening" && <span className="text-lg">🌜</span>}
+                      {tab.key === "growth" && <span className="text-lg">🌿</span>}
+                      {tab.key === "weekly" && <span className="text-lg">📓</span>}
+                      {tab.key === "monthly" && <span className="text-lg">📅</span>}
+                      {tab.label}
+                    </button>
+                  ))}
+                </div>
+                {/* Entry Form Section */}
+                <section className="bg-white border border-gray-200 rounded-lg p-6 shadow-none">
+                  <textarea
+                    value={entry}
+                    onChange={(e) => setEntry(e.target.value)}
+                    placeholder="Write your thoughts..."
+                    className="w-full p-4 min-h-[120px] resize-none border-b border-gray-100 focus:outline-none rounded-t-lg"
+                  ></textarea>
+                  {/* Formatting Bar */}
+                  <div className="flex items-center gap-3 px-4 py-2 text-gray-500 text-sm border-b border-gray-100">
+                    <span className="hover:text-primary-500 cursor-pointer" data-tooltip-id="bold-tip"><FaBold /></span>
+                    <Tooltip id="bold-tip" content="Bold" />
+                    <span className="hover:text-primary-500 cursor-pointer" data-tooltip-id="italic-tip"><FaItalic /></span>
+                    <Tooltip id="italic-tip" content="Italic" />
+                    <span className="hover:text-primary-500 cursor-pointer" data-tooltip-id="underline-tip"><FaUnderline /></span>
+                    <Tooltip id="underline-tip" content="Underline" />
+                    <span className="hover:text-primary-500 cursor-pointer" data-tooltip-id="ul-tip"><FaListUl /></span>
+                    <Tooltip id="ul-tip" content="Bullet List" />
+                    <span className="hover:text-primary-500 cursor-pointer" data-tooltip-id="ol-tip"><FaListOl /></span>
+                    <Tooltip id="ol-tip" content="Numbered List" />
+                    <span className="hover:text-primary-500 cursor-pointer" data-tooltip-id="link-tip"><FaLink /></span>
+                    <Tooltip id="link-tip" content="Insert Link" />
+                    <span className="hover:text-primary-500 cursor-pointer" data-tooltip-id="minus-tip"><FaMinus /></span>
+                    <Tooltip id="minus-tip" content="Divider" />
+                  </div>
+                  {/* Upload */}
+                  <div className="px-4 py-3 text-sm text-gray-500 border-b border-gray-100 flex items-center gap-2">
+                    <label className="underline cursor-pointer hover:text-primary-500 transition-colors">
+                      Drop your image here, or <span className="font-semibold">Browse</span>
+                      <input type="file" accept="image/*" className="hidden" />
+                    </label>
+                  </div>
+                  {/* Submit Button */}
+                  <div className="px-4 py-3 flex justify-end">
+                    <button
+                      disabled={!entry.trim()}
+                      className={`px-4 py-1.5 text-sm rounded-md transition-all duration-150 font-medium
+                        ${entry.trim()
+                          ? "bg-orange-500 text-white hover:bg-primary/90 cursor-pointer shadow"
+                          : "bg-accent text-white opacity-60 cursor-not-allowed"}
+                      `}
+                    >
+                      {entry.trim() ? "Submit" : "Write something to submit"}
                     </button>
                   </div>
-                  {/* Prompt Display */}
-                  {prompt && (
-                    <div className="mb-4 p-4 bg-blue-50 border-l-4 border-primary rounded text-primary font-medium">
-                      {prompt}
-                    </div>
-                  )}
-                  <JournalEntryForm onAdd={handleAddEntry} prompt={prompt} setPrompt={setPrompt} />
-                  {/* Search/filter for historical entries */}
-                  <div className="mb-4">
+                </section>
+                {/* Activity Section */}
+                <section className="bg-white border border-gray-200 rounded-lg p-6 shadow-none">
+                  <h2 className="text-xl font-bold mb-4 text-primary">Activity</h2>
+                  {/* Search bar */}
+                  <div className="flex items-center mb-4 gap-2">
                     <input
                       type="text"
-                      className="w-full border border-gray-300 rounded-lg p-2"
-                      placeholder="Search your journal history..."
-                      value={filter}
-                      onChange={e => setFilter(e.target.value)}
+                      placeholder="Search"
+                      value={search}
+                      onChange={(e) => setSearch(e.target.value)}
+                      className="w-full border border-gray-300 rounded-md px-3 py-1.5 text-sm"
                     />
+                    <select className="text-sm border border-gray-300 rounded-md px-2 py-1">
+                      <option>All</option>
+                      <option>Mindset</option>
+                      <option>Review</option>
+                    </select>
                   </div>
-                  <JournalEntriesList entries={entries} filter={filter} />
+                  {/* Empty state */}
+                  <div className="text-center text-gray-400 border border-dashed border-gray-300 rounded-xl py-12 px-6 bg-gray-50">
+                    <div className="flex justify-center mb-4">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-16 h-16 text-gray-200"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                      >
+                        <path d="M3 3h18v18H3V3zm2 2v14h14V5H5z" />
+                      </svg>
+                    </div>
+                    <p className="font-semibold text-gray-500 text-lg">Ready to reflect?</p>
+                    <p className="text-sm mt-1 text-gray-400">
+                      Fill this space with your private observations, thoughts, and dreams.
+                    </p>
+                    <button
+                      className="mt-6 px-5 py-2 bg-accent text-white rounded-full shadow hover:bg-primary transition-all"
+                      onClick={handleOpenReflection}
+                    >
+                      Start your first entry
+                    </button>
+                  </div>
                 </section>
               </div>
-              {/* Right Sidebar */}
-              
             </div>
           </div>
         </main>
       </div>
+      {/* Reflection Modal */}
+      {showReflectionModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+          <div className="bg-white rounded-xl p-6 w-full max-w-md shadow-lg relative">
+            <button
+              onClick={handleCloseReflection}
+              className="absolute top-2 right-2 text-gray-400 hover:text-gray-700 text-xl"
+              aria-label="Close"
+            >
+              ×
+            </button>
+            <h2 className="text-xl font-bold mb-4 text-primary">New Reflection</h2>
+            <textarea
+              value={reflectionDraft}
+              onChange={e => setReflectionDraft(e.target.value)}
+              placeholder="Write your reflection..."
+              className="w-full border border-gray-300 rounded-md p-3 min-h-[120px] mb-4 focus:outline-none"
+              autoFocus
+            />
+            <div className="flex justify-end gap-2">
+              <button
+                className="px-4 py-2 border border-gray-300 rounded-md"
+                onClick={handleCloseReflection}
+              >
+                Cancel
+              </button>
+              <button
+                className="px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-primary/90 disabled:opacity-60"
+                onClick={handleSubmitReflection}
+                disabled={!reflectionDraft.trim()}
+              >
+                Add Reflection
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
