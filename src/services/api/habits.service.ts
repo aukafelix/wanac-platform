@@ -17,4 +17,12 @@ export const habitsService = {
     const response = await apiClient.get('/api/v1/daily-habits/history');
     return response.data;
   },
+  async addWholeLifeAssessment(data: any) {
+    const response = await apiClient.post('/api/v1/whole-life/add', data);
+    return response.data;
+  },
+  async getWholeLifeHistory() {
+    const response = await apiClient.get('/api/v1/whole-life/history');
+    return response.data;
+  },
 }; 

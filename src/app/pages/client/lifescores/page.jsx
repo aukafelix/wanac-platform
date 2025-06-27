@@ -32,12 +32,18 @@ export default function LifeScoresPage() {
   const [openAssessment, setOpenAssessment] = useState(null); // 'daily' | 'wholeLife' | null
   const [dailyForm, setDailyForm] = useState({ sleep: '', exercise: '', nutrition: '', mood: '', productivity: '' });
   const [wholeLifeForm, setWholeLifeForm] = useState({ health: '', relationships: '', career: '', finances: '', personalGrowth: '', recreation: '', spirituality: '', community: '' });
+  const [wholeLifeHistory, setWholeLifeHistory] = useState([]);
 
   useEffect(() => {
     const userData = localStorage.getItem('wanacUser');
     if (userData) {
       try {
-        setUser(JSON.parse(userData));
+        const parsedUser = JSON.parse(userData);
+        setUser(parsedUser);
+        // Fetch whole life history after user is set
+        habitsService.getWholeLifeHistory()
+          .then((data) => setWholeLifeHistory(data))
+          .catch(() => setWholeLifeHistory([]));
       } catch (e) {
         setUser(null);
       }
@@ -65,16 +71,20 @@ export default function LifeScoresPage() {
       alert('Failed to submit assessment.');
     }
   };
-  const handleWholeLifeSubmit = (e) => {
+  const handleWholeLifeSubmit = async (e) => {
     e.preventDefault();
     const assessmentData = {
       userId: user?.id || user?._id || 'anonymous',
       date: new Date().toISOString(),
       ...wholeLifeForm,
     };
-    console.log('Whole Life Assessment Submitted:', assessmentData);
-    // TODO: send assessmentData to backend
-    setOpenAssessment(null);
+    try {
+      await habitsService.addWholeLifeAssessment(assessmentData);
+      alert('Whole Life Assessment Submitted!');
+      setOpenAssessment(null);
+    } catch (error) {
+      alert('Failed to submit whole life assessment.');
+    }
   };
 
   return (
@@ -125,7 +135,7 @@ export default function LifeScoresPage() {
                   </div>
                   <Typography variant="body2" className="mb-2 text-gray-600">See your overall life habits and trends for the past 6 months.</Typography>
                   <ResponsiveContainer width="100%" height={180}>
-                    <LineChart data={wholeLifeData} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>
+                    <LineChart data={wholeLifeHistory.length ? wholeLifeHistory : wholeLifeData} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis dataKey="month" />
                       <YAxis domain={[0, 10]} />
@@ -150,7 +160,7 @@ export default function LifeScoresPage() {
                   </div>
                   <Typography variant="body2" className="mb-2 text-gray-600">See your progress over time with interactive charts and visuals.</Typography>
                   <ResponsiveContainer width="100%" height={220}>
-                    <LineChart data={wholeLifeData} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>
+                    <LineChart data={wholeLifeHistory.length ? wholeLifeHistory : wholeLifeData} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis dataKey="month" />
                       <YAxis domain={[0, 10]} />
