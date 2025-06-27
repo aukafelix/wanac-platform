@@ -9,6 +9,8 @@ import { FaChartLine, FaHistory } from "react-icons/fa";
 import { Button, LinearProgress, Box, Typography, Dialog, DialogTitle, DialogContent, DialogActions, TextField } from '@mui/material';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, BarChart, Bar } from 'recharts';
 import { habitsService } from '../../../../services/api/habits.service';
+import { handleValidationErrors } from "@/lib/error";
+import toast from "react-hot-toast";
 
 // Demo data for charts
 const dailyHabitsData = Array.from({ length: 30 }, (_, i) => ({
@@ -31,7 +33,7 @@ export default function LifeScoresPage() {
   const totalAssessmentSteps = 10;
   const [openAssessment, setOpenAssessment] = useState(null); // 'daily' | 'wholeLife' | null
   const [dailyForm, setDailyForm] = useState({ sleep: '', exercise: '', nutrition: '', mood: '', productivity: '' });
-  const [wholeLifeForm, setWholeLifeForm] = useState({ health: '', relationships: '', career: '', finances: '', personalGrowth: '', recreation: '', spirituality: '', community: '' });
+  const [wholeLifeForm, setWholeLifeForm] = useState({ health: '', relationship: '', career: '', finances: '', personal_growth: '', recreation: '', spirituality: '', community: '' });
   const [wholeLifeHistory, setWholeLifeHistory] = useState([]);
 
   useEffect(() => {
@@ -64,11 +66,20 @@ export default function LifeScoresPage() {
       ...dailyForm,
     };
     try {
-      await habitsService.addDailyHabit(assessmentData);
-      alert('Daily Habits Assessment Submitted!');
+     const response = await habitsService.addDailyHabit(assessmentData);
+      toast.success(response.success);
       setOpenAssessment(null);
     } catch (error) {
-      alert('Failed to submit assessment.');
+      if (error.response && error.response.data) {
+        if (error.response?.data?.errors) {
+          handleValidationErrors(error.response.data.errors);
+        }
+        if (error.response?.data?.error) {
+          toast.error(error.response.data.error);
+        }
+      } else {
+        console.log(error);
+      }
     }
   };
   const handleWholeLifeSubmit = async (e) => {
@@ -79,11 +90,21 @@ export default function LifeScoresPage() {
       ...wholeLifeForm,
     };
     try {
-      await habitsService.addWholeLifeAssessment(assessmentData);
-      alert('Whole Life Assessment Submitted!');
+      const response = await habitsService.addWholeLifeAssessment(assessmentData);
+      toast.success(response.success);
       setOpenAssessment(null);
     } catch (error) {
-      alert('Failed to submit whole life assessment.');
+      if (error.response && error.response.data) {
+        if (error.response?.data?.errors) {
+          handleValidationErrors(error.response.data.errors);
+        }
+        if (error.response?.data?.error) {
+          toast.error(error.response.data.error);
+        }
+      } else {
+        console.log(error);
+      }
+    
     }
   };
 
@@ -259,11 +280,11 @@ export default function LifeScoresPage() {
               required
             />
             <TextField
-              label="Relationships"
-              name="relationships"
+              label="Relationship"
+              name="relationship"
               type="number"
               inputProps={{ min: 1, max: 10 }}
-              value={wholeLifeForm.relationships}
+              value={wholeLifeForm.relationship}
               onChange={handleWholeLifeChange}
               fullWidth
               required
@@ -290,10 +311,10 @@ export default function LifeScoresPage() {
             />
             <TextField
               label="Personal Growth"
-              name="personalGrowth"
+              name="personal_growth"
               type="number"
               inputProps={{ min: 1, max: 10 }}
-              value={wholeLifeForm.personalGrowth}
+              value={wholeLifeForm.personal_growth}
               onChange={handleWholeLifeChange}
               fullWidth
               required
