@@ -18,6 +18,7 @@ export const tasksService = {
   },
 
   async deleteTask(id: string): Promise<void> {
-    await apiClient.delete(`/api/v1/tasks/delete/${id}`);
+    const response = await apiClient.delete(`/api/v1/tasks/delete/${id}`);
+    return response.data;
   },
 }; 

@@ -37,7 +37,7 @@ const INITIAL_FORM_STATE = {
 export default function TaskManagementPage() {
   // State management
   const [user, setUser] = useState(null);
-  const [tasks, setTasks] = useState({});
+  const [tasks, setTasks] = useState([]); 
   const [loading, setLoading] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editTask, setEditTask] = useState(null);
@@ -45,7 +45,7 @@ export default function TaskManagementPage() {
   const [formError, setFormError] = useState("");
   const [collapsed, setCollapsed] = useState(false);
 
-  // Filter tasks by priority quadrant
+
   const getTasksByPriority = useCallback(
     (priority) => {
       return tasks.filter((task) => task.priority === priority);
@@ -53,22 +53,21 @@ export default function TaskManagementPage() {
     [tasks]
   );
 
-  // Fetch tasks from API
+
   const fetchTasks = useCallback(async () => {
     setLoading(true);
     try {
-      const data = await tasksService.getTasks();
-      setTasks(data.data);
-
+      const response = await tasksService.getTasks();
+      setTasks(Array.isArray(response.data) ? response.data : []);
     } catch (error) {
-      setTasks({}); // fallback to empty array on error
+      setTasks([]);
       console.error("Failed to fetch tasks:", error);
     } finally {
       setLoading(false);
     }
   }, []);
 
-  // Initialize client-side data
+
   useEffect(() => {
     const userData = localStorage.getItem("wanacUser");
     if (userData) {
@@ -81,7 +80,6 @@ export default function TaskManagementPage() {
     fetchTasks();
   }, [fetchTasks]);
 
-  // Form handlers
   const handleFormChange = useCallback((e) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
@@ -101,7 +99,12 @@ export default function TaskManagementPage() {
     setFormError("");
   }, []);
 
-  // Task CRUD operations
+  const handleValidationErrors = (errors) => {
+    const firstErrorKey = Object.keys(errors)[0];
+    const firstErrorMsg = errors[firstErrorKey][0];
+    setFormError(firstErrorMsg);
+  };
+
   const handleSaveTask = useCallback(async () => {
     if (!form.title || !form.due_date) {
       setFormError("Title and Due Date are required.");
@@ -112,20 +115,18 @@ export default function TaskManagementPage() {
       if (editTask) {
         const response = await tasksService.updateTask(editTask.id, form);
         toast.success(response.message);
-
       } else {
         const response = await tasksService.addTask(form);
         toast.success(response.message);
-
       }
       fetchTasks();
       handleCloseDialog();
     } catch (error) {
       if (error.response && error.response.data) {
-        if (error.response?.data?.errors) {
+        if (error.response.data.errors) {
           handleValidationErrors(error.response.data.errors);
         }
-        if (error.response?.data?.error) {
+        if (error.response.data.error) {
           toast.error(error.response.data.error);
         }
       } else {
@@ -148,7 +149,6 @@ export default function TaskManagementPage() {
     [fetchTasks]
   );
 
-  // Drag and drop functionality
   const handleUpdateTaskPriority = useCallback(
     async (task, newPriority) => {
       try {
@@ -170,7 +170,7 @@ export default function TaskManagementPage() {
 
       const { source, destination, draggableId } = result;
       if (source.droppableId !== destination.droppableId) {
-        const task = tasks.find((t) => t.id === draggableId);
+        const task = tasks.find((t) => t.id.toString() === draggableId);
         if (task) {
           handleUpdateTaskPriority(task, destination.droppableId);
         }
@@ -181,20 +181,17 @@ export default function TaskManagementPage() {
 
   return (
     <div className="h-screen flex bg-gray-50 font-serif">
-      {/* Sidebar */}
       <Sidebar
         className="w-56 bg-white border-r border-gray-200"
         collapsed={collapsed}
         setCollapsed={setCollapsed}
       />
 
-      {/* Main Content Area */}
       <div className="flex-1 flex flex-col h-full transition-all duration-300">
         <ClientTopbar user={user} />
 
         <main className="flex-1 h-0 overflow-y-auto px-4 md:px-12 py-8 bg-gray-50">
           <div className="max-w-7xl mx-auto">
-            {/* Header */}
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-bold text-brand-navy">
                 Task Management (Eisenhower Matrix)
@@ -209,7 +206,6 @@ export default function TaskManagementPage() {
               </Button>
             </div>
 
-            {/* Matrix Section */}
             <section className="mb-8">
               <Typography variant="body1" className="mb-4 text-gray-600">
                 Organize your tasks using the Eisenhower Matrix. Drag and drop
@@ -238,7 +234,7 @@ export default function TaskManagementPage() {
                           {getTasksByPriority(quadrant.value).map(
                             (task, idx) => (
                               <Draggable
-                                draggableId={task.id}
+                                draggableId={task.id.toString()}
                                 index={idx}
                                 key={task.id}
                               >
@@ -280,7 +276,7 @@ export default function TaskManagementPage() {
             </section>
           </div>
 
-          {/* Task Dialog */}
+
           <Dialog
             open={dialogOpen}
             onClose={handleCloseDialog}
@@ -331,7 +327,6 @@ export default function TaskManagementPage() {
                     </MenuItem>
                   ))}
                 </TextField>
-            
               </div>
               {formError && <Typography color="error">{formError}</Typography>}
             </DialogContent>
