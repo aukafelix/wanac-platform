@@ -135,36 +135,51 @@ export default function HowWeHelp() {
       
 
       {/* Understanding Your Challenges Section */}
-      <section className="relative py-16 overflow-hidden" style={{ background: 'linear-gradient(160deg, #FFFDF9)' }}>
-        {/* Flowing/animated gradient blobs for visual effect */}
-        <div className="absolute top-0 left-1/3 w-96 h-96 bg-gradient-to-br from-orange-400/10 via-orange-200/10 to-blue-400/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 z-0 animate-pulse" />
-        <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-gradient-to-tr from-blue-400/10 via-white/10 to-orange-400/10 rounded-full blur-2xl z-0 animate-pulse delay-700" />
-        {/* Optional: subtle pattern overlay for extra depth */}
-        {/* <div className="absolute inset-0 opacity-5 bg-[url('/testimonials-bg-pattern.jpg')] bg-cover bg-center"></div> */}
-        <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-[#002147] mb-4">
-            Understanding Your Challenges
-          </h2>
-          <p className="text-lg text-[#002147] mb-8">
-            We recognize the unique obstacles faced by our participants:
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
-            <div className="flex flex-col items-center bg-white/90 rounded-xl shadow p-5 border border-gray-100 hover:shadow-lg transition">
-              <img src="/bussinessacademyphase1.jpg" alt="Career Transitions" className="w-20 h-20 object-cover rounded-full mb-3 shadow" />
-              <span className="text-gray-800 font-medium text-center">Navigating complex career transitions</span>
+      <section className="relative py-16 bg-white overflow-hidden">
+        <div className="max-w-4xl mx-auto px-4 grid md:grid-cols-2 gap-10 items-center">
+          {/* Infographic Wheel with Icons */}
+          <div className="relative w-[320px] h-[320px] mx-auto flex items-center justify-center">
+            <div className="absolute left-1/2 top-1/2 w-[320px] h-[320px] -translate-x-1/2 -translate-y-1/2">
+              {/* Top */}
+              <div className="absolute left-1/2 top-0 -translate-x-1/2 flex flex-col items-center">
+                <img src="/bussinessacademyphase1.jpg" alt="Career Transitions" className="w-16 h-16 object-cover rounded-full shadow mb-2" />
+                <span className="text-xs text-center text-gray-700 font-medium w-24">Career Transitions</span>
+              </div>
+              {/* Right */}
+              <div className="absolute right-0 top-1/2 -translate-y-1/2 flex flex-col items-center">
+                <img src="/aIandfeatires.jpg" alt="Educational Paths" className="w-16 h-16 object-cover rounded-full shadow mb-2" />
+                <span className="text-xs text-center text-gray-700 font-medium w-24">Educational Paths</span>
+              </div>
+              {/* Bottom */}
+              <div className="absolute left-1/2 bottom-0 -translate-x-1/2 flex flex-col items-center">
+                <img src="/veterancommunity.png" alt="Entrepreneurial Ventures" className="w-16 h-16 object-cover rounded-full shadow mb-2" />
+                <span className="text-xs text-center text-gray-700 font-medium w-24">Entrepreneurial Ventures</span>
+              </div>
+              {/* Left */}
+              <div className="absolute left-0 top-1/2 -translate-y-1/2 flex flex-col items-center">
+                <img src="/high perfomance coaching.jpg" alt="High Performance" className="w-16 h-16 object-cover rounded-full shadow mb-2" />
+                <span className="text-xs text-center text-gray-700 font-medium w-24">High Performance</span>
+              </div>
+              {/* Center circle for visual effect */}
+              <div className="absolute left-1/2 top-1/2 w-24 h-24 bg-gradient-to-br from-orange-200 via-white to-blue-200 rounded-full -translate-x-1/2 -translate-y-1/2 border-4 border-white shadow-lg flex items-center justify-center">
+                <span className="text-center text-sm font-bold text-[#002147]">Your Challenges</span>
+              </div>
             </div>
-            <div className="flex flex-col items-center bg-white/90 rounded-xl shadow p-5 border border-gray-100 hover:shadow-lg transition">
-              <img src="/aIandfeatires.jpg" alt="Educational Paths" className="w-20 h-20 object-cover rounded-full mb-3 shadow" />
-              <span className="text-gray-800 font-medium text-center">Overcoming uncertainty about educational paths</span>
-            </div>
-            <div className="flex flex-col items-center bg-white/90 rounded-xl shadow p-5 border border-gray-100 hover:shadow-lg transition">
-              <img src="/veterancommunity.png" alt="Entrepreneurial Ventures" className="w-20 h-20 object-cover rounded-full mb-3 shadow" />
-              <span className="text-gray-800 font-medium text-center">Developing entrepreneurial ventures</span>
-            </div>
-            <div className="flex flex-col items-center bg-white/90 rounded-xl shadow p-5 border border-gray-100 hover:shadow-lg transition">
-              <img src="/high perfomance coaching.jpg" alt="High Performance" className="w-20 h-20 object-cover rounded-full mb-3 shadow" />
-              <span className="text-gray-800 font-medium text-center">Sustaining high performance personally and professionally</span>
-            </div>
+          </div>
+          {/* Section Text */}
+          <div className="max-w-md mx-auto text-center md:text-left">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#002147] mb-4">
+              Understanding Your Challenges
+            </h2>
+            <p className="text-lg text-[#002147] mb-6">
+              We recognize the unique obstacles faced by our participants. Explore the key areas where WANAC supports your journey:
+            </p>
+            <ul className="space-y-3 text-left text-gray-700 text-sm">
+              <li><span className="font-semibold text-[#ff5e1a]">Career Transitions:</span> Navigating complex career transitions</li>
+              <li><span className="font-semibold text-[#ff5e1a]">Educational Paths:</span> Overcoming uncertainty about educational paths</li>
+              <li><span className="font-semibold text-[#ff5e1a]">Entrepreneurial Ventures:</span> Developing entrepreneurial ventures</li>
+              <li><span className="font-semibold text-[#ff5e1a]">High Performance:</span> Sustaining high performance personally and professionally</li>
+            </ul>
           </div>
         </div>
       </section>
