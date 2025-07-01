@@ -121,6 +121,9 @@ export default function HowWeHelp() {
             <a href="#why-wanac" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
               Why WANAC
             </a>
+            <a href="/pages/vsointakeform" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
+              VSO Intake Form
+            </a>
           </nav>
           <div 
             className="absolute inset-0 w-full" 

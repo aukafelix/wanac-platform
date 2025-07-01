@@ -82,7 +82,7 @@ const VolunteerPage = () => {
         </div>
       </header>
       <section>
-          <div className="relative w-full h-10 bg-[#002147] overflow-hidden flex items-center justify-center">
+          <div className="relative w-full h-16 bg-[#002147] overflow-hidden flex items-center justify-center">
             <nav className="relative z-10 flex space-x-16 px-4">
               <Link href="#How-to-Volunteer" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
                 How to Volunteer
@@ -109,9 +109,13 @@ const VolunteerPage = () => {
         </section>
 
       {/* Steps Section */}
-      <section className="py-20 px-6 bg-gray-50">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-semibold mb-12 text-center">
+      <section className="py-20 px-6 relative overflow-hidden" style={{ background: 'linear-gradient(160deg, #FFFDF9 0%, #FF7D33 15%, #FF5E1A 50%, #002147 60%)' }}>
+        {/* Extra gradients for visual layering */}
+        <div className="absolute top-0 left-1/3 w-96 h-96 bg-gradient-to-br from-orange-400/10 via-orange-200/10 to-blue-400/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 z-0" />
+        <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-gradient-to-tr from-blue-400/10 via-white/10 to-orange-400/10 rounded-full blur-2xl z-0" />
+        <div className="absolute inset-0 opacity-5 bg-[url('/testimonials-bg-pattern.jpg')] bg-cover bg-center"></div>
+        <div className="max-w-6xl mx-auto relative z-10">
+          <h2 className="text-3xl md:text-4xl text-white font-semibold mb-12 text-center">
             How to Volunteer
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 px-4">
@@ -140,7 +144,7 @@ const VolunteerPage = () => {
       {/* Stories Section */}
       <section className="py-20 px-6 bg-white">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-semibold mb-12 text-center">
+          <h2 className="text-3xl md:text-4xl font-semibold mb-12  text-center">
             Meet Our Volunteers
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10">

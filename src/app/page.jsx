@@ -122,10 +122,7 @@ export default function Homepage() {
 
           {/* Content Container */}
           <div className="p-6">
-            {/* Icon */}
-            <div className="w-12 h-12 bg-orange-400 text-white rounded-full flex items-center justify-center text-xl mx-auto -mt-12 relative z-10 border-3 border-white group-hover:scale-110 transition-transform">
-              {icon}
-            </div>
+            
 
             {/* Content */}
             <h3 className="text-lg font-semibold mt-3 mb-2 text-[#002147]">{title}</h3>
@@ -142,6 +139,21 @@ export default function Homepage() {
                 </span>
               ))}
             </div>
+            {/* Learn More Link */}
+            <div className="mt-4 flex justify-center">
+              <Link
+                href={
+                  title.includes('PLEP') ? '/plep' :
+                  title.includes('PLCA') ? '/plca' :
+                  title.includes('PPC') ? '/ppc' :
+                  title.includes('VETA') ? '/veta' :
+                  '#'
+                }
+                className="inline-block px-4 py-2 bg-orange-500 text-white font-semibold rounded-lg shadow hover:bg-orange-600 transition-colors duration-300 text-sm"
+              >
+                Learn More
+              </Link>
+            </div>
           </div>
         </div>
       ))}
@@ -149,14 +161,7 @@ export default function Homepage() {
    
   </div>
    {/* Learn More Button */}
-   <div className="mt-10 flex justify-center">
-      <Link
-        href="/howwehelp"
-        className="inline-block px-8 py-3 bg-orange-500 text-white font-semibold rounded-lg shadow-lg hover:bg-orange-600 transition-colors duration-300 text-lg"
-      >
-        Learn More
-      </Link>
-    </div>
+   
 </section>
 
       <section className="py-20 px-6 bg-[#002147] text-white relative overflow-hidden">

@@ -3,13 +3,11 @@
 import { useState, useEffect } from "react";
 import Sidebar from '../../../../../components/dashboardcomponents/sidebar';
 import ClientTopbar from '../../../../../components/dashboardcomponents/clienttopbar';
-import CommunityFeedWidget from '../../../../../components/dashboardcomponents/widgets/CommunityFeedWidget';
 import CommunityChat from '../../../../../components/CommunityChat';
 import { FaPlus } from 'react-icons/fa';
-import { fetchCommunities, createCommunity, updateCommunity, deleteCommunity, addCommunityPostComment, updateCommunityPostComment, deleteCommunityPostComment } from '../../../../services/api/community.service';
-import { postsService } from '../../../../services/api/posts.service';
+import { fetchCommunities, createCommunity, updateCommunityPost, deleteCommunity, addCommunityPostComment, updateCommunityPostComment, deleteCommunityPostComment, fetchCommunityPosts } from '../../../../services/api/community.service';
 
-export default function SocialCommunityMeetupsPage() {
+export default function CommunityPage() {
   const [collapsed, setCollapsed] = useState(false);
   const [user, setUser] = useState(null);
   const [selectedTab, setSelectedTab] = useState('Explore');
@@ -21,6 +19,8 @@ export default function SocialCommunityMeetupsPage() {
   ]);
   const [actionLoading, setActionLoading] = useState(false);
   const [posts, setPosts] = useState([]);
+  const [postForm, setPostForm] = useState({ title: '', description: '' });
+
   const handleSend = (text) => {
     setChatMessages(msgs => [
       ...msgs,
@@ -51,7 +51,7 @@ export default function SocialCommunityMeetupsPage() {
       try {
         const communities = await fetchCommunities();
         setCommunities(Array.isArray(communities) ? communities : []);
-        const posts = await postsService.getPosts();
+        const posts = await fetchCommunityPosts();
         setPosts(Array.isArray(posts) ? posts : []);
       } catch (e) {
         setCommunities([]);
@@ -65,19 +65,31 @@ export default function SocialCommunityMeetupsPage() {
   const handleCreateCommunity = async (communityData) => {
     setActionLoading(true);
     try {
-      await createCommunity(communityData);
+      let newCommunity;
+      if (typeof communityData === 'string') {
+        newCommunity = {
+          content: communityData,
+          user: user?.name || 'You',
+          time: new Date().toLocaleString(),
+          id: Date.now(),
+          type: 'post',
+        };
+      } else {
+        newCommunity = communityData;
+      }
+      await createCommunity(newCommunity);
       const communities = await fetchCommunities();
       setCommunities(Array.isArray(communities) ? communities : []);
     } catch (e) {}
     setActionLoading(false);
   };
 
-  const handleUpdateCommunity = async (communityId, data) => {
+  const handleUpdateCommunity = async (postId, data) => {
     setActionLoading(true);
     try {
-      await updateCommunity(communityId, data);
-      const communities = await fetchCommunities();
-      setCommunities(Array.isArray(communities) ? communities : []);
+      await updateCommunityPost(postId, data);
+      const posts = await fetchCommunityPosts();
+      setPosts(Array.isArray(posts) ? posts : []);
     } catch (e) {}
     setActionLoading(false);
   };
@@ -133,13 +145,9 @@ export default function SocialCommunityMeetupsPage() {
       ...hostingForm,
       rsvps: 0,
       host: user?.name || 'You',
-      image: '/images/meetup1.png',
-      duration: '60 minutes',
       time: `${hostingForm.date}, ${hostingForm.time}`,
       id: Date.now(),
       type: 'meetup',
-      likes: 0,
-      reshares: 0,
     };
     handleCreateCommunity(newCommunity);
     setHostingForm({ title: '', date: '', time: '', type: '', location: '', link: '' });
@@ -154,16 +162,75 @@ export default function SocialCommunityMeetupsPage() {
     mainContent = (
       <div className="pl-8">
         <h2 className="text-2xl font-bold mb-6 text-primary">Community Feed & Meetups</h2>
-        <CommunityFeedWidget
-          feedItems={[...communities].sort((a, b) => (b.id || 0) - (a.id || 0))}
-          onPost={postContent => handleCreateCommunity({
-            title: 'Community Post',
-            description: 'A new post in the community feed.',
-            content: postContent
-          })}
-          onLike={handleUpdateCommunity}
-          onReshare={handleDeleteCommunity}
-        />
+        {/* Community Feed Section (replaces CommunityFeedWidget) */}
+        <section className="bg-white rounded-xl shadow p-4 mb-12">
+          <h3 className="text-lg font-semibold text-brand-navy mb-3 flex items-center gap-2">
+            Community Feed
+          </h3>
+          {/* Post box */}
+          <form
+            onSubmit={e => {
+              e.preventDefault();
+              if (postForm.title.trim() && postForm.description.trim()) {
+                handleCreateCommunity({
+                  title: postForm.title,
+                  description: postForm.description,
+                  user: user?.name || 'You',
+                  time: new Date().toLocaleString(),
+                  id: Date.now(),
+                  type: 'post',
+                });
+                setPostForm({ title: '', description: '' });
+              }
+            }}
+            className="mb-4"
+          >
+            <input
+              className="w-full border rounded p-2 mb-2"
+              type="text"
+              placeholder="Post title"
+              value={postForm.title}
+              onChange={e => setPostForm({ ...postForm, title: e.target.value })}
+            />
+            <textarea
+              className="w-full border rounded p-2 mb-2"
+              rows={2}
+              placeholder="Share something with the community..."
+              value={postForm.description}
+              onChange={e => setPostForm({ ...postForm, description: e.target.value })}
+            />
+            <button type="submit" className="bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700">Post</button>
+          </form>
+          <div className="space-y-3">
+            {[...communities].sort((a, b) => (b.id || 0) - (a.id || 0)).map(item => (
+              <div key={item.id} className="border-b pb-2 last:border-0">
+                <div className="flex items-start">
+                  <div className="bg-brand-navy text-white rounded-full w-8 h-8 flex items-center justify-center text-sm mr-2">
+                    {item.user?.charAt(0) || 'M'}
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-sm">
+                      <span className="font-medium">{item.user || item.host || 'Meetup'}</span> {item.action || (item.type === 'meetup' ? 'created a meetup' : 'posted')}
+                    </p>
+                    <p className="text-xs text-gray-500">{item.time || item.date || ''}</p>
+                    <p className="text-sm mt-1 font-semibold">{item.title}</p>
+                    <p className="text-sm">{item.description || item.content}</p>
+                    {item.type === 'meetup' && (
+                      <div className="mt-2">
+                        <span className="text-xs text-gray-600">{item.duration} • {item.location || ''}</span>
+                      </div>
+                    )}
+                    {/* Like/Reshare buttons */}
+                    <div className="flex gap-2 mt-2">
+                      <button className="text-blue-600 hover:underline text-xs" onClick={() => handleUpdateCommunity(item.id)}>Like</button>
+                      <button className="text-blue-600 hover:underline text-xs" onClick={() => handleDeleteCommunity(item.id)}>Reshare</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
         <div className="mt-12">
           <h3 className="text-xl font-semibold mb-4 text-primary">All Posts</h3>
           {posts.length === 0 ? (
@@ -172,10 +239,11 @@ export default function SocialCommunityMeetupsPage() {
             <ul className="space-y-4">
               {posts.map(post => (
                 <li key={post.id} className="bg-white p-4 rounded shadow border border-gray-100">
-                  <div className="text-gray-800 mb-2">{post.content}</div>
+                  <div className="text-lg font-semibold text-gray-900 mb-1">{post.title || post.content}</div>
+                  <div className="text-gray-800 mb-2">{post.description || post.content}</div>
                   <div className="text-xs text-gray-500 flex justify-between">
-                    <span>By: {post.user_id}</span>
-                    <span>{new Date(post.created_at).toLocaleString()}</span>
+                    <span>By: {post.user_id || post.user || 'Unknown'}</span>
+                    <span>{post.created_at ? new Date(post.created_at).toLocaleString() : (post.time || '')}</span>
                   </div>
                 </li>
               ))}

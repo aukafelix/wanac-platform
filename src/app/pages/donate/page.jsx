@@ -65,7 +65,7 @@ export default function DonatePage() {
         </div>
       </header>
       <section>
-          <div className="relative w-full h-10 bg-[#002147] overflow-hidden flex items-center justify-center">
+          <div className="relative w-full h-16 bg-[#002147] overflow-hidden flex items-center justify-center">
             <nav className="relative z-10 flex space-x-16 px-4">
               <Link href="#How-to-Volunteer" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
                 Support our Mission

@@ -14,12 +14,6 @@ export async function createCommunity(community: any) {
   return res.data;
 }
 
-// Update a community by ID
-export async function updateCommunity(communityId: number, data: any) {
-  const res = await apiClient.put(`${API_BASE}/communities/update/${communityId}`, data);
-  return res.data;
-}
-
 // Delete a community by ID (assuming ID is sent in body or as a param)
 export async function deleteCommunity(communityId: number) {
   const res = await apiClient.delete(`${API_BASE}/communities/delete`, { data: { id: communityId } });
@@ -41,5 +35,17 @@ export async function updateCommunityPostComment(commentId: number, data: any) {
 // Delete a comment from a community post
 export async function deleteCommunityPostComment(commentId: number) {
   const res = await apiClient.delete(`${API_BASE}/communities/posts/comment/delete/${commentId}`);
+  return res.data;
+}
+
+// Fetch all community posts
+export async function fetchCommunityPosts() {
+  const res = await apiClient.get(`${API_BASE}/communities/posts`);
+  return res.data;
+}
+
+// Update a community post by ID
+export async function updateCommunityPost(postId: number, data: any) {
+  const res = await apiClient.put(`${API_BASE}/communities/posts/update/${postId}`, data);
   return res.data;
 } 
