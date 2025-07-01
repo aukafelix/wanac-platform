@@ -7,86 +7,20 @@ import CommunityFeedWidget from '../../../../../components/dashboardcomponents/w
 import CommunityChat from '../../../../../components/CommunityChat';
 import { FaPlus } from 'react-icons/fa';
 import { fetchCommunities, createCommunity, updateCommunity, deleteCommunity, addCommunityPostComment, updateCommunityPostComment, deleteCommunityPostComment } from '../../../../services/api/community.service';
-
-const initialMeetups = [
-  {
-    time: "Friday, Jan 31, 6:00 AM (PST)",
-    duration: "60 minutes",
-    title: "Leaders: Let's Connect & Collaborate. What book and mentors have shaped your style?",
-    host: "Jaclyn Zolnik",
-    rsvps: 2,
-    image: "/images/meetup1.png",
-  },
-  {
-    time: "Friday, Jan 31, 8:00 AM (PST)",
-    duration: "60 minutes",
-    title: "EVerything They Forgot to Tell You When You Started Your Business",
-    host: "Kevin McKamey",
-    rsvps: 21,
-    image: "/images/meetup2.png",
-  },
-  {
-    time: "Friday, Jan 31, 9:00 AM (PST)",
-    duration: "30 minutes",
-    title: "Reclaim Your Relationship With Money - Making It Positive",
-    host: "Elizabeth Rosenberg",
-    rsvps: 17,
-    image: "/images/meetup3.png",
-  },
-  {
-    time: "Friday, Jan 31, 9:30 AM (PST)",
-    duration: "30 minutes",
-    title: "Mental Health Success Habits",
-    host: "Samantha S.",
-    rsvps: 10,
-    image: "/images/meetup4.png",
-  },
-];
-
-const initialFeed = [
-  {
-    id: 1,
-    user: 'John D.',
-    action: 'posted in Veterans Support',
-    time: '10 min ago',
-    content: 'Just completed my first week of the transition program!',
-    type: 'post',
-    likes: 0,
-    reshares: 0,
-  },
-  {
-    id: 2,
-    user: 'Sarah M.',
-    action: 'shared a resource',
-    time: '1 hour ago',
-    content: 'Found this great article on resume building for veterans.',
-    type: 'post',
-    likes: 0,
-    reshares: 0,
-  },
-  {
-    id: 3,
-    user: 'Michael T.',
-    action: 'created an event',
-    time: '3 hours ago',
-    content: 'Virtual coffee meetup this Friday at 10am PT.',
-    type: 'post',
-    likes: 0,
-    reshares: 0,
-  },
-];
+import { postsService } from '../../../../services/api/posts.service';
 
 export default function SocialCommunityMeetupsPage() {
   const [collapsed, setCollapsed] = useState(false);
   const [user, setUser] = useState(null);
   const [selectedTab, setSelectedTab] = useState('Explore');
   const [communities, setCommunities] = useState([]);
-  const [hostingForm, setHostingForm] = useState({ title: '', date: '', time: '', location: '' });
+  const [hostingForm, setHostingForm] = useState({ title: '', date: '', time: '', type: '', location: '', link: '' });
   const [loading, setLoading] = useState(true);
   const [chatMessages, setChatMessages] = useState([
     { text: "Welcome to the community chat!", sender: "Admin", time: "Now" }
   ]);
   const [actionLoading, setActionLoading] = useState(false);
+  const [posts, setPosts] = useState([]);
   const handleSend = (text) => {
     setChatMessages(msgs => [
       ...msgs,
@@ -117,8 +51,11 @@ export default function SocialCommunityMeetupsPage() {
       try {
         const communities = await fetchCommunities();
         setCommunities(Array.isArray(communities) ? communities : []);
+        const posts = await postsService.getPosts();
+        setPosts(Array.isArray(posts) ? posts : []);
       } catch (e) {
         setCommunities([]);
+        setPosts([]);
       }
       setLoading(false);
     }
@@ -188,7 +125,10 @@ export default function SocialCommunityMeetupsPage() {
   // Hosting form submit
   const handleCreateEvent = (e) => {
     e.preventDefault();
-    if (!hostingForm.title || !hostingForm.date || !hostingForm.time || !hostingForm.location) return;
+    // Validation logic
+    if (!hostingForm.title || !hostingForm.date || !hostingForm.time || !hostingForm.type) return;
+    if (hostingForm.type === 'Physical' && !hostingForm.location) return;
+    if (hostingForm.type === 'Online' && !hostingForm.link) return;
     const newCommunity = {
       ...hostingForm,
       rsvps: 0,
@@ -202,7 +142,7 @@ export default function SocialCommunityMeetupsPage() {
       reshares: 0,
     };
     handleCreateCommunity(newCommunity);
-    setHostingForm({ title: '', date: '', time: '', location: '' });
+    setHostingForm({ title: '', date: '', time: '', type: '', location: '', link: '' });
     setSelectedTab('Explore');
   };
 
@@ -216,10 +156,32 @@ export default function SocialCommunityMeetupsPage() {
         <h2 className="text-2xl font-bold mb-6 text-primary">Community Feed & Meetups</h2>
         <CommunityFeedWidget
           feedItems={[...communities].sort((a, b) => (b.id || 0) - (a.id || 0))}
-          onPost={handleCreateCommunity}
+          onPost={postContent => handleCreateCommunity({
+            title: 'Community Post',
+            description: 'A new post in the community feed.',
+            content: postContent
+          })}
           onLike={handleUpdateCommunity}
           onReshare={handleDeleteCommunity}
         />
+        <div className="mt-12">
+          <h3 className="text-xl font-semibold mb-4 text-primary">All Posts</h3>
+          {posts.length === 0 ? (
+            <p className="text-gray-500">No posts available.</p>
+          ) : (
+            <ul className="space-y-4">
+              {posts.map(post => (
+                <li key={post.id} className="bg-white p-4 rounded shadow border border-gray-100">
+                  <div className="text-gray-800 mb-2">{post.content}</div>
+                  <div className="text-xs text-gray-500 flex justify-between">
+                    <span>By: {post.user_id}</span>
+                    <span>{new Date(post.created_at).toLocaleString()}</span>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
       </div>
     );
   } else if (selectedTab === 'Hosting') {
@@ -242,9 +204,30 @@ export default function SocialCommunityMeetupsPage() {
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">Location</label>
-            <input type="text" className="w-full border rounded px-3 py-2" value={hostingForm.location} onChange={e => setHostingForm({ ...hostingForm, location: e.target.value })} required />
+            <label className="block text-sm font-medium mb-1">Type</label>
+            <select
+              className="w-full border rounded px-3 py-2"
+              value={hostingForm.type}
+              onChange={e => setHostingForm({ ...hostingForm, type: e.target.value, location: '', link: '' })}
+              required
+            >
+              <option value="">Select type</option>
+              <option value="Physical">Physical</option>
+              <option value="Online">Online</option>
+            </select>
           </div>
+          {hostingForm.type === 'Physical' && (
+            <div>
+              <label className="block text-sm font-medium mb-1">Location</label>
+              <input type="text" className="w-full border rounded px-3 py-2" value={hostingForm.location} onChange={e => setHostingForm({ ...hostingForm, location: e.target.value })} required />
+            </div>
+          )}
+          {hostingForm.type === 'Online' && (
+            <div>
+              <label className="block text-sm font-medium mb-1">Link</label>
+              <input type="text" className="w-full border rounded px-3 py-2" value={hostingForm.link} onChange={e => setHostingForm({ ...hostingForm, link: e.target.value })} required />
+            </div>
+          )}
           <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 flex items-center gap-2"><FaPlus /> Create Meetup</button>
         </form>
       </div>

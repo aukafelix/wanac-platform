@@ -128,10 +128,10 @@ const OurStory = () => {
         />
         <div className="absolute inset-0 bg-gradient-to-br from-[#002147]/90 via-[#002147]/80 to-[#ff5e1a]/40"></div>
         <div className="relative z-10 py-20 px-4 w-full max-w-4xl mx-auto text-center flex flex-col items-center">
-          <h1 className="text-4xl md:text-5xl font-extrabold mb-4 leading-tight drop-shadow-lg">
+          <h1 className="text-2xl md:text-3xl font-extrabold mb-2 leading-tight drop-shadow-lg">
             OUR MISSION
           </h1>
-          <p className="text-lg md:text-2xl max-w-2xl mx-auto mb-6 text-blue-100 font-medium drop-shadow">
+          <p className="text-base md:text-lg max-w-2xl mx-auto mb-4 text-blue-100 font-medium drop-shadow">
             WANAC is committed to empowering transitioning service members, veterans, and professionals by delivering
 transformative coaching and training that fosters personal growth, professional excellence, and entrepreneurial
 success. Our innovative programs and resources are carefully designed to enable participants to lead impactful lives in
@@ -144,25 +144,25 @@ their communities and beyond.
       <section>
         <div className="relative w-full h-16 bg-[#002147] overflow-hidden flex items-center justify-center">
           <nav className="relative z-10 flex space-x-8 px-4">
-            <a href="#about" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
+            <a href="#about" className="text-white hover:text-blue-300 transition-colors text-xs font-medium">
               About
             </a>
-            <a href="#mission" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
+            <a href="#mission" className="text-white hover:text-blue-300 transition-colors text-xs font-medium">
               Mission
             </a>
-            <a href="#what-sets-apart" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
+            <a href="#what-sets-apart" className="text-white hover:text-blue-300 transition-colors text-xs font-medium">
               What Sets Apart
             </a>
-            <a href="#core-pillars" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
+            <a href="#core-pillars" className="text-white hover:text-blue-300 transition-colors text-xs font-medium">
               Core Pillars
             </a>
-            <a href="#aspirations" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
+            <a href="#aspirations" className="text-white hover:text-blue-300 transition-colors text-xs font-medium">
               Aspirations
             </a>
-            <a href="#board" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
+            <a href="#board" className="text-white hover:text-blue-300 transition-colors text-xs font-medium">
               Board of Directors
             </a>
-            <a href="#executive" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
+            <a href="#executive" className="text-white hover:text-blue-300 transition-colors text-xs font-medium">
               Executive Staff
             </a>
           </nav>
@@ -181,13 +181,13 @@ their communities and beyond.
           <div className="flex flex-col md:flex-row items-stretch max-w-5xl mx-auto gap-8">
             {/* Text Content */}
             <div className="flex-1 flex flex-col justify-center text-left">
-              <h1 className="text-4xl md:text-5xl font-extrabold mb-4">
+              <h1 className="text-2xl md:text-3xl font-extrabold mb-2">
                 What Sets WANAC Apart
               </h1>
-              <p className="text-lg md:text-2xl max-w-2xl mb-6 text-black font-medium drop-shadow">
+              <p className="text-base md:text-lg max-w-2xl mb-4 text-black font-medium drop-shadow">
                 In today's rapidly evolving world, the ability to adapt, lead, and inspire others is more important than ever. At WANAC, we cultivate forward-thinking leaders who not only possess strategic insight and adaptability but also excel in emotional intelligence and resilience—key traits of transformative leadership.
               </p>
-              <p className="text-lg md:text-2xl max-w-2xl mb-6 text-black font-medium drop-shadow">
+              <p className="text-base md:text-lg max-w-2xl mb-4 text-black font-medium drop-shadow">
                 Our distinctive approach combines rigorous academic insights with real-world experiences, preparing our participants to confidently navigate life's transitions and professional challenges.
               </p>
             </div>

@@ -1,9 +1,11 @@
 // components/dashboardcomponents/widgets/CommunityFeedWidget.jsx
 import { FaUsers } from 'react-icons/fa';
 import React from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function CommunityFeedWidget({ feedItems = [], onPost, onLike, onReshare }) {
   const [postContent, setPostContent] = React.useState('');
+  const router = useRouter();
 
   return (
     <div className="bg-white rounded-xl shadow p-4">
@@ -58,7 +60,7 @@ export default function CommunityFeedWidget({ feedItems = [], onPost, onLike, on
           </div>
         ))}
       </div>
-      <button className="w-full mt-3 bg-[#002147] text-white px-3 py-1 rounded text-sm hover:bg-orange-500 transition">
+      <button className="w-full mt-3 bg-[#002147] text-white px-3 py-1 rounded text-sm hover:bg-orange-500 transition" onClick={() => router.push('/pages/client/socialcommunity')}>
         View All Updates
       </button>
     </div>
