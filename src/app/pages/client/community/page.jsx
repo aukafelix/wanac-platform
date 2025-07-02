@@ -14,7 +14,7 @@ export default function CommunityPage() {
   const [loadingCommunities, setLoadingCommunities] = useState(true);
   const [communityError, setCommunityError] = useState('');
   const [showCreateModal, setShowCreateModal] = useState(false);
-  const [newCommunity, setNewCommunity] = useState({ title: '', description: '' });
+  const [newCommunity, setNewCommunity] = useState({ name: '', description: '' });
   const [creating, setCreating] = useState(false);
   const [createError, setCreateError] = useState('');
   const [selectedCommunityId, setSelectedCommunityId] = useState(null);
@@ -48,20 +48,20 @@ export default function CommunityPage() {
     e.preventDefault();
     setCreating(true);
     setCreateError('');
-    if (!newCommunity.title.trim() || !newCommunity.description.trim()) {
-      setCreateError('Title and description are required.');
+    if (!newCommunity.name.trim() || !newCommunity.description.trim()) {
+      setCreateError('Name and description are required.');
       setCreating(false);
       return;
     }
     try {
       const payload = {
-        title: newCommunity.title,
+        name: newCommunity.name,
         description: newCommunity.description,
       };
       const created = await createCommunity(payload);
       setCommunities([created, ...communities]);
       setShowCreateModal(false);
-      setNewCommunity({ title: '', description: '' });
+      setNewCommunity({ name: '', description: '' });
     } catch (err) {
       setCreateError('Failed to create community.');
     } finally {
@@ -113,7 +113,7 @@ export default function CommunityPage() {
                         >
                           <div className="flex items-center gap-2 mb-2">
                             <FaUsers className="text-blue-600 text-xl" />
-                            <h3 className="font-bold text-lg text-gray-800 group-hover:text-blue-700 transition">{comm.title || <span className='italic text-gray-400'>Untitled</span>}</h3>
+                            <h3 className="font-bold text-lg text-gray-800 group-hover:text-blue-700 transition">{comm.name || <span className='italic text-gray-400'>Untitled</span>}</h3>
                           </div>
                           {comm.name && (
                             <div className="mb-2">
@@ -136,12 +136,12 @@ export default function CommunityPage() {
                       <h3 className="text-xl font-bold mb-4">Create Community</h3>
                       <form onSubmit={handleCreateCommunity} className="space-y-4">
                         <div>
-                          <label className="block text-sm font-medium mb-1">Title</label>
+                          <label className="block text-sm font-medium mb-1">Name</label>
                           <input
                             type="text"
                             className="w-full border rounded px-3 py-2"
-                            value={newCommunity.title}
-                            onChange={e => setNewCommunity({ ...newCommunity, title: e.target.value })}
+                            value={newCommunity.name}
+                            onChange={e => setNewCommunity({ ...newCommunity, name: e.target.value })}
                             required
                           />
                         </div>
