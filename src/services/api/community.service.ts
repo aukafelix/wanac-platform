@@ -48,4 +48,10 @@ export async function fetchCommunityPosts() {
 export async function updateCommunityPost(postId: number, data: any) {
   const res = await apiClient.put(`${API_BASE}/communities/posts/update/${postId}`, data);
   return res.data;
+}
+
+// Fetch a single community by ID
+export async function fetchCommunityById(communityId) {
+  const res = await apiClient.get(`${API_BASE}/communities/${communityId}`);
+  return res.data;
 } 

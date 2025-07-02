@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import Sidebar from "../../../../../components/dashboardcomponents/sidebar";
 import ClientTopbar from "../../../../../components/dashboardcomponents/clienttopbar";
 import { FaLock, FaCalendarAlt, FaPlus, FaUsers } from "react-icons/fa";
@@ -25,7 +24,6 @@ export default function CommunityPage() {
   const [creating, setCreating] = useState(false);
   const [createError, setCreateError] = useState("");
   const [selectedCommunityId, setSelectedCommunityId] = useState(null);
-  const router = useRouter();
 
   useEffect(() => {
     const userData = localStorage.getItem("wanacUser");
@@ -184,7 +182,8 @@ export default function CommunityPage() {
                             className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-semibold py-1 px-3 rounded transition"
                             onClick={(e) => {
                               e.stopPropagation();
-                              router.push(`/pages/client/community/communities?id=${comm.id}`);
+                              // TODO: Implement navigation to community details page
+                              alert(`View Community: ${comm.name}`);
                             }}
                           >
                             View Community

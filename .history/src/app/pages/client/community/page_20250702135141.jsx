@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import Sidebar from "../../../../../components/dashboardcomponents/sidebar";
 import ClientTopbar from "../../../../../components/dashboardcomponents/clienttopbar";
 import { FaLock, FaCalendarAlt, FaPlus, FaUsers } from "react-icons/fa";
@@ -25,7 +24,6 @@ export default function CommunityPage() {
   const [creating, setCreating] = useState(false);
   const [createError, setCreateError] = useState("");
   const [selectedCommunityId, setSelectedCommunityId] = useState(null);
-  const router = useRouter();
 
   useEffect(() => {
     const userData = localStorage.getItem("wanacUser");
@@ -180,15 +178,6 @@ export default function CommunityPage() {
                               <span className="italic text-gray-400"></span>
                             )}
                           </p>
-                          <button
-                            className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-semibold py-1 px-3 rounded transition"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              router.push(`/pages/client/community/communities?id=${comm.id}`);
-                            }}
-                          >
-                            View Community
-                          </button>
                         </div>
                       ))}
                     </div>
@@ -253,6 +242,13 @@ export default function CommunityPage() {
                           disabled={creating}
                         >
                           {creating ? "Creating..." : "Create"}
+                        </button>
+                        <button
+                          type="button"
+                          className="mt-2 bg-[#002147] text-white px-4 py-2 rounded hover:bg-orange-500 transition w-full"
+                          onClick={() => window.location.href = '/pages/client/socialcommunity'}
+                        >
+                          View Updates
                         </button>
                       </form>
                     </div>

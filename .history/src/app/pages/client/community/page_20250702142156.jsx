@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import Sidebar from "../../../../../components/dashboardcomponents/sidebar";
 import ClientTopbar from "../../../../../components/dashboardcomponents/clienttopbar";
 import { FaLock, FaCalendarAlt, FaPlus, FaUsers } from "react-icons/fa";
@@ -9,6 +8,7 @@ import {
   fetchCommunities,
   createCommunity,
 } from "../../../../../src/services/api/community.service";
+import Communities from "../../../../../components/communities/communities";
 
 export default function CommunityPage() {
   const [collapsed, setCollapsed] = useState(false);
@@ -25,7 +25,7 @@ export default function CommunityPage() {
   const [creating, setCreating] = useState(false);
   const [createError, setCreateError] = useState("");
   const [selectedCommunityId, setSelectedCommunityId] = useState(null);
-  const router = useRouter();
+  const [showCommunitiesModal, setShowCommunitiesModal] = useState(false);
 
   useEffect(() => {
     const userData = localStorage.getItem("wanacUser");
@@ -184,7 +184,7 @@ export default function CommunityPage() {
                             className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-semibold py-1 px-3 rounded transition"
                             onClick={(e) => {
                               e.stopPropagation();
-                              router.push(`/pages/client/community/communities?id=${comm.id}`);
+                              setShowCommunitiesModal(true);
                             }}
                           >
                             View Community
@@ -255,6 +255,19 @@ export default function CommunityPage() {
                           {creating ? "Creating..." : "Create"}
                         </button>
                       </form>
+                    </div>
+                  </div>
+                )}
+                {showCommunitiesModal && (
+                  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
+                    <div className="bg-white rounded-lg p-8 w-full max-w-4xl shadow-lg relative">
+                      <button
+                        className="absolute top-2 right-2 text-gray-400 hover:text-gray-700 text-2xl"
+                        onClick={() => setShowCommunitiesModal(false)}
+                      >
+                        &times;
+                      </button>
+                      <Communities />
                     </div>
                   </div>
                 )}
