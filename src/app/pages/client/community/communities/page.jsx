@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { fetchCommunityById } from "../../../../../services/api/community.service";
+import { fetchCommunityById, addCommunityFeedPost } from "../../../../../services/api/community.service";
 
 const sampleMeetups = [
   {
@@ -60,6 +60,8 @@ export default function CommunityDetailPage() {
   const [sidebarTab, setSidebarTab] = useState("explore");
   const [feedPosts, setFeedPosts] = useState([]);
   const [newFeedContent, setNewFeedContent] = useState("");
+  const [feedLoading, setFeedLoading] = useState(false);
+  const [feedError, setFeedError] = useState("");
 
   useEffect(() => {
     if (!communityId) {
@@ -164,14 +166,27 @@ export default function CommunityDetailPage() {
               {/* Feed Post Form */}
               <form
                 className="mb-6 flex flex-col gap-2"
-                onSubmit={e => {
+                onSubmit={async e => {
                   e.preventDefault();
                   if (!newFeedContent.trim() || !user) return;
-                  setFeedPosts([
-                    { content: newFeedContent, userName: user.name, createdAt: new Date() },
-                    ...feedPosts
-                  ]);
-                  setNewFeedContent("");
+                  setFeedLoading(true);
+                  setFeedError("");
+                  try {
+                    const postPayload = {
+                      content: newFeedContent,
+                      community_id: communityId,
+                    };
+                    const response = await addCommunityFeedPost(postPayload);
+                    setFeedPosts([
+                      { content: newFeedContent, userName: user.name, createdAt: new Date(), ...response },
+                      ...feedPosts
+                    ]);
+                    setNewFeedContent("");
+                  } catch (err) {
+                    setFeedError("Failed to post. Please try again.");
+                  } finally {
+                    setFeedLoading(false);
+                  }
                 }}
               >
                 <textarea
@@ -184,11 +199,12 @@ export default function CommunityDetailPage() {
                 <button
                   type="submit"
                   className="self-end bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50"
-                  disabled={!newFeedContent.trim()}
+                  disabled={!newFeedContent.trim() || feedLoading}
                 >
-                  Post
+                  {feedLoading ? "Posting..." : "Post"}
                 </button>
               </form>
+              {feedError && <div className="text-red-500 text-sm mb-2">{feedError}</div>}
               {/* Feed Posts List */}
               {feedPosts.length === 0 ? (
                 <div className="text-gray-500 italic">No posts yet. Be the first to post!</div>

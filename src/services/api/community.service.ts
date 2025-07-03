@@ -51,7 +51,13 @@ export async function updateCommunityPost(postId: number, data: any) {
 }
 
 // Fetch a single community by ID
-export async function fetchCommunityById(communityId) {
+export async function fetchCommunityById(communityId: any) {
   const res = await apiClient.get(`${API_BASE}/communities/${communityId}`);
+  return res.data;
+}
+
+// Add a new feed post
+export async function addCommunityFeedPost(post: any) {
+  const res = await apiClient.post('https://wanac-api.kuzasports.com/api/v1/communities/posts/add', post);
   return res.data;
 } 
