@@ -34,7 +34,7 @@ export default function CoachSidebar() {
 
   return (
     <aside
-      className={`bg-white border-r border-gray-200 hidden md:flex flex-col h-screen transition-all duration-300 ${collapsed ? 'w-16' : 'w-56'}`}
+      className={`bg-white border-r border-gray-200 flex flex-col h-screen transition-all duration-300 ${collapsed ? 'w-16' : 'w-56'}`}
       onMouseEnter={() => setCollapsed(false)}
       onMouseLeave={() => setCollapsed(true)}
     >

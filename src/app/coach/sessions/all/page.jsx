@@ -50,11 +50,15 @@ export default function AllCoachSessionsPage() {
   return (
     <div className="h-screen flex bg-gray-50 font-serif">
       {/* Sidebar */}
-      <CoachSidebar />
+      <div style={{ background: 'red', minWidth: 100, border: '2px solid black' }}>
+        <CoachSidebar />
+      </div>
       {/* Main Area */}
       <div className="flex-1 flex flex-col h-full transition-all duration-300">
         {/* Top Bar */}
-        <ClientTopbar user={user || { name: "Coach" }} />
+        <div style={{ background: 'blue', border: '2px solid yellow' }}>
+          <ClientTopbar user={user || { name: "Coach" }} />
+        </div>
         {/* Main Content */}
         <main className="flex-1 h-0 overflow-y-auto px-2 md:px-8 py-6 bg-gray-50">
           <div className="max-w-5xl mx-auto grid grid-cols-1 gap-6">
