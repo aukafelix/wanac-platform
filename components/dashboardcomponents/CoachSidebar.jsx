@@ -16,16 +16,16 @@ import {
 } from 'react-icons/fa';
 
 const coachNavItems = [
-  { name: 'Dashboard', href: '/pages/coach', icon: <FaChartBar size={18} /> },
-  { name: 'Sessions', href: '/pages/coach/sessions', icon: <FaCalendarAlt size={18} /> },
-  { name: 'Clients', href: '/pages/coach/clients', icon: <FaUserFriends size={18} /> },
-  { name: 'Session Notes', href: '/pages/coach/session-notes', icon: <FaClipboardList size={18} /> },
-  { name: 'Coaching Tips', href: '/pages/coach/tips', icon: <FaLightbulb size={18} /> },
-  { name: 'Progress', href: '/pages/coach/progress', icon: <FaChartBar size={18} /> },
-  { name: 'Resources', href: '/pages/coach/resources', icon: <FaBook size={18} /> },
-  { name: 'Community', href: '/pages/client/community', icon: <FaUsersCog size={18} /> },
-  { name: 'Feedback', href: '/pages/coach/feedback', icon: <FaComments size={18} /> },
-  { name: 'Messages', href: '/pages/coach/messages', icon: <FaEnvelope size={18} /> },
+  { name: 'Dashboard', href: '/coach', icon: <FaChartBar size={18} /> },
+  { name: 'Sessions', href: '/coach/sessions', icon: <FaCalendarAlt size={18} /> },
+  { name: 'Clients', href: '/coach/clients', icon: <FaUserFriends size={18} /> },
+  { name: 'Session Notes', href: '/coach/session-notes', icon: <FaClipboardList size={18} /> },
+  { name: 'Coaching Tips', href: '/coach/tips', icon: <FaLightbulb size={18} /> },
+  { name: 'Progress', href: '/coach/progress', icon: <FaChartBar size={18} /> },
+  { name: 'Resources', href: '/coach/resources', icon: <FaBook size={18} /> },
+  { name: 'Community', href: '/client/community', icon: <FaUsersCog size={18} /> },
+  { name: 'Feedback', href: '/coach/feedback', icon: <FaComments size={18} /> },
+  { name: 'Messages', href: '/coach/messages', icon: <FaEnvelope size={18} /> },
 ];
 
 export default function CoachSidebar() {

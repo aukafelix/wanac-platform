@@ -13,8 +13,8 @@ import {
   FaComments,
   FaEnvelope,
 } from 'react-icons/fa';
-import CoachSidebar from '../../../../components/dashboardcomponents/CoachSidebar';
-import ClientTopbar from '../../../../components/dashboardcomponents/clienttopbar';
+import CoachSidebar from '../../../components/dashboardcomponents/CoachSidebar';
+import ClientTopbar from '../../../components/dashboardcomponents/clienttopbar';
 
 // Simple Modal Component
 function Modal({ open, onClose, title, children }) {

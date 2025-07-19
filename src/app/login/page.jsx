@@ -103,7 +103,7 @@ export default function Login() {
 
         const dashboardPaths = {
           client: '/pages/client/dashboard',
-          coach: '/pages/coach',
+          coach: '/coach',
           admin: '/pages/admin'
         };
 

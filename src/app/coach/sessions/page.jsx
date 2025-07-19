@@ -1,12 +1,12 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import CoachSidebar from '../../../../../components/dashboardcomponents/CoachSidebar';
-import ClientTopbar from '../../../../../components/dashboardcomponents/clienttopbar';
+import CoachSidebar from '../../../../components/dashboardcomponents/CoachSidebar';
+import ClientTopbar from '../../../../components/dashboardcomponents/clienttopbar';
 import { FaCalendar, FaVideo, FaMicrophone, FaUpload, FaRobot, FaBookOpen, FaInfoCircle } from 'react-icons/fa';
-import SessionRecorder from "../../client/session/SessionRecorder";
-import FileUpload from "../../client/session/FileUpload";
-import { sessionsService } from '../../../../services/api/sessions.service';
+import SessionRecorder from "../../pages/client/session/SessionRecorder";
+import FileUpload from "../../pages/client/session/FileUpload";
+import { sessionsService } from '../../../services/api/sessions.service';
 
 export default function CoachSessionsPage() {
   const [upcomingSessions, setUpcomingSessions] = useState([]);
@@ -153,7 +153,7 @@ export default function CoachSessionsPage() {
                     <div
                       key={session.id}
                       className="border-l-4 border-primary pl-4 py-2 bg-primary/5 rounded cursor-pointer hover:bg-primary/10 transition"
-                      onClick={() => router.push(`/pages/coach/sessions/fullviewsession/${session.id}`)}
+                      onClick={() => router.push(`/coach/sessions/fullviewsession/${session.id}`)}
                     >
                       <div className="flex justify-between">
                         <div>
