@@ -37,27 +37,32 @@ export default function CoachSessionsPage() {
     // Fetch existing sessions
     const fetchSessions = async () => {
       try {
-        const sessions = await sessionsService.getSessions();
-        setUpcomingSessions(sessions.map(session => {
-          // Use fixed formatting for date/time
-          const d = new Date(session.date);
-          const pad = n => n.toString().padStart(2, '0');
-          const date = `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
-          const time = `${pad(d.getHours())}:${pad(d.getMinutes())}`;
-          return {
-            ...session,
-            time,
-            date,
-            link: session.meeting_link || '',
-            resources: session.resources || '',
-            notes: session.description || '',
-            status: session.status || 'Scheduled'
-          };
-        }));
+        const response = await sessionsService.getSessions(); // Axios/Fetch response
+        const sessions = response.sessions.data; 
+        console.log(sessions);
+    
+        setUpcomingSessions(
+          sessions.map(session => {
+            const d = new Date(session.scheduled_at);
+            const pad = n => n.toString().padStart(2, '0');
+            const date = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+            const time = `${pad(d.getHours())}:${pad(d.getMinutes())}`;
+            return {
+              ...session,
+              time,
+              date,
+              link: session.session_link || '',
+              resources: session.resources || '',
+              notes: session.description || '',
+              status: session.status || 'Scheduled'
+            };
+          })
+        );
       } catch (error) {
         console.error('Error fetching sessions:', error);
-    }
+      }
     };
+    
     fetchSessions();
   }, []);
 
