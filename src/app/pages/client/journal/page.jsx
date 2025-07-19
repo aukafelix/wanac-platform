@@ -16,11 +16,11 @@ import { Tooltip } from "react-tooltip";
 import { journalService } from "../../../../services/api/journal.service";
 
 const tabs = [
-  { key: "morning", label: "\u2600\ufe0f Morning Mindset" },
-  { key: "evening", label: "\ud83c\udf1c Evening Review" },
-  { key: "growth", label: "\ud83c\udf3f Growth Prompts" },
-  { key: "weekly", label: "\ud83d\udcd3 Weekly Review" },
-  { key: "monthly", label: "\ud83d\udcc5 Monthly Review" },
+  { key: "morning", label: " Morning Mindset" },
+  { key: "evening", label: " Evening Review" },
+  { key: "growth", label: " Growth Prompts" },
+  { key: "weekly", label: " Weekly Review" },
+  { key: "monthly", label: " Monthly Review" },
 ];
 
 export default function JournalUI() {

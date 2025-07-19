@@ -123,10 +123,10 @@ export default function LifeScoresPage() {
               {/* Main Content */}
               <div className="flex-1 space-y-10">
                 {/* Hero / Preview Section */}
-                <LifeScorePreview />
 
                 {/* Daily Habits Section */}
                 <section className="bg-white border border-gray-200 rounded-lg p-6 shadow-none mb-8">
+                  <h2 className="text-2xl font-bold text-brand-navy">Track Your Growth</h2>
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="text-xl font-bold text-brand-navy">Daily Habits (Last 30 Days)</h3>
                     <Button variant="contained" color="primary" size="small" onClick={() => setOpenAssessment('daily')}>Take Assessment</Button>

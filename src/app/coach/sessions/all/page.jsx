@@ -50,13 +50,13 @@ export default function AllCoachSessionsPage() {
   return (
     <div className="h-screen flex bg-gray-50 font-serif">
       {/* Sidebar */}
-      <div style={{ background: 'red', minWidth: 100, border: '2px solid black' }}>
+      <div>
         <CoachSidebar />
       </div>
       {/* Main Area */}
       <div className="flex-1 flex flex-col h-full transition-all duration-300">
         {/* Top Bar */}
-        <div style={{ background: 'blue', border: '2px solid yellow' }}>
+        <div>
           <ClientTopbar user={user || { name: "Coach" }} />
         </div>
         {/* Main Content */}
@@ -76,7 +76,7 @@ export default function AllCoachSessionsPage() {
               </div>
               <button
                 className="text-blue-600 underline text-sm font-medium w-max mb-4"
-                onClick={() => router.push("/pages/coach/sessions")}
+                onClick={() => router.push("/coach/sessions")}
               >
                 &larr; Back to Dashboard
               </button>

@@ -124,11 +124,11 @@ export default function CoachSessionsPage() {
       {/* Sidebar */}
       <CoachSidebar />
       {/* Main Area */}
-      <div className="flex-1 flex flex-col h-full transition-all duration-300">
+      <div className="flex-1 flex flex-col h-full min-h-0 transition-all duration-300">
         {/* Top Bar */}
         <ClientTopbar user={user || { name: "Coach" }} />
         {/* Main Content */}
-        <main className="flex-1 h-0 overflow-y-auto px-2 md:px-8 py-6 bg-gray-50">
+        <main className="flex-1 min-h-0 overflow-y-auto px-2 md:px-8 py-6 bg-gray-50">
           <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Welcome & Instructions */}
             <section className="col-span-1 md:col-span-2 bg-white border border-gray-200 rounded-lg p-6 shadow-sm flex items-center gap-4">
@@ -158,50 +158,17 @@ export default function CoachSessionsPage() {
                       <div className="flex justify-between">
                         <div>
                           <p className="font-medium text-gray-800">{session.title}</p>
-                          <p className="text-sm text-gray-600">Status: {session.status}</p>
                           {session.link && (
                             <div className="mt-1">
-                              <label className="text-xs text-gray-500">Meeting Link</label>
-                              <input
-                                type="text"
-                                value={session.link}
-                                readOnly
-                                className="block w-full text-xs bg-gray-100 border border-gray-300 rounded px-2 py-1 mt-1 text-blue-700 cursor-pointer focus:outline-none"
-                                onFocus={e => e.target.select()}
-                                onClick={e => e.target.select()}
-                              />
                               <a
                                 href={session.link}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-blue-600 underline text-xs mt-1 inline-block"
+                                onClick={e => e.stopPropagation()}
                               >
                                 Join Meeting
                               </a>
-                            </div>
-                          )}
-                          {session.resources && (
-                            <div className="mt-1">
-                              <label className="text-xs text-gray-500">Resources</label>
-                              <div className="text-xs text-gray-700 bg-gray-50 border border-gray-200 rounded px-2 py-1 mt-1 break-words">{session.resources}</div>
-                            </div>
-                          )}
-                          {session.notes && (
-                            <div className="mt-1">
-                              <label className="text-xs text-gray-500">Notes</label>
-                              <div className="text-xs text-gray-700 bg-gray-50 border border-gray-200 rounded px-2 py-1 mt-1 break-words">{session.notes}</div>
-                            </div>
-                          )}
-                          {session.files && session.files.length > 0 && (
-                            <div className="mt-1">
-                              <label className="text-xs text-gray-500">Files</label>
-                              <ul className="text-xs mt-1">
-                                {session.files.map((file, idx) => (
-                                  <li key={idx}>
-                                    <a href={file.url} download={file.name} className="text-blue-600 underline" target="_blank" rel="noopener noreferrer">{file.name}</a>
-                                  </li>
-                                ))}
-                              </ul>
                             </div>
                           )}
                         </div>
