@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import {
   FaUserFriends,
   FaCalendarAlt,
@@ -19,7 +20,6 @@ const coachNavItems = [
   { name: 'Dashboard', href: '/coach', icon: <FaChartBar size={18} /> },
   { name: 'Sessions', href: '/coach/sessions', icon: <FaCalendarAlt size={18} /> },
   { name: 'Clients', href: '/coach/clients', icon: <FaUserFriends size={18} /> },
-  { name: 'Session Notes', href: '/coach/session-notes', icon: <FaClipboardList size={18} /> },
   { name: 'Coaching Tips', href: '/coach/tips', icon: <FaLightbulb size={18} /> },
   { name: 'Progress', href: '/coach/progress', icon: <FaChartBar size={18} /> },
   { name: 'Resources', href: '/coach/resources', icon: <FaBook size={18} /> },
@@ -31,6 +31,15 @@ const coachNavItems = [
 export default function CoachSidebar() {
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(true);
+  const router = useRouter();
+
+  const handleLogout = () => {
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('wanacUser');
+      localStorage.removeItem('auth_token');
+    }
+    router.push('/login');
+  };
 
   return (
     <aside
@@ -39,8 +48,8 @@ export default function CoachSidebar() {
       onMouseLeave={() => setCollapsed(true)}
     >
       <div className={`p-3 ${collapsed ? 'justify-center flex' : ''}`}>
-        {!collapsed && <h1 className="text-base font-semibold text-gray-800">WANAC Coach</h1>}
-        {collapsed && <span className="sr-only">WANAC Coach</span>}
+        {!collapsed && <h1 className="text-base font-semibold text-gray-800">WANAC COACH</h1>}
+        {collapsed && <span className="sr-only">WANAC COACH</span>}
       </div>
       <nav className="flex-1 p-1 space-y-1">
         {coachNavItems.map((item) => (
@@ -61,7 +70,7 @@ export default function CoachSidebar() {
       </nav>
       <div className="p-2 border-t flex flex-col gap-1">
         <button className={`flex items-center gap-2 px-2 py-2 text-xs text-gray-600 hover:bg-gray-100 w-full rounded-md ${collapsed ? 'justify-center' : ''}`}
-          // TODO: Add actual logout logic
+          onClick={handleLogout}
         >
           <FaSignOutAlt size={18} />
           {!collapsed && 'Log Out'}

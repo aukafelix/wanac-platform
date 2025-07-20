@@ -1,6 +1,6 @@
 "use client";
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import {
   FaUsers,
@@ -31,11 +31,20 @@ const adminNavItems = [
 
 export default function AdminSidebar() {
   const pathname = usePathname();
+  const router = useRouter();
   const [collapsed, setCollapsed] = useState(true);
+
+  const handleLogout = () => {
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('wanacUser');
+      localStorage.removeItem('auth_token');
+    }
+    router.push('/login');
+  };
 
   return (
     <aside
-      className={`bg-white border-r border-gray-200 hidden md:flex flex-col h-screen transition-all duration-300 ${collapsed ? 'w-16' : 'w-56'}`}
+      className={`fixed top-0 left-0 z-30 bg-white border-r border-gray-200 hidden md:flex flex-col h-screen transition-all duration-300 ${collapsed ? 'w-16' : 'w-56'}`}
       onMouseEnter={() => setCollapsed(false)}
       onMouseLeave={() => setCollapsed(true)}
     >
@@ -62,7 +71,7 @@ export default function AdminSidebar() {
       </nav>
       <div className="p-2 border-t flex flex-col gap-1">
         <button className={`flex items-center gap-2 px-2 py-2 text-xs text-gray-600 hover:bg-gray-100 w-full rounded-md ${collapsed ? 'justify-center' : ''}`}
-          // TODO: Add actual logout logic
+          onClick={handleLogout}
         >
           <FaSignOutAlt size={18} />
           {!collapsed && 'Log Out'}

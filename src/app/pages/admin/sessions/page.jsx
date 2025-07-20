@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import AdminSidebar from "../../../../../components/dashboardcomponents/adminsidebar";
 import { Plus, Search, Edit, Trash2, Users, User, Calendar, X } from "lucide-react";
+import { sessionsService } from "../../../../services/api/sessions.service";
 
 export default function SessionManagement() {
   const [sessions, setSessions] = useState([]);
@@ -18,41 +19,28 @@ export default function SessionManagement() {
 
   // Dummy data for demonstration
   useEffect(() => {
-    setSessions([
-      {
-        id: 1,
-        client: "Mary Johnson",
-        coach: "Jane Doe",
-        date: "2024-06-20",
-        time: "10:00 AM",
-        status: "Scheduled",
-      },
-      {
-        id: 2,
-        client: "Peter Lee",
-        coach: "John Smith",
-        date: "2024-06-21",
-        time: "2:00 PM",
-        status: "Completed",
-      },
-      {
-        id: 3,
-        client: "Grace Kim",
-        coach: "Alice Brown",
-        date: "2024-06-22",
-        time: "11:00 AM",
-        status: "Cancelled",
-      },
-    ]);
+    async function fetchSessions() {
+      try {
+        const response = await sessionsService.getSessions();
+        // Handle both { data: [...] } and { sessions: { data: [...] } }
+        const sessionsArray = response?.data || response?.sessions?.data || [];
+        setSessions(sessionsArray);
+      } catch (error) {
+        console.error("Failed to fetch sessions:", error);
+      }
+    }
+    fetchSessions();
   }, []);
 
   useEffect(() => {
     setFilteredSessions(
-      sessions.filter(
-        (session) =>
-          session.client.toLowerCase().includes(search.toLowerCase()) ||
-          session.coach.toLowerCase().includes(search.toLowerCase())
-      )
+      Array.isArray(sessions)
+        ? sessions.filter(
+            (session) =>
+              (session.title && session.title.toLowerCase().includes(search.toLowerCase())) ||
+              (session.description && session.description.toLowerCase().includes(search.toLowerCase()))
+          )
+        : []
     );
   }, [search, sessions]);
 
@@ -228,9 +216,9 @@ export default function SessionManagement() {
             <table className="min-w-full text-sm">
               <thead>
                 <tr className="bg-gray-100 text-[#002147]">
-                  <th className="py-2 px-4 text-left"><Users size={14} className="inline mr-1" />Client</th>
-                  <th className="py-2 px-4 text-left"><User size={14} className="inline mr-1" />Coach</th>
+                  <th className="py-2 px-4 text-left">Title</th>
                   <th className="py-2 px-4 text-left"><Calendar size={14} className="inline mr-1" />Date</th>
+                  <th className="py-2 px-4 text-left">Description</th>
                   <th className="py-2 px-4 text-left">Time</th>
                   <th className="py-2 px-4 text-left">Status</th>
                   <th className="py-2 px-4 text-left">Actions</th>
@@ -246,10 +234,10 @@ export default function SessionManagement() {
                 ) : (
                   filteredSessions.map((session) => (
                     <tr key={session.id} className="border-b hover:bg-gray-50">
-                      <td className="py-2 px-4">{session.client}</td>
-                      <td className="py-2 px-4">{session.coach}</td>
+                      <td className="py-2 px-4">{session.title}</td>
                       <td className="py-2 px-4">{session.date}</td>
-                      <td className="py-2 px-4">{session.time}</td>
+                      <td className="py-2 px-4">{session.description}</td>
+                      <td className="py-2 px-4">{session.time || '-'}</td>
                       <td className="py-2 px-4">
                         <span
                           className={`px-2 py-1 rounded-full text-xs font-semibold ${
@@ -260,7 +248,7 @@ export default function SessionManagement() {
                               : "bg-gray-200 text-gray-600"
                           }`}
                         >
-                          {session.status}
+                          {session.status || '-'}
                         </span>
                       </td>
                       <td className="py-2 px-4 flex gap-2">
