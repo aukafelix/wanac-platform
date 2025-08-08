@@ -18,6 +18,7 @@ const navItems = [
   { name: 'Students', href: '/pages/client/students', icon: <Users size={18} /> },
   { name: 'Account Settings', href: '/pages/client/accountsettings', icon: <UserCog size={18} /> },
   { name: 'Sessions', href: '/pages/client/session', icon: <Video size={18} /> }, // <-- Changed to Video icon
+  { name: 'My Career', href: '/pages/client/Mycareer', icon: <Briefcase size={18} /> },
   { name: 'My Education Compass', href: '/pages/client/myeducationcompass', icon: <GraduationCap size={18} /> },
   { name: 'Reports', href: '/client/reports', icon: <BarChart2 size={18} /> },
 ]
