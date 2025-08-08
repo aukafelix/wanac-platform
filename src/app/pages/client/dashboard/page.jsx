@@ -122,10 +122,10 @@ export default function ClientDashboard() {
                 {/* Quick Actions Row */}
                 <section className="flex flex-col md:flex-row gap-4">
                   <QuickActionCard
-                    icon={FaCalendar}
-                    title="Schedule Session"
-                    description="Book your next coaching session"
-                    href="/pages/client/session"
+                    icon={FaUsers}
+                    title="Community"
+                    description="Join the community"
+                    href="/pages/client/community"
                     color="primary"
                   />
                   <QuickActionCard
