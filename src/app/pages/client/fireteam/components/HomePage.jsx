@@ -119,14 +119,14 @@ export default function HomePage() {
                     {a.status === 'Upcoming' ? (
                       <button
                         className="text-[11px] text-blue-600 font-semibold hover:underline group-hover:text-blue-800 transition-colors"
-                        onClick={() => router.push(`/pages/client/breakoutroom/details?id=${a.id}`)}
+                        onClick={() => router.push(`/pages/client/fireteam/details?id=${a.id}`)}
                       >
                         View &rarr;
                       </button>
                     ) : (
                       <button
                         className="text-[11px] text-blue-600 font-semibold hover:underline group-hover:text-blue-800 transition-colors"
-                        onClick={() => router.push(`/pages/client/breakoutroom/details?id=${a.id}`)}
+                        onClick={() => router.push(`/pages/client/fireteam/details?id=${a.id}`)}
                       >
                         View Results &rarr;
                       </button>

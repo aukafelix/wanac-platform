@@ -10,7 +10,7 @@ const navItems = [
   
   { name: 'Lifescores', href: '/pages/client/lifescores', icon: <HeartPulse size={18} /> },
   { name: 'Journal', href: '/pages/client/journal', icon: <BookOpen size={18} /> },
-  { name: 'BreakoutRoom', href: '/pages/client/breakoutroom', icon: <Users size={18} /> },
+  { name: 'BreakoutRoom', href: '/pages/client/fireteam', icon: <Users size={18} /> },
   { name: 'Task Management', href: '/pages/client/taskmanagement', icon: <CheckSquare size={18} /> },
   { name: 'AI Insights', href: '/pages/client/aiinsights', icon: <Brain size={18} /> },
   { name: 'Community', href: '/pages/client/community', icon: <MessageCircle size={18} /> },

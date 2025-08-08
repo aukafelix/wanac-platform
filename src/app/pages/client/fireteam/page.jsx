@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
-import Sidebar from "./components/Sidebar";
+import Sidebar from '../../../../../components/dashboardcomponents/sidebar';
+import ClientTopbar from '../../../../../components/dashboardcomponents/clienttopbar';
 import HomePage from "./components/HomePage";
 
 function CourseMaterialsModal({ open, onClose }) {
@@ -56,17 +57,32 @@ function CourseMaterialsModal({ open, onClose }) {
 }
 
 export default function BreakoutRoomPage() {
+  const [collapsed, setCollapsed] = useState(false);
   // For now, always show HomePage. Replace with logic for experience selection if needed.
   return (
-    <div className="flex min-h-screen bg-gray-50">
-      <Sidebar />
-      <main className="flex-1 ml-64 p-8">
-        {/* Breadcrumb and Title */}
-        <div className="text-sm text-gray-400 mb-2">
-          Home
-        </div>
-        <HomePage />
-      </main>
+    <div className="h-screen flex bg-gray-50 font-serif">
+      {/* Sidebar */}
+      <Sidebar className="w-56 bg-white border-r border-gray-200" collapsed={collapsed} setCollapsed={setCollapsed} />
+      {/* Main Area */}
+      <div className="flex-1 flex flex-col h-full transition-all duration-300">
+        {/* Top Bar */}
+        <ClientTopbar />
+        {/* Main Content */}
+        <main className="flex-1 h-0 overflow-y-auto px-4 md:px-12 py-8 bg-gray-50">
+          <div className="max-w-6xl mx-auto">
+            <div className="flex flex-col lg:flex-row gap-8">
+              {/* Main Content */}
+              <div className="flex-1 space-y-10">
+                {/* Breadcrumb and Title */}
+                <div className="text-sm text-gray-400 mb-2">
+                  WANAC
+                </div>
+                <HomePage />
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
     </div>
   );
 }

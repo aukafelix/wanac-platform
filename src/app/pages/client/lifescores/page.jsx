@@ -192,10 +192,9 @@ export default function LifeScoresPage() {
                   </ResponsiveContainer>
                 </section>
 
-                {/* Infographic Wheel or other visual summary */}
-                <InfographicWheel />
+              
               </div>
-              {/* Right Sidebar Widgets */}
+            
              
             </div>
           </div>
