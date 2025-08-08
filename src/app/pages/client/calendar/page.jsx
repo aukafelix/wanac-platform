@@ -4,6 +4,7 @@ import Sidebar from '../../../../../components/dashboardcomponents/sidebar';
 import ClientTopbar from '../../../../../components/dashboardcomponents/clienttopbar';
 import { Dialog } from "@headlessui/react";
 import { FaCalendar } from 'react-icons/fa';
+import { sessionsService } from '../../../../services/api/sessions.service';
 
 const CalendarPage = () => {
   const [selectedDate, setSelectedDate] = useState(null);
@@ -12,12 +13,24 @@ const CalendarPage = () => {
   const [user, setUser] = useState(null);
   const [collapsed, setCollapsed] = useState(false);
   const [events, setEvents] = useState([]);
+  const [upcomingSessions, setUpcomingSessions] = useState([]);
 
   useEffect(() => {
     const userData = localStorage.getItem('wanacUser');
     if (userData) {
       try {
-        setUser(JSON.parse(userData));
+        const parsedUser = JSON.parse(userData);
+        setUser(parsedUser);
+        sessionsService.getSessions().then((result) => {
+          const sessionArray = result?.sessions?.data || [];
+          // Filter for sessions where the user is coach or participant
+          const filtered = sessionArray.filter(
+            (session) =>
+              session.coach_id === parsedUser.id ||
+              session.user_id === parsedUser.id
+          );
+          setUpcomingSessions(filtered);
+        });
       } catch (e) {
         setUser(null);
       }
@@ -49,23 +62,6 @@ const CalendarPage = () => {
   for (let i = 1; i <= daysInMonth; i++) {
     days.push(i);
   }
-
-  const mockUpcomingSessions = [
-    {
-      id: 1,
-      title: "Career Guidance",
-      date: "2025-06-15",
-      time: "10:00 AM",
-      status: "Scheduled",
-    },
-    {
-      id: 2,
-      title: "Personal Development",
-      date: "2025-06-18",
-      time: "2:00 PM",
-      status: "Scheduled",
-    },
-  ];
 
   return (
     <div className="h-screen flex bg-gray-50 font-serif">
@@ -144,10 +140,10 @@ const CalendarPage = () => {
                     Upcoming Sessions
                   </h3>
                   <div className="space-y-4">
-                    {mockUpcomingSessions.length === 0 ? (
+                    {upcomingSessions.length === 0 ? (
                       <p className="text-gray-500 text-sm">No upcoming sessions.</p>
                     ) : (
-                      mockUpcomingSessions.map((session) => (
+                      upcomingSessions.map((session) => (
                         <div
                           key={session.id}
                           className="border-l-4 border-primary pl-4 py-3 bg-primary/5 rounded"
@@ -155,11 +151,9 @@ const CalendarPage = () => {
                           <div className="flex justify-between">
                             <div>
                               <p className="font-medium text-gray-800">{session.title}</p>
-                              <p className="text-sm text-gray-600">Status: {session.status}</p>
-                            </div>
-                            <div className="text-right">
-                              <p className="text-sm font-semibold text-gray-800">{session.date}</p>
-                              <p className="text-sm text-gray-600">{session.time}</p>
+                              <p className="text-sm text-gray-600">ID: {session.id}</p>
+                              <p className="text-sm text-gray-600">Description: {session.description}</p>
+                              <p className="text-sm text-gray-600">Date: {session.date}</p>
                             </div>
                           </div>
                         </div>

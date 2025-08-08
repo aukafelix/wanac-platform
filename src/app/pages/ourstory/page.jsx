@@ -144,26 +144,41 @@ their communities and beyond.
       <section>
         <div className="relative w-full h-16 bg-[#002147] overflow-hidden flex items-center justify-center">
           <nav className="relative z-10 flex space-x-8 px-4">
-            <a href="#about" className="text-white hover:text-blue-300 transition-colors text-xs font-medium">
-              About
+            <a href="#about" className="text-white hover:text-blue-300 transition-colors text-sm font-bold flex flex-col items-center gap-0.5">
+              ABOUT
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
             </a>
-            <a href="#mission" className="text-white hover:text-blue-300 transition-colors text-xs font-medium">
-              Mission
+            <a href="#mission" className="text-white hover:text-blue-300 transition-colors text-sm font-bold flex flex-col items-center gap-0.5">
+              MISSION
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
             </a>
-            <a href="#what-sets-apart" className="text-white hover:text-blue-300 transition-colors text-xs font-medium">
-              What Sets Apart
+            <a href="#what-sets-apart" className="text-white hover:text-blue-300 transition-colors text-sm font-bold flex flex-col items-center gap-0.5">
+              WHAT SETS APART
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
             </a>
-            <a href="#core-pillars" className="text-white hover:text-blue-300 transition-colors text-xs font-medium">
-              Core Pillars
+            <a href="#core-pillars" className="text-white hover:text-blue-300 transition-colors text-sm font-bold flex flex-col items-center gap-0.5">
+              CORE PILLARS
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
             </a>
-            <a href="#aspirations" className="text-white hover:text-blue-300 transition-colors text-xs font-medium">
-              Aspirations
+            <a href="#aspirations" className="text-white hover:text-blue-300 transition-colors text-sm font-bold flex flex-col items-center gap-0.5">
+              STRATEGIC ASPIRATIONS
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
             </a>
-            <a href="#board" className="text-white hover:text-blue-300 transition-colors text-xs font-medium">
-              Board of Directors
-            </a>
-            <a href="#executive" className="text-white hover:text-blue-300 transition-colors text-xs font-medium">
-              Executive Staff
+            <a href="#executive" className="text-white hover:text-blue-300 transition-colors text-sm font-bold flex flex-col items-center gap-0.5">
+              EXECUTIVE STAFF
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
             </a>
           </nav>
           <div 
@@ -177,7 +192,7 @@ their communities and beyond.
         </div>
       </section>
 
-        <section id="what-sets-apart" className="p-8 mb-12">
+        <section id="what-sets-apart" className="p-12 md:p-20 mb-12">
           <div className="flex flex-col items-center max-w-4xl mx-auto gap-8">
             {/* Text Content */}
             <div className="flex flex-col items-center text-center w-full max-w-4xl">
@@ -209,7 +224,7 @@ their communities and beyond.
             }}
           />
           <div className="absolute inset-0 bg-gradient-to-br from-[#002147]/90 via-[#002147]/80 to-[#ff5e1a]/40"></div>
-          <div className="relative z-10 w-full max-w-3xl mx-auto py-12 px-4 flex flex-col items-center">
+          <div className="relative z-10 w-full max-w-3xl mx-auto py-16 px-8 md:py-24 md:px-16 flex flex-col items-center">
             <h2 className="text-3xl font-bold text-white mb-8 flex items-center justify-center relative font-[Montserrat]" style={{ fontFamily: "'Montserrat', Arial, sans-serif" }}>
               <span className="z-10">Our Core Pillars At WANAC</span>
             </h2>
@@ -381,12 +396,7 @@ their communities and beyond.
             </p>
           </div>
 
-          <section id="board">
-            <LeadershipSection 
-              title="BOARD OF DIRECTORS" 
-              members={leadershipTeams.boardOfDirectors} 
-            />
-          </section>
+          
           
           <section id="executive">
             <LeadershipSection 

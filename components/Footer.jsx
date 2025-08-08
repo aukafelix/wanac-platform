@@ -89,13 +89,15 @@ export default function Footer({ hideFooter = false }) {
 
           <div className="backdrop-blur-sm bg-white/40 p-6 rounded-lg shadow-sm hover:shadow-md border border-slate-100 transition-all duration-300">
             <ul className="space-y-3 text-sm">
-              <li className="text-[#002147] font-bold mb-4 pb-2 border-b border-[#002147]/10">
+              <li className="hover:text-[#002147] text-slate-600 transition-all duration-300 cursor-pointer pl-3 hover:pl-4 border-l border-transparent hover:border-[#002147]/20">
                 VOLUNTEER
               </li>
               <li className="hover:text-[#002147] text-slate-600 transition-all duration-300 cursor-pointer pl-3 hover:pl-4 border-l border-transparent hover:border-[#002147]/20">CORPORATE PARTNERS</li>
               <li className="hover:text-[#002147] text-slate-600 transition-all duration-300 cursor-pointer pl-3 hover:pl-4 border-l border-transparent hover:border-[#002147]/20">LEADERSHIP GIVING</li>
               <li className="hover:text-[#002147] text-slate-600 transition-all duration-300 cursor-pointer pl-3 hover:pl-4 border-l border-transparent hover:border-[#002147]/20">WAYS TO SUPPORT</li>
               <li className="hover:text-[#002147] text-slate-600 transition-all duration-300 cursor-pointer pl-3 hover:pl-4 border-l border-transparent hover:border-[#002147]/20">TESTIMONIALS</li>
+              <li className="hover:text-[#002147] text-slate-600 transition-all duration-300 cursor-pointer pl-3 hover:pl-4 border-l border-transparent hover:border-[#002147]/20">OUR STORY</li>
+              <li className="hover:text-[#002147] text-slate-600 transition-all duration-300 cursor-pointer pl-3 hover:pl-4 border-l border-transparent hover:border-[#002147]/20">WANAC CAREERS</li>
             </ul>
           </div>
 

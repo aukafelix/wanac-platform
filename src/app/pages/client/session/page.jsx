@@ -31,7 +31,8 @@ export default function SessionPage() {
             (session) =>
               (session.coach && session.coach.user_id === parsedUser.id) ||
               (session.coach_id && session.coach_id === parsedUser.id) ||
-              (session.user_id && session.user_id === parsedUser.id)
+              (session.user_id && session.user_id === parsedUser.id) ||
+              (session.members && Array.isArray(session.members) && session.members.some(m => m.user_id === parsedUser.id))
           );
           setUpcomingSessions(filtered);
         });

@@ -3,6 +3,9 @@
 import React from 'react';
 import Link from 'next/link';
 import InfographicWheel from '../../../../components/infographicWheel';
+import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeline-component';
+import 'react-vertical-timeline-component/style.min.css';
+import { FaCheckCircle, FaStar, FaFlag } from 'react-icons/fa'; // Example icons
 
 
 const PlepPage = () => {
@@ -78,6 +81,13 @@ const PlepPage = () => {
     'border-cyan-400 bg-cyan-50 text-cyan-700',
   ];
   
+  // Example icon array (customize as needed)
+  const stepIcons = [
+    <FaFlag />,
+    <FaStar />,
+    <FaCheckCircle />
+    // ...add more or use logic to pick icons
+  ];
 
   return (
     <div className="bg-white font-sans" style={{ fontFamily: "'Source Sans Pro', 'Montserrat', Arial, sans-serif" }}>
@@ -121,17 +131,29 @@ journey.
       <section>
         <div className="relative w-full h-16 bg-[#002147] overflow-hidden flex items-center justify-center">
           <nav className="relative z-10 flex space-x-8 px-4">
-            <a href="#program-overview" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
+            <a href="#program-overview" className="text-white hover:text-blue-300 transition-colors text-sm font-bold flex flex-col items-center gap-0.5">
               Program Overview
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
             </a>
-            <a href="#how-it-works" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
+            <a href="#how-it-works" className="text-white hover:text-blue-300 transition-colors text-sm font-bold flex flex-col items-center gap-0.5">
               How It Works
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
             </a>
-            <a href="#who-should-enroll" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
+            <a href="#who-should-enroll" className="text-white hover:text-blue-300 transition-colors text-sm font-bold flex flex-col items-center gap-0.5">
               Who Should Enroll?
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
             </a>
-            <a href="#success-stories" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
+            <a href="#success-stories" className="text-white hover:text-blue-300 transition-colors text-sm font-bold flex flex-col items-center gap-0.5">
               Success Stories
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
             </a>
           </nav>
           <div 
@@ -217,44 +239,37 @@ journey.
         </div>
       </section>
 
-      <section id="how-it-works" className="py-24 bg-white">
-  <div className="container mx-auto px-4">
-    <div className="text-center mb-16">
-      <span className="text-orange-400 font-semibold text-lg mb-4 block">Our Process</span>
-      <h2 className="text-4xl font-bold mb-6 text-[#002147]">How PLEP Works</h2>
-      <p className="text-gray-600 max-w-2xl mx-auto">
-        Our comprehensive approach ensures a smooth transition from military service to academic success.
-      </p>
-    </div>
-  
-    <div className="grid md:grid-cols-2 gap-12 items-center">
-      {/* Left Infographic Chart (placeholder for now) */}
-      <div className="w-full flex justify-center items-center">
-        <img 
-          src="/promiselandtransition.jpg" 
-          alt="Promise Land Infographic" 
-          className="rounded-lg shadow-lg max-w-xs md:max-w-sm lg:max-w-md w-full h-auto object-cover border-4 border-orange-200"
-        />
-      </div>
-
-      {/* Right Step List */}
-      <div className="space-y-6">
-        {steps.map((step, index) => (
-          <div
-            key={index}
-            className={`flex items-start shadow rounded-lg p-4 border-l-[6px] ${
-              colorClasses[index % colorClasses.length]
-            }`}
-          >
-            <div className={`text-xl font-bold mr-4`}>0{step.number}</div>
-            <div>
-              <h3 className="text-lg font-semibold">{step.title}</h3>
-              <p className="text-gray-600 text-sm">{step.description}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
+      <section className="py-16 bg-gradient-to-b from-orange-50 to-white">
+  <div className="max-w-4xl mx-auto px-4">
+    <h2 className="text-4xl font-bold text-center mb-4 text-black ">Your Roadmap to the Promise Land</h2>
+    <p className="text-center text-gray-700 mb-10 text-lg">
+      Follow these key steps to achieve your goals. Each milestone brings you closer to success!
+    </p>
+    <VerticalTimeline lineColor="#fdba74">
+      {steps.map((step, index) => (
+        <VerticalTimelineElement
+          key={index}
+          className="vertical-timeline-element--work"
+          contentStyle={{
+            background: 'linear-gradient(135deg, #fff7ed 80%, #fdba74 100%)',
+            color: '#002147',
+            borderRadius: '16px',
+            boxShadow: '0 4px 24px 0 rgba(253,186,116,0.15)'
+          }}
+          contentArrowStyle={{ borderRight: '7px solid #fdba74' }}
+          iconStyle={{
+            background: '#fdba74',
+            color: '#fff',
+            boxShadow: '0 0 0 4px #fff7ed, 0 2px 8px 0 rgba(253,186,116,0.25)'
+          }}
+          icon={stepIcons[index % stepIcons.length]}
+          date={<span className="font-bold text-orange-500">{`Step 0${step.number}`}</span>}
+        >
+          <h3 className="vertical-timeline-element-title text-xl font-bold text-orange-700">{step.title}</h3>
+          <p className="text-gray-700 text-base">{step.description}</p>
+        </VerticalTimelineElement>
+      ))}
+    </VerticalTimeline>
   </div>
 </section>
 

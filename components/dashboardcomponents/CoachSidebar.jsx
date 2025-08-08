@@ -25,6 +25,7 @@ const coachNavItems = [
   { name: 'Resources', href: '/coach/resources', icon: <FaBook size={18} /> },
   { name: 'Community', href: '/client/community', icon: <FaUsersCog size={18} /> },
   { name: 'Feedback', href: '/coach/feedback', icon: <FaComments size={18} /> },
+  { name: 'Fireteam', href: '/coach/fireteam', icon: <FaComments size={18} /> },
   { name: 'Messages', href: '/coach/messages', icon: <FaEnvelope size={18} /> },
 ];
 

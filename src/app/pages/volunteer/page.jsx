@@ -83,18 +83,18 @@ const VolunteerPage = () => {
       </header>
       <section>
           <div className="relative w-full h-16 bg-[#002147] overflow-hidden flex items-center justify-center">
-            <nav className="relative z-10 flex space-x-16 px-4">
-              <Link href="#How-to-Volunteer" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
-                How to Volunteer
+            <nav className="relative z-10 flex space-x-16 px-16">
+              <Link href="#How-to-Volunteer" className="text-white hover:text-blue-300 transition-colors text-sm font-bold">
+                HOW TO VOLUNTEER
               </Link>
-              <Link href="#Volunteer-Stories" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
-                Volunteer Stories
+              <Link href="#Volunteer-Stories" className="text-white hover:text-blue-300 transition-colors text-sm font-bold">
+                VOLUNTEER STORIES
               </Link>
-              <Link href="#Frequently-Asked-Questions" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
-                Frequently Asked Questions
+              <Link href="#Frequently-Asked-Questions" className="text-white hover:text-blue-300 transition-colors text-sm font-bold">
+                FREQUENTLY ASKED QUESTIONS
               </Link>
-              <Link href="#Ready-to-Make-a-Difference" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
-                Ready to Make a Difference?
+              <Link href="#Ready-to-Make-a-Difference" className="text-white hover:text-blue-300 transition-colors text-sm font-bold">
+                READY TO MAKE A DIFFERENCE?
               </Link>
             </nav>
             <div 

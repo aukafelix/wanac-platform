@@ -2,20 +2,14 @@
 import AdminSidebar from '../../../../../components/dashboardcomponents/adminsidebar';
 import { useState, useEffect } from 'react';
 import { FaUserPlus, FaUserEdit, FaUserTimes } from 'react-icons/fa';
-
-// Example mock data for users
-const mockUsers = [
-  { id: 1, name: 'Jane Doe', email: 'jane@wanac.org', role: 'Client', status: 'Active' },
-  { id: 2, name: 'John Smith', email: 'john@wanac.org', role: 'Coach', status: 'Active' },
-  { id: 3, name: 'Alice Johnson', email: 'alice@wanac.org', role: 'Client', status: 'Inactive' },
-  { id: 4, name: 'Bob Williams', email: 'bob@wanac.org', role: 'Coach', status: 'Active' },
-];
+import { clientsService } from '../../../../services/api/clients.service';
 
 export default function ManageUsersPage() {
   const [users, setUsers] = useState([]);
   useEffect(() => {
-    // Replace with API call in production
-    setUsers(mockUsers);
+    clientsService.getClients().then((data) => {
+      setUsers(data);
+    });
   }, []);
 
   return (

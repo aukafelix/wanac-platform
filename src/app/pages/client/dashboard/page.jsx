@@ -10,6 +10,9 @@ import {
 } from 'react-icons/fa';
 import Sidebar from '../../../../../components/dashboardcomponents/sidebar'
 import ClientTopbar from '../../../../../components/dashboardcomponents/clienttopbar';
+import { useRouter } from 'next/navigation';
+import { sessionsService } from '../../../../services/api/sessions.service';
+import { habitsService } from '../../../../services/api/habits.service';
 
 // Simple Notifications Widget
 function NotificationsWidget() {
@@ -35,41 +38,49 @@ function NotificationsWidget() {
 
 export default function ClientDashboard() {
   const [collapsed, setCollapsed] = useState(false);
-  const [upcomingSessions, setUpcomingSessions] = useState([
-    {
-      id: 1,
-      date: '2024-03-25',
-      time: '10:00 AM',
-      coach: 'Coach Smith',
-      type: 'One-on-One Session',
-    },
-    {
-      id: 2,
-      date: '2024-03-27',
-      time: '2:00 PM',
-      coach: 'Coach Smith',
-      type: 'Goal Review',
-    },
-  ]);
-
-  const [lifeScore, setLifeScore] = useState({
-    career: 7,
-    relationships: 8,
-    health: 6,
-    finances: 5,
-    personal: 7,
-  });
-
+  const [upcomingSessions, setUpcomingSessions] = useState([]);
+  const [lifeScore, setLifeScore] = useState({});
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  const router = useRouter();
 
   useEffect(() => {
     const userData = localStorage.getItem('wanacUser');
     if (userData) {
       try {
-        setUser(JSON.parse(userData));
+        const parsedUser = JSON.parse(userData);
+        setUser(parsedUser);
+        setLoading(true);
+        // Fetch sessions for this user
+        sessionsService.getSessions().then((sessions) => {
+          const sessionArray = Array.isArray(sessions) ? sessions : sessions?.sessions?.data || [];
+          const now = new Date();
+          const filtered = sessionArray.filter(
+            (session) =>
+              (
+                (session.coach && session.coach.user_id === parsedUser.id) ||
+                (session.coach_id && session.coach_id === parsedUser.id) ||
+                (session.user_id && session.user_id === parsedUser.id) ||
+                (session.members && Array.isArray(session.members) && session.members.some(m => m.user_id === parsedUser.id))
+              ) &&
+              new Date(session.date) > now
+          );
+          setUpcomingSessions(filtered);
+          setLoading(false);
+        });
+        // Fetch life score overview
+        habitsService.getWholeLifeHistory().then((history) => {
+          if (Array.isArray(history) && history.length > 0) {
+            setLifeScore(history[0]);
+          }
+        });
       } catch (e) {
         setUser(null);
+        setLoading(false);
       }
+    } else {
+      setLoading(false);
     }
   }, []);
 
@@ -99,7 +110,7 @@ export default function ClientDashboard() {
                     >
                       Welcome Back{user?.name ? `, ${user.name}` : ''}!
                     </h2>
-                    <p className="text-gray-600 text-base md:text-lg">Your coaching journey starts here.</p>
+                    <p className="text-gray-600 text-base md:text-lg">Your journey starts here.</p>
                   </div>
                   <img
                     src="/dashboard-illustration.svg"
@@ -159,7 +170,9 @@ export default function ClientDashboard() {
                       Upcoming Sessions
                     </h3>
                     <div className="space-y-4">
-                      {upcomingSessions.length === 0 ? (
+                      {loading ? (
+                        <p className="text-gray-500 text-sm">Loading...</p>
+                      ) : upcomingSessions.length === 0 ? (
                         <p className="text-gray-500 text-sm">No sessions scheduled yet.</p>
                       ) : (
                         upcomingSessions.map((session) => (
@@ -169,8 +182,8 @@ export default function ClientDashboard() {
                           >
                             <div className="flex justify-between">
                               <div>
-                                <p className="font-medium text-gray-800">{session.type}</p>
-                                <p className="text-sm text-gray-600">with {session.coach}</p>
+                                <p className="font-medium text-gray-800">{session.type || session.title}</p>
+                                <p className="text-sm text-gray-600">with {session.coach?.name || session.coach || '-'}</p>
                               </div>
                               <div className="text-right">
                                 <p className="text-sm font-semibold text-gray-800">{session.date}</p>
@@ -181,7 +194,7 @@ export default function ClientDashboard() {
                         ))
                       )}
                     </div>
-                    <button className="mt-4 text-primary hover:underline text-sm font-medium transition-colors duration-150">
+                    <button className="mt-4 text-primary hover:underline text-sm font-medium transition-colors duration-150" onClick={() => router.push('/pages/client/session')}>
                       View All Sessions →
                     </button>
                   </div>
@@ -196,20 +209,24 @@ export default function ClientDashboard() {
                       Life Score Overview
                     </h3>
                     <div className="space-y-4">
-                      {Object.entries(lifeScore).map(([category, score]) => (
-                        <div key={category}>
-                          <div className="flex justify-between">
-                            <span className="capitalize font-medium text-gray-700">{category}</span>
-                            <span className="text-gray-600">{score}/10</span>
+                      {Object.keys(lifeScore).length === 0 ? (
+                        <p className="text-gray-500 text-sm">No life score data available.</p>
+                      ) : (
+                        Object.entries(lifeScore).map(([category, score]) => (
+                          <div key={category}>
+                            <div className="flex justify-between">
+                              <span className="capitalize font-medium text-gray-700">{category}</span>
+                              <span className="text-gray-600">{score}/10</span>
+                            </div>
+                            <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+                              <div
+                                className="h-full bg-warning rounded-full transition-all duration-300"
+                                style={{ width: `${score * 10}%` }}
+                              />
+                            </div>
                           </div>
-                          <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
-                            <div
-                              className="h-full bg-warning rounded-full transition-all duration-300"
-                              style={{ width: `${score * 10}%` }}
-                            />
-                          </div>
-                        </div>
-                      ))}
+                        ))
+                      )}
                     </div>
                     <button className="mt-4 text-warning hover:underline text-sm font-medium transition-colors duration-150">
                       View Detailed Analysis →

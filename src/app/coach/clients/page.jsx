@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import CoachSidebar from '../../../../components/dashboardcomponents/CoachSidebar';
 import ClientTopbar from '../../../../components/dashboardcomponents/clienttopbar';
 import { FaUserFriends, FaUserEdit, FaUserTimes } from "react-icons/fa";
+import { clientsService } from '../../../services/api/clients.service';
 
 // Example mock data for clients
 const mockClients = [
@@ -16,8 +17,15 @@ export default function CoachClientsPage() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // TODO: Replace with API call to fetch coach's clients
-    setClients(mockClients);
+    async function fetchClients() {
+      try {
+        const data = await clientsService.getClients();
+        setClients(data);
+      } catch (error) {
+        setClients([]);
+      }
+    }
+    fetchClients();
     const userData = localStorage.getItem('wanacUser');
     if (userData) {
       try {
@@ -53,14 +61,12 @@ export default function CoachClientsPage() {
                         <th className="py-2 px-4 text-left">Name</th>
                         <th className="py-2 px-4 text-left">Email</th>
                         <th className="py-2 px-4 text-left">Phone</th>
-                        <th className="py-2 px-4 text-left">Status</th>
-                        <th className="py-2 px-4 text-left">Actions</th>
                       </tr>
                     </thead>
                     <tbody>
                       {clients.length === 0 ? (
                         <tr>
-                          <td colSpan={5} className="text-center py-6 text-gray-500">
+                          <td colSpan={3} className="text-center py-6 text-gray-500">
                             No clients found.
                           </td>
                         </tr>
@@ -70,17 +76,6 @@ export default function CoachClientsPage() {
                             <td className="py-2 px-4">{client.name}</td>
                             <td className="py-2 px-4">{client.email}</td>
                             <td className="py-2 px-4">{client.phone}</td>
-                            <td className="py-2 px-4">
-                              <span className={`px-2 py-1 rounded-full text-xs font-semibold ${client.status === "Active" ? "bg-green-100 text-green-700" : "bg-gray-200 text-gray-600"}`}>{client.status}</span>
-                            </td>
-                            <td className="py-2 px-4 flex gap-2">
-                              <button className="p-2 rounded hover:bg-blue-100 text-blue-600" title="Edit Client">
-                                <FaUserEdit />
-                              </button>
-                              <button className="p-2 rounded hover:bg-red-100 text-red-600" title="Remove Client">
-                                <FaUserTimes />
-                              </button>
-                            </td>
                           </tr>
                         ))
                       )}

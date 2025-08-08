@@ -82,18 +82,26 @@ thriving enterprises.
       </header>
 
       {/* Navigation Bar */}
-      {/* Navigation Bar */}
       <section>
         <div className="relative w-full h-16 bg-[#002147] overflow-hidden flex items-center justify-center">
-          <nav className="relative z-10 flex space-x-16 px-4">
-            <a href="#program-overview" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
+          <nav className="relative z-10 flex space-x-8 px-4">
+            <a href="#program-overview" className="text-white hover:text-blue-300 transition-colors text-sm font-bold flex flex-col items-center gap-0.5">
               Program Overview
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
             </a>
-            <a href="#how-it-works" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
+            <a href="#how-it-works" className="text-white hover:text-blue-300 transition-colors text-sm font-bold flex flex-col items-center gap-0.5">
               How It Works
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
             </a>
-            <a href="#success-stories" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
+            <a href="#success-stories" className="text-white hover:text-blue-300 transition-colors text-sm font-bold flex flex-col items-center gap-0.5">
               Success Stories
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
             </a>
           </nav>
           <div 

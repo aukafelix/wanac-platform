@@ -238,7 +238,7 @@ const handleNavigation = (href) => {
               DONATE
             </Link>
             <Link
-              href="/howwehelp"
+              href="/pages/programintakeform"
               className="bg-orange-500 text-white text-sm font-bold px-4 py-2 rounded-md hover:bg-orange-600 transition duration-300 whitespace-nowrap"
             >
               FREE STRATEGY SESSION
@@ -317,7 +317,7 @@ const handleNavigation = (href) => {
               className="block w-full text-center py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600"
               onClick={() => {
                 setIsMobileMenuOpen(false);
-                handleNavigation('/pages/howwehelp');
+                handleNavigation('/pages/programintakeform');
               }}
             >
               FREE STRATEGY SESSION

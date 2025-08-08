@@ -86,19 +86,13 @@ export default function HowWeHelp() {
           aspiring coaches with the skills and knowledge required to succeed personally, professionally, and entrepreneurially.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mt-4">
-            <a
-              href="/pages/vsointakeform"
-              className="w-full sm:w-auto bg-orange-500 text-white px-8 py-4 rounded-lg font-semibold hover:bg-orange-600 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl text-center"
-              aria-label="Intake Form"
-            >
-              Intake Form
-            </a>
+           
             <a
               href="/pages/programintakeform"
               className="w-full sm:w-auto bg-transparent text-white border-2 border-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-[#002147] transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl text-center"
               aria-label="Program Intake Form"
             >
-              Program Intake Form
+              TRANSITION PROGRAM INTAKE FORM
             </a>
           </div>
         </div>
@@ -108,20 +102,23 @@ export default function HowWeHelp() {
       <section>
         <div className="relative w-full h-16 bg-[#002147] overflow-hidden flex items-center justify-center">
           <nav className="relative z-10 flex space-x-8 px-4">
-            <a href="#about" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
-              Understanding Challanges
+            <a href="#about" className="text-white hover:text-orange-300 text-sm font-bold flex flex-col items-center gap-0.5">
+              UNDERSTANDING CHALLENGES
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
             </a>
-            <a href="#program-offerings" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
-              Our Programs
+            <a href="#program-offerings" className="text-white hover:text-orange-300 transition-colors text-sm font-bold flex flex-col items-center gap-0.5">
+              OUR PROGRAMS  
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
             </a>
-            <a href="#vso-claims-support" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
-              VSO Claims Support
-            </a>
-            <a href="#why-wanac" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
-              Why WANAC
-            </a>
-            <a href="/pages/vsointakeform" className="text-white hover:text-blue-300 transition-colors text-sm font-medium">
-              VSO Intake Form
+            <a href="#why-wanac" className="text-white hover:text-orange-300 transition-colors text-sm font-bold flex flex-col items-center gap-0.5">
+              WHY WANAC?
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
             </a>
           </nav>
           <div 
