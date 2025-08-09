@@ -15,6 +15,7 @@ import {
 } from 'react-icons/fa';
 import CoachSidebar from '../../../components/dashboardcomponents/CoachSidebar';
 import ClientTopbar from '../../../components/dashboardcomponents/clienttopbar';
+import ScheduleSessionModal from '../../../components/dashboardcomponents/ScheduleSessionModal';
 
 // Simple Modal Component
 function Modal({ open, onClose, title, children }) {
@@ -62,6 +63,7 @@ export default function CoachDashboard() {
   const coachUser = { name: 'Coach' };
   // Modal state
   const [openModal, setOpenModal] = useState(null); // 'notes' | 'content' | null
+  const [showScheduleModal, setShowScheduleModal] = useState(false);
 
   // Mock stats
   const stats = [
@@ -107,7 +109,7 @@ export default function CoachDashboard() {
                     icon={FaCalendarAlt}
                     title="Schedule Session"
                     description="Book a new session with a client"
-                    onClick={() => alert('Schedule Session (not implemented)')}
+                    onClick={() => setShowScheduleModal(true)}
                     color="primary"
                   />
                   <QuickActionCard
@@ -238,6 +240,15 @@ export default function CoachDashboard() {
             <button type="button" className="bg-brand-navy text-white px-4 py-2 rounded hover:bg-orange-500 transition">Upload</button>
           </form>
         </Modal>
+        {showScheduleModal && (
+          <ScheduleSessionModal
+            onClose={() => setShowScheduleModal(false)}
+            onSubmit={data => {
+              console.log('Scheduled session:', data);
+              // TODO: Integrate with backend or state
+            }}
+          />
+        )}
       </div>
     </div>
   );

@@ -281,8 +281,8 @@ export default function Homepage() {
               </div>
               <blockquote className="italic text-foreground relative pl-8">
                 <FaQuoteLeft className="absolute left-0 top-0 text-orange-500 opacity-50" />
-                <p className="text-lg leading-relaxed">"WANAC helped me rediscover my strength and purpose after leaving the military."</p>
-                <footer className="mt-4 font-semibold text-right">— Clarence </footer>
+                <p className="text-lg leading-relaxed">"WANAC helped me rediscover my strength and purpose after leaving the military and finding my way in the civilian world."</p>
+                <footer className="mt-4 font-semibold text-right">— Clarence Jacob </footer>
               </blockquote>
             </div>
           </div>
@@ -307,8 +307,8 @@ export default function Homepage() {
               </div>
               <blockquote className="italic text-foreground relative pl-8">
                 <FaQuoteLeft className="absolute left-0 top-0 text-orange-500 opacity-50" />
-                <p className="text-lg leading-relaxed">"WANAC helped me rediscover my strength and purpose after leaving the military."</p>
-                <footer className="mt-4 font-semibold text-right">— Sarah M.</footer>
+                <p className="text-lg leading-relaxed">"WANAC has been a game-changer for me. The support and guidance I've received have been invaluable in my transition to civilian life."</p>
+                <footer className="mt-4 font-semibold text-right">— Stephanie Williams </footer>
               </blockquote>
             </div>
           </div>

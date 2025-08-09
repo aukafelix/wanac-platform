@@ -152,7 +152,7 @@ export default function CoachSessionsPage() {
                   {(upcomingSessions.slice(0, 2)).map((session) => (
                     <div
                       key={session.id}
-                      className="border-l-4 border-primary pl-4 py-2 bg-primary/5 rounded cursor-pointer hover:bg-primary/10 transition"
+                      className="border-l-4 border-primary pl-4 py-2 bg-primary/5 rounded cursor-pointer transition transform hover:scale-[1.02] hover:shadow-lg hover:bg-orange-100 hover:border-orange-500"
                       onClick={() => router.push(`/coach/sessions/fullviewsession/${session.id}`)}
                     >
                       <div className="flex justify-between">
