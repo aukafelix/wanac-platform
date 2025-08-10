@@ -54,19 +54,34 @@ export default function ClientDashboard() {
         setLoading(true);
         // Fetch sessions for this user
         sessionsService.getSessions().then((sessions) => {
-          const sessionArray = Array.isArray(sessions) ? sessions : sessions?.sessions?.data || [];
+          // Robustly handle both array and object API responses
+          let sessionArray = [];
+          if (Array.isArray(sessions)) {
+            sessionArray = sessions;
+          } else if (sessions?.sessions?.data && Array.isArray(sessions.sessions.data)) {
+            sessionArray = sessions.sessions.data;
+          } else if (sessions?.data && Array.isArray(sessions.data)) {
+            sessionArray = sessions.data;
+          }
           const now = new Date();
-          // Only filter by date (upcoming sessions)
+          // Only filter by scheduled_at (upcoming sessions)
           const upcoming = sessionArray.filter(
-            (session) => new Date(session.date) > now
+            (session) => session.scheduled_at && new Date(session.scheduled_at) > now
           );
           setUpcomingSessions(upcoming);
           setLoading(false);
         });
         // Fetch life score overview
         habitsService.getWholeLifeHistory().then((history) => {
-          if (Array.isArray(history) && history.length > 0) {
-            setLifeScore(history[0]);
+          // Robustly handle both array and object API responses
+          let historyArray = [];
+          if (Array.isArray(history)) {
+            historyArray = history;
+          } else if (history?.data && Array.isArray(history.data)) {
+            historyArray = history.data;
+          }
+          if (historyArray.length > 0) {
+            setLifeScore(historyArray[0]);
           }
         });
       } catch (e) {
@@ -169,23 +184,35 @@ export default function ClientDashboard() {
                       ) : upcomingSessions.length === 0 ? (
                         <p className="text-gray-500 text-sm">No sessions scheduled yet.</p>
                       ) : (
-                        upcomingSessions.map((session) => (
-                          <div
-                            key={session.id}
-                            className="border-l-4 border-primary pl-4 py-3 bg-primary/5 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200"
-                          >
-                            <div className="flex justify-between">
-                              <div>
-                                <p className="font-medium text-gray-800">{session.type || session.title}</p>
-                                <p className="text-sm text-gray-600">with {session.coach?.name || session.coach || '-'}</p>
-                              </div>
-                              <div className="text-right">
-                                <p className="text-sm font-semibold text-gray-800">{session.date}</p>
-                                <p className="text-sm text-gray-600">{session.time}</p>
+                        upcomingSessions.map((session) => {
+                          // Format date and time
+                          const dateObj = new Date(session.scheduled_at);
+                          const dateStr = dateObj.toLocaleDateString();
+                          const timeStr = dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                          return (
+                            <div
+                              key={session.id}
+                              className="border-l-4 border-primary pl-4 py-3 bg-primary/5 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200"
+                            >
+                              <div className="flex justify-between">
+                                <div>
+                                  <p className="font-medium text-gray-800">{session.type || session.title}</p>
+                                  <p className="text-sm text-gray-600">
+                                    with {
+                                      typeof session.coach === 'object'
+                                        ? session.coach.name || session.coach.user?.name || '-'
+                                        : session.coach || '-'
+                                    }
+                                  </p>
+                                </div>
+                                <div className="text-right">
+                                  <p className="text-sm font-semibold text-gray-800">{dateStr}</p>
+                                  <p className="text-sm text-gray-600">{timeStr}</p>
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        ))
+                          );
+                        })
                       )}
                     </div>
                     <button className="mt-4 text-primary hover:underline text-sm font-medium transition-colors duration-150" onClick={() => router.push('/pages/client/session')}>

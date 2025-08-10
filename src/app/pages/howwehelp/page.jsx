@@ -165,15 +165,11 @@ export default function HowWeHelp() {
                 <img src="/aIandfeatires.jpg" alt="Educational Paths" className="w-16 h-16 object-cover rounded-full shadow mb-2" />
                 <span className="text-xs text-center text-gray-700 font-medium w-24">Educational Paths</span>
               </div>
-              {/* Bottom */}
-              <div className="absolute left-1/2 bottom-0 -translate-x-1/2 flex flex-col items-center">
-                <img src="/veterancommunity.png" alt="Entrepreneurial Ventures" className="w-16 h-16 object-cover rounded-full shadow mb-2" />
-                <span className="text-xs text-center text-gray-700 font-medium w-24">Entrepreneurial Ventures</span>
-              </div>
+              
               {/* Left */}
               <div className="absolute left-0 top-1/2 -translate-y-1/2 flex flex-col items-center">
                 <img src="/high perfomance coaching.jpg" alt="High Performance" className="w-16 h-16 object-cover rounded-full shadow mb-2" />
-                <span className="text-xs text-center text-gray-700 font-medium w-24">High Performance</span>
+                <span className="text-xs text-center text-gray-700 font-medium w-24">Entrepreneurial Ventures</span>
               </div>
               {/* Center circle for visual effect */}
               <div className="absolute left-1/2 top-1/2 w-24 h-24 bg-gradient-to-br from-orange-200 via-white to-blue-200 rounded-full -translate-x-1/2 -translate-y-1/2 border-4 border-white shadow-lg flex items-center justify-center">
@@ -193,7 +189,6 @@ export default function HowWeHelp() {
               <li><span className="font-semibold text-[#ff5e1a]">Career Transitions:</span> Navigating complex career transitions</li>
               <li><span className="font-semibold text-[#ff5e1a]">Educational Paths:</span> Overcoming uncertainty about educational paths</li>
               <li><span className="font-semibold text-[#ff5e1a]">Entrepreneurial Ventures:</span> Developing entrepreneurial ventures</li>
-              <li><span className="font-semibold text-[#ff5e1a]">High Performance:</span> Sustaining high performance personally and professionally</li>
             </ul>
           </div>
         </div>
