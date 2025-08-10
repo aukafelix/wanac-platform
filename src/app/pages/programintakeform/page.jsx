@@ -164,7 +164,7 @@ export default function ProgramIntakeForm() {
   return (
     <div className="min-h-screen bg-gray-50 py-10 px-2">
       <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-lg p-8">
-        <h1 className="text-3xl font-bold mb-8 text-center text-[#002147]">Program Intake Form</h1>
+        <h1 className="text-3xl font-bold mb-8 text-center text-[#002147]">Transition Program Intake Form</h1>
         <form onSubmit={handleSubmit} className="space-y-8">
           {/* Section 1: Personal Information */}
           <section>

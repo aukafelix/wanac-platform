@@ -79,7 +79,8 @@ export default function Navbar({ hideNavbar = false }) {
       title: "RESOURCES",
       items: [
         { label: "Free Workshops", href: "/pages/workshops" },
-        { label: "Help Center", href: "/pages/helpcenter" }
+        { label: "Help Center", href: "/pages/helpcenter" },
+        { label: "Contact & Career", href: "/pages/contact&career" }
       ]
     }
   };
