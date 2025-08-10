@@ -56,17 +56,11 @@ export default function ClientDashboard() {
         sessionsService.getSessions().then((sessions) => {
           const sessionArray = Array.isArray(sessions) ? sessions : sessions?.sessions?.data || [];
           const now = new Date();
-          const filtered = sessionArray.filter(
-            (session) =>
-              (
-                (session.coach && session.coach.user_id === parsedUser.id) ||
-                (session.coach_id && session.coach_id === parsedUser.id) ||
-                (session.user_id && session.user_id === parsedUser.id) ||
-                (session.members && Array.isArray(session.members) && session.members.some(m => m.user_id === parsedUser.id))
-              ) &&
-              new Date(session.date) > now
+          // Only filter by date (upcoming sessions)
+          const upcoming = sessionArray.filter(
+            (session) => new Date(session.date) > now
           );
-          setUpcomingSessions(filtered);
+          setUpcomingSessions(upcoming);
           setLoading(false);
         });
         // Fetch life score overview

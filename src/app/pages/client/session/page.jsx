@@ -24,17 +24,10 @@ export default function SessionPage() {
         const parsedUser = JSON.parse(userData);
         setUser(parsedUser);
         // Fetch sessions for this user
-        sessionsService.getSessions().then((sessions) => {
-          console.log('Fetched sessions:', sessions); // DEBUG
-          const sessionArray = sessions?.sessions?.data || [];
-          const filtered = sessionArray.filter(
-            (session) =>
-              (session.coach && session.coach.user_id === parsedUser.id) ||
-              (session.coach_id && session.coach_id === parsedUser.id) ||
-              (session.user_id && session.user_id === parsedUser.id) ||
-              (session.members && Array.isArray(session.members) && session.members.some(m => m.user_id === parsedUser.id))
-          );
-          setUpcomingSessions(filtered);
+        sessionsService.getSessions().then((data) => {
+          // Use the correct API response structure
+          const sessionArray = data?.sessions?.data || [];
+          setUpcomingSessions(sessionArray);
         });
       } catch (e) {
         setUser(null);
@@ -76,8 +69,8 @@ export default function SessionPage() {
             <section className="col-span-1 md:col-span-2 bg-white border border-gray-200 rounded-lg p-6 shadow-sm flex items-center gap-4">
               <FaInfoCircle className="text-primary text-2xl" />
               <div>
-                <h1 className="text-xl font-bold mb-1">Welcome to Your Coaching Sessions</h1>
-                <p className="text-gray-600 text-sm">Book, join, record, and review your coaching sessions. Upload your recordings to get AI-powered transcripts, summaries, and actionable insights.</p>
+                <h1 className="text-xl font-bold mb-1">Welcome to Your Sessions</h1>
+                <p className="text-gray-600 text-sm"> Join, record, and review your coaching sessions. Summaries, and actionable insights.</p>
               </div>
             </section>
 
@@ -217,16 +210,7 @@ export default function SessionPage() {
                 </div>
               )}
             </section>
-            {/* AI Results Placeholder */}
-            <section className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm flex flex-col gap-2 md:col-span-2">
-              <div className="flex items-center gap-2 mb-2">
-                <FaRobot className="text-primary" />
-                <h2 className="text-lg font-semibold text-primary">AI Results</h2>
-              </div>
-              <div className="text-gray-500 text-sm">
-                After uploading your session, AI-generated transcript, summary, and insights will appear here.
-              </div>
-            </section>
+            
           </div>
         </main>
       </div>

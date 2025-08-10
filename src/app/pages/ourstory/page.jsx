@@ -5,10 +5,11 @@ import React from "react";
 const OurStory = () => {
   const leadershipTeams = {
     boardOfDirectors: [
+      
       {
         name: "Jason B.A. Van Camp",
         title: "Chairman of the Board",
-        image: ".png",
+        image: "/executivestaff/jason.jpg",
         bio: "Founder and Executive Chairman"
       },
       {
@@ -26,90 +27,117 @@ const OurStory = () => {
     ],
     executiveStaff: [
       {
-        name: "Ken Vance",
-        title: "Chief Executive Officer",
-        image: "path-to-image.jpg",
+        name: "Clarence Narcisse",
+        title: "Executive Director",
+        image: "/executivestaff/Anderson Pic.JPG",
         bio: "Leading operations and strategic initiatives"
       },
       {
-        name: "Ken Vance",
-        title: "Chief Executive Officer",
-        image: "path-to-image.jpg",
+        name: "Charles Ekanem",
+        title: "Deputy Director",
+        image: "/executivestaff/chingles1_367397516_6541771792565540_1911467567915577559_n.jpg",
         bio: "Leading operations and strategic initiatives"
       },
       {
-        name: "Ken Vance",
-        title: "Chief Executive Officer",
-        image: "path-to-image.jpg",
+        name: "Keason Torian",
+        title: "Program Manager",
+        image: "/executivestaff/staff-sgt-keason-torian-a-drill-instructor-instructs-3dc2c8-1024.jpg",
+        bio: "Leading operations and strategic initiatives"
+      },
+      
+      {
+        name: "Gabriella Torian",
+        title: "Program Manager ",
+        image: "/executivestaff/Gabriella Torian.jpg",
         bio: "Leading operations and strategic initiatives"
       },
     ]
   };
 
-  const LeadershipSection = ({ title, members }) => (
-    <section className="py-12 bg-white rounded-lg shadow-sm mb-8">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="text-center mb-10">
-          <h2 className="text-3xl font-bold text-[#002147] relative inline-block font-[Montserrat]" style={{ fontFamily: "'Montserrat', Arial, sans-serif" }}>
-            {title}
-            <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-blue-600 rounded-full"></div>
-          </h2>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {members.map((member, index) => (
-            <div 
-              key={index} 
-              className="group relative bg-white rounded-lg overflow-hidden transition-all duration-300 hover:shadow-xl"
-            >
-              <div className="aspect-w-4 aspect-h-5 relative">
-                <img
-                  src={member.image}
-                  alt={member.name}
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#002147]/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              </div>
-              
-              <div className="p-6 bg-white relative">
-                <div className="absolute -top-4 right-6 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center transform rotate-45">
-                  <div className="transform -rotate-45">
-                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 12h14M12 5l7 7-7 7"/>
-                    </svg>
+  const LeadershipSection = ({ title, members }) => {
+    const firstRow = members.slice(0, 3);
+    const lastRow = members.slice(3);
+    return (
+      <section className="py-12 bg-white rounded-lg shadow-sm mb-8">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl font-bold text-[#002147] relative inline-block font-[Montserrat]" style={{ fontFamily: "'Montserrat', Arial, sans-serif" }}>
+              {title}
+              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-blue-600 rounded-full"></div>
+            </h2>
+          </div>
+          {/* First row: 3 executives */}
+          <div className="flex flex-col items-center">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full justify-items-center">
+              {firstRow.map((member, index) => (
+                <div
+                  key={index}
+                  className="group relative bg-white rounded-lg overflow-hidden transition-all duration-300 hover:shadow-xl"
+                >
+                  <div className="relative">
+                    <img
+                      src={member.image}
+                      alt={member.name}
+                      className="object-cover transition-transform duration-300 group-hover:scale-105"
+                      style={{ width: '300px', height: '300px' }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#002147]/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  </div>
+                  <div className="p-6 bg-white relative">
+                    <div className="absolute -top-4 right-6 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center transform rotate-45">
+                      <div className="transform -rotate-45">
+                        <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                      </div>
+                    </div>
+                    <h3 className="text-xl font-bold text-[#002147] mb-2 font-[Montserrat]" style={{ fontFamily: "'Montserrat', Arial, sans-serif" }}>{member.name}</h3>
+                    <p className="text-blue-600 font-medium text-sm mb-3">{member.title}</p>
+                    <div className="h-px w-16 bg-gray-200 mb-3"></div>
+                    <p className="text-gray-600 text-sm">{member.bio}</p>
                   </div>
                 </div>
-                
-                <h3 className="text-xl font-bold text-[#002147] mb-2 font-[Montserrat]" style={{ fontFamily: "'Montserrat', Arial, sans-serif" }}>{member.name}</h3>
-                <p className="text-blue-600 font-medium text-sm mb-3">{member.title}</p>
-                
-                <div className="h-px w-16 bg-gray-200 mb-3"></div>
-                
-                {member.bio && (
-                  <p className="text-gray-600 text-sm leading-relaxed">{member.bio}</p>
-                )}
-                
-                <div className="mt-4 flex space-x-3">
-                  <button className="text-sm text-gray-600 hover:text-blue-600 transition-colors flex items-center">
-                    <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                    </svg>
-                    Contact
-                  </button>
-                  <button className="text-sm text-gray-600 hover:text-blue-600 transition-colors flex items-center">
-                    <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
-                    </svg>
-                    LinkedIn
-                  </button>
-                </div>
-              </div>
+              ))}
             </div>
-          ))}
+            {/* Last row: 1 executive centered */}
+            {lastRow.length > 0 && (
+              <div className="flex justify-center mt-8 w-full">
+                {lastRow.map((member, index) => (
+                  <div
+                    key={index}
+                    className="group relative bg-white rounded-lg overflow-hidden transition-all duration-300 hover:shadow-xl"
+                  >
+                    <div className="relative">
+                      <img
+                        src={member.image}
+                        alt={member.name}
+                        className="object-cover transition-transform duration-300 group-hover:scale-105"
+                        style={{ width: '300px', height: '300px' }}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#002147]/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    </div>
+                    <div className="p-6 bg-white relative">
+                      <div className="absolute -top-4 right-6 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center transform rotate-45">
+                        <div className="transform -rotate-45">
+                          <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 12h14M12 5l7 7-7 7" />
+                          </svg>
+                        </div>
+                      </div>
+                      <h3 className="text-xl font-bold text-[#002147] mb-2 font-[Montserrat]" style={{ fontFamily: "'Montserrat', Arial, sans-serif" }}>{member.name}</h3>
+                      <p className="text-blue-600 font-medium text-sm mb-3">{member.title}</p>
+                      <div className="h-px w-16 bg-gray-200 mb-3"></div>
+                      <p className="text-gray-600 text-sm">{member.bio}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
-      </div>
-    </section>
-  );
+      </section>
+    );
+  };
 
   return (
     <div className="bg-gray-50" style={{ fontFamily: "'Source Sans Pro', Arial, sans-serif" }}>
@@ -408,8 +436,16 @@ their communities and beyond.
             </p>
           </div>
 
-          
-          
+          {/* Board of Directors Section */}
+          {/*
+          <section id="board-of-directors">
+            <LeadershipSection 
+              title="BOARD OF DIRECTORS" 
+              members={leadershipTeams.boardOfDirectors} 
+            />
+          </section>
+          */}
+
           <section id="executive">
             <LeadershipSection 
               title="EXECUTIVE STAFF" 

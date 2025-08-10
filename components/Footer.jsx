@@ -16,7 +16,7 @@ export default function Footer({ hideFooter = false }) {
     '/career-compass', '/education-compass', '/taskmanagement',
     '/aiinsights', '/admin', '/breakoutrooms',
     '/accountsettings', '/reports', '/corporate-partners',
-    '/leadership-giving', '/ways-to-support', '/testimonials', '/pages/vsointakeform', '/pages/programintakeform'
+    '/leadership-giving', '/ways-to-support', '/testimonials', '/pages/vsointakeform', '/pages/programintakeform', '/pages/vabenefitsclaimintakeform'
   ];
 
   const shouldHideFooter =

@@ -80,7 +80,7 @@ export default function Navbar({ hideNavbar = false }) {
       items: [
         { label: "Free Workshops", href: "/pages/workshops" },
         { label: "Help Center", href: "/pages/helpcenter" },
-        { label: "Contact & Career", href: "/pages/contact&career" }
+        { label: "WANAC Careers", href: "/pages/contact&career" }
       ]
     }
   };

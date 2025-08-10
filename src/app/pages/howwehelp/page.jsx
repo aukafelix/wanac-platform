@@ -95,6 +95,16 @@ export default function HowWeHelp() {
               TRANSITION PROGRAM INTAKE FORM
             </a>
           </div>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mt-4">
+           
+            <a
+              href="/pages/programintakeform"
+              className="w-full sm:w-auto bg-transparent text-white border-2 border-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-[#002147] transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl text-center"
+              aria-label="Program Intake Form"
+            >
+              VA BENEFITS CLAIM INTAKE FORM
+            </a>
+          </div>
         </div>
       </header>
 

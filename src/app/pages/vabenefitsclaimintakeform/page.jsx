@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 
-const VSOClaimsSupportProgram = () => {
+const VABenefitsClaimIntakeForm = () => {
   return (
     <div className="bg-white min-h-screen">
       {/* Hero Section */}
@@ -180,4 +180,4 @@ const VSOClaimsSupportProgram = () => {
   );
 };
 
-export default VSOClaimsSupportProgram;
+export default VABenefitsClaimIntakeForm;
