@@ -7,7 +7,7 @@ import MeetControlBar from "../components/MeetControlBar";
 import PeersGrid from "../components/PeersGrid";
 import Sidebar from "../../../../../../components/dashboardcomponents/sidebar.jsx";
 
-export default function ExperienceModule({ onClose }) {
+export default function ExperienceModule() {
   // Hard-coded agenda items — pull these from props or context if you like
   const agenda = [
     { title: "Waiting Room", subtitle: "Welcome to your Breakout Room.", duration: "1 min" },

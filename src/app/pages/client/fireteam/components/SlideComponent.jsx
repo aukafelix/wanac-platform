@@ -22,11 +22,11 @@ export default function Slide({ step }) {
         </p>
         <p className="text-sm text-gray-700">Sincerely,</p>
         <p className="text-sm font-medium text-gray-800">
-          The Breakout Learning Team
+          The WANAC Team
         </p>
         <div className="mt-4">
           {/* Replace with your logo or icon */}
-          <span className="inline-block text-3xl">🎓</span>
+          <span className="inline-block text-3xl"></span>
         </div>
       </div>
     );
