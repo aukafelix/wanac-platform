@@ -1,11 +1,14 @@
 "use client";
 
 import React from "react";
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
 
 const OurStory = () => {
   const leadershipTeams = {
     boardOfDirectors: [
-      
       {
         name: "Jason B.A. Van Camp",
         title: "Chairman of the Board",
@@ -44,7 +47,6 @@ const OurStory = () => {
         image: "/executivestaff/staff-sgt-keason-torian-a-drill-instructor-instructs-3dc2c8-1024.jpg",
         bio: "Leading operations and strategic initiatives"
       },
-      
       {
         name: "Gabriella Torian",
         title: "Program Manager ",
@@ -139,12 +141,39 @@ const OurStory = () => {
     );
   };
 
+  // Static core pillars data
+  const corePillars = [
+    {
+      title: "Clarity & Vision",
+      description: "Establishing clear personal and professional pathways.",
+      color: "#2563eb" // Tailwind blue-600
+    },
+    {
+      title: "Energy & Resilience",
+      description: "Optimizing physical, emotional, and mental well-being.",
+      color: "#16a34a" // Tailwind green-600
+    },
+    {
+      title: "Courage & Confidence",
+      description: "Building the ability to navigate challenges with strength.",
+      color: "#ea580c" // Tailwind orange-600
+    },
+    {
+      title: "Productivity & Excellence",
+      description: "Empowering individuals to achieve exceptional results.",
+      color: "#eab308" // Tailwind yellow-500
+    },
+    {
+      title: "Influence & Leadership",
+      description: "Enhancing interpersonal skills to inspire and drive change.",
+      color: "#7c3aed" // Tailwind purple-600
+    },
+  ];
+
   return (
     <div className="bg-gray-50" style={{ fontFamily: "'Source Sans Pro', Arial, sans-serif" }}>
-    
-
       {/* Main Content */}
-         <section className="relative bg-[#002147] text-white min-h-[420px] flex items-center justify-center overflow-hidden">
+      <section className="relative bg-[#002147] text-white min-h-[420px] flex items-center justify-center overflow-hidden">
         <div 
           className="absolute inset-0 w-full h-full"
           style={{
@@ -161,13 +190,12 @@ const OurStory = () => {
           </h1>
           <p className="text-base md:text-lg max-w-2xl mx-auto mb-4 text-blue-100 font-medium drop-shadow">
             WANAC is committed to empowering transitioning service members, veterans, and professionals by delivering
-transformative coaching and training that fosters personal growth, professional excellence, and entrepreneurial
-success. Our innovative programs and resources are carefully designed to enable participants to lead impactful lives in
-their communities and beyond.
+            transformative coaching and training that fosters personal growth, professional excellence, and entrepreneurial
+            success. Our innovative programs and resources are carefully designed to enable participants to lead impactful lives in
+            their communities and beyond.
           </p>
         </div>
       </section>
-
 
       <section>
         <div className="relative w-full h-16 bg-[#002147] overflow-hidden flex items-center justify-center">
@@ -232,232 +260,177 @@ their communities and beyond.
         </div>
       </section>
 
-        <section id="what-sets-apart" className="p-12 md:p-20 mb-12">
-          <div className="flex flex-col items-center max-w-4xl mx-auto gap-8">
-            {/* Text Content */}
-            <div className="flex flex-col items-center text-center w-full max-w-4xl">
-              <h1 className="text-2xl md:text-3xl font-extrabold mb-2 font-[Montserrat]" style={{ fontFamily: "'Montserrat', Arial, sans-serif" }}>
-                What Sets WANAC Apart
-              </h1>
-              <p className="text-base md:text-lg mb-4 text-black font-medium drop-shadow w-full">
-                In today's rapidly evolving world, the ability to adapt, lead, and inspire others is more important than ever. At WANAC, we cultivate forward-thinking leaders who not only possess strategic insight and adaptability but also excel in emotional intelligence and resilience—key traits of transformative leadership.
-              </p>
-              <p className="text-base md:text-lg mb-4 text-black font-medium drop-shadow w-full">
-                Our distinctive approach combines rigorous academic insights with real-world experiences, preparing our participants to confidently navigate life's transitions and professional challenges.
-              </p>
-            </div>
-            {/* Image */}
-            
+      <section id="what-sets-apart" className="p-12 md:p-20 mb-12">
+        <div className="flex flex-col items-center max-w-4xl mx-auto gap-8">
+          {/* Text Content */}
+          <div className="flex flex-col items-center text-center w-full max-w-4xl">
+            <h1 className="text-2xl md:text-3xl font-extrabold mb-2 font-[Montserrat]" style={{ fontFamily: "'Montserrat', Arial, sans-serif" }}>
+              What Sets WANAC Apart
+            </h1>
+            <p className="text-base md:text-lg mb-4 text-black font-medium drop-shadow w-full">
+              In today's rapidly evolving world, the ability to adapt, lead, and inspire others is more important than ever. At WANAC, we cultivate forward-thinking leaders who not only possess strategic insight and adaptability but also excel in emotional intelligence and resilience—key traits of transformative leadership.
+            </p>
+            <p className="text-base md:text-lg mb-4 text-black font-medium drop-shadow w-full">
+              Our distinctive approach combines rigorous academic insights with real-world experiences, preparing our participants to confidently navigate life's transitions and professional challenges.
+            </p>
           </div>
-        </section>
-        
+          {/* Image */}
+        </div>
+      </section>
 
-        {/* Core Pillars Section */}
-        <section id="core-pillars" className="relative bg-[#002147] text-white min-h-[420px] flex items-center justify-center overflow-hidden mb-12">
-          <div 
-            className="absolute inset-0 w-full h-full"
-            style={{
-              backgroundImage: "url('/veterancommunity3.png')",
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat'
-            }}
-          />
+      {/* Static Core Pillars Section */}
+      <section id="core-pillars" className="mb-12">
+        <div className="relative bg-[#002147] text-white min-h-[400px] flex flex-col items-center justify-center overflow-hidden py-12">
+          <div className="absolute inset-0 w-full h-full" style={{ backgroundImage: "url('/veterancommunity3.png')", backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat" }} />
           <div className="absolute inset-0 bg-gradient-to-br from-[#002147]/90 via-[#002147]/80 to-[#ff5e1a]/40"></div>
-          <div className="relative z-10 w-full max-w-3xl mx-auto py-16 px-8 md:py-24 md:px-16 flex flex-col items-center">
-            <h2 className="text-3xl font-bold text-white mb-8 flex items-center justify-center relative font-[Montserrat]" style={{ fontFamily: "'Montserrat', Arial, sans-serif" }}>
-              <span className="z-10">Our Core Pillars At WANAC</span>
-            </h2>
-            <div className="w-full">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {[
-                  {
-                    title: "Clarity and Vision",
-                    desc: "Establishing clear personal and professional pathways.",
-                    icon: (
-                      <svg className="w-6 h-6 text-blue-600 mb-2" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-                    )
-                  },
-                  {
-                    title: "Energy and Resilience",
-                    desc: "Optimizing physical, emotional, and mental well-being.",
-                    icon: (
-                      <svg className="w-6 h-6 text-blue-600 mb-2" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                    )
-                  },
-                  {
-                    title: "Courage and Confidence",
-                    desc: "Building the ability to navigate challenges with strength.",
-                    icon: (
-                      <svg className="w-6 h-6 text-blue-600 mb-2" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="10"/></svg>
-                    )
-                  },
-                  {
-                    title: "Productivity and Excellence",
-                    desc: "Empowering individuals to achieve exceptional results.",
-                    icon: (
-                      <svg className="w-6 h-6 text-blue-600 mb-2" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6v6H9z"/></svg>
-                    )
-                  },
-                  {
-                    title: "Influence and Leadership",
-                    desc: "Enhancing interpersonal skills to inspire and drive change.",
-                    icon: (
-                      <svg className="w-6 h-6 text-blue-600 mb-2" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M8 17l4 4 4-4m-4-5v9"/><circle cx="12" cy="7" r="4"/></svg>
-                    )
-                  }
-                ].map((pillar, index, arr) => {
-                  if (index < 4) {
-                    return (
-                      <div key={index} className="flex flex-col items-center bg-white rounded-lg shadow p-3 hover:shadow-md transition-shadow border border-gray-100">
-                        {pillar.icon}
-                        <h4 className="font-bold text-base text-[#002147] mb-1 text-center">{pillar.title}</h4>
-                        <p className="text-gray-700 text-xs text-center">{pillar.desc}</p>
-                      </div>
-                    );
-                  } else {
-                    return null;
-                  }
-                })}
-              </div>
-              <div className="flex justify-center mt-4">
-                <div className="flex flex-col items-center bg-white rounded-lg shadow p-3 hover:shadow-md transition-shadow border border-gray-100 w-full sm:w-2/3 md:w-1/2 lg:w-1/3">
-                  {[
-                    {
-                      title: "Influence and Leadership",
-                      desc: "Enhancing interpersonal skills to inspire and drive change.",
-                      icon: (
-                        <svg className="w-6 h-6 text-blue-600 mb-2" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M8 17l4 4 4-4m-4-5v9"/><circle cx="12" cy="7" r="4"/></svg>
-                      )
-                    }
-                  ].map((pillar, index) => (
-                    <React.Fragment key={index}>
-                      {pillar.icon}
-                      <h4 className="font-bold text-base text-[#002147] mb-1 text-center">{pillar.title}</h4>
-                      <p className="text-gray-700 text-xs text-center">{pillar.desc}</p>
-                    </React.Fragment>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Strategic Aspirations Section */}
-        <section id="aspirations" className="p-8 mb-12">
-          <h1 className="text-3xl md:text-4xl font-extrabold mb-4 leading-tight drop-shadow-lg text-[#002147] text-center font-[Montserrat]" style={{ fontFamily: "'Montserrat', Arial, sans-serif" }}>Our Strategic Aspirations</h1>
-          {/* Simple Infographic Row */}
-          <div className="w-full overflow-x-auto">
-            <div className="flex md:grid md:grid-cols-5 gap-6 md:gap-8 items-stretch justify-center min-w-[600px] md:min-w-0">
-              {[
-                { 
-                  title: "Attain Excellence",
-                  desc: "We are dedicated to excellence in every program, resource, and initiative we undertake.",
-                  icon: (
-                    <svg className="w-8 h-8 text-blue-600 mb-2 mx-auto" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
-                  )
-                },
-                {
-                  title: "Empower Lifelong Success",
-                  desc: " We provide comprehensive tools and support to ensure sustainable success",
-                  icon: (
-                    <svg className="w-8 h-8 text-blue-600 mb-2 mx-auto" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-                  )
-                },
-                {
-                  title: "Drive Innovation",
-                  desc: "We continuously innovate our methodologies to deliver cutting-edge coaching and training solutions",
-                  icon: (
-                    <svg className="w-8 h-8 text-blue-600 mb-2 mx-auto" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                  )
-                },
-                {
-                  title: "Build Strong Community",
-                  desc: "We foster an inclusive community, creating meaningful connections among veterans,professionals, and industry leaders",
-                  icon: (
-                    <svg className="w-8 h-8 text-blue-600 mb-2 mx-auto" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="7" r="4"/><path d="M5.5 21h13a2 2 0 002-2v-2a7 7 0 00-14 0v2a2 2 0 002 2z"/></svg>
-                  )
-                },
-                {
-                  title: "Create Opportunity",
-                  desc: "We strive to remove barriers, promoting opportunities for personal and professional advancement for traditionally underserved groups.",
-                  icon: (
-                    <svg className="w-8 h-8 text-blue-600 mb-2 mx-auto" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6v6H9z"/></svg>
-                  )
-                }
-              ].map((aspiration, index) => (
-                <div
-                  key={index}
-                  className="flex flex-col items-center bg-white p-4 rounded-lg shadow hover:shadow-md transition-shadow min-w-[220px] md:min-w-0"
-                >
-                  <div className="flex items-center justify-center w-12 h-12 bg-blue-100 rounded-full mb-2">
-                    {aspiration.icon}
-                  </div>
-                  <h4 className="font-semibold text-[#002147] mb-2 text-center text-base">{aspiration.title}</h4>
-                  <p className="text-gray-700 text-sm text-center">{aspiration.desc}</p>
-                </div>
+          <h2 className="relative z-10 text-3xl font-bold text-white mb-10 font-[Montserrat]">Our Core Pillars At WANAC</h2>
+          <Box className="relative z-10" sx={{ width: '100%', maxWidth: '1200px', px: 4, display: 'flex', flexDirection: 'column', gap: 6 }}>
+            <Box sx={{ display: 'flex', justifyContent: 'center', gap: 6 }}>
+              {corePillars.slice(0, 3).map((pillar, idx) => (
+                <Card key={idx} sx={{ minWidth: 340, minHeight: 220, backgroundColor: pillar.color, color: '#fff', boxShadow: 6, borderRadius: 4, p: 4, opacity: 0.95, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <CardContent>
+                    <Typography variant="h6" component="div" sx={{ fontWeight: 'bold', mb: 2, textAlign: 'center', fontFamily: 'Montserrat', whiteSpace: 'nowrap' }}>
+                      {pillar.title}
+                    </Typography>
+                    <Typography variant="body1" sx={{ textAlign: 'center' }}>
+                      {pillar.description}
+                    </Typography>
+                  </CardContent>
+                </Card>
               ))}
-            </div>
+            </Box>
+            <Box sx={{ display: 'flex', justifyContent: 'center', gap: 6 }}>
+              {corePillars.slice(3).map((pillar, idx) => (
+                <Card key={idx} sx={{ minWidth: 340, minHeight: 220, backgroundColor: pillar.color, color: '#fff', boxShadow: 6, borderRadius: 4, p: 4, opacity: 0.95, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <CardContent>
+                    <Typography variant="h6" component="div" sx={{ fontWeight: 'bold', mb: 2, textAlign: 'center', fontFamily: 'Montserrat', whiteSpace: 'nowrap' }}>
+                      {pillar.title}
+                    </Typography>
+                    <Typography variant="body1" sx={{ textAlign: 'center' }}>
+                      {pillar.description}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              ))}
+            </Box>
+          </Box>
+        </div>
+      </section>
+
+      {/* Strategic Aspirations Section */}
+      <section id="aspirations" className="p-8 mb-12">
+        <h1 className="text-3xl md:text-4xl font-extrabold mb-4 leading-tight drop-shadow-lg text-[#002147] text-center font-[Montserrat]" style={{ fontFamily: "'Montserrat', Arial, sans-serif" }}>Our Strategic Aspirations</h1>
+        {/* Simple Infographic Row */}
+        <div className="w-full overflow-x-auto">
+          <div className="flex md:grid md:grid-cols-5 gap-6 md:gap-8 items-stretch justify-center min-w-[600px] md:min-w-0">
+            {[
+              { 
+                title: "Attain Excellence",
+                desc: "We are dedicated to excellence in every program, resource, and initiative we undertake.",
+                icon: (
+                  <svg className="w-8 h-8 text-blue-600 mb-2 mx-auto" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+                )
+              },
+              {
+                title: "Empower Lifelong Success",
+                desc: " We provide comprehensive tools and support to ensure sustainable success",
+                icon: (
+                  <svg className="w-8 h-8 text-blue-600 mb-2 mx-auto" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                )
+              },
+              {
+                title: "Drive Innovation",
+                desc: "We continuously innovate our methodologies to deliver cutting-edge coaching and training solutions",
+                icon: (
+                  <svg className="w-8 h-8 text-blue-600 mb-2 mx-auto" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                )
+              },
+              {
+                title: "Build Strong Community",
+                desc: "We foster an inclusive community, creating meaningful connections among veterans,professionals, and industry leaders",
+                icon: (
+                  <svg className="w-8 h-8 text-blue-600 mb-2 mx-auto" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="7" r="4"/><path d="M5.5 21h13a2 2 0 002-2v-2a7 7 0 00-14 0v2a2 2 0 002 2z"/></svg>
+                )
+              },
+              {
+                title: "Create Opportunity",
+                desc: "We strive to remove barriers, promoting opportunities for personal and professional advancement for traditionally underserved groups.",
+                icon: (
+                  <svg className="w-8 h-8 text-blue-600 mb-2 mx-auto" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6v6H9z"/></svg>
+                )
+              }
+            ].map((aspiration, index) => (
+              <div
+                key={index}
+                className="flex flex-col items-center bg-white p-4 rounded-lg shadow hover:shadow-md transition-shadow min-w-[220px] md:min-w-0"
+              >
+                <div className="flex items-center justify-center w-12 h-12 bg-blue-100 rounded-full mb-2">
+                  {aspiration.icon}
+                </div>
+                <h4 className="font-semibold text-[#002147] mb-2 text-center text-base">{aspiration.title}</h4>
+                <p className="text-gray-700 text-sm text-center">{aspiration.desc}</p>
+              </div>
+            ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section className="relative bg-[#002147] rounded-xl p-0 mb-12 min-h-[400px] md:min-h-[500px] flex items-center justify-center overflow-hidden">
-          <div 
-            className="absolute inset-0 w-full h-full"
-            style={{
-              backgroundImage: 'url("/community1.jpg")',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat'
-            }}
-          />
-          <div className="absolute inset-0 bg-gradient-to-br from-[#002147]/90 via-[#002147]/80 to-[#ff5e1a]/40"></div>
-          <div className="relative z-10 w-full max-w-2xl mx-auto text-center flex flex-col items-center justify-center py-16 px-4">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-3 drop-shadow-lg font-[Montserrat]" style={{ fontFamily: "'Montserrat', Arial, sans-serif" }}>Join the WANAC Community</h2>
-            <p className="text-white max-w-xl mx-auto mb-6 text-lg md:text-xl drop-shadow">
-              Become part of an empowered network dedicated to making meaningful, positive impacts in society. Connect with us
-              to start your transformative journey today.
-            </p>
-            <a
-              href="/services"
-              className="inline-block bg-orange-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-orange-700 transition text-lg md:text-xl shadow-lg"
-            >
-              JOIN COMMUNITY &rarr;
-            </a>
-          </div>
-        </section>
+      <section className="relative bg-[#002147] rounded-xl p-0 mb-12 min-h-[400px] md:min-h-[500px] flex items-center justify-center overflow-hidden">
+        <div 
+          className="absolute inset-0 w-full h-full"
+          style={{
+            backgroundImage: 'url("/community1.jpg")',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#002147]/90 via-[#002147]/80 to-[#ff5e1a]/40"></div>
+        <div className="relative z-10 w-full max-w-2xl mx-auto text-center flex flex-col items-center justify-center py-16 px-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-3 drop-shadow-lg font-[Montserrat]" style={{ fontFamily: "'Montserrat', Arial, sans-serif" }}>Join the WANAC Community</h2>
+          <p className="text-white max-w-xl mx-auto mb-6 text-lg md:text-xl drop-shadow">
+            Become part of an empowered network dedicated to making meaningful, positive impacts in society. Connect with us
+            to start your transformative journey today.
+          </p>
+          <a
+            href="/services"
+            className="inline-block bg-orange-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-orange-700 transition text-lg md:text-xl shadow-lg"
+          >
+            JOIN COMMUNITY &rarr;
+          </a>
+        </div>
+      </section>
 
-        {/* Leadership Sections */}
-        <div className="space-y-8">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-[#002147] mb-4 font-[Montserrat]" style={{ fontFamily: "'Montserrat', Arial, sans-serif" }}>Our Leadership</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Meet the dedicated individuals who guide our mission and drive our success in empowering veterans and professionals.
-            </p>
-          </div>
-
-          {/* Board of Directors Section */}
-          {/*
-          <section id="board-of-directors">
-            <LeadershipSection 
-              title="BOARD OF DIRECTORS" 
-              members={leadershipTeams.boardOfDirectors} 
-            />
-          </section>
-          */}
-
-          <section id="executive">
-            <LeadershipSection 
-              title="EXECUTIVE STAFF" 
-              members={leadershipTeams.executiveStaff} 
-            />
-          </section>
+      {/* Leadership Sections */}
+      <div className="space-y-8">
+        <div className="text-center mb-12">
+          <h2 className="text-4xl font-bold text-[#002147] mb-4 font-[Montserrat]" style={{ fontFamily: "'Montserrat', Arial, sans-serif" }}>Our Leadership</h2>
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            Meet the dedicated individuals who guide our mission and drive our success in empowering veterans and professionals.
+          </p>
         </div>
 
-        {/* Call to Action */}
-        
+        {/* Board of Directors Section */}
+        {/*
+        <section id="board-of-directors">
+          <LeadershipSection 
+            title="BOARD OF DIRECTORS" 
+            members={leadershipTeams.boardOfDirectors} 
+          />
+        </section>
+        */}
+
+        <section id="executive">
+          <LeadershipSection 
+            title="EXECUTIVE STAFF" 
+            members={leadershipTeams.executiveStaff} 
+          />
+        </section>
+      </div>
+
+      {/* Call to Action */}
     </div>
   );
-}
+};
 
 export default OurStory;

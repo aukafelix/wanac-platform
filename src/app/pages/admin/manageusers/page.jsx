@@ -8,7 +8,7 @@ export default function ManageUsersPage() {
   const [users, setUsers] = useState([]);
   useEffect(() => {
     clientsService.getClients().then((data) => {
-      setUsers(data);
+      setUsers(Array.isArray(data) ? data : (data.clients || []));
     });
   }, []);
 
@@ -38,13 +38,13 @@ export default function ManageUsersPage() {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-100">
-                  {users.map((user) => (
-                    <tr key={user.id} className="hover:bg-gray-50 transition">
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{user.name}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{user.email}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{user.role}</td>
+                  {users.map((client) => (
+                    <tr key={client.id} className="hover:bg-gray-50 transition">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{client.user?.name || '-'}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{client.user?.email || '-'}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{client.user?.role || '-'}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm">
-                        <span className={`px-2 py-1 rounded text-xs font-semibold ${user.status === 'Active' ? 'bg-green-100 text-green-700' : 'bg-gray-200 text-gray-500'}`}>{user.status}</span>
+                        <span className={`px-2 py-1 rounded text-xs font-semibold ${client.status === 'Active' ? 'bg-green-100 text-green-700' : 'bg-gray-200 text-gray-500'}`}>{client.status || '-'}</span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm flex gap-2 justify-end">
                         <button className="p-2 rounded hover:bg-blue-100 text-blue-600" title="Edit User">

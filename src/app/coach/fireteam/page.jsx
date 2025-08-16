@@ -3,6 +3,10 @@
 import React, { useState, useEffect } from "react";
 import CoachSidebar from '../../../../components/dashboardcomponents/CoachSidebar';
 import ClientTopbar from '../../../../components/dashboardcomponents/clienttopbar';
+import ClassCard from "../../../../components/ClassCard";
+import ExperienceCard from "../../../../components/ExperienceCard";
+import AddClassModal from "../../../../components/AddClassModal";
+import AddExperienceModal from "../../../../components/AddExperienceModal";
 
 // Initial mock data for classes and experiences
 const initialClasses = [
@@ -158,7 +162,7 @@ export default function FireteamCoachPage() {
         {/* Main Content */}
         <main className="flex-1 h-0 overflow-y-auto px-4 md:px-12 py-8 bg-gray-50">
           <div className="max-w-5xl mx-auto">
-            <h1 className="text-3xl font-bold mb-6">Breakout Room Coach Panel</h1>
+            <h1 className="text-3xl font-bold mb-6">Fireteam Room Coach Panel</h1>
             {/* Add Class Button and Modal */}
             <div className="mb-8">
               <button
@@ -167,61 +171,34 @@ export default function FireteamCoachPage() {
               >
                 + Add Class
               </button>
-              {showClassModal && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
-                  <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md relative">
-                    <button
-                      className="absolute top-2 right-2 text-gray-500 hover:text-red-500 text-2xl"
-                      onClick={() => setShowClassModal(false)}
-                      aria-label="Close"
-                    >
-                      &times;
-                    </button>
-                    <h2 className="text-lg font-semibold mb-4">Add New Class</h2>
-                    <form onSubmit={handleAddClass} className="flex flex-col gap-4">
-                      <div>
-                        <label className="block text-sm font-medium">Class Name</label>
-                        <input
-                          type="text"
-                          name="name"
-                          value={newClass.name}
-                          onChange={handleClassInputChange}
-                          className="w-full px-3 py-2 border rounded-lg mt-1"
-                          required
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium">Section Name</label>
-                        <input
-                          type="text"
-                          name="sectionName"
-                          value={newClass.sectionName}
-                          onChange={handleClassInputChange}
-                          className="w-full px-3 py-2 border rounded-lg mt-1"
-                          required
-                        />
-                      </div>
-                      <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold">Add Class</button>
-                    </form>
-                  </div>
-                </div>
-              )}
+              <AddClassModal
+                open={showClassModal}
+                onClose={() => setShowClassModal(false)}
+                onSubmit={handleAddClass}
+                form={newClass}
+                onChange={handleClassInputChange}
+              />
             </div>
             {/* Class List */}
             <div className="mb-8">
               <h2 className="text-lg font-semibold mb-2">Classes</h2>
-              <div className="flex flex-wrap gap-3">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {classes.length === 0 ? (
                   <div className="text-gray-400">No classes yet.</div>
                 ) : (
                   classes.map(cls => (
-                    <button
+                    <ClassCard
                       key={cls.id}
-                      onClick={() => setSelectedClassId(cls.id)}
-                      className={`px-4 py-2 rounded-lg border font-semibold transition-colors ${selectedClassId === cls.id ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-700 border-gray-300 hover:bg-blue-50'}`}
-                    >
-                      {cls.name} <span className="text-xs text-gray-300">|</span> {cls.sectionName}
-                    </button>
+                      cls={cls}
+                      isSelected={selectedClassId === cls.id}
+                      onSelect={() => setSelectedClassId(cls.id)}
+                      onEdit={() => {}}
+                      onDelete={() => {}}
+                      onAddExperience={() => {
+                        setSelectedClassId(cls.id);
+                        setShowExperienceModal(true);
+                      }}
+                    />
                   ))
                 )}
               </div>
@@ -234,87 +211,29 @@ export default function FireteamCoachPage() {
                 {selectedClass.experiences.length === 0 ? (
                   <div className="text-gray-400 mb-8">No experiences yet for this class.</div>
                 ) : (
-                  <ul className="divide-y mb-8">
+                  <div className="mb-8">
                     {selectedClass.experiences.map((exp) => (
-                      <li key={exp.id} className="py-4">
-                        <div className="font-bold text-lg">{exp.title}</div>
-                      </li>
+                      <ExperienceCard
+                        key={exp.id}
+                        exp={exp}
+                        onEdit={() => {}}
+                        onDelete={() => {}}
+                      />
                     ))}
-                  </ul>
+                  </div>
                 )}
-                {/* Add Experience Button and Modal */}
-                <div className="mb-8">
-                  <button
-                    onClick={() => setShowExperienceModal(true)}
-                    className="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold shadow hover:bg-blue-700 transition"
-                  >
-                    + Add Experience
-                  </button>
-                  {showExperienceModal && (
-                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
-                      <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md relative">
-                        <button
-                          className="absolute top-2 right-2 text-gray-500 hover:text-red-500 text-2xl"
-                          onClick={() => setShowExperienceModal(false)}
-                          aria-label="Close"
-                        >
-                          &times;
-                        </button>
-                        <h2 className="text-lg font-semibold mb-4">Add New Experience</h2>
-                        <form onSubmit={handleAddExperience} className="space-y-4">
-                          <div>
-                            <label className="block text-sm font-medium">Title</label>
-                            <input
-                              type="text"
-                              name="title"
-                              value={newExperience.title}
-                              onChange={handleExperienceInputChange}
-                              className="w-full px-3 py-2 border rounded-lg mt-1"
-                              required
-                            />
-                          </div>
-                          <div>
-                            <label className="block text-sm font-medium">Subtitle</label>
-                            <input
-                              type="text"
-                              name="subtitle"
-                              value={newExperience.subtitle}
-                              onChange={handleExperienceInputChange}
-                              className="w-full px-3 py-2 border rounded-lg mt-1"
-                            />
-                          </div>
-                          <div>
-                            <label className="block text-sm font-medium">Agenda Steps</label>
-                            {newExperience.agenda.map((step, idx) => (
-                              <div key={idx} className="flex gap-2 mb-2">
-                                <input
-                                  type="text"
-                                  placeholder="Step Title"
-                                  value={step.title}
-                                  onChange={e => handleAgendaChange(idx, "title", e.target.value)}
-                                  className="flex-1 px-2 py-1 border rounded"
-                                  required
-                                />
-                                <input
-                                  type="text"
-                                  placeholder="Duration (e.g. 5 mins)"
-                                  value={step.duration}
-                                  onChange={e => handleAgendaChange(idx, "duration", e.target.value)}
-                                  className="w-32 px-2 py-1 border rounded"
-                                />
-                                {newExperience.agenda.length > 1 && (
-                                  <button type="button" onClick={() => removeAgendaStep(idx)} className="text-red-500 px-2">&times;</button>
-                                )}
-                              </div>
-                            ))}
-                            <button type="button" onClick={addAgendaStep} className="text-blue-600 text-sm mt-1">+ Add Step</button>
-                          </div>
-                          <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold">Add Experience</button>
-                        </form>
-                      </div>
-                    </div>
-                  )}
-                </div>
+                {/* Add Experience Modal */}
+                <AddExperienceModal
+                  open={showExperienceModal}
+                  onClose={() => setShowExperienceModal(false)}
+                  onSubmit={handleAddExperience}
+                  form={newExperience}
+                  onChange={handleExperienceInputChange}
+                  agenda={newExperience.agenda}
+                  onAgendaChange={handleAgendaChange}
+                  onAddAgendaStep={addAgendaStep}
+                  onRemoveAgendaStep={removeAgendaStep}
+                />
               </div>
             )}
           </div>

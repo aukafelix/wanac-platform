@@ -1,20 +1,10 @@
 "use client";
 // Admin Dashboard for WANAC Coaching Platform
-import {
-  FaUsers,
-  FaCalendarAlt,
-  FaChartPie,
-  FaCogs,
-  FaUserTie,
-  FaClipboardCheck,
-  FaBook,
-  FaEnvelope,
-  FaUserShield,
-  FaUserEdit,
-} from 'react-icons/fa';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import AdminSidebar from '../../../../components/dashboardcomponents/adminsidebar';
-  
+import { Box, Grid, Card, CardContent, Typography, Button, Avatar, Paper } from '@mui/material';
+import { People, Event, PieChart, SupervisorAccount, Edit, BarChart } from '@mui/icons-material';
+
 export default function AdminDashboard() {
   const [user, setUser] = useState(null);
   useEffect(() => {
@@ -28,116 +18,87 @@ export default function AdminDashboard() {
     }
   }, []);
 
+  // Placeholder stats
+  const stats = [
+    { icon: <People color="primary" />, label: 'Manage Users', desc: 'View, edit, or remove users' },
+    { icon: <SupervisorAccount color="secondary" />, label: 'Manage Coaches', desc: 'Control coach services and profiles' },
+    { icon: <Edit color="action" />, label: 'Manage Clients', desc: 'Control client services and profiles' },
+    { icon: <Event color="warning" />, label: 'Sessions', desc: 'Monitor all sessions' },
+    { icon: <PieChart color="primary" />, label: 'Analytics', desc: 'View platform analytics' },
+  ];
+
   return (
-    <div className="h-screen flex bg-gray-50 font-serif">
-      {/* Sidebar */}
+    <Box sx={{ display: 'flex', minHeight: '100vh', bgcolor: 'grey.50', fontFamily: 'serif' }}>
       <AdminSidebar />
-      {/* Main Area */}
-      <div className="flex-1 flex flex-col h-full transition-all duration-300">
+      <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', height: '100vh' }}>
         {/* Top Bar */}
-        <nav className="flex items-center justify-between bg-white px-4 py-3 border-b border-gray-200 shadow-sm sticky top-0 z-10">
-          <div />
-          <div className="flex items-center gap-6">
-            <div className="flex items-center gap-2 cursor-pointer hover:bg-gray-100 px-3 py-1 rounded transition">
-              <FaUserShield className="text-2xl text-gray-500" />
-              <span className="text-sm font-medium text-gray-700">{user ? user.name : 'Admin'}</span>
-            </div>
-          </div>
-        </nav>
+        <Paper elevation={1} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', px: 4, py: 2, borderBottom: 1, borderColor: 'grey.200', position: 'sticky', top: 0, zIndex: 10 }}>
+          <Box display="flex" alignItems="center" gap={2}>
+            <Avatar sx={{ bgcolor: 'grey.300', color: 'grey.700' }}><SupervisorAccount /></Avatar>
+            <Typography variant="subtitle1" color="text.secondary">{user ? user.name : 'Admin'}</Typography>
+          </Box>
+        </Paper>
         {/* Main Content */}
-        <main className="flex-1 h-0 overflow-y-auto px-4 md:px-12 py-8 bg-gray-50">
-          <div className="max-w-6xl mx-auto">
-            <div className="flex flex-col lg:flex-row gap-8">
-              {/* Main Content */}
-              <div className="flex-1 space-y-8">
+        <Box component="main" sx={{ flex: 1, overflowY: 'auto', px: { xs: 2, md: 6 }, py: 4, bgcolor: 'grey.50' }}>
+          <Box maxWidth="lg" mx="auto">
+            <Grid container spacing={4}>
+              <Grid item xs={12}>
                 {/* Welcome Section */}
-                <section className="bg-white border border-gray-200 rounded-lg p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4 shadow-none">
-                  <div>
-                    <h2 className="text-2xl md:text-3xl font-bold text-primary mb-1 tracking-tight">
+                <Card sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', p: 3 }}>
+                  <Box>
+                    <Typography variant="h4" fontWeight={700} gutterBottom>
                       Welcome Back{user?.name ? `, ${user.name}` : ''}!
-                    </h2>
-                    <p className="text-gray-600 text-base md:text-lg">Admin control panel for WANAC platform.</p>
-                  </div>
-                  <img
-                    src="/dashboard-illustration.svg"
-                    alt="Dashboard"
-                    className="w-28 h-28 md:w-36 md:h-36 object-contain hidden md:block"
-                  />
-                </section>
-
+                    </Typography>
+                    <Typography color="text.secondary" variant="body1">
+                      Admin control panel for WANAC platform.
+                    </Typography>
+                  </Box>
+                  <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+                    <img src="/dashboard-illustration.svg" alt="Dashboard" style={{ width: 120, height: 120, objectFit: 'contain' }} />
+                  </Box>
+                </Card>
+              </Grid>
+              <Grid item xs={12}>
                 {/* Quick Actions Row */}
-                <section className="flex flex-col md:flex-row gap-4">
-                  <AdminQuickActionCard
-                    icon={FaUsers}
-                    title="Manage Users"
-                    description="View, edit, or remove users"
-                    color="primary"
-                  />
-                  <AdminQuickActionCard
-                    icon={FaUserTie}
-                    title="Manage Coaches"
-                    description="Control coach services and profiles"
-                    color="secondary"
-                  />
-                  <AdminQuickActionCard
-                    icon={FaUserEdit}
-                    title="Manage Clients"
-                    description="Control client services and profiles"
-                    color="accent"
-                  />
-                  <AdminQuickActionCard
-                    icon={FaCalendarAlt}
-                    title="Sessions"
-                    description="Monitor all sessions"
-                    color="warning"
-                  />
-                  <AdminQuickActionCard
-                    icon={FaChartPie}
-                    title="Analytics"
-                    description="View platform analytics"
-                    color="primary"
-                  />
-                </section>
-              </div>
-            </div>
-          </div>
-        </main>
-      </div>
-    </div>
-  );
-}
-
-// Quick Action Card for Admin
-function AdminQuickActionCard({ icon: Icon, title, description, color }) {
-  const colorClasses = {
-    primary: 'bg-primary/10 text-primary border-primary/20 hover:bg-primary/20',
-    secondary: 'bg-secondary/10 text-secondary border-secondary/20 hover:bg-secondary/20',
-    accent: 'bg-accent/10 text-accent border-accent/20 hover:bg-accent/20',
-    warning: 'bg-warning/10 text-warning border-warning/20 hover:bg-warning/20',
-  };
-  return (
-    <div
-      className={`flex-1 min-w-[180px] p-5 rounded-lg border transition-all duration-200 shadow-none hover:shadow-sm transform hover:scale-[1.01] flex flex-col items-start gap-2 ${colorClasses[color]}`}
-    >
-      <Icon className="text-2xl mb-1" />
-      <h3 className="text-base font-semibold mb-0.5">{title}</h3>
-      <p className="text-xs opacity-80">{description}</p>
-    </div>
-  );
-}
-
-// Card for Admin Content Grid
-function AdminCard({ icon: Icon, title, description, buttonText }) {
-  return (
-    <div className="bg-white rounded-xl shadow p-6 hover:shadow-lg transition-transform duration-300 flex flex-col justify-between">
-      <h2 className="text-xl font-semibold text-brand-navy mb-2 flex items-center gap-2">
-        <Icon /> {title}
-      </h2>
-      <p className="text-brand-blue text-sm mb-2">{description}</p>
-      <button className="mt-4 bg-[#002147] text-white px-4 py-2 rounded hover:bg-orange-500 transition">
-        {buttonText}
-      </button>
-    </div>
+                <Grid container spacing={2}>
+                  {stats.map((stat, idx) => (
+                    <Grid item xs={12} sm={6} md={2.4} key={stat.label}>
+                      <Card sx={{ p: 2, display: 'flex', flexDirection: 'column', alignItems: 'flex-start', minHeight: 120, transition: '0.2s', '&:hover': { boxShadow: 6, transform: 'scale(1.03)' } }}>
+                        <Box mb={1}>{stat.icon}</Box>
+                        <Typography variant="subtitle1" fontWeight={600}>{stat.label}</Typography>
+                        <Typography variant="caption" color="text.secondary">{stat.desc}</Typography>
+                      </Card>
+                    </Grid>
+                  ))}
+                </Grid>
+              </Grid>
+              {/* More Insights Section */}
+              <Grid item xs={12} md={8}>
+                <Card sx={{ p: 3, minHeight: 220 }}>
+                  <Typography variant="h6" fontWeight={600} gutterBottom>
+                    User & Session Growth (Chart Placeholder)
+                  </Typography>
+                  <Box sx={{ height: 160, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'grey.400' }}>
+                    <BarChart sx={{ fontSize: 60 }} />
+                    <Typography color="text.secondary" sx={{ ml: 2 }}>
+                      Chart coming soon...
+                    </Typography>
+                  </Box>
+                </Card>
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <Card sx={{ p: 3, minHeight: 220 }}>
+                  <Typography variant="h6" fontWeight={600} gutterBottom>
+                    Recent Activity
+                  </Typography>
+                  <Typography color="text.secondary">Recent activity feed coming soon...</Typography>
+                </Card>
+              </Grid>
+            </Grid>
+          </Box>
+        </Box>
+      </Box>
+    </Box>
   );
 }
   

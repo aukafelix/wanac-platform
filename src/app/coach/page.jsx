@@ -1,6 +1,6 @@
 'use client';
 // Coach Dashboard for WANAC Coaching Platform with Client Management & Messaging
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import {
   FaUserFriends,
@@ -16,6 +16,7 @@ import {
 import CoachSidebar from '../../../components/dashboardcomponents/CoachSidebar';
 import ClientTopbar from '../../../components/dashboardcomponents/clienttopbar';
 import ScheduleSessionModal from '../../../components/dashboardcomponents/ScheduleSessionModal';
+import { sessionsService } from '../../services/api/sessions.service';
 
 // Simple Modal Component
 function Modal({ open, onClose, title, children }) {
@@ -64,6 +65,25 @@ export default function CoachDashboard() {
   // Modal state
   const [openModal, setOpenModal] = useState(null); // 'notes' | 'content' | null
   const [showScheduleModal, setShowScheduleModal] = useState(false);
+  const [upcomingSessions, setUpcomingSessions] = useState([]);
+
+  useEffect(() => {
+    const fetchSessions = async () => {
+      try {
+        const response = await sessionsService.getSessions();
+        const sessions = response.data || response.sessions?.data || [];
+        setUpcomingSessions(
+          sessions
+            .filter(session => session.status === 'Scheduled' || session.status === 'Upcoming' || session.status === 'Pending')
+            .sort((a, b) => new Date(a.date) - new Date(b.date))
+            .slice(0, 3)
+        );
+      } catch (error) {
+        console.error('Error fetching sessions:', error);
+      }
+    };
+    fetchSessions();
+  }, []);
 
   // Mock stats
   const stats = [
@@ -146,17 +166,23 @@ export default function CoachDashboard() {
                       Upcoming Sessions
                     </h3>
                     <div className="space-y-4">
-                      <div className="border-l-4 border-primary pl-4 py-3 bg-primary/5 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200">
-                        <div className="flex justify-between">
-                          <div>
-                            <p className="font-medium text-gray-800">One-on-One with James Mwangi</p>
-                            <p className="text-sm text-gray-600">Apr 6, 2025 – 11:00AM</p>
+                      {upcomingSessions.length === 0 ? (
+                        <p className="text-gray-500 text-sm">No upcoming sessions.</p>
+                      ) : (
+                        upcomingSessions.map(session => (
+                          <div key={session.id} className="border-l-4 border-primary pl-4 py-3 bg-primary/5 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200">
+                            <div className="flex justify-between">
+                              <div>
+                                <p className="font-medium text-gray-800">{session.title}</p>
+                                <p className="text-sm text-gray-600">{new Date(session.date).toLocaleDateString()} – {new Date(session.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+                              </div>
+                              <div className="text-right">
+                                <p className="text-sm font-semibold text-gray-800">{session.mode || 'Virtual'}</p>
+                              </div>
+                            </div>
                           </div>
-                          <div className="text-right">
-                            <p className="text-sm font-semibold text-gray-800">Virtual</p>
-                          </div>
-                        </div>
-                      </div>
+                        ))
+                      )}
                     </div>
                     <button className="mt-4 text-primary hover:underline text-sm font-medium transition-colors duration-150">
                       View Calendar →

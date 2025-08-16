@@ -1,34 +1,45 @@
 "use client";
 import { useState, useEffect } from "react";
 import AdminSidebar from '../../../../../components/dashboardcomponents/adminsidebar';
-import { Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField, Stack, Typography, Box, IconButton, Autocomplete, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
+import { Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField, Stack, Typography, Box, IconButton, Autocomplete, Select, MenuItem, InputLabel, FormControl, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Tabs, Tab, Chip, Avatar } from '@mui/material';
 import { FaEdit, FaPlus, FaTrash } from "react-icons/fa";
 import { clientsService } from '../../../../services/api/clients.service';
+
+const mockCoaches = [
+  { id: 'c1', name: "Jane Doe", email: "jane@wanac.org", role: "coach" },
+  { id: 'c2', name: "John Smith", email: "john@wanac.org", role: "coach" },
+  { id: 'c3', name: "Alice Brown", email: "alice@wanac.org", role: "coach" },
+];
 
 export default function FireteamAdminManagementPage() {
   const [fireteams, setFireteams] = useState([]);
   const [selectedFireteam, setSelectedFireteam] = useState(null);
   const [showFireteamDialog, setShowFireteamDialog] = useState(false);
-  const [fireteamForm, setFireteamForm] = useState({ name: '', description: '', members: [], admin: '' });
+  const [fireteamForm, setFireteamForm] = useState({ name: '', description: '', members: [], admin: '', type: 'client' });
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
-  const [users, setUsers] = useState([]);
+  const [clients, setClients] = useState([]);
+  const [coaches, setCoaches] = useState([]);
+  const [tab, setTab] = useState('all');
 
   useEffect(() => {
     clientsService.getClients().then((data) => {
-      // Ensure users is always an array
       if (Array.isArray(data)) {
-        setUsers(data);
+        setClients(data.map(u => ({ ...u, role: 'client' })));
       } else if (data && typeof data === 'object') {
-        setUsers(Object.values(data));
+        setClients(Object.values(data).map(u => ({ ...u, role: 'client' })));
       } else {
-        setUsers([]);
+        setClients([]);
       }
     });
+    // Simulate fetching coaches (replace with real API if available)
+    setCoaches(mockCoaches);
   }, []);
+
+  const allUsers = [...clients, ...coaches];
 
   // Handlers for Fireteams
   const handleOpenAddFireteam = () => {
-    setFireteamForm({ name: '', description: '', members: [], admin: '' });
+    setFireteamForm({ name: '', description: '', members: [], admin: '', type: 'client' });
     setSelectedFireteam(null);
     setShowFireteamDialog(true);
   };
@@ -38,6 +49,7 @@ export default function FireteamAdminManagementPage() {
       description: fireteam.description,
       members: fireteam.members || [],
       admin: fireteam.admin || '',
+      type: fireteam.type || 'client',
     });
     setSelectedFireteam(fireteam);
     setShowFireteamDialog(true);
@@ -45,8 +57,11 @@ export default function FireteamAdminManagementPage() {
   const handleFireteamFormChange = (e) => {
     setFireteamForm({ ...fireteamForm, [e.target.name]: e.target.value });
   };
+  const handleTypeChange = (e) => {
+    setFireteamForm({ ...fireteamForm, type: e.target.value, members: [], admin: '' });
+  };
   const handleMembersChange = (event, value) => {
-    setFireteamForm(form => ({ ...form, members: value, admin: value.includes(form.admin) ? form.admin : '' }));
+    setFireteamForm(form => ({ ...form, members: value.map(u => u.id), admin: value.find(u => u.id === form.admin) ? form.admin : '' }));
   };
   const handleAdminChange = (e) => {
     setFireteamForm({ ...fireteamForm, admin: e.target.value });
@@ -68,6 +83,13 @@ export default function FireteamAdminManagementPage() {
     setShowDeleteDialog(false);
     setSelectedFireteam(null);
   };
+  const handleTabChange = (event, newValue) => {
+    setTab(newValue);
+  };
+
+  // Filter fireteams by type
+  const filteredFireteams = tab === 'all' ? fireteams : fireteams.filter(f => f.type === tab);
+  const userOptions = fireteamForm.type === 'coach' ? coaches : clients;
 
   return (
     <div className="flex min-h-screen bg-gray-50">
@@ -79,49 +101,71 @@ export default function FireteamAdminManagementPage() {
             Add Fireteam
           </Button>
         </div>
-        <Box className="bg-white rounded shadow p-4">
-          <table className="min-w-full">
-            <thead>
-              <tr>
-                <th className="text-left py-2">Name</th>
-                <th className="text-left py-2">Description</th>
-                <th className="text-left py-2">Members</th>
-                <th className="text-left py-2">Admin</th>
-                <th className="text-left py-2">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {fireteams.length === 0 ? (
-                <tr><td colSpan={5} className="text-center py-4 text-gray-400">No fireteams found.</td></tr>
-              ) : fireteams.map((fireteam) => (
-                <tr key={fireteam.id} className="border-t">
-                  <td className="py-2">{fireteam.name}</td>
-                  <td className="py-2">{fireteam.description}</td>
-                  <td className="py-2">
+        <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 2 }}>
+          <Tabs value={tab} onChange={handleTabChange} aria-label="fireteam type tabs">
+            <Tab label="All" value="all" />
+            <Tab label="Client Fireteams" value="client" />
+            <Tab label="Coach Fireteams" value="coach" />
+          </Tabs>
+        </Box>
+        <TableContainer component={Paper} sx={{ mb: 4 }}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Name</TableCell>
+                <TableCell>Description</TableCell>
+                <TableCell>Type</TableCell>
+                <TableCell>Members</TableCell>
+                <TableCell>Admin</TableCell>
+                <TableCell>Actions</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {filteredFireteams.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={6} align="center">No fireteams found.</TableCell>
+                </TableRow>
+              ) : filteredFireteams.map((fireteam) => (
+                <TableRow key={fireteam.id}>
+                  <TableCell>{fireteam.name}</TableCell>
+                  <TableCell>{fireteam.description}</TableCell>
+                  <TableCell>
+                    <Chip label={fireteam.type === 'coach' ? 'Coach' : 'Client'} color={fireteam.type === 'coach' ? 'secondary' : 'primary'} size="small" />
+                  </TableCell>
+                  <TableCell>
                     {fireteam.members?.map(memberId => {
-                      const user = users.find(u => u.id === memberId);
+                      const user = allUsers.find(u => u.id === memberId);
                       return user ? (
-                        <span key={user.id} className="inline-block bg-gray-100 rounded px-2 py-1 text-xs mr-1 mb-1">{user.name}</span>
+                        <Chip
+                          key={user.id}
+                          avatar={<Avatar>{user.name[0]}</Avatar>}
+                          label={user.name}
+                          sx={{ mr: 0.5, mb: 0.5 }}
+                        />
                       ) : null;
                     })}
-                  </td>
-                  <td className="py-2">
+                  </TableCell>
+                  <TableCell>
                     {(() => {
-                      const adminUser = users.find(u => u.id === fireteam.admin);
+                      const adminUser = allUsers.find(u => u.id === fireteam.admin);
                       return adminUser ? (
-                        <span className="inline-block bg-blue-100 rounded px-2 py-1 text-xs font-semibold text-blue-700">{adminUser.name}</span>
+                        <Chip
+                          avatar={<Avatar>{adminUser.name[0]}</Avatar>}
+                          label={adminUser.name}
+                          color="primary"
+                        />
                       ) : '--';
                     })()}
-                  </td>
-                  <td className="py-2">
+                  </TableCell>
+                  <TableCell>
                     <IconButton color="primary" onClick={() => handleOpenEditFireteam(fireteam)}><FaEdit /></IconButton>
                     <IconButton color="error" onClick={() => handleOpenDeleteFireteam(fireteam)}><FaTrash /></IconButton>
-                  </td>
-                </tr>
+                  </TableCell>
+                </TableRow>
               ))}
-            </tbody>
-          </table>
-        </Box>
+            </TableBody>
+          </Table>
+        </TableContainer>
         {/* Fireteam Dialog */}
         <Dialog open={showFireteamDialog} onClose={() => setShowFireteamDialog(false)} maxWidth="xs" fullWidth scroll="paper">
           <DialogTitle>{selectedFireteam ? 'Edit Fireteam' : 'Add Fireteam'}</DialogTitle>
@@ -148,12 +192,24 @@ export default function FireteamAdminManagementPage() {
                 maxRows={4}
                 variant="outlined"
               />
+              <FormControl fullWidth>
+                <InputLabel id="type-label">Fireteam Type</InputLabel>
+                <Select
+                  labelId="type-label"
+                  value={fireteamForm.type}
+                  label="Fireteam Type"
+                  onChange={handleTypeChange}
+                >
+                  <MenuItem value="client">Client</MenuItem>
+                  <MenuItem value="coach">Coach</MenuItem>
+                </Select>
+              </FormControl>
               <Autocomplete
                 multiple
-                options={users}
+                options={userOptions}
                 getOptionLabel={option => option.name}
-                value={users.filter(u => fireteamForm.members.includes(u.id))}
-                onChange={(e, value) => handleMembersChange(e, value.map(u => u.id))}
+                value={userOptions.filter(u => fireteamForm.members.includes(u.id))}
+                onChange={handleMembersChange}
                 renderInput={(params) => <TextField {...params} label="Members" placeholder="Select members" />}
                 isOptionEqualToValue={(option, value) => option.id === value.id}
                 disableCloseOnSelect
@@ -167,7 +223,7 @@ export default function FireteamAdminManagementPage() {
                   onChange={handleAdminChange}
                   disabled={fireteamForm.members.length === 0}
                 >
-                  {users.filter(u => fireteamForm.members.includes(u.id)).map(user => (
+                  {userOptions.filter(u => fireteamForm.members.includes(u.id)).map(user => (
                     <MenuItem key={user.id} value={user.id}>{user.name}</MenuItem>
                   ))}
                 </Select>
