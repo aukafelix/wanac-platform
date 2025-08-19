@@ -46,16 +46,31 @@ export default function AIChatbotPage() {
     setInput("");
     setLoading(true);
 
-    // Simulate AI response with delay
-    setTimeout(() => {
+    try {
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: input }),
+      });
+      const data = await res.json();
       const aiMessage = {
         sender: "ai",
-        text: "This is a sample AI response. (Replace with real AI integration)",
+        text: data.reply || data.error || "Sorry, I couldn't get a response.",
         timestamp: new Date().toISOString(),
       };
       setMessages((prev) => [...prev, aiMessage]);
+    } catch (error) {
+      setMessages((prev) => [
+        ...prev,
+        {
+          sender: "ai",
+          text: "There was an error connecting to the AI service.",
+          timestamp: new Date().toISOString(),
+        },
+      ]);
+    } finally {
       setLoading(false);
-    }, 1200);
+    }
   };
 
   const handleInputKeyDown = (e) => {
