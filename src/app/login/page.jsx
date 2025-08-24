@@ -10,6 +10,7 @@ import toast from "react-hot-toast";
 import { handleValidationErrors } from "@/lib/error";
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import { googleAuthService } from '@/services/api/google-auth.service';
+import { jwtDecode } from "jwt-decode";
 
 export default function Login() {
   const router = useRouter();
@@ -74,7 +75,7 @@ export default function Login() {
             body: JSON.stringify({
               email: form.email,
               password: form.password,
-              role: userType,
+              role: userType.toLowerCase(),
               social: false
             }),
           }
@@ -138,7 +139,7 @@ export default function Login() {
   const handleGoogleSuccess = async (credentialResponse) => {
     setSocialLoading({ google: true });
     try {
-      const googleUser = await googleAuthService.getGoogleUser(credentialResponse.credential); // You may need to implement this if not present
+      const googleUser = jwtDecode(credentialResponse.credential);
       const response = await fetch(
         "https://wanac-api.kuzasports.com/api/v1/auth/login",
         {
@@ -148,10 +149,10 @@ export default function Login() {
           },
           body: JSON.stringify({
             email: googleUser.email,
-            role: userType,
+            role: userType.toLowerCase(),
             social: true,
             provider: "google",
-            provider_id: googleUser.sub // or id, depending on Google payload
+            provider_id: googleUser.sub
           }),
         }
       );
