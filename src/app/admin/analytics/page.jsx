@@ -1,8 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
-import AdminSidebar from "../../../../../components/dashboardcomponents/adminsidebar";
-import { clientsService } from "../../../../services/api/clients.service";
-import { sessionsService } from "../../../../services/api/sessions.service";
+import AdminSidebar from "../../../../components/dashboardcomponents/adminsidebar";
+import { clientsService } from "../../../services/api/clients.service";
+import { sessionsService } from "../../../services/api/sessions.service";
 import { FaUsers, FaChalkboardTeacher, FaCalendarAlt } from "react-icons/fa";
 
 export default function AdminAnalytics() {

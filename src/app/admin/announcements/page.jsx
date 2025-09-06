@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import AdminSidebar from "../../../../../components/dashboardcomponents/adminsidebar";
-import ClientTopbar from "../../../../../components/dashboardcomponents/clienttopbar";
+import AdminSidebar from "../../../../components/dashboardcomponents/adminsidebar";
+import ClientTopbar from "../../../../components/dashboardcomponents/clienttopbar";
 
 const AdminAnnouncementPage = () => {
   const [announcements, setAnnouncements] = useState([]);
