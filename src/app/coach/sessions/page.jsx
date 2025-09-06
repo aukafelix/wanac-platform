@@ -4,8 +4,8 @@ import { useRouter } from "next/navigation";
 import CoachSidebar from '../../../../components/dashboardcomponents/CoachSidebar';
 import ClientTopbar from '../../../../components/dashboardcomponents/clienttopbar';
 import { FaCalendar, FaVideo, FaMicrophone, FaUpload, FaRobot, FaBookOpen, FaInfoCircle } from 'react-icons/fa';
-import SessionRecorder from "../../pages/client/session/SessionRecorder";
-import FileUpload from "../../pages/client/session/FileUpload";
+import SessionRecorder from "../../client/session/SessionRecorder";
+import FileUpload from "../../client/session/FileUpload";
 import { sessionsService } from '../../../services/api/sessions.service';
 
 export default function CoachSessionsPage() {
