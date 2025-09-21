@@ -23,7 +23,8 @@ function unwrapItem(payload: any): any {
 export const experienceService = {
   async getExperiences(fireteamId?: string | number) {
     try {
-      const url = fireteamId ? `/api/v1/experiences?fireteam_id=${fireteamId}` : '/api/v1/experiences';
+      // Use the correct endpoint for fireteam experiences
+      const url = fireteamId ? `/api/v1/fireteams/experiences/${fireteamId}` : '/api/v1/experiences';
       const res = await apiClient.get(url);
       console.log("Raw API response for getExperiences:", res.data);
       return normalizeExperienceList(res.data);
@@ -45,14 +46,26 @@ export const experienceService = {
   async addExperience(data: {
     fireteam_id: string | number;
     title: string;
-    subtitle?: string;
-    description?: string;
-    agenda: Array<{ title: string; duration: string; subtitle?: string }>;
-    scheduled_at?: string;
-    duration_minutes?: number;
+    experience: string;
   }) {
-    const res = await apiClient.post('/api/v1/experiences/add', data);
-    return unwrapItem(res.data);
+    try {
+      // Use the correct endpoint and payload as per API docs
+      const apiPayload = {
+        fire_team_id: String(data.fireteam_id),
+        title: data.title,
+        experience: data.experience
+      };
+      
+      console.log("Sending experience data to correct API:", apiPayload);
+      const res = await apiClient.post('/api/v1/fireteams/experience/add', apiPayload);
+      console.log("API response:", res.data);
+      return unwrapItem(res.data);
+    } catch (error: any) {
+      console.error("Error adding experience:", error);
+      console.error("Error response:", error.response?.data);
+      console.error("Error status:", error.response?.status);
+      throw error;
+    }
   },
   
   async updateExperience(id: string | number, data: {

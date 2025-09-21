@@ -27,22 +27,6 @@ import {
 import { cohortService } from "../../../services/api/cohort.service";
 import { fireteamService } from "../../../services/api/fireteam.service";
 
-// Generate fireteam link helper function
-const generateFireteamLink = (fireteamId, title) => {
-  // Create a clean URL-friendly identifier
-  const cleanTitle = title.toLowerCase()
-    .replace(/[^a-z0-9\s-]/g, '') // Remove special characters
-    .replace(/\s+/g, '-') // Replace spaces with hyphens
-    .replace(/-+/g, '-') // Replace multiple hyphens with single
-    .trim();
-  
-  // Generate a unique meeting ID (you can customize this format)
-  const meetingId = `${cleanTitle}-${fireteamId}-${Date.now().toString(36)}`;
-  
-  // Return a meeting link (using Google Meet format as example)
-  return `https://meet.google.com/${meetingId}`;
-};
-
 export default function FireteamAdminManagementPage() {
   const router = useRouter();
   const [showAddEdit, setShowAddEdit] = useState(false);
@@ -130,40 +114,21 @@ export default function FireteamAdminManagementPage() {
 
   // Save Fireteam (create or update)
   const handleSave = async () => {
-    // Validate required fields
-    const validationErrors = [];
-    if (!name.trim()) validationErrors.push("Name is required");
-    if (!description.trim()) validationErrors.push("Description is required");
-    if (!cohortId) validationErrors.push("Cohort is required");
-    if (!date.trim()) validationErrors.push("Date is required");
-    if (!time.trim()) validationErrors.push("Time is required");
-    
-    if (validationErrors.length > 0) {
-      setError(validationErrors.join(". "));
+    if (!name.trim() || !description.trim() || !cohortId || !date.trim() || !time.trim()) {
+      setError("All fields are required.");
       return;
     }
-    
     setError("");
-    setLoading(true);
     try {
       if (selectedFireteam) {
-        // Update request - generate new link if title changed
-        const currentTitle = selectedFireteam?.title || selectedFireteam?.name || "";
-        const generatedLink = name !== currentTitle 
-          ? generateFireteamLink(selectedFireteam.id, name)
-          : selectedFireteam?.link || generateFireteamLink(selectedFireteam.id, name);
-        
-        // Combine date and time into proper datetime format
-        const dateTime = `${date}T${time}:00`;
-          
+        // Update request
         console.log("Updating fireteam:", selectedFireteam.id);
         await fireteamService.updateFireteam(selectedFireteam.id, {
           cohort_id: cohortId,
           title: name,
           description,
-          date: dateTime,
+          date,
           time,
-          link: generatedLink,
         });
         // Refetch to ensure table is up-to-date
         const updated = await fireteamService.getFireteams();
@@ -171,42 +136,21 @@ export default function FireteamAdminManagementPage() {
         setFireteams(updated);
         setSuccess("Fireteam updated successfully!");
       } else {
-        // Create request - generate link automatically
-        const generatedLink = generateFireteamLink('temp', name); // Use temp ID, will be updated after creation
-        
-        // Combine date and time into proper datetime format
-        const dateTime = `${date}T${time}:00`;
-        
+        // Create request
         console.log("Creating fireteam with data:", {
           cohort_id: cohortId,
           title: name,
           description,
-          date: dateTime,
+          date,
           time,
-          link: generatedLink,
         });
         const createdFireteam = await fireteamService.addFireteam({
           cohort_id: cohortId,
           title: name,
           description,
-          date: dateTime,
+          date,
           time,
-          link: generatedLink,
         });
-        
-        // Update the link with the actual fireteam ID after creation
-        if (createdFireteam && createdFireteam.id) {
-          const finalLink = generateFireteamLink(createdFireteam.id, name);
-          console.log("Updating fireteam with final link:", finalLink);
-          await fireteamService.updateFireteam(createdFireteam.id, {
-            cohort_id: cohortId,
-            title: name,
-            description,
-            date: dateTime,
-            time,
-            link: finalLink,
-          });
-        }
         console.log("Created fireteam response:", createdFireteam);
         // Refetch to include the newly created item
         const refreshed = await fireteamService.getFireteams();
@@ -217,36 +161,11 @@ export default function FireteamAdminManagementPage() {
       handleClose();
     } catch (err) {
       console.error("Error saving fireteam:", err);
-      console.error("Error details:", {
-        message: err.message,
-        status: err.response?.status,
-        data: err.response?.data,
-        config: err.config
-      });
-      
-      let errorMessage = "Network or server error. Please try again.";
-      
-      if (err.response?.data) {
-        if (typeof err.response.data === 'string') {
-          errorMessage = err.response.data;
-        } else if (err.response.data.message) {
-          errorMessage = err.response.data.message;
-        } else if (err.response.data.error) {
-          errorMessage = err.response.data.error;
-        } else if (err.response.data.errors) {
-          // Handle validation errors array
-          const errors = Array.isArray(err.response.data.errors) 
-            ? err.response.data.errors 
-            : Object.values(err.response.data.errors).flat();
-          errorMessage = errors.join(". ");
-        }
-      } else if (err.message) {
-        errorMessage = err.message;
-      }
-      
-      setError(errorMessage);
-    } finally {
-      setLoading(false);
+      setError(
+        err.response?.data?.message ||
+          err.response?.data?.error ||
+          "Network or server error. Please try again."
+      );
     }
   };
 
@@ -303,18 +222,17 @@ export default function FireteamAdminManagementPage() {
                 <TableCell>Cohort</TableCell>
                 <TableCell>Date</TableCell>
                 <TableCell>Time</TableCell>
-                <TableCell>Meeting Link</TableCell>
                 <TableCell>Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {loading ? (
                 <TableRow key="loading">
-                  <TableCell colSpan={7} align="center">Loading...</TableCell>
+                  <TableCell colSpan={6} align="center">Loading...</TableCell>
                 </TableRow>
               ) : filteredFireteams.length === 0 ? (
                 <TableRow key="empty">
-                  <TableCell colSpan={7} align="center">
+                  <TableCell colSpan={6} align="center">
                     {error && typeof error === "string" && error.includes("Authentication required") ? (
                       <div>
                         <Typography variant="body2" color="error" sx={{ mb: 2 }}>
@@ -361,31 +279,6 @@ export default function FireteamAdminManagementPage() {
                       <TableCell>{cohort ? (cohort.name || cohort.title || `Cohort ${cohort.id}`) : f.cohort_id}</TableCell>
                       <TableCell>{f.date}</TableCell>
                       <TableCell>{f.time}</TableCell>
-                      <TableCell>
-                        {f.link ? (
-                          <Button
-                            size="small"
-                            variant="outlined"
-                            href={f.link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            sx={{ 
-                              textTransform: 'none',
-                              fontSize: '0.75rem',
-                              maxWidth: '150px',
-                              overflow: 'hidden',
-                              textOverflow: 'ellipsis',
-                              whiteSpace: 'nowrap'
-                            }}
-                          >
-                            Join Meeting
-                          </Button>
-                        ) : (
-                          <Typography variant="body2" color="text.secondary">
-                            Generating...
-                          </Typography>
-                        )}
-                      </TableCell>
                       <TableCell onClick={(e) => e.stopPropagation()}>
                         <Button size="small" color="primary" onClick={() => handleEdit(f)} sx={{ mr: 1 }}>Edit</Button>
                         <Button size="small" color="error" onClick={() => handleDelete(f)}>Delete</Button>
@@ -452,35 +345,12 @@ export default function FireteamAdminManagementPage() {
                 required
                 fullWidth
               />
-              <Box sx={{ mt: 2, p: 2, bgcolor: 'grey.50', borderRadius: 1 }}>
-                <Typography variant="subtitle2" sx={{ mb: 1, fontWeight: 600 }}>
-                  Generated Meeting Link
-                </Typography>
-                <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-                  A unique meeting link will be automatically generated for this fireteam.
-                </Typography>
-                {name.trim() && (
-                  <Typography variant="body2" sx={{ 
-                    fontFamily: 'monospace', 
-                    bgcolor: 'white', 
-                    p: 1, 
-                    borderRadius: 0.5,
-                    border: '1px solid',
-                    borderColor: 'grey.300',
-                    wordBreak: 'break-all'
-                  }}>
-                    {generateFireteamLink('preview', name)}
-                  </Typography>
-                )}
-              </Box>
               {error && <Alert severity="error">{error}</Alert>}
             </Stack>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose} disabled={loading}>Cancel</Button>
-            <Button variant="contained" onClick={handleSave} disabled={loading}>
-              {loading ? "Saving..." : "Save"}
-            </Button>
+            <Button onClick={handleClose}>Cancel</Button>
+            <Button variant="contained" onClick={handleSave}>Save</Button>
           </DialogActions>
         </Dialog>
         {/* Delete Dialog */}

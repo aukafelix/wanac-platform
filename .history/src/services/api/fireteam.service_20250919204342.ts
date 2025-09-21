@@ -90,29 +90,8 @@ export const fireteamService = {
     }
   },
   async getFireteam(id: string | number) {
-    try {
-      // Check authentication status
-      const token = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null;
-      console.log("Auth token present for getFireteam:", !!token);
-      
-      const res = await apiClient.get(`/api/v1/fireteams/${id}`);
-      console.log("Raw API response for getFireteam:", res.data);
-      console.log("Response status:", res.status);
-      
-      return unwrapItem(res.data);
-    } catch (error: any) {
-      console.error("Error fetching fireteam:", error);
-      console.error("Error response:", error.response?.data);
-      console.error("Error status:", error.response?.status);
-      
-      // If it's a 401 error, the user needs to log in
-      if (error.response?.status === 401) {
-        console.error("Authentication required. Please log in first.");
-        throw error;
-      }
-      
-      throw error;
-    }
+    const res = await apiClient.get(`/api/v1/fireteams/${id}`);
+    return unwrapItem(res.data);
   },
   async addFireteam(data: {
     cohort_id: string;
@@ -122,24 +101,8 @@ export const fireteamService = {
     time: string;
     link: string;
   }) {
-    try {
-      // Keep cohort_id as string as per API documentation
-      const payload = {
-        ...data,
-        cohort_id: String(data.cohort_id)
-      };
-      
-      console.log("Sending fireteam data to API:", payload);
-      const res = await apiClient.post('/api/v1/fireteams/add', payload);
-      console.log("API response:", res.data);
-      return unwrapItem(res.data);
-    } catch (error: any) {
-      console.error("Error adding fireteam:", error);
-      console.error("Error response:", error.response?.data);
-      console.error("Error status:", error.response?.status);
-      console.error("Error headers:", error.response?.headers);
-      throw error;
-    }
+    const res = await apiClient.post('/api/v1/fireteams/add', data);
+    return unwrapItem(res.data);
   },
   async updateFireteam(id: string | number, data: {
     cohort_id: string | number;
@@ -158,11 +121,6 @@ export const fireteamService = {
   async addFireteamMember(data: { client_id: string | number; fire_team_id: string | number; }) {
     const res = await apiClient.post('/api/v1/fireteams/member/add', data);
     return unwrapItem(res.data);
-  },
-  async getFireteamMembers(fireteamId: string | number) {
-    const res = await apiClient.get(`/api/v1/fireteams/members/${fireteamId}`);
-    const data = unwrapItem(res.data);
-    return Array.isArray(data) ? data : [];
   },
   async deleteFireteamMember(fireteamMemberId: string | number) {
     const res = await apiClient.delete(`/api/v1/fireteams/member/delete/${fireteamMemberId}`);

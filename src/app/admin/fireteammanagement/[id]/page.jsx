@@ -42,6 +42,7 @@ import {
 import { fireteamService } from "../../../../services/api/fireteam.service";
 import { cohortService } from "../../../../services/api/cohort.service";
 import { experienceService } from "../../../../services/api/experience.service";
+import { clientsService } from "../../../../services/api/clients.service";
 import ExperienceVideoModal from "../../../../../components/ExperienceVideoModal";
 
 export default function FireteamDetailPage() {
@@ -59,10 +60,12 @@ export default function FireteamDetailPage() {
   const [success, setSuccess] = useState("");
   const [showEdit, setShowEdit] = useState(false);
   const [showAddMember, setShowAddMember] = useState(false);
+  const [showRemoveMember, setShowRemoveMember] = useState(false);
   const [showAddExperience, setShowAddExperience] = useState(false);
   const [showVideoMeeting, setShowVideoMeeting] = useState(false);
   const [selectedExperience, setSelectedExperience] = useState(null);
   const [selectedClient, setSelectedClient] = useState("");
+  const [selectedMemberToRemove, setSelectedMemberToRemove] = useState("");
   const [editData, setEditData] = useState({
     title: "",
     description: "",
@@ -72,11 +75,7 @@ export default function FireteamDetailPage() {
   });
   const [experienceData, setExperienceData] = useState({
     title: "",
-    subtitle: "",
-    description: "",
-    agenda: [{ title: "", duration: "", subtitle: "" }],
-    scheduled_at: "",
-    duration_minutes: 60,
+    experience: "",
   });
 
   useEffect(() => {
@@ -110,9 +109,29 @@ export default function FireteamDetailPage() {
         }
       }
 
-      // TODO: Fetch members and clients when those APIs are available
-      // const membersData = await fireteamService.getFireteamMembers(id);
-      // setMembers(membersData);
+      // Fetch members and clients
+      try {
+        const membersData = await fireteamService.getFireteamMembers(id);
+        setMembers(membersData || []);
+      } catch (err) {
+        console.error("Error fetching members:", err);
+        setMembers([]);
+      }
+
+      // Fetch clients for the add member dropdown
+      try {
+        const clientsResponse = await clientsService.getClients();
+        const clientsArray = Array.isArray(clientsResponse?.clients) ? clientsResponse.clients : [];
+        const mappedClients = clientsArray.map(client => ({
+          id: client.id, // Use the top-level client.id
+          name: client.user?.name || 'Unknown',
+          email: client.user?.email || ''
+        }));
+        setClients(mappedClients);
+      } catch (err) {
+        console.error("Error fetching clients:", err);
+        setClients([]);
+      }
       
       // Fetch experiences for this fireteam
       try {
@@ -175,14 +194,35 @@ export default function FireteamDetailPage() {
     }
   };
 
+  const handleRemoveMember = async (memberId) => {
+    if (window.confirm("Are you sure you want to remove this member from the fireteam?")) {
+      try {
+        await fireteamService.deleteFireteamMember(memberId);
+        setSuccess("Member removed successfully!");
+        fetchFireteamDetails(); // Refresh data
+      } catch (err) {
+        setError("Failed to remove member");
+      }
+    }
+  };
+
+  const handleRemoveMemberFromDialog = async () => {
+    if (!selectedMemberToRemove) return;
+    try {
+      await fireteamService.deleteFireteamMember(selectedMemberToRemove);
+      setSuccess("Member removed successfully!");
+      setShowRemoveMember(false);
+      setSelectedMemberToRemove("");
+      fetchFireteamDetails(); // Refresh data
+    } catch (err) {
+      setError("Failed to remove member");
+    }
+  };
+
   const handleAddExperience = () => {
     setExperienceData({
       title: "",
-      subtitle: "",
-      description: "",
-      agenda: [{ title: "", duration: "", subtitle: "" }],
-      scheduled_at: "",
-      duration_minutes: 60,
+      experience: "",
     });
     setShowAddExperience(true);
   };
@@ -244,27 +284,6 @@ export default function FireteamDetailPage() {
     }
   };
 
-  const addAgendaStep = () => {
-    setExperienceData({
-      ...experienceData,
-      agenda: [...experienceData.agenda, { title: "", duration: "", subtitle: "" }],
-    });
-  };
-
-  const removeAgendaStep = (index) => {
-    if (experienceData.agenda.length > 1) {
-      setExperienceData({
-        ...experienceData,
-        agenda: experienceData.agenda.filter((_, i) => i !== index),
-      });
-    }
-  };
-
-  const updateAgendaStep = (index, field, value) => {
-    const newAgenda = [...experienceData.agenda];
-    newAgenda[index] = { ...newAgenda[index], [field]: value };
-    setExperienceData({ ...experienceData, agenda: newAgenda });
-  };
 
   if (loading) {
     return (
@@ -398,6 +417,7 @@ export default function FireteamDetailPage() {
                   <Button
                     variant="outlined"
                     startIcon={<PersonRemove />}
+                    onClick={() => setShowRemoveMember(true)}
                     fullWidth
                   >
                     Remove Member
@@ -448,7 +468,11 @@ export default function FireteamDetailPage() {
                             <Chip label={member.role || 'Member'} size="small" />
                           </TableCell>
                           <TableCell>
-                            <IconButton size="small" color="error">
+                            <IconButton 
+                              size="small" 
+                              color="error"
+                              onClick={() => handleRemoveMember(member.id)}
+                            >
                               <PersonRemove />
                             </IconButton>
                           </TableCell>
@@ -467,7 +491,7 @@ export default function FireteamDetailPage() {
               <CardContent>
                 <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 2 }}>
                   <Typography variant="h6">
-                    Online Discussion Experiences
+                    Fireteam Experiences
                   </Typography>
                   <Button
                     variant="contained"
@@ -479,7 +503,7 @@ export default function FireteamDetailPage() {
                   </Button>
                 </Stack>
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                  Create structured online discussion sessions inspired by Breakout Learning's peer-to-peer learning approach.
+                  Create learning experiences and discussion sessions for your fireteam members.
                 </Typography>
                 {experiences.length === 0 ? (
                   <Box sx={{ textAlign: 'center', py: 4 }}>
@@ -503,39 +527,11 @@ export default function FireteamDetailPage() {
                             <Typography variant="h6" sx={{ mb: 1 }}>
                               {experience.title}
                             </Typography>
-                            {experience.subtitle && (
-                              <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-                                {experience.subtitle}
-                              </Typography>
-                            )}
-                            {experience.description && (
+                            {experience.experience && (
                               <Typography variant="body2" sx={{ mb: 2 }}>
-                                {experience.description}
+                                {experience.experience}
                               </Typography>
                             )}
-                            <Typography variant="subtitle2" sx={{ mb: 1 }}>
-                              Discussion Agenda:
-                            </Typography>
-                            <Box sx={{ mb: 2 }}>
-                              {experience.agenda && experience.agenda.slice(0, 3).map((step, idx) => (
-                                <Typography key={idx} variant="body2" sx={{ fontSize: '0.875rem' }}>
-                                  • {step.title} {step.duration && `(${step.duration})`}
-                                </Typography>
-                              ))}
-                              {experience.agenda && experience.agenda.length > 3 && (
-                                <Typography variant="body2" color="text.secondary">
-                                  +{experience.agenda.length - 3} more steps
-                                </Typography>
-                              )}
-                            </Box>
-                            {experience.scheduled_at && (
-                              <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-                                Scheduled: {new Date(experience.scheduled_at).toLocaleDateString()}
-                              </Typography>
-                            )}
-                            <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-                              Duration: {experience.duration_minutes || 60} minutes
-                            </Typography>
                             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
                               <Box sx={{ 
                                 width: 8, 
@@ -655,8 +651,42 @@ export default function FireteamDetailPage() {
           </DialogActions>
         </Dialog>
 
+        {/* Remove Member Dialog */}
+        <Dialog open={showRemoveMember} onClose={() => setShowRemoveMember(false)} fullWidth maxWidth="sm">
+          <DialogTitle>Remove Member from Fireteam</DialogTitle>
+          <DialogContent>
+            <Stack spacing={2} sx={{ mt: 1 }}>
+              <FormControl fullWidth>
+                <InputLabel>Select Member to Remove</InputLabel>
+                <Select
+                  value={selectedMemberToRemove}
+                  onChange={(e) => setSelectedMemberToRemove(e.target.value)}
+                  label="Select Member to Remove"
+                >
+                  {members.map((member) => (
+                    <MenuItem key={member.id} value={member.id}>
+                      {member.name} ({member.email})
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Stack>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setShowRemoveMember(false)}>Cancel</Button>
+            <Button 
+              variant="contained" 
+              color="error" 
+              onClick={handleRemoveMemberFromDialog}
+              disabled={!selectedMemberToRemove}
+            >
+              Remove Member
+            </Button>
+          </DialogActions>
+        </Dialog>
+
         {/* Add Experience Dialog */}
-        <Dialog open={showAddExperience} onClose={() => setShowAddExperience(false)} fullWidth maxWidth="md">
+        <Dialog open={showAddExperience} onClose={() => setShowAddExperience(false)} fullWidth maxWidth="sm">
           <DialogTitle>Add New Experience</DialogTitle>
           <DialogContent>
             <Stack spacing={3} sx={{ mt: 1 }}>
@@ -667,98 +697,19 @@ export default function FireteamDetailPage() {
                 fullWidth
                 required
                 placeholder="e.g., Leadership in Crisis Management"
+                helperText="Enter a descriptive title for this experience"
               />
               <TextField
-                label="Subtitle"
-                value={experienceData.subtitle}
-                onChange={(e) => setExperienceData({...experienceData, subtitle: e.target.value})}
-                fullWidth
-                placeholder="e.g., A discussion on decision-making under pressure"
-              />
-              <TextField
-                label="Description"
-                value={experienceData.description}
-                onChange={(e) => setExperienceData({...experienceData, description: e.target.value})}
+                label="Experience Content"
+                value={experienceData.experience}
+                onChange={(e) => setExperienceData({...experienceData, experience: e.target.value})}
                 fullWidth
                 multiline
-                rows={3}
-                placeholder="Describe the learning objectives and discussion goals..."
+                rows={4}
+                required
+                placeholder="Describe the experience content, learning objectives, and what participants will gain..."
+                helperText="Provide the detailed content and description of the experience"
               />
-              <TextField
-                label="Scheduled Date & Time"
-                type="datetime-local"
-                value={experienceData.scheduled_at}
-                onChange={(e) => setExperienceData({...experienceData, scheduled_at: e.target.value})}
-                InputLabelProps={{ shrink: true }}
-                fullWidth
-              />
-              <TextField
-                label="Duration (minutes)"
-                type="number"
-                value={experienceData.duration_minutes}
-                onChange={(e) => setExperienceData({...experienceData, duration_minutes: parseInt(e.target.value) || 60})}
-                fullWidth
-                inputProps={{ min: 15, max: 180 }}
-              />
-              
-              <Box>
-                <Typography variant="h6" sx={{ mb: 2 }}>
-                  Discussion Agenda
-                </Typography>
-                <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                  Create structured discussion segments inspired by Breakout Learning's approach to peer-to-peer learning.
-                </Typography>
-                {experienceData.agenda.map((step, idx) => (
-                  <Card key={idx} variant="outlined" sx={{ mb: 2, p: 2 }}>
-                    <Stack direction="row" spacing={2} alignItems="center">
-                      <Typography variant="body2" sx={{ minWidth: '60px' }}>
-                        Step {idx + 1}
-                      </Typography>
-                      <TextField
-                        label="Step Title"
-                        value={step.title}
-                        onChange={(e) => updateAgendaStep(idx, 'title', e.target.value)}
-                        fullWidth
-                        size="small"
-                        placeholder="e.g., Introduction & Icebreaker"
-                      />
-                      <TextField
-                        label="Duration"
-                        value={step.duration}
-                        onChange={(e) => updateAgendaStep(idx, 'duration', e.target.value)}
-                        size="small"
-                        placeholder="5 mins"
-                        sx={{ width: '120px' }}
-                      />
-                      <TextField
-                        label="Subtitle"
-                        value={step.subtitle}
-                        onChange={(e) => updateAgendaStep(idx, 'subtitle', e.target.value)}
-                        size="small"
-                        placeholder="Optional"
-                        sx={{ width: '150px' }}
-                      />
-                      {experienceData.agenda.length > 1 && (
-                        <IconButton
-                          size="small"
-                          color="error"
-                          onClick={() => removeAgendaStep(idx)}
-                        >
-                          <Delete />
-                        </IconButton>
-                      )}
-                    </Stack>
-                  </Card>
-                ))}
-                <Button
-                  variant="outlined"
-                  startIcon={<Add />}
-                  onClick={addAgendaStep}
-                  fullWidth
-                >
-                  Add Agenda Step
-                </Button>
-              </Box>
             </Stack>
           </DialogContent>
           <DialogActions>
@@ -766,7 +717,7 @@ export default function FireteamDetailPage() {
             <Button 
               variant="contained" 
               onClick={handleSaveExperience}
-              disabled={!experienceData.title.trim() || experienceData.agenda.some(step => !step.title.trim())}
+              disabled={!experienceData.title.trim() || !experienceData.experience.trim()}
             >
               Create Experience
             </Button>
