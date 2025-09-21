@@ -17,6 +17,11 @@ const excludedPaths = [
   '/pages/client',
   '/pages/breakoutroom',
   '/pages/coach',
+  '/pages/vsoclaimsupport',
+  '/pages/transitionreadinessquiz',
+  '/pages/scholarshipelidgibilityestimator',
+  '/pages/cohortapplication',
+
 ];
 
 export default function ClientLayoutWrapper({ children }) {

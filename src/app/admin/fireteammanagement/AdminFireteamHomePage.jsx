@@ -62,6 +62,7 @@ export default function AdminFireteamHomePage({ fireteams = [], cohorts = [], on
             <thead>
               <tr className="text-xs text-gray-400 border-b">
                 <th className="py-3 px-4 font-medium">Name</th>
+                <th className="px-4 font-medium">Members</th>
                 <th className="px-4 font-medium">Description</th>
                 <th className="px-4 font-medium">Cohort</th>
                 <th className="px-4 font-medium">Date & Time</th>
@@ -71,11 +72,24 @@ export default function AdminFireteamHomePage({ fireteams = [], cohorts = [], on
             <tbody>
               {filteredFireteams.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="text-center py-8 text-gray-400">No fireteams found.</td>
+                  <td colSpan={6} className="text-center py-8 text-gray-400">No fireteams found.</td>
                 </tr>
               ) : (
                 filteredFireteams.map((f) => {
                   const cohort = cohorts.find(c => c.id === f.cohort_id);
+                  // Add state for members
+                  const [members, setMembers] = React.useState([]);
+                  React.useEffect(() => {
+                    async function fetchMembers() {
+                      try {
+                        const data = await import("../../../../services/api/fireteam.service").then(m => m.fireteamService.getFireteamMembers(f.id));
+                        setMembers(data);
+                      } catch {
+                        setMembers([]);
+                      }
+                    }
+                    fetchMembers();
+                  }, [f.id]);
                   return (
                   <tr
                     key={f.id}
@@ -83,6 +97,7 @@ export default function AdminFireteamHomePage({ fireteams = [], cohorts = [], on
                     onClick={() => router.push(`/admin/fireteammanagement/${f.id}`)}
                   >
                     <td className="py-4 px-4 font-semibold align-middle">{f.name}</td>
+                    <td className="px-4 align-middle">{members.length > 0 ? members.map(m => m.name).join(", ") : "-"}</td>
                     <td className="px-4 align-middle">{f.description}</td>
                       <td className="px-4 align-middle">{cohort ? (cohort.name || cohort.title || `Cohort ${cohort.id}`) : f.cohort_id}</td>
                       <td className="px-4 align-middle">{f.date ? `${f.date}${f.time ? ` ${f.time}` : ''}` : ''}</td>

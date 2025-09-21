@@ -181,10 +181,19 @@ export default function FireteamDetailPage() {
   const handleAddMember = async () => {
     if (!selectedClient) return;
     try {
-      await fireteamService.addFireteamMember({
-        client_id: selectedClient,
-        fire_team_id: id,
+      // Use the WANAC API endpoint to add a member
+      const response = await fetch('https://wanac-api.kuzasports.com/api/v1/fireteams/member/add', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+          fire_team_id: id,
+          client_id: selectedClient,
+        }),
       });
+      if (!response.ok) throw new Error('Failed to add member');
       setSuccess("Member added successfully!");
       setShowAddMember(false);
       setSelectedClient("");
@@ -421,15 +430,6 @@ export default function FireteamDetailPage() {
                     fullWidth
                   >
                     Remove Member
-                  </Button>
-                  <Button
-                    variant="contained"
-                    startIcon={<Add />}
-                    onClick={handleAddExperience}
-                    fullWidth
-                    sx={{ mt: 2 }}
-                  >
-                    Add Experience
                   </Button>
                 </Stack>
               </CardContent>
