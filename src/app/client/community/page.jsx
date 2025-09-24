@@ -184,7 +184,7 @@ export default function CommunityPage() {
                             onClick={(e) => {
                               e.stopPropagation();
                               if (comm.id) {
-                                router.push(`/pages/client/community/communities?id=${comm.id}`);
+                                router.push(`/client/community/communities/${comm.id}`);
                               } else {
                                 alert("Community ID is missing!");
                               }

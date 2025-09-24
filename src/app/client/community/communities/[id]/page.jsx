@@ -1,10 +1,9 @@
 "use client";
 
 import { useEffect, useState, Suspense } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import { fetchCommunityById, addCommunityFeedPost, addEvent } from "../../../../../services/api/community.service";
-import { updateEvent, getEvents } from "../../../../../services/api/events.service";
-import axios from "axios";
+import { getEvents } from "../../../../../services/api/events.service";
 
 export default function CommunityDetailPage() {
   return (
@@ -16,8 +15,8 @@ export default function CommunityDetailPage() {
 
 function CommunityDetailPageInner() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const communityId = searchParams.get("id");
+  const params = useParams();
+  const communityId = params?.id;
 
   const [community, setCommunity] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -46,6 +45,7 @@ function CommunityDetailPageInner() {
   const [eventsError, setEventsError] = useState("");
 
   useEffect(() => {
+    if (!communityId) return;
     setLoading(true);
     fetchCommunityById(communityId)
       .then((data) => {
@@ -58,7 +58,6 @@ function CommunityDetailPageInner() {
       })
       .finally(() => setLoading(false));
 
-    // Load user from localStorage
     const userData = localStorage.getItem("wanacUser");
     if (userData) {
       try {
@@ -68,7 +67,6 @@ function CommunityDetailPageInner() {
       }
     }
 
-    // Fetch all scheduled events using getEvents API
     setEventsLoading(true);
     getEvents()
       .then(data => {
@@ -83,12 +81,10 @@ function CommunityDetailPageInner() {
       .finally(() => setEventsLoading(false));
   }, [communityId]);
 
-  // Show animation when modal opens
   useEffect(() => {
     if (showScheduleModal) {
       setModalVisible(true);
     } else {
-      // Delay hiding for animation
       const timeout = setTimeout(() => setModalVisible(false), 200);
       return () => clearTimeout(timeout);
     }
@@ -106,7 +102,6 @@ function CommunityDetailPageInner() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Back to Communities Button */}
       <div className="max-w-6xl mx-auto px-4 pt-6 pb-2">
         <button
           className="flex items-center gap-2 text-blue-600 hover:text-blue-800 font-medium text-base mb-2"
@@ -116,7 +111,6 @@ function CommunityDetailPageInner() {
           Back to Communities
         </button>
       </div>
-      {/* Top Tabs */}
       <div className="flex justify-center border-b bg-white sticky top-0 z-10">
         {['Feed', 'Chat', 'Meetups'].map(tab => (
           <button
@@ -129,7 +123,6 @@ function CommunityDetailPageInner() {
         ))}
       </div>
       <div className="flex max-w-6xl mx-auto mt-8 gap-8 px-4">
-        {/* Sidebar */}
         <aside className="w-56 flex-shrink-0">
           <div className="bg-white rounded-lg shadow p-4 mb-6">
             {['Explore'].map(tab => (
@@ -149,7 +142,6 @@ function CommunityDetailPageInner() {
             Schedule
           </button>
         </aside>
-        {/* Main Content */}
         <main className="flex-1">
           {activeTab === "meetups" && (
             <div className="space-y-4">
@@ -188,7 +180,6 @@ function CommunityDetailPageInner() {
           {activeTab === "feed" && (
             <div className="bg-white rounded-lg shadow p-8">
               <h2 className="text-xl font-semibold mb-4">Community Feed</h2>
-              {/* Feed Post Form */}
               <form
                 className="mb-6 flex flex-col gap-2"
                 onSubmit={async e => {
@@ -230,7 +221,6 @@ function CommunityDetailPageInner() {
                 </button>
               </form>
               {feedError && <div className="text-red-500 text-sm mb-2">{feedError}</div>}
-              {/* Feed Posts List */}
               {feedPosts.length === 0 ? (
                 <div className="text-gray-500 italic">No posts yet. Be the first to post!</div>
               ) : (
@@ -240,10 +230,8 @@ function CommunityDetailPageInner() {
                       <div className="text-gray-800 mb-1">{post.content}</div>
                       <div className="text-xs text-gray-500 mb-1">Posted by <span className="font-semibold">{post.userName || "Unknown"}</span></div>
                       <div className="text-xs text-gray-400">{post.createdAt.toLocaleString()}</div>
-                      {/* Comments Section */}
                       <div className="mt-4 pl-4 border-l">
                         <div className="font-semibold text-sm mb-2 text-blue-700">Comments</div>
-                        {/* Comments List */}
                         {Array.isArray(comments[post.id]) && comments[post.id].length > 0 ? (
                           <ul className="space-y-2 mb-2">
                             {comments[post.id].map((comment, cidx) => (
@@ -256,7 +244,6 @@ function CommunityDetailPageInner() {
                         ) : (
                           <div className="text-gray-400 italic mb-2">No comments yet.</div>
                         )}
-                        {/* Add Comment Form */}
                         <form
                           className="flex gap-2"
                           onSubmit={e => {
@@ -342,7 +329,6 @@ function CommunityDetailPageInner() {
           )}
         </main>
       </div>
-      {/* Schedule Event Modal */}
       {(showScheduleModal || modalVisible) && (
         <div
           className={`fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-10 transition-opacity duration-200 ${showScheduleModal ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
@@ -375,7 +361,6 @@ function CommunityDetailPageInner() {
                   await addEvent(payload);
                   setShowScheduleModal(false);
                   setEventForm({ title: '', date: '', time: '', description: '', type: 'online', link: '', location: '' });
-                  // Refresh all events after scheduling
                   setEventsLoading(true);
                   getEvents()
                     .then(data => {
@@ -424,7 +409,6 @@ function CommunityDetailPageInner() {
                 value={eventForm.description}
                 onChange={e => setEventForm(f => ({ ...f, description: e.target.value }))}
               />
-              {/* Event Type Selector */}
               <div className="flex gap-4 items-center">
                 <label className="font-medium">Type:</label>
                 <select
@@ -436,7 +420,6 @@ function CommunityDetailPageInner() {
                   <option value="inperson">In Person</option>
                 </select>
               </div>
-              {/* Conditional Fields */}
               {eventForm.type === 'online' && (
                 <input
                   className="border rounded p-2"
@@ -488,3 +471,5 @@ function CommunityDetailPageInner() {
     </div>
   );
 }
+
+

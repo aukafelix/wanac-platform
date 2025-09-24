@@ -19,7 +19,7 @@ export default function ExperienceVideoModal({ onClose, experience, fireteam }) 
   }, [experience]);
 
   const generateMeetingRoom = () => {
-    const roomName = `wanac-experience-${fireteam?.id || 'unknown'}-${experience?.id || Date.now()}-${Date.now()}`;
+    const roomName = `wanac-experience-${fireTeam?.id || 'unknown'}-${experience?.id || Date.now()}-${Date.now()}`;
     const meetingUrl = `https://meet.jit.si/${roomName}`;
     
     setMeetingInfo({
@@ -27,7 +27,7 @@ export default function ExperienceVideoModal({ onClose, experience, fireteam }) 
       meetingUrl,
       meetingId: roomName,
       title: experience?.title || 'Experience Discussion',
-      fireteamName: fireteam?.title || fireteam?.name || 'Fireteam',
+      fireTeamName: fireTeam?.title || fireteam?.name || 'Fireteam',
       duration: experience?.duration_minutes || 60,
       agenda: experience?.agenda || []
     });

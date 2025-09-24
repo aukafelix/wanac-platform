@@ -76,6 +76,16 @@ export default function FireteamDetailPage() {
     title: "",
     experience: "",
   });
+  const [showEditExperience, setShowEditExperience] = useState(false);
+  const [selectedExperienceToEdit, setSelectedExperienceToEdit] = useState(null);
+  const [editExperienceData, setEditExperienceData] = useState({
+    title: '',
+    experience: '',
+    agenda: [{ title: '', duration: '' }],
+    exhibits: [{ name: '', type: 'link', link: '', file: null }],
+    videoAdminId: '',
+    meetingLink: '',
+  });
 
   useEffect(() => {
     if (id) {
@@ -295,9 +305,25 @@ export default function FireteamDetailPage() {
   }
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div
+      style={{
+        width: '100vw',
+        height: '100vh',
+        overflow: 'hidden',
+        display: 'flex',
+        background: '#f8fafc', // fallback for bg-gray-50
+      }}
+    >
       <AdminSidebar />
-      <main className="flex-1 p-8 ml-16 md:ml-56">
+      <main
+        className="flex-1 p-8 ml-16 md:ml-56"
+        style={{
+          height: '100vh',
+          overflow: 'hidden', // prevent main from scrolling
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
         {/* Header */}
         <Box sx={{ mb: 3 }}>
           <Stack direction="row" alignItems="center" spacing={2} sx={{ mb: 2 }}>
@@ -326,11 +352,12 @@ export default function FireteamDetailPage() {
             </Button>
           </Stack>
         </Box>
-
-        <Grid container spacing={3}>
+        {/* Content area: make it take all remaining space and scroll only inside tables */}
+        <Box sx={{ flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+          <Grid container spacing={3} sx={{ flex: 1, minHeight: 0 }}>
           {/* Fireteam Details */}
-          <Grid item xs={12} md={8}>
-            <Card>
+            <Grid item xs={12} md={8} sx={{ minHeight: 0 }}>
+              <Card sx={{ height: '100%' }}>
               <CardContent>
                 <Typography variant="h6" sx={{ mb: 2 }}>
                   Fireteam Information
@@ -382,8 +409,8 @@ export default function FireteamDetailPage() {
           </Grid>
 
           {/* Quick Actions */}
-          <Grid item xs={12} md={4}>
-            <Card>
+            <Grid item xs={12} md={4} sx={{ minHeight: 0 }}>
+              <Card sx={{ height: '100%' }}>
               <CardContent>
                 <Typography variant="h6" sx={{ mb: 2 }}>
                   Quick Actions
@@ -411,12 +438,13 @@ export default function FireteamDetailPage() {
           </Grid>
 
           {/* Members List */}
-          <Grid item xs={12}>
-            <Card>
-              <CardContent>
+            <Grid item xs={12} sx={{ minHeight: 0 }}>
+              <Card sx={{ height: 300, display: 'flex', flexDirection: 'column' }}>
+                <CardContent sx={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column' }}>
                 <Typography variant="h6" sx={{ mb: 2 }}>
                   Fireteam Members
                 </Typography>
+                  <Box sx={{ flex: 1, minHeight: 0, overflow: 'auto' }}>
                 <Table>
                   <TableHead>
                     <TableRow>
@@ -454,14 +482,15 @@ export default function FireteamDetailPage() {
                     )}
                   </TableBody>
                 </Table>
+                  </Box>
               </CardContent>
             </Card>
           </Grid>
 
           {/* Experiences List */}
-          <Grid item xs={12}>
-            <Card>
-              <CardContent>
+            <Grid item xs={12} sx={{ minHeight: 0 }}>
+              <Card sx={{ height: 300, display: 'flex', flexDirection: 'column' }}>
+                <CardContent sx={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column' }}>
                 <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 2 }}>
                   <Typography variant="h6">
                     Fireteam Experiences
@@ -478,6 +507,7 @@ export default function FireteamDetailPage() {
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
                   Create learning experiences and discussion sessions for your fireteam members.
                 </Typography>
+                  <Box sx={{ flex: 1, minHeight: 0, overflow: 'auto' }}>
                 {experiences.length === 0 ? (
                   <Box sx={{ textAlign: 'center', py: 4 }}>
                     <Typography color="text.secondary" sx={{ mb: 2 }}>
@@ -502,7 +532,32 @@ export default function FireteamDetailPage() {
                     </TableHead>
                     <TableBody>
                       {experiences.map((experience) => (
-                        <TableRow key={experience.id}>
+                            <TableRow
+                              key={experience.id}
+                              hover
+                              style={{ cursor: 'pointer' }}
+                              onClick={e => {
+                                // Prevent opening modal if clicking on action buttons
+                                if (e.target.closest('.experience-action-btn')) return;
+                                setSelectedExperienceToEdit(experience);
+                                setEditExperienceData({
+                                  title: experience.title || '',
+                                  experience: experience.experience || '',
+                                  agenda: experience.agenda && Array.isArray(experience.agenda) && experience.agenda.length > 0 ? experience.agenda : [{ title: '', duration: '' }],
+                                  exhibits: experience.exhibits && Array.isArray(experience.exhibits) && experience.exhibits.length > 0
+                                    ? experience.exhibits.map(ex => ({
+                                        name: ex.name || '',
+                                        type: ex.type || (ex.link ? 'link' : 'document'),
+                                        link: ex.link || '',
+                                        file: null,
+                                      }))
+                                    : [{ name: '', type: 'link', link: '', file: null }],
+                                  videoAdminId: experience.videoAdminId || '',
+                                  meetingLink: experience.meetingLink || '',
+                                });
+                                setShowEditExperience(true);
+                              }}
+                            >
                           <TableCell>{experience.title}</TableCell>
                           <TableCell>{experience.experience}</TableCell>
                           <TableCell>
@@ -512,12 +567,8 @@ export default function FireteamDetailPage() {
                                 variant="contained"
                                 startIcon={<VideoCall />}
                                 onClick={() => handleStartExperience(experience.id)}
-                                sx={{ 
-                                  background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
-                                  '&:hover': {
-                                    background: 'linear-gradient(45deg, #1976D2 30%, #1CB5E0 90%)',
-                                  }
-                                }}
+                                    sx={{ background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)', '&:hover': { background: 'linear-gradient(45deg, #1976D2 30%, #1CB5E0 90%)' } }}
+                                    className="experience-action-btn"
                               >
                                 Join Meeting
                               </Button>
@@ -526,6 +577,7 @@ export default function FireteamDetailPage() {
                                 variant="outlined"
                                 color="error"
                                 onClick={() => handleDeleteExperience(experience.id)}
+                                    className="experience-action-btn"
                               >
                                 Delete
                               </Button>
@@ -536,10 +588,12 @@ export default function FireteamDetailPage() {
                     </TableBody>
                   </Table>
                 )}
+                  </Box>
               </CardContent>
             </Card>
           </Grid>
         </Grid>
+        </Box>
 
         {/* Edit Dialog */}
         <Dialog open={showEdit} onClose={() => setShowEdit(false)} fullWidth maxWidth="sm">
@@ -680,6 +734,215 @@ export default function FireteamDetailPage() {
               disabled={!experienceData.title.trim() || !experienceData.experience.trim()}
             >
               Create Experience
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+        {/* Edit Experience Dialog */}
+        <Dialog open={showEditExperience} onClose={() => setShowEditExperience(false)} fullWidth maxWidth="sm">
+          <DialogTitle>Edit Experience</DialogTitle>
+          <DialogContent>
+            <Stack spacing={3} sx={{ mt: 1 }}>
+              <TextField
+                label="Experience Title"
+                value={editExperienceData.title}
+                onChange={e => setEditExperienceData({ ...editExperienceData, title: e.target.value })}
+                fullWidth
+                required
+              />
+              <TextField
+                label="Experience Content"
+                value={editExperienceData.experience}
+                onChange={e => setEditExperienceData({ ...editExperienceData, experience: e.target.value })}
+                fullWidth
+                multiline
+                rows={4}
+                required
+              />
+              {/* Agenda Steps */}
+              <Box>
+                <Typography variant="subtitle1">Agenda Steps</Typography>
+                {editExperienceData.agenda.map((step, idx) => (
+                  <Stack direction="row" spacing={1} alignItems="center" key={idx} sx={{ mb: 1 }}>
+                    <TextField
+                      label="Step Title"
+                      value={step.title}
+                      onChange={e => {
+                        const agenda = [...editExperienceData.agenda];
+                        agenda[idx].title = e.target.value;
+                        setEditExperienceData({ ...editExperienceData, agenda });
+                      }}
+                      required
+                      sx={{ flex: 2 }}
+                    />
+                    <TextField
+                      label="Duration"
+                      value={step.duration}
+                      onChange={e => {
+                        const agenda = [...editExperienceData.agenda];
+                        agenda[idx].duration = e.target.value;
+                        setEditExperienceData({ ...editExperienceData, agenda });
+                      }}
+                      sx={{ flex: 1 }}
+                    />
+                    <Button
+                      onClick={() => {
+                        const agenda = editExperienceData.agenda.filter((_, i) => i !== idx);
+                        setEditExperienceData({ ...editExperienceData, agenda: agenda.length ? agenda : [{ title: '', duration: '' }] });
+                      }}
+                      color="error"
+                      size="small"
+                      disabled={editExperienceData.agenda.length === 1}
+                    >Remove</Button>
+                  </Stack>
+                ))}
+                <Button
+                  onClick={() => setEditExperienceData({ ...editExperienceData, agenda: [...editExperienceData.agenda, { title: '', duration: '' }] })}
+                  size="small"
+                  variant="outlined"
+                >+ Add Step</Button>
+              </Box>
+              {/* Exhibits */}
+              <Box>
+                <Typography variant="subtitle1">Exhibits</Typography>
+                {editExperienceData.exhibits.map((exhibit, idx) => (
+                  <Stack direction="row" spacing={1} alignItems="center" key={idx} sx={{ mb: 1, flexWrap: 'wrap' }}>
+                    <TextField
+                      label="Exhibit Name"
+                      value={exhibit.name}
+                      onChange={e => {
+                        const exhibits = [...editExperienceData.exhibits];
+                        exhibits[idx].name = e.target.value;
+                        setEditExperienceData({ ...editExperienceData, exhibits });
+                      }}
+                      required
+                      sx={{ flex: 2, minWidth: 120 }}
+                    />
+                    <FormControl sx={{ minWidth: 120 }}>
+                      <InputLabel>Type</InputLabel>
+                      <Select
+                        value={exhibit.type}
+                        label="Type"
+                        onChange={e => {
+                          const exhibits = [...editExperienceData.exhibits];
+                          exhibits[idx].type = e.target.value;
+                          // Reset file/link when type changes
+                          if (e.target.value === 'link') {
+                            exhibits[idx].file = null;
+                            exhibits[idx].link = '';
+                          } else {
+                            exhibits[idx].file = null;
+                            exhibits[idx].link = '';
+                          }
+                          setEditExperienceData({ ...editExperienceData, exhibits });
+                        }}
+                      >
+                        <MenuItem value="link">Link</MenuItem>
+                        <MenuItem value="document">Document</MenuItem>
+                        <MenuItem value="image">Image</MenuItem>
+                        <MenuItem value="video">Video</MenuItem>
+                      </Select>
+                    </FormControl>
+                    {exhibit.type === 'link' ? (
+                      <TextField
+                        label="Link"
+                        value={exhibit.link}
+                        onChange={e => {
+                          const exhibits = [...editExperienceData.exhibits];
+                          exhibits[idx].link = e.target.value;
+                          setEditExperienceData({ ...editExperienceData, exhibits });
+                        }}
+                        sx={{ flex: 2, minWidth: 120 }}
+                      />
+                    ) : (
+                      <>
+                        <Button
+                          variant="outlined"
+                          component="label"
+                          sx={{ minWidth: 120 }}
+                        >
+                          {exhibit.file ? exhibit.file.name : `Upload ${exhibit.type}`}
+                          <input
+                            type="file"
+                            accept={
+                              exhibit.type === 'image' ? 'image/*' :
+                              exhibit.type === 'video' ? 'video/*' :
+                              exhibit.type === 'document' ? '.pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.txt' : '*/*'
+                            }
+                            hidden
+                            onChange={e => {
+                              const file = e.target.files[0];
+                              const exhibits = [...editExperienceData.exhibits];
+                              exhibits[idx].file = file;
+                              setEditExperienceData({ ...editExperienceData, exhibits });
+                            }}
+                          />
+                        </Button>
+                        {exhibit.file && (
+                          <Typography variant="caption" sx={{ ml: 1 }}>{exhibit.file.name}</Typography>
+                        )}
+                      </>
+                    )}
+                    <Button
+                      onClick={() => {
+                        const exhibits = editExperienceData.exhibits.filter((_, i) => i !== idx);
+                        setEditExperienceData({ ...editExperienceData, exhibits: exhibits.length ? exhibits : [{ name: '', type: 'link', link: '', file: null }] });
+                      }}
+                      color="error"
+                      size="small"
+                      disabled={editExperienceData.exhibits.length === 1}
+                    >Remove</Button>
+                  </Stack>
+                ))}
+                <Button
+                  onClick={() => setEditExperienceData({ ...editExperienceData, exhibits: [...editExperienceData.exhibits, { name: '', type: 'link', link: '', file: null }] })}
+                  size="small"
+                  variant="outlined"
+                >+ Add Exhibit</Button>
+              </Box>
+              {/* Experience Video Admin */}
+              <FormControl fullWidth>
+                <InputLabel>Experience Video Admin</InputLabel>
+                <Select
+                  value={editExperienceData.videoAdminId}
+                  label="Experience Video Admin"
+                  onChange={e => setEditExperienceData({ ...editExperienceData, videoAdminId: e.target.value })}
+                >
+                  {members.map(member => (
+                    <MenuItem key={member.id} value={member.id}>
+                      {member.client?.user?.name || member.name || member.id}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              {/* Meeting Link */}
+              <TextField
+                label="Meeting Link"
+                value={editExperienceData.meetingLink}
+                onChange={e => setEditExperienceData({ ...editExperienceData, meetingLink: e.target.value })}
+                fullWidth
+              />
+            </Stack>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setShowEditExperience(false)}>Cancel</Button>
+            <Button
+              variant="contained"
+              onClick={async () => {
+                if (!selectedExperienceToEdit) return;
+                try {
+                  await experienceService.updateExperience(selectedExperienceToEdit.id, editExperienceData);
+                  setShowEditExperience(false);
+                  setSelectedExperienceToEdit(null);
+                  setSuccess('Experience updated successfully!');
+                  fetchFireteamDetails();
+                } catch (err) {
+                  setError('Failed to update experience');
+                }
+              }}
+              disabled={!editExperienceData.title.trim() || !editExperienceData.experience.trim()}
+            >
+              Save
             </Button>
           </DialogActions>
         </Dialog>

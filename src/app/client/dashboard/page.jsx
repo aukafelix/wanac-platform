@@ -135,35 +135,35 @@ export default function ClientDashboard() {
                     icon={FaUsers}
                     title="Community"
                     description="Join the community"
-                    href="/pages/client/community"
+                    href="/client/community"
                     color="primary"
                   />
                   <QuickActionCard
                     icon={FaPenFancy}
                     title="New Journal Entry"
                     description="Record your thoughts and progress"
-                    href="/pages/client/journal"
+                    href="/client/journal"
                     color="secondary"
                   />
                   <QuickActionCard
                     icon={FaRobot}
                     title="AI Assistant"
                     description="Get instant guidance and support"
-                    href="/pages/client/aichatbot"
+                    href="/client/aichatbot"
                     color="accent"
                   />
                   <QuickActionCard
                     icon={FaChartLine}
                     title="Track Progress"
                     description="View your life score metrics"
-                    href="/pages/client/lifescore"
+                    href="/client/lifescore"
                     color="warning"
                   />
                   <QuickActionCard
                     icon={FaUsers}
-                    title="Breakout Room"
+                    title="FireTeam"
                     description="Group discussion and collaboration"
-                    href="/pages/client/breakoutroom"
+                    href="/client/fireteam"
                     color="primary"
                   />
                 </section>
