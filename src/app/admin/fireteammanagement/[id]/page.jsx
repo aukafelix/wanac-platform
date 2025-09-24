@@ -40,7 +40,6 @@ import {
   VideoCall,
 } from "@mui/icons-material";
 import { fireteamService } from "../../../../services/api/fireteam.service";
-import { cohortService } from "../../../../services/api/cohort.service";
 import { experienceService } from "../../../../services/api/experience.service";
 import { clientsService } from "../../../../services/api/clients.service";
 import ExperienceVideoModal from "../../../../../components/ExperienceVideoModal";
@@ -88,41 +87,21 @@ export default function FireteamDetailPage() {
     setLoading(true);
     try {
       const fireteamData = await fireteamService.getFireteam(id);
-      console.log("Fireteam data:", fireteamData);
-      setFireteam(fireteamData);
+      const fireTeam = fireteamData.fireTeam;
+      console.log("Fireteam data:", fireteamData.fireTeam);
+      setFireteam(fireTeam);
+      setMembers(Array.isArray(fireTeam.members) ? fireTeam.members : []);
+      setExperiences(Array.isArray(fireTeam.experiences) ? fireTeam.experiences : []);
+      setCohort(fireTeam.cohort);
       setEditData({
-        title: fireteamData.title || "",
-        description: fireteamData.description || "",
-        date: fireteamData.date || "",
-        time: fireteamData.time || "",
-        cohort_id: fireteamData.cohort_id || "",
+        title: fireTeam.title || "",
+        description: fireTeam.description || "",
+        date: fireTeam.date || "",
+        time: fireTeam.time || "",
+        cohort_id: fireTeam.cohort_id || "",
       });
 
-      // Fetch cohort details
-      if (fireteamData.cohort_id) {
-        try {
-          const cohorts = await cohortService.getCohorts();
-          const cohortData = cohorts.find(c => c.id === fireteamData.cohort_id);
-          setCohort(cohortData);
-        } catch (err) {
-          console.error("Error fetching cohort:", err);
-        }
-      }
-
-      // Fetch members and clients
-      try {
-        console.log("Fetching members for fireteam ID:", id);
-        const membersData = await fireteamService.getFireteamMembers(id);
-        console.log("Members data received:", membersData);
-        console.log("Members data type:", typeof membersData);
-        console.log("Members data length:", Array.isArray(membersData) ? membersData.length : 'not an array');
-        setMembers(membersData || []);
-      } catch (err) {
-        console.error("Error fetching members:", err);
-        console.error("Error details:", err.response?.data);
-        console.error("Error status:", err.response?.status);
-        setMembers([]);
-      }
+      
 
       // Fetch clients for the add member dropdown
       try {
@@ -138,16 +117,7 @@ export default function FireteamDetailPage() {
         console.error("Error fetching clients:", err);
         setClients([]);
       }
-      
-      // Fetch experiences for this fireteam
-      try {
-        const experiencesData = await experienceService.getExperiences(id);
-        console.log("Experiences data:", experiencesData);
-        setExperiences(experiencesData);
-      } catch (err) {
-        console.error("Error fetching experiences:", err);
-        // Don't set error for experiences, just log it
-      }
+
       
     } catch (err) {
       console.error("Error fetching fireteam:", err);
@@ -335,7 +305,7 @@ export default function FireteamDetailPage() {
               <ArrowBack />
             </IconButton>
             <Typography variant="h4" sx={{ fontWeight: 700 }}>
-              {fireteam.title || fireteam.name}
+              {fireteam.title }
             </Typography>
           </Stack>
           <Stack direction="row" spacing={2}>
@@ -371,7 +341,7 @@ export default function FireteamDetailPage() {
                       Title
                     </Typography>
                     <Typography variant="body1">
-                      {fireteam.title || fireteam.name}
+                      {fireteam.title}
                     </Typography>
                   </Box>
                   <Box>
@@ -465,8 +435,8 @@ export default function FireteamDetailPage() {
                     ) : (
                       members.map((member) => (
                         <TableRow key={member.id}>
-                          <TableCell>{member.name}</TableCell>
-                          <TableCell>{member.email}</TableCell>
+                          <TableCell>{member.client.user.name}</TableCell>
+                          <TableCell>{member.client.user.email}</TableCell>
                           <TableCell>
                             <Chip label={member.role || 'Member'} size="small" />
                           </TableCell>
