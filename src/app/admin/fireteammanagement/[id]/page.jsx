@@ -243,7 +243,7 @@ export default function FireteamDetailPage() {
   const handleSaveExperience = async () => {
     try {
       await experienceService.addExperience({
-        fireteam_id: id,
+        fire_team_id: id,
         ...experienceData,
       });
       setSuccess("Experience added successfully!");
@@ -522,39 +522,26 @@ export default function FireteamDetailPage() {
                     </Button>
                   </Box>
                 ) : (
-                  <Grid container spacing={2}>
-                    {experiences.map((experience) => (
-                      <Grid item xs={12} md={6} lg={4} key={experience.id}>
-                        <Card variant="outlined" sx={{ height: '100%' }}>
-                          <CardContent>
-                            <Typography variant="h6" sx={{ mb: 1 }}>
-                              {experience.title}
-                            </Typography>
-                            {experience.experience && (
-                              <Typography variant="body2" sx={{ mb: 2 }}>
-                                {experience.experience}
-                              </Typography>
-                            )}
-                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
-                              <Box sx={{ 
-                                width: 8, 
-                                height: 8, 
-                                borderRadius: '50%', 
-                                bgcolor: 'success.main' 
-                              }} />
-                              <Typography variant="body2" color="text.secondary">
-                                Video Meeting Ready
-                              </Typography>
-                            </Box>
-                          </CardContent>
-                          <CardContent sx={{ pt: 0 }}>
+                  <Table>
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>Title</TableCell>
+                        <TableCell>Description</TableCell>
+                        <TableCell>Actions</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {experiences.map((experience) => (
+                        <TableRow key={experience.id}>
+                          <TableCell>{experience.title}</TableCell>
+                          <TableCell>{experience.experience}</TableCell>
+                          <TableCell>
                             <Stack direction="row" spacing={1}>
                               <Button
                                 size="small"
                                 variant="contained"
                                 startIcon={<VideoCall />}
                                 onClick={() => handleStartExperience(experience.id)}
-                                fullWidth
                                 sx={{ 
                                   background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
                                   '&:hover': {
@@ -573,11 +560,11 @@ export default function FireteamDetailPage() {
                                 Delete
                               </Button>
                             </Stack>
-                          </CardContent>
-                        </Card>
-                      </Grid>
-                    ))}
-                  </Grid>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
                 )}
               </CardContent>
             </Card>
