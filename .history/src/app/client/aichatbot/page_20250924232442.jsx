@@ -134,7 +134,14 @@ export default function AIChatbotPage() {
                             : "bg-gray-100 text-gray-800 rounded-bl-none"
                         }`}
                       >
-                        
+                        {msg.sender === "user" && user && user.name && (
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className="w-7 h-7 rounded-full bg-blue-200 flex items-center justify-center text-blue-700 font-bold text-sm">
+                              {user.name[0]}
+                            </span>
+                            <span className="text-xs font-semibold text-blue-900">{user.name}</span>
+                          </div>
+                        )}
                         {msg.text}
                         <div className="text-xs text-gray-400 mt-1 text-right">
                           {new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
