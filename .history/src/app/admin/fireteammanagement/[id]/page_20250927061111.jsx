@@ -39,11 +39,10 @@ import {
   PersonRemove,
   VideoCall,
 } from "@mui/icons-material";
-import { fireteamService } from "../../../../services/api/fireteam.service";
-import { experienceService } from "../../../../services/api/experience.service";
-import { clientsService } from "../../../../services/api/clients.service";
-import { generatefireteamMeetingLink } from "../../../../lib/jitsi.utils";
-
+import { fireteamService } from "../../../services/api/fireteam.service";
+import { ExperienceService } from "../../../services/api/experience.service";
+import { clientsService } from "../../../services/api/clients.service";
+import ExperienceVideoModal from "../../../../components/ExperienceVideoModal";
 
 export default function FireteamDetailPage() {
   const params = useParams();
@@ -275,85 +274,6 @@ export default function FireteamDetailPage() {
     // Optionally end the experience on the server
     if (selectedExperience) {
       experienceService.endExperience(selectedExperience.id).catch(console.error);
-    }
-  };
-
-  // Add handler for adding an agenda step
-  const handleAddAgendaStep = async () => {
-    if (!selectedExperienceToEdit) return;
-    try {
-      const newStep = await experienceService.addAgendaStep({
-        fire_team_experience_id: selectedExperienceToEdit.id,
-        title: '',
-        duration: '',
-        // Optionally: order: editExperienceData.agenda.length + 1
-      });
-      setEditExperienceData(prev => ({
-        ...prev,
-        agenda: [...prev.agenda, { ...newStep }],
-      }));
-    } catch (err) {
-      setError('Failed to add agenda step');
-    }
-  };
-
-  // Add handler for deleting an agenda step
-  const handleDeleteAgendaStep = async (agendaStepId, idx) => {
-    if (!selectedExperienceToEdit) return;
-    try {
-      await experienceService.deleteAgendaStep(agendaStepId);
-      setEditExperienceData(prev => ({
-        ...prev,
-        agenda: prev.agenda.filter((step, i) => i !== idx),
-      }));
-    } catch (err) {
-      setError('Failed to delete agenda step');
-    }
-  };
-
-  // Add handler for updating an agenda step (onBlur or onChange debounce)
-  const handleUpdateAgendaStep = async (agendaStepId, data) => {
-    if (!selectedExperienceToEdit) return;
-    try {
-      await experienceService.updateAgendaStep(agendaStepId, data);
-      // Optionally: update local state if needed
-    } catch (err) {
-      setError('Failed to update agenda step');
-    }
-  };
-
-  // Exhibit handlers
-  const handleAddExhibit = async () => {
-    if (!selectedExperienceToEdit) return;
-    try {
-      const newExhibit = await experienceService.addExhibit({
-        fire_team_experience_id: selectedExperienceToEdit.id,
-        name: '',
-        type: 'link',
-        link: '',
-      });
-      setEditExperienceData(prev => ({
-        ...prev,
-        exhibits: [...prev.exhibits, { ...newExhibit, file: null }],
-      }));
-    } catch (err) {
-      setError('Failed to add exhibit');
-    }
-  };
-
-
-  const handleDeleteExhibit = async (exhibitId, idx) => {
-    if (!selectedExperienceToEdit) return;
-    try {
-      if (exhibitId) {
-        await experienceService.deleteExhibit(exhibitId);
-      }
-      setEditExperienceData(prev => ({
-        ...prev,
-        exhibits: prev.exhibits.filter((_, i) => i !== idx),
-      }));
-    } catch (err) {
-      setError('Failed to delete exhibit');
     }
   };
 
@@ -843,7 +763,7 @@ export default function FireteamDetailPage() {
               <Box>
                 <Typography variant="subtitle1">Agenda Steps</Typography>
                 {editExperienceData.agenda.map((step, idx) => (
-                  <Stack direction="row" spacing={1} alignItems="center" key={step.id || idx} sx={{ mb: 1 }}>
+                  <Stack direction="row" spacing={1} alignItems="center" key={idx} sx={{ mb: 1 }}>
                     <TextField
                       label="Step Title"
                       value={step.title}
@@ -851,9 +771,6 @@ export default function FireteamDetailPage() {
                         const agenda = [...editExperienceData.agenda];
                         agenda[idx].title = e.target.value;
                         setEditExperienceData({ ...editExperienceData, agenda });
-                      }}
-                      onBlur={e => {
-                        if (step.id) handleUpdateAgendaStep(step.id, { title: e.target.value });
                       }}
                       required
                       sx={{ flex: 2 }}
@@ -866,13 +783,13 @@ export default function FireteamDetailPage() {
                         agenda[idx].duration = e.target.value;
                         setEditExperienceData({ ...editExperienceData, agenda });
                       }}
-                      onBlur={e => {
-                        if (step.id) handleUpdateAgendaStep(step.id, { duration: e.target.value });
-                      }}
                       sx={{ flex: 1 }}
                     />
                     <Button
-                      onClick={() => step.id ? handleDeleteAgendaStep(step.id, idx) : null}
+                      onClick={() => {
+                        const agenda = editExperienceData.agenda.filter((_, i) => i !== idx);
+                        setEditExperienceData({ ...editExperienceData, agenda: agenda.length ? agenda : [{ title: '', duration: '' }] });
+                      }}
                       color="error"
                       size="small"
                       disabled={editExperienceData.agenda.length === 1}
@@ -880,7 +797,7 @@ export default function FireteamDetailPage() {
                   </Stack>
                 ))}
                 <Button
-                  onClick={handleAddAgendaStep}
+                  onClick={() => setEditExperienceData({ ...editExperienceData, agenda: [...editExperienceData.agenda, { title: '', duration: '' }] })}
                   size="small"
                   variant="outlined"
                 >+ Add Step</Button>
@@ -967,7 +884,10 @@ export default function FireteamDetailPage() {
                       </>
                     )}
                     <Button
-                      onClick={() => handleDeleteExhibit(exhibit.id, idx)}
+                      onClick={() => {
+                        const exhibits = editExperienceData.exhibits.filter((_, i) => i !== idx);
+                        setEditExperienceData({ ...editExperienceData, exhibits: exhibits.length ? exhibits : [{ name: '', type: 'link', link: '', file: null }] });
+                      }}
                       color="error"
                       size="small"
                       disabled={editExperienceData.exhibits.length === 1}
@@ -975,7 +895,7 @@ export default function FireteamDetailPage() {
                   </Stack>
                 ))}
                 <Button
-                  onClick={handleAddExhibit}
+                  onClick={() => setEditExperienceData({ ...editExperienceData, exhibits: [...editExperienceData.exhibits, { name: '', type: 'link', link: '', file: null }] })}
                   size="small"
                   variant="outlined"
                 >+ Add Exhibit</Button>
@@ -986,25 +906,7 @@ export default function FireteamDetailPage() {
                 <Select
                   value={editExperienceData.videoAdminId}
                   label="Experience Video Admin"
-                  onChange={e => {
-                    const adminId = e.target.value;
-                    const admin = members.find(member => member.id === adminId);
-                    const adminName = admin?.client?.user?.name || admin?.name || 'Admin';
-                    
-                    // Auto-generate Jitsi meeting link when admin is selected
-                    const meetingLink = generateFireteamMeetingLink(
-                      id, // fireteamId
-                      selectedExperienceToEdit?.id || 'new', // experienceId
-                      adminId,
-                      adminName
-                    );
-                    
-                    setEditExperienceData({ 
-                      ...editExperienceData, 
-                      videoAdminId: adminId,
-                      meetingLink: meetingLink
-                    });
-                  }}
+                  onChange={e => setEditExperienceData({ ...editExperienceData, videoAdminId: e.target.value })}
                 >
                   {members.map(member => (
                     <MenuItem key={member.id} value={member.id}>
@@ -1014,43 +916,12 @@ export default function FireteamDetailPage() {
                 </Select>
               </FormControl>
               {/* Meeting Link */}
-              <Stack direction="row" spacing={1} alignItems="flex-start">
-                <TextField
-                  label="Meeting Link"
-                  value={editExperienceData.meetingLink}
-                  onChange={e => setEditExperienceData({ ...editExperienceData, meetingLink: e.target.value })}
-                  fullWidth
-                  helperText="Meeting link is auto-generated when you select a video admin. You can manually edit if needed."
-                  InputProps={{
-                    readOnly: editExperienceData.videoAdminId ? true : false,
-                  }}
-                />
-                {editExperienceData.videoAdminId && (
-                  <Button
-                    variant="outlined"
-                    size="small"
-                    onClick={() => {
-                      const admin = members.find(member => member.id === editExperienceData.videoAdminId);
-                      const adminName = admin?.client?.user?.name || admin?.name || 'Admin';
-                      
-                      const newMeetingLink = generateFireteamMeetingLink(
-                        id,
-                        selectedExperienceToEdit?.id || 'new',
-                        editExperienceData.videoAdminId,
-                        adminName
-                      );
-                      
-                      setEditExperienceData({ 
-                        ...editExperienceData, 
-                        meetingLink: newMeetingLink
-                      });
-                    }}
-                    sx={{ mt: 1, minWidth: 'auto' }}
-                  >
-                    Regenerate
-                  </Button>
-                )}
-              </Stack>
+              <TextField
+                label="Meeting Link"
+                value={editExperienceData.meetingLink}
+                onChange={e => setEditExperienceData({ ...editExperienceData, meetingLink: e.target.value })}
+                fullWidth
+              />
             </Stack>
           </DialogContent>
           <DialogActions>
@@ -1060,42 +931,12 @@ export default function FireteamDetailPage() {
               onClick={async () => {
                 if (!selectedExperienceToEdit) return;
                 try {
-                  // Update the main experience
-                  await experienceService.updateExperience(selectedExperienceToEdit.id, {
-                    title: editExperienceData.title,
-                    experience: editExperienceData.experience,
-                  });
-
-                  // Handle exhibits - save new ones and delete removed ones
-                  const currentExhibitIds = selectedExperienceToEdit.exhibits?.map(ex => ex.id).filter(Boolean) || [];
-                  const newExhibits = editExperienceData.exhibits.filter(ex => !ex.id);
-                  const existingExhibits = editExperienceData.exhibits.filter(ex => ex.id);
-                  
-                  // Delete exhibits that were removed
-                  for (const exhibitId of currentExhibitIds) {
-                    if (!existingExhibits.find(ex => ex.id === exhibitId)) {
-                      await experienceService.deleteExhibit(exhibitId);
-                    }
-                  }
-                  
-                  // Add new exhibits
-                  for (const exhibit of newExhibits) {
-                    if (exhibit.name.trim()) {
-                      await experienceService.addExhibit({
-                        fire_team_experience_id: selectedExperienceToEdit.id,
-                        name: exhibit.name,
-                        type: exhibit.type,
-                        link: exhibit.type === 'link' ? exhibit.link : undefined,
-                      });
-                    }
-                  }
-
+                  await experienceService.updateExperience(selectedExperienceToEdit.id, editExperienceData);
                   setShowEditExperience(false);
                   setSelectedExperienceToEdit(null);
                   setSuccess('Experience updated successfully!');
                   fetchFireteamDetails();
                 } catch (err) {
-                  console.error('Error updating experience:', err);
                   setError('Failed to update experience');
                 }
               }}
