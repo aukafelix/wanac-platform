@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# jitsi-meet directory (contains React Native code incompatible with Next.js)
+/jitsi-meet
