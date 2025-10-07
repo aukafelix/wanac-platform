@@ -187,9 +187,28 @@ export default function FireteamExperienceMeeting() {
         console.log("✅ Jitsi API loaded, starting meeting...");
         
         setLoading(false);
-        setTimeout(() => {
-          startJitsi(domain, roomName);
-        }, 100);
+        
+        // Wait for container to be available in DOM before starting Jitsi
+        let retryCount = 0;
+        const maxRetries = 50; // Max 5 seconds (50 * 100ms)
+        
+        const waitForContainer = () => {
+          const containerElement = document.getElementById(jitsiContainerId);
+          if (containerElement) {
+            console.log("✅ Container found, starting Jitsi...");
+            startJitsi(domain, roomName);
+          } else if (retryCount < maxRetries) {
+            retryCount++;
+            console.log(`⏳ Waiting for container to be available... (attempt ${retryCount}/${maxRetries})`);
+            setTimeout(waitForContainer, 100);
+          } else {
+            console.error("❌ Container not found after maximum retries");
+            setMeetingError("Failed to initialize meeting container. Please refresh the page.");
+          }
+        };
+        
+        // Start checking for container after a brief delay to allow React to render
+        setTimeout(waitForContainer, 50);
         
         // Set up default agenda while meeting starts
         const defaultAgenda = [
