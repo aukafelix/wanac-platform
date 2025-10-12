@@ -209,7 +209,7 @@ export default function Homepage() {
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
                 </Link>
                 <Link
-          href="#how-we-help"
+          href="/pages/vsoclaimsupport"
           className="px-5 sm:px-6 py-2.5 sm:py-3 bg-white/10 backdrop-blur-sm border-2 border-white text-white font-semibold text-center hover:bg-white hover:text-[#002147] transition-all duration-300 text-sm"
                 >
           VSO Claim Support 

@@ -1,11 +1,8 @@
 "use client";
 
 import React, { useState } from 'react';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 
 const WanacPLEP = () => {
-  const router = useRouter();
   const [openFaq, setOpenFaq] = useState(null);
 
   const toggleFaq = (index) => {
@@ -182,87 +179,31 @@ const WanacPLEP = () => {
 
   return (
     <div className="min-h-screen bg-[#faf9f7]">
-      {/* Header Navigation */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
-        {/* Top bar */}
-        <div className="bg-white border-b border-gray-100">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center py-2 text-sm">
-              <div className="flex items-center space-x-4">
-                <select className="bg-transparent border-none text-gray-600 focus:outline-none cursor-pointer">
-                  <option>English</option>
-                </select>
-                <a href="#" className="text-gray-600 hover:text-gray-900 transition-colors">Sign in/Sign up</a>
-                <a href="#" className="text-gray-600 hover:text-gray-900 transition-colors">Customer Support</a>
-              </div>
-              <div className="flex items-center space-x-4">
-                <button className="p-1 text-gray-600 hover:text-gray-900 transition-colors">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                  </svg>
-                </button>
-                <a href="#" className="text-gray-600 hover:text-gray-900 transition-colors">Log in</a>
-                <button className="bg-[#ff5e1a] text-white px-4 py-2 rounded-md hover:bg-[#e54e16] transition-colors">
-                  Join
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Main navigation */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
-            <div className="flex items-center">
-              <Image
-                src="/WANAC N 8 Old Glory.svg"
-                alt="WANAC Logo"
-                width={120}
-                height={40}
-                className="h-8 w-auto cursor-pointer"
-                onClick={() => router.push('/')}
-              />
-            </div>
-            <nav className="hidden md:flex space-x-8">
-              <a href="#" className="text-gray-700 hover:text-[#ff5e1a] font-medium transition-colors">Products</a>
-              <a href="#" className="text-gray-700 hover:text-[#ff5e1a] font-medium transition-colors">Solutions</a>
-              <a href="#" className="text-gray-700 hover:text-[#ff5e1a] font-medium transition-colors">Pricing</a>
-              <a href="#" className="text-gray-700 hover:text-[#ff5e1a] font-medium transition-colors">Resources</a>
-            </nav>
-            <div className="hidden md:flex space-x-4">
-              <button className="bg-[#002147] text-white px-6 py-2 rounded-md hover:bg-[#001530] transition-colors text-sm">
-                Apply for PLEP
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
-
       {/* Hero Section */}
-      <section className="bg-gradient-to-b from-[#faf9f7] to-white py-20">
+      <section className="bg-gradient-to-b from-[#faf9f7] to-white py-16 sm:py-20 md:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-4xl mx-auto">
-            <div className="inline-block bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-semibold mb-6">
+            <div className="inline-block bg-blue-100 text-blue-800 px-3 py-1.5 rounded-full text-xs sm:text-sm font-semibold mb-4 sm:mb-6">
               Education Pathway • GI Bill Optimization
             </div>
-            <h1 className="text-5xl lg:text-6xl font-bold text-[#002147] mb-6 leading-tight">
+            <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold text-[#002147] mb-3 sm:mb-4 leading-tight">
               WANAC Promise Land Education Pathway (PLEP)
             </h1>
-            <p className="text-2xl text-gray-600 mb-4 font-semibold">
+            <p className="text-lg sm:text-xl md:text-2xl text-gray-600 mb-2 sm:mb-3 font-semibold">
               Build a funded, fit-for-purpose education plan
             </p>
-            <p className="text-lg text-gray-600 mb-8 leading-relaxed max-w-3xl mx-auto">
+            <p className="text-sm sm:text-base text-gray-600 mb-6 sm:mb-8 leading-relaxed max-w-3xl mx-auto">
               A cohort-based pathway that aligns your mission, program choice, prerequisites, timeline, and GI Bill funding—so you start on time with a plan you can execute.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
-              <button className="bg-[#ff5e1a] text-white px-10 py-4 rounded-lg text-lg font-semibold hover:bg-[#e54e16] transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105">
+            <div className="flex flex-col xs:flex-row gap-3 sm:gap-4 justify-center mb-4 sm:mb-6">
+              <button className="bg-[#ff5e1a] text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-semibold hover:bg-[#e54e16] transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105">
                 Apply for the PLEP cohort
               </button>
-              <button className="border-2 border-[#002147] text-[#002147] px-10 py-4 rounded-lg text-lg font-semibold hover:bg-[#002147] hover:text-white transition-all duration-200">
+              <button className="border-2 border-[#002147] text-[#002147] px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-semibold hover:bg-[#002147] hover:text-white transition-all duration-200">
                 Not sure yet? Take the 3-minute quiz
               </button>
             </div>
-            <div className="flex items-center justify-center gap-6 text-sm text-gray-600 flex-wrap">
+            <div className="flex items-center justify-center gap-4 sm:gap-6 text-xs sm:text-sm text-gray-600 flex-wrap">
               <span className="flex items-center gap-2">
                 <svg className="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
@@ -293,13 +234,13 @@ const WanacPLEP = () => {
       </section>
 
       {/* The Problem Section */}
-      <section className="bg-white py-16">
+      <section className="bg-white py-12 sm:py-16">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-4xl font-bold text-[#002147] mb-4">
+          <div className="text-center mb-8 sm:mb-10">
+            <h2 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold text-[#002147] mb-3 sm:mb-4">
               The problem (and what's at stake)
             </h2>
-            <p className="text-lg text-gray-700 leading-relaxed max-w-3xl mx-auto">
+            <p className="text-sm sm:text-base text-gray-700 leading-relaxed max-w-3xl mx-auto">
               After TAP, most veterans get lists, not a plan. Wrong-fit programs, missed admissions windows, and uncoordinated GI Bill usage lead to delays and wasted time. <span className="font-semibold text-[#ff5e1a]">Every term you miss compounds lost momentum and costs.</span>
             </p>
           </div>
@@ -307,60 +248,60 @@ const WanacPLEP = () => {
       </section>
 
       {/* The Solution Section */}
-      <section className="bg-[#faf9f7] py-20">
+      <section className="bg-[#faf9f7] py-16 sm:py-20">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-4xl font-bold text-[#002147] mb-6">
+          <div className="text-center mb-8 sm:mb-10">
+            <h2 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold text-[#002147] mb-3 sm:mb-4">
               The PLEP solution (at a glance)
             </h2>
-            <p className="text-2xl font-semibold text-[#ff5e1a] mb-8">
+            <p className="text-lg sm:text-xl md:text-2xl font-semibold text-[#ff5e1a] mb-6 sm:mb-8">
               One cohort. One operating picture.
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-10">
             {/* Features Card */}
-            <div className="bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300">
-              <div className="w-16 h-16 bg-[#ff5e1a] bg-opacity-10 rounded-full flex items-center justify-center mb-6">
+            <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg p-5 sm:p-6 hover:shadow-xl transition-shadow duration-300">
+              <div className="w-12 h-12 sm:w-14 sm:h-14 bg-[#ff5e1a] bg-opacity-10 rounded-full flex items-center justify-center mb-4 sm:mb-5">
                 <svg className="w-8 h-8 text-[#ff5e1a]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
                 </svg>
               </div>
-              <h3 className="text-2xl font-bold text-[#002147] mb-4">Features</h3>
-              <p className="text-gray-600">
+              <h3 className="text-lg sm:text-xl font-bold text-[#002147] mb-3 sm:mb-4">Features</h3>
+              <p className="text-xs sm:text-sm text-gray-600">
                 Program fit & shortlisting, admissions timeline, prerequisite mapping, GI Bill optimization, cost & funding plan, application execution, start-strong onboarding.
               </p>
             </div>
 
             {/* Advantages Card */}
-            <div className="bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300">
-              <div className="w-16 h-16 bg-[#002147] bg-opacity-10 rounded-full flex items-center justify-center mb-6">
+            <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg p-5 sm:p-6 hover:shadow-xl transition-shadow duration-300">
+              <div className="w-12 h-12 sm:w-14 sm:h-14 bg-[#002147] bg-opacity-10 rounded-full flex items-center justify-center mb-4 sm:mb-5">
                 <svg className="w-8 h-8 text-[#002147]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
               </div>
-              <h3 className="text-2xl font-bold text-[#002147] mb-4">Advantages</h3>
-              <p className="text-gray-600">
+              <h3 className="text-lg sm:text-xl font-bold text-[#002147] mb-3 sm:mb-4">Advantages</h3>
+              <p className="text-xs sm:text-sm text-gray-600">
                 A single, integrated plan that ties benefits → program → start date.
               </p>
             </div>
 
             {/* Benefits Card */}
-            <div className="bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300">
-              <div className="w-16 h-16 bg-green-600 bg-opacity-10 rounded-full flex items-center justify-center mb-6">
+            <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg p-5 sm:p-6 hover:shadow-xl transition-shadow duration-300">
+              <div className="w-12 h-12 sm:w-14 sm:h-14 bg-green-600 bg-opacity-10 rounded-full flex items-center justify-center mb-4 sm:mb-5">
                 <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
-              <h3 className="text-2xl font-bold text-[#002147] mb-4">Benefits</h3>
-              <p className="text-gray-600">
+              <h3 className="text-lg sm:text-xl font-bold text-[#002147] mb-3 sm:mb-4">Benefits</h3>
+              <p className="text-xs sm:text-sm text-gray-600">
                 Start the right program, on time, with funding aligned and a week-one execution plan.
               </p>
             </div>
           </div>
 
           <div className="text-center">
-            <button className="bg-[#ff5e1a] text-white px-10 py-4 rounded-lg text-lg font-semibold hover:bg-[#e54e16] transition-all duration-200 shadow-lg hover:shadow-xl">
+            <button className="bg-[#ff5e1a] text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-semibold hover:bg-[#e54e16] transition-all duration-200 shadow-lg hover:shadow-xl">
               Apply for the PLEP cohort
             </button>
           </div>
@@ -368,18 +309,18 @@ const WanacPLEP = () => {
       </section>
 
       {/* Proof/Testimonial Section */}
-      <section className="bg-white py-16">
+      <section className="bg-white py-12 sm:py-16">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-gradient-to-r from-[#002147] to-[#003366] rounded-2xl shadow-xl p-8 md:p-12 text-white">
-            <div className="flex items-start gap-4 mb-6">
+          <div className="bg-gradient-to-r from-[#002147] to-[#003366] rounded-xl sm:rounded-2xl shadow-xl p-5 sm:p-8 text-white">
+            <div className="flex items-start gap-3 sm:gap-4 mb-4 sm:mb-5">
               <svg className="w-12 h-12 text-[#ff5e1a] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
               </svg>
               <div>
-                <p className="text-xl md:text-2xl font-semibold mb-4 leading-relaxed">
+                <p className="text-base sm:text-lg md:text-xl font-semibold mb-3 sm:mb-4 leading-relaxed">
                   "I went from 'maybe next term' to a funded start date with a clear course map and checklist."
                 </p>
-                <p className="text-gray-300 font-medium">— U.S. Navy veteran</p>
+                <p className="text-xs sm:text-sm text-gray-300 font-medium">— U.S. Navy veteran</p>
               </div>
             </div>
           </div>
@@ -387,39 +328,39 @@ const WanacPLEP = () => {
       </section>
 
       {/* Deep Benefits & Capabilities Section */}
-      <section className="bg-[#faf9f7] py-20">
+      <section className="bg-[#faf9f7] py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-[#002147] mb-4">
+          <div className="text-center mb-10 sm:mb-12">
+            <h2 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold text-[#002147] mb-3 sm:mb-4">
               Deep benefits & capabilities (by use case)
             </h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+            <p className="text-xs sm:text-sm md:text-base text-gray-600 max-w-3xl mx-auto">
               Tailored pathways for every education goal
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {useCases.map((useCase, index) => {
               const colors = colorClasses[useCase.color];
               return (
-                <div key={index} className={`bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl transition-all duration-300 border-t-4 ${colors.border}`}>
-                  <div className={`w-16 h-16 ${colors.bgOpacity} rounded-full flex items-center justify-center mb-6 ${colors.text}`}>
+                <div key={index} className={`bg-white rounded-xl shadow-lg p-5 sm:p-6 hover:shadow-xl transition-all duration-300 border-t-4 ${colors.border}`}>
+                  <div className={`w-12 h-12 sm:w-14 sm:h-14 ${colors.bgOpacity} rounded-full flex items-center justify-center mb-4 sm:mb-5 ${colors.text}`}>
                     {useCase.icon}
                   </div>
-                  <h3 className="text-xl font-bold text-[#002147] mb-4">{useCase.title}</h3>
-                  <div className="mb-4">
-                    <p className="text-sm font-semibold text-gray-700 mb-2">Outcome:</p>
-                    <p className="text-sm text-gray-600 mb-4">{useCase.outcome}</p>
-                    <p className="text-sm font-semibold text-gray-700 mb-2">What we do:</p>
-                    <p className="text-sm text-gray-600">{useCase.whatWeDo}</p>
+                  <h3 className="text-base sm:text-lg font-bold text-[#002147] mb-3 sm:mb-4">{useCase.title}</h3>
+                  <div className="mb-3 sm:mb-4">
+                    <p className="text-xs font-semibold text-gray-700 mb-1.5">Outcome:</p>
+                    <p className="text-xs text-gray-600 mb-3">{ useCase.outcome}</p>
+                    <p className="text-xs font-semibold text-gray-700 mb-1.5">What we do:</p>
+                    <p className="text-xs text-gray-600">{useCase.whatWeDo}</p>
                   </div>
                 </div>
               );
             })}
           </div>
 
-          <div className="text-center mt-12">
-            <button className="bg-[#ff5e1a] text-white px-10 py-4 rounded-lg text-lg font-semibold hover:bg-[#e54e16] transition-all duration-200 shadow-lg hover:shadow-xl inline-flex items-center gap-2">
+          <div className="text-center mt-8 sm:mt-10">
+            <button className="bg-[#ff5e1a] text-white px-5 sm:px-8 py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-semibold hover:bg-[#e54e16] transition-all duration-200 shadow-lg hover:shadow-xl inline-flex items-center gap-2">
               Apply for the PLEP cohort
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
@@ -430,27 +371,27 @@ const WanacPLEP = () => {
       </section>
 
       {/* What You'll Produce Section */}
-      <section className="bg-white py-20">
+      <section className="bg-white py-16 sm:py-20">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-[#002147] mb-4">
+          <div className="text-center mb-10 sm:mb-12">
+            <h2 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold text-[#002147] mb-3 sm:mb-4">
               What you'll produce (deliverables)
             </h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+            <p className="text-xs sm:text-sm md:text-base text-gray-600 max-w-3xl mx-auto">
               Concrete outputs from your PLEP cohort experience
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
             {deliverables.map((deliverable, index) => (
-              <div key={index} className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300 border-l-4 border-[#ff5e1a]">
-                <div className="flex items-start gap-3">
-                  <div className="w-10 h-10 bg-[#ff5e1a] bg-opacity-10 rounded-full flex items-center justify-center text-[#ff5e1a] flex-shrink-0">
+              <div key={index} className="bg-white rounded-lg shadow-lg p-4 sm:p-5 hover:shadow-xl transition-shadow duration-300 border-l-4 border-[#ff5e1a]">
+                <div className="flex items-start gap-2.5 sm:gap-3">
+                  <div className="w-8 h-8 sm:w-9 sm:h-9 bg-[#ff5e1a] bg-opacity-10 rounded-full flex items-center justify-center text-[#ff5e1a] flex-shrink-0">
                     {deliverable.icon}
                   </div>
                   <div>
-                    <h3 className="font-bold text-[#002147] mb-2">{deliverable.title}</h3>
-                    <p className="text-gray-600 text-sm">{deliverable.description}</p>
+                    <h3 className="text-xs sm:text-sm font-bold text-[#002147] mb-1.5 sm:mb-2">{deliverable.title}</h3>
+                    <p className="text-gray-600 text-xs leading-relaxed">{deliverable.description}</p>
                   </div>
                 </div>
               </div>
@@ -460,83 +401,83 @@ const WanacPLEP = () => {
       </section>
 
       {/* How the Cohort Works */}
-      <section className="bg-[#faf9f7] py-20">
+      <section className="bg-[#faf9f7] py-16 sm:py-20">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-[#002147] mb-4">
+          <div className="text-center mb-10 sm:mb-12">
+            <h2 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold text-[#002147] mb-3 sm:mb-4">
               How the cohort works (4 steps)
             </h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+            <p className="text-xs sm:text-sm md:text-base text-gray-600 max-w-3xl mx-auto">
               12-week journey from intake to enrollment
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
             {/* Step 1 */}
             <div className="text-center">
-              <div className="w-20 h-20 bg-blue-600 text-white rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-6 shadow-lg">
+              <div className="w-16 h-16 sm:w-18 sm:h-18 bg-blue-600 text-white rounded-full flex items-center justify-center text-2xl sm:text-3xl font-bold mx-auto mb-4 sm:mb-5 shadow-lg">
                 1
               </div>
-              <h3 className="text-xl font-bold text-[#002147] mb-3">
+              <h3 className="text-base sm:text-lg font-bold text-[#002147] mb-2 sm:mb-3">
                 Intake & targeting
               </h3>
-              <p className="text-gray-600 text-sm mb-2">(week 1)</p>
-              <p className="text-gray-600">
+              <p className="text-xs text-gray-600 mb-1.5 sm:mb-2">(week 1)</p>
+              <p className="text-xs text-gray-600">
                 Goals, constraints, timeline, prior credits
               </p>
             </div>
 
             {/* Step 2 */}
             <div className="text-center">
-              <div className="w-20 h-20 bg-[#ff5e1a] text-white rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-6 shadow-lg">
+              <div className="w-16 h-16 sm:w-18 sm:h-18 bg-[#ff5e1a] text-white rounded-full flex items-center justify-center text-2xl sm:text-3xl font-bold mx-auto mb-4 sm:mb-5 shadow-lg">
                 2
               </div>
-              <h3 className="text-xl font-bold text-[#002147] mb-3">
+              <h3 className="text-base sm:text-lg font-bold text-[#002147] mb-2 sm:mb-3">
                 Design & alignment
               </h3>
-              <p className="text-gray-600 text-sm mb-2">(weeks 2–3)</p>
-              <p className="text-gray-600">
+              <p className="text-xs text-gray-600 mb-1.5 sm:mb-2">(weeks 2–3)</p>
+              <p className="text-xs text-gray-600">
                 Shortlist + funding map + admissions schedule
               </p>
             </div>
 
             {/* Step 3 */}
             <div className="text-center">
-              <div className="w-20 h-20 bg-purple-600 text-white rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-6 shadow-lg">
+              <div className="w-16 h-16 sm:w-18 sm:h-18 bg-purple-600 text-white rounded-full flex items-center justify-center text-2xl sm:text-3xl font-bold mx-auto mb-4 sm:mb-5 shadow-lg">
                 3
               </div>
-              <h3 className="text-xl font-bold text-[#002147] mb-3">
+              <h3 className="text-base sm:text-lg font-bold text-[#002147] mb-2 sm:mb-3">
                 Execute
               </h3>
-              <p className="text-gray-600 text-sm mb-2">(weeks 4–8)</p>
-              <p className="text-gray-600">
+              <p className="text-xs text-gray-600 mb-1.5 sm:mb-2">(weeks 4–8)</p>
+              <p className="text-xs text-gray-600">
                 Submit applications, order records, finalize prerequisites
               </p>
             </div>
 
             {/* Step 4 */}
             <div className="text-center">
-              <div className="w-20 h-20 bg-green-600 text-white rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-6 shadow-lg">
+              <div className="w-16 h-16 sm:w-18 sm:h-18 bg-green-600 text-white rounded-full flex items-center justify-center text-2xl sm:text-3xl font-bold mx-auto mb-4 sm:mb-5 shadow-lg">
                 4
               </div>
-              <h3 className="text-xl font-bold text-[#002147] mb-3">
+              <h3 className="text-base sm:text-lg font-bold text-[#002147] mb-2 sm:mb-3">
                 Launch readiness
               </h3>
-              <p className="text-gray-600 text-sm mb-2">(weeks 9–12)</p>
-              <p className="text-gray-600">
+              <p className="text-xs text-gray-600 mb-1.5 sm:mb-2">(weeks 9–12)</p>
+              <p className="text-xs text-gray-600">
                 Enroll, register, activate services, run the start-strong plan
               </p>
             </div>
           </div>
 
-          <div className="bg-blue-50 border-l-4 border-blue-600 p-6 rounded-lg mb-8">
-            <p className="text-gray-700">
+          <div className="bg-blue-50 border-l-4 border-blue-600 p-4 sm:p-5 rounded-lg mb-6 sm:mb-8">
+            <p className="text-xs sm:text-sm text-gray-700">
               <span className="font-semibold text-blue-800">Time commitment:</span> ~60–90 minutes/week (session + missions).
             </p>
           </div>
 
           <div className="text-center">
-            <button className="bg-[#ff5e1a] text-white px-10 py-4 rounded-lg text-lg font-semibold hover:bg-[#e54e16] transition-all duration-200 shadow-lg hover:shadow-xl">
+            <button className="bg-[#ff5e1a] text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-semibold hover:bg-[#e54e16] transition-all duration-200 shadow-lg hover:shadow-xl">
               Apply for the PLEP cohort
             </button>
           </div>
@@ -544,54 +485,54 @@ const WanacPLEP = () => {
       </section>
 
       {/* Integration & Fit */}
-      <section className="bg-white py-20">
+      <section className="bg-white py-16 sm:py-20">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-4xl font-bold text-[#002147] mb-4">
+          <div className="text-center mb-8 sm:mb-10">
+            <h2 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold text-[#002147] mb-3 sm:mb-4">
               Integration & fit
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white rounded-xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300">
-              <div className="w-14 h-14 bg-blue-600 bg-opacity-10 rounded-full flex items-center justify-center mb-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+            <div className="bg-white rounded-lg shadow-lg p-5 sm:p-6 hover:shadow-xl transition-shadow duration-300">
+              <div className="w-12 h-12 sm:w-13 sm:h-13 bg-blue-600 bg-opacity-10 rounded-full flex items-center justify-center mb-3 sm:mb-4">
                 <svg className="w-7 h-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold text-[#002147] mb-3">Benefits first when needed</h3>
-              <p className="text-gray-600">
+              <h3 className="text-base sm:text-lg font-bold text-[#002147] mb-2 sm:mb-3">Benefits first when needed</h3>
+              <p className="text-xs sm:text-sm text-gray-600">
                 If claims are the bottleneck, we route you to accredited VSO Claim Support (including BDD for active duty) before cohort milestones.
               </p>
             </div>
 
-            <div className="bg-white rounded-xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300">
-              <div className="w-14 h-14 bg-[#ff5e1a] bg-opacity-10 rounded-full flex items-center justify-center mb-4">
+            <div className="bg-white rounded-lg shadow-lg p-5 sm:p-6 hover:shadow-xl transition-shadow duration-300">
+              <div className="w-12 h-12 sm:w-13 sm:h-13 bg-[#ff5e1a] bg-opacity-10 rounded-full flex items-center justify-center mb-3 sm:mb-4">
                 <svg className="w-7 h-7 text-[#ff5e1a]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold text-[#002147] mb-3">Career alignment</h3>
-              <p className="text-gray-600">
+              <h3 className="text-base sm:text-lg font-bold text-[#002147] mb-2 sm:mb-3">Career alignment</h3>
+              <p className="text-xs sm:text-sm text-gray-600">
                 PLEP pairs with PLCA (Career Accelerator) to connect program → role pipeline.
               </p>
             </div>
 
-            <div className="bg-white rounded-xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300">
-              <div className="w-14 h-14 bg-green-600 bg-opacity-10 rounded-full flex items-center justify-center mb-4">
+            <div className="bg-white rounded-lg shadow-lg p-5 sm:p-6 hover:shadow-xl transition-shadow duration-300">
+              <div className="w-12 h-12 sm:w-13 sm:h-13 bg-green-600 bg-opacity-10 rounded-full flex items-center justify-center mb-3 sm:mb-4">
                 <svg className="w-7 h-7 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold text-[#002147] mb-3">Execution engine</h3>
-              <p className="text-gray-600">
+              <h3 className="text-base sm:text-lg font-bold text-[#002147] mb-2 sm:mb-3">Execution engine</h3>
+              <p className="text-xs sm:text-sm text-gray-600">
                 PPC can run in parallel to keep weekly missions on track.
               </p>
             </div>
           </div>
 
-          <div className="bg-blue-50 border-l-4 border-blue-600 p-6 rounded-lg mt-8">
-            <p className="text-gray-700">
+          <div className="bg-blue-50 border-l-4 border-blue-600 p-4 sm:p-5 rounded-lg mt-6 sm:mt-8">
+            <p className="text-xs sm:text-sm text-gray-700">
               <span className="font-semibold text-blue-800">Note:</span> Cohorts are for PLEP, PLCA, PPC, CPPC, and VETA. Claims support is 1:1 representation (not a cohort).
             </p>
           </div>
@@ -599,37 +540,37 @@ const WanacPLEP = () => {
       </section>
 
       {/* Scholarships & Funding */}
-      <section className="bg-[#faf9f7] py-20">
+      <section className="bg-[#faf9f7] py-16 sm:py-20">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-4xl font-bold text-[#002147] mb-4">
+          <div className="text-center mb-8 sm:mb-10">
+            <h2 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold text-[#002147] mb-3 sm:mb-4">
               Scholarships & funding
             </h2>
           </div>
 
-          <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl shadow-lg p-8 md:p-12 mb-8">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+          <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl sm:rounded-2xl shadow-lg p-5 sm:p-8 mb-6 sm:mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 text-center">
               <div>
-                <div className="w-16 h-16 bg-purple-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4 shadow-lg">
+                <div className="w-14 h-14 sm:w-16 sm:h-16 bg-purple-600 text-white rounded-full flex items-center justify-center text-lg sm:text-2xl font-bold mx-auto mb-3 sm:mb-4 shadow-lg">
                   1
                 </div>
-                <p className="text-gray-700 font-semibold">One scholarship per veteran per year (sponsor-funded; limited)</p>
+                <p className="text-xs sm:text-sm text-gray-700 font-semibold">One scholarship per veteran per year (sponsor-funded; limited)</p>
               </div>
               <div>
-                <div className="w-16 h-16 bg-[#ff5e1a] text-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                <div className="w-14 h-14 sm:w-16 sm:h-16 bg-[#ff5e1a] text-white rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 shadow-lg">
                   <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
                   </svg>
                 </div>
-                <p className="text-gray-700 font-semibold">Use the Scholarship Eligibility Estimator after you apply</p>
+                <p className="text-xs sm:text-sm text-gray-700 font-semibold">Use the Scholarship Eligibility Estimator after you apply</p>
               </div>
               <div>
-                <div className="w-16 h-16 bg-green-600 text-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                <div className="w-14 h-14 sm:w-16 sm:h-16 bg-green-600 text-white rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 shadow-lg">
                   <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
                 </div>
-                <p className="text-gray-700 font-semibold">Claims support is free and does not require a scholarship</p>
+                <p className="text-xs sm:text-sm text-gray-700 font-semibold">Claims support is free and does not require a scholarship</p>
               </div>
             </div>
           </div>
@@ -637,27 +578,27 @@ const WanacPLEP = () => {
       </section>
 
       {/* FAQ Section */}
-      <section className="bg-white py-20">
+      <section className="bg-white py-16 sm:py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-4xl font-bold text-[#002147] mb-4">
+          <div className="text-center mb-8 sm:mb-10">
+            <h2 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold text-[#002147] mb-3 sm:mb-4">
               Frequently Asked Questions
             </h2>
-            <p className="text-lg text-gray-600">
+            <p className="text-xs sm:text-sm md:text-base text-gray-600">
               Risk reversal & objections answered
             </p>
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             {faqs.map((faq, index) => (
-              <div key={index} className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
+              <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
                 <button
-                  className="w-full text-left px-6 py-5 flex justify-between items-center hover:bg-gray-50 transition-colors"
+                  className="w-full text-left px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center hover:bg-gray-50 transition-colors"
                   onClick={() => toggleFaq(index)}
                 >
-                  <span className="text-lg font-semibold text-[#002147]">{faq.question}</span>
+                  <span className="text-sm sm:text-base font-semibold text-[#002147]">{faq.question}</span>
                   <svg
-                    className={`w-6 h-6 text-[#ff5e1a] transition-transform duration-200 ${
+                    className={`w-5 h-5 sm:w-6 sm:h-6 text-[#ff5e1a] transition-transform duration-200 ${
                       openFaq === index ? 'transform rotate-180' : ''
                     }`}
                     fill="none"
@@ -668,7 +609,7 @@ const WanacPLEP = () => {
                   </svg>
                 </button>
                 {openFaq === index && (
-                  <div className="px-6 pb-5 text-gray-600 animate-fadeIn">
+                  <div className="px-4 sm:px-6 pb-3 sm:pb-4 text-xs sm:text-sm text-gray-600 animate-fadeIn">
                     {faq.answer}
                   </div>
                 )}
@@ -679,20 +620,20 @@ const WanacPLEP = () => {
       </section>
 
       {/* Final CTA Section */}
-      <section className="bg-gradient-to-r from-[#002147] to-[#003366] py-20">
+      <section className="bg-gradient-to-r from-[#002147] to-[#003366] py-16 sm:py-20">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center text-white">
-            <h2 className="text-4xl lg:text-5xl font-bold mb-6">
+            <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6">
               Start your education journey
             </h2>
-            <p className="text-xl mb-10 text-gray-200 max-w-3xl mx-auto">
+            <p className="text-base sm:text-lg md:text-xl mb-8 sm:mb-10 text-gray-200 max-w-3xl mx-auto">
               Join the next PLEP cohort and build a funded education plan that fits your mission
             </p>
-            <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <button className="bg-[#ff5e1a] text-white px-12 py-5 rounded-lg text-xl font-semibold hover:bg-[#e54e16] transition-all duration-200 shadow-xl hover:shadow-2xl transform hover:scale-105">
+            <div className="flex flex-col xs:flex-row gap-4 sm:gap-6 justify-center">
+              <button className="bg-[#ff5e1a] text-white px-4 sm:px-6 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-semibold hover:bg-[#e54e16] transition-all duration-200 shadow-xl hover:shadow-2xl transform hover:scale-105">
                 Apply for the PLEP cohort
               </button>
-              <button className="border-3 border-white text-white px-12 py-5 rounded-lg text-xl font-semibold hover:bg-white hover:text-[#002147] transition-all duration-200 shadow-xl">
+              <button className="border-2 sm:border-3 border-white text-white px-4 sm:px-6 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-semibold hover:bg-white hover:text-[#002147] transition-all duration-200 shadow-xl">
                 Take the 3-minute quiz
               </button>
             </div>
@@ -701,90 +642,15 @@ const WanacPLEP = () => {
       </section>
 
       {/* Compliance Section */}
-      <section className="bg-gray-100 py-8">
+      <section className="bg-gray-100 py-6 sm:py-8">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <p className="text-sm text-gray-600 leading-relaxed">
+            <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
               <span className="font-semibold">Compliance & Privacy:</span> Cohorts are available for PLEP, PLCA, PPC, CPPC, and VETA only. VA claims are handled 1:1 via accredited representatives (WANAC for ≤12 months/BDD; partner VSOs/agents/attorneys for others). One scholarship per veteran per year; awards limited and not guaranteed. WANAC is not a law firm and is not affiliated with the U.S. Department of Veterans Affairs. Your information is handled securely and shared only with your consent.
             </p>
           </div>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="bg-[#002147] text-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
-            <div>
-              <h4 className="font-bold text-lg mb-4">Programs</h4>
-              <ul className="space-y-3 text-gray-300">
-                <li><a href="#" className="hover:text-[#ff5e1a] transition-colors">PLEP (Education)</a></li>
-                <li><a href="#" className="hover:text-[#ff5e1a] transition-colors">PLCA (Career)</a></li>
-                <li><a href="#" className="hover:text-[#ff5e1a] transition-colors">PPC (Performance)</a></li>
-                <li><a href="#" className="hover:text-[#ff5e1a] transition-colors">CPPC (Certified Coach)</a></li>
-                <li><a href="#" className="hover:text-[#ff5e1a] transition-colors">VETA (Entrepreneurship)</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-bold text-lg mb-4">PLEP Resources</h4>
-              <ul className="space-y-3 text-gray-300">
-                <li><a href="#" className="hover:text-[#ff5e1a] transition-colors">GI Bill Calculator</a></li>
-                <li><a href="#" className="hover:text-[#ff5e1a] transition-colors">Program Comparison Tool</a></li>
-                <li><a href="#" className="hover:text-[#ff5e1a] transition-colors">Admissions Checklist</a></li>
-                <li><a href="#" className="hover:text-[#ff5e1a] transition-colors">Success Stories</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-bold text-lg mb-4">Company</h4>
-              <ul className="space-y-3 text-gray-300">
-                <li><a href="#" className="hover:text-[#ff5e1a] transition-colors">About Us</a></li>
-                <li><a href="#" className="hover:text-[#ff5e1a] transition-colors">Contact</a></li>
-                <li><a href="#" className="hover:text-[#ff5e1a] transition-colors">Privacy Policy</a></li>
-                <li><a href="#" className="hover:text-[#ff5e1a] transition-colors">Terms of Service</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-bold text-lg mb-4">Connect</h4>
-              <div className="flex space-x-4 mb-6">
-                <a href="#" className="w-10 h-10 bg-white bg-opacity-10 rounded-full flex items-center justify-center hover:bg-[#ff5e1a] transition-colors">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
-                  </svg>
-                </a>
-                <a href="#" className="w-10 h-10 bg-white bg-opacity-10 rounded-full flex items-center justify-center hover:bg-[#ff5e1a] transition-colors">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm3 8h-1.35c-.538 0-.65.221-.65.778V10h2l-.209 2H13v7h-3v-7H8v-2h2V7.692C10 5.923 10.931 5 13.029 5H15v3z"/>
-                  </svg>
-                </a>
-                <a href="#" className="w-10 h-10 bg-white bg-opacity-10 rounded-full flex items-center justify-center hover:bg-[#ff5e1a] transition-colors">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                  </svg>
-                </a>
-              </div>
-              <p className="text-sm text-gray-300 mt-4">
-                Your path to the Promise Land
-              </p>
-            </div>
-          </div>
-          <div className="border-t border-gray-700 pt-8">
-            <div className="flex flex-col md:flex-row justify-between items-center text-gray-400 text-sm">
-              <div className="mb-4 md:mb-0">
-                <p>&copy; 2025 WANAC. All rights reserved.</p>
-              </div>
-              <div className="flex items-center gap-2">
-                <Image
-                  src="/WANAC N 8 Old Glory.svg"
-                  alt="WANAC Logo"
-                  width={80}
-                  height={30}
-                  className="opacity-80"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 };
