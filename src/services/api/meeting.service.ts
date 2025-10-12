@@ -248,6 +248,92 @@ export const meetingService = {
   },
 
   /**
+   * Get recording summary for admin
+   * Reference: https://wanac-api.kuzasports.com/docs#endpoints-GETapi-v1-fireteams-recordings-summary-admin--recordingId-
+   */
+  async getRecordingSummaryAdmin(recordingId: number | string): Promise<any> {
+    try {
+      const response = await apiClient.get(
+        `/api/v1/fireteams/recordings/summary/admin/${recordingId}`
+      );
+      
+      return response.data.data || response.data;
+    } catch (error) {
+      console.error('Failed to get admin recording summary:', error);
+      throw error;
+    }
+  },
+
+  /**
+   * Get recording summary for coach
+   * Reference: https://wanac-api.kuzasports.com/docs#endpoints-GETapi-v1-fireteams-recordings-summary-coach--recordingId-
+   */
+  async getRecordingSummaryCoach(recordingId: number | string): Promise<any> {
+    try {
+      const response = await apiClient.get(
+        `/api/v1/fireteams/recordings/summary/coach/${recordingId}`
+      );
+      
+      return response.data.data || response.data;
+    } catch (error) {
+      console.error('Failed to get coach recording summary:', error);
+      throw error;
+    }
+  },
+
+  /**
+   * Get recording summary for client
+   * Reference: https://wanac-api.kuzasports.com/docs#endpoints-GETapi-v1-fireteams-recordings-summary-client--recordingId---clientId-
+   */
+  async getRecordingSummaryClient(recordingId: number | string, clientId: number | string): Promise<any> {
+    try {
+      const response = await apiClient.get(
+        `/api/v1/fireteams/recordings/summary/client/${recordingId}/${clientId}`
+      );
+      
+      return response.data.data || response.data;
+    } catch (error) {
+      console.error('Failed to get client recording summary:', error);
+      throw error;
+    }
+  },
+
+  /**
+   * Get recording summary based on user role
+   * Automatically routes to the correct endpoint based on role
+   */
+  async getRecordingSummaryByRole(
+    recordingId: number | string,
+    userRole: 'admin' | 'coach' | 'client',
+    clientId?: number | string
+  ): Promise<any> {
+    try {
+      switch (userRole) {
+        case 'admin':
+          return await this.getRecordingSummaryAdmin(recordingId);
+        
+        case 'coach':
+          return await this.getRecordingSummaryCoach(recordingId);
+        
+        case 'client':
+          if (!clientId) {
+            throw new Error('Client ID is required for client role');
+          }
+          return await this.getRecordingSummaryClient(recordingId, clientId);
+        
+        default:
+          throw new Error(`Invalid user role: ${userRole}`);
+      }
+    } catch (error: any) {
+      console.error('Failed to get recording summary by role:', error);
+      throw new Error(
+        'Failed to fetch recording summary: ' + 
+        (error.response?.data?.message || error.message)
+      );
+    }
+  },
+
+  /**
    * Delete recording
    */
   async deleteRecording(recordingId: number): Promise<void> {

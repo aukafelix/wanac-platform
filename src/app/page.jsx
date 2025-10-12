@@ -41,7 +41,7 @@ const PROGRAMS = [
     image: '/promiselandtransition.jpg',
     alt: 'Education Pathway Program',
     highlights: ['Academic Support', 'Mentoring'],
-    link: '/pages/plep'
+    link: '/pages/wanacplep'
   },
   {
     title: 'Promise Land Career Accelerator (PLCA)',
@@ -49,7 +49,7 @@ const PROGRAMS = [
     image: '/transitioncoaching11.jpg',
     alt: 'Career Accelerator Program',
     highlights: ['Career Growth', 'Strategy'],
-    link: '/pages/plca'
+    link: '/pages/wanaplca'
   },
   {
     title: 'Peak Performance Coaching (PPC)',
@@ -57,7 +57,7 @@ const PROGRAMS = [
     image: '/transitionguide.jpg',
     alt: 'Peak Performance Coaching',
     highlights: ['12-Sessions', 'Development'],
-    link: '/pages/ppc'
+    link: '/pages/wanappc'
   },
   {
     title: 'Vetrepreneurship Academy (VETA)',
@@ -65,7 +65,7 @@ const PROGRAMS = [
     image: '/Performancecoaching.png',
     alt: 'Vetrepreneurship Academy',
     highlights: ['Business', 'Mentorship'],
-    link: '/pages/veta'
+    link: '/pages/vetaacademy'
   }
 ];
 
@@ -272,7 +272,7 @@ export default function Homepage() {
               {desc}
             </p>
 
-            {/* Modern pill badges */}
+            {/*  pill badges */}
             <div className="flex flex-wrap gap-1.5 mb-3">
               {highlights.map((item) => (
                 <span 
@@ -284,7 +284,7 @@ export default function Homepage() {
               ))}
             </div>
 
-            {/* Modern button with arrow */}
+            {/*  button with arrow */}
               <Link
                 href={link}
               className="inline-flex items-center justify-center gap-2 w-full px-3 py-2 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold shadow-lg hover:shadow-orange-500/50 transform hover:-translate-y-0.5 transition-all duration-300 text-xs mt-auto"
@@ -334,7 +334,7 @@ export default function Homepage() {
             </p>
           </div>
 
-          {/* Modern Glassmorphism Cards */}
+          {/* Glassmorphism Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {FEATURES.map((feature) => (
               <div 

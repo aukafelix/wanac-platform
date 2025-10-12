@@ -19,7 +19,10 @@ export function useRecording(jitsiApiRef, jitsiReady) {
    * Toggle recording on/off
    */
   const toggleRecording = async () => {
-    if (!jitsiApiRef?.current || !jitsiReady) return;
+    if (!jitsiApiRef?.current || !jitsiReady) {
+      console.warn('⚠️ Jitsi not ready for recording');
+      throw new Error('Jitsi is not ready. Please wait a moment and try again.');
+    }
 
     try {
       if (isRecording) {
@@ -28,58 +31,90 @@ export function useRecording(jitsiApiRef, jitsiReady) {
 
         // Stop Jitsi recording if available
         try {
-          jitsiApiRef.current.executeCommand('stopRecording', 'file');
+          await jitsiApiRef.current.executeCommand('stopRecording', 'file');
+          console.log('✅ Jitsi recording stopped');
         } catch (err) {
-          console.warn('Could not stop Jitsi recording:', err);
+          console.warn('⚠️ Could not stop Jitsi recording:', err);
         }
 
         // Stop local media recorder
         if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
           mediaRecorderRef.current.stop();
+          console.log('✅ Local recorder stopped');
         }
 
         setIsRecording(false);
-        console.log('✅ Recording stopped');
+        console.log('✅ Recording stopped successfully');
       } else {
         // START RECORDING
         console.log('🔴 Starting recording...');
 
         // Start Jitsi recording if available
         try {
-          jitsiApiRef.current.executeCommand('startRecording', {
+          await jitsiApiRef.current.executeCommand('startRecording', {
             mode: 'file',
             shouldShare: false,
+            rtmpStreamKey: '',
+            rtmpBroadcastID: '',
+            youtubeStreamKey: '',
+            youtubeBroadcastID: '',
           });
+          console.log('✅ Jitsi recording started (server-side)');
         } catch (err) {
-          console.warn('Could not start Jitsi recording:', err);
+          console.warn('⚠️ Jitsi recording not available, using local recording only:', err.message);
         }
 
-        // Start local media recorder as backup
+        // Start local media recorder as backup/fallback
         try {
-          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-          const mediaRecorder = new MediaRecorder(stream);
+          // Get display media (screen + audio) for better quality
+          let stream;
+          try {
+            // Try to get screen + audio
+            stream = await navigator.mediaDevices.getDisplayMedia({ 
+              audio: true,
+              video: true 
+            });
+            console.log('✅ Screen capture with audio enabled');
+          } catch (err) {
+            // Fallback to just microphone audio
+            console.log('⚠️ Screen capture unavailable, using microphone only');
+            stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          }
+          
+          const mediaRecorder = new MediaRecorder(stream, {
+            mimeType: MediaRecorder.isTypeSupported('video/webm;codecs=vp9') 
+              ? 'video/webm;codecs=vp9'
+              : 'video/webm'
+          });
           mediaRecorderRef.current = mediaRecorder;
           recordedChunksRef.current = [];
 
           mediaRecorder.ondataavailable = (event) => {
             if (event.data.size > 0) {
               recordedChunksRef.current.push(event.data);
+              console.log('📦 Recording chunk saved:', event.data.size, 'bytes');
             }
           };
 
           mediaRecorder.onstop = async () => {
-            const blob = new Blob(recordedChunksRef.current, { type: 'audio/webm' });
+            const blob = new Blob(recordedChunksRef.current, { 
+              type: stream.getVideoTracks().length > 0 ? 'video/webm' : 'audio/webm' 
+            });
             setRecordingBlob(blob);
-            console.log('✅ Recording saved, size:', blob.size);
+            console.log('✅ Recording saved locally, size:', (blob.size / 1024 / 1024).toFixed(2), 'MB');
 
             // Stop all tracks
-            stream.getTracks().forEach((track) => track.stop());
+            stream.getTracks().forEach((track) => {
+              track.stop();
+              console.log('🛑 Track stopped:', track.kind);
+            });
           };
 
-          mediaRecorder.start();
+          mediaRecorder.start(1000); // Collect data every second
           console.log('✅ Local media recorder started');
         } catch (err) {
           console.error('❌ Failed to start local recorder:', err);
+          throw new Error('Could not access microphone/screen. Please grant permissions.');
         }
 
         setIsRecording(true);

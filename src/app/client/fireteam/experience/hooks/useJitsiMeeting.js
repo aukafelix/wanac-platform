@@ -221,8 +221,38 @@ export function useJitsiMeeting(jitsiContainerId) {
           disableReactions: false,
           disablePolls: false,
           enableClosePage: false,
+          
+          // ========================================
+          // RECORDING CONFIGURATION - ENABLED
+          // ========================================
           fileRecordingsEnabled: true,
+          fileRecordingsServiceEnabled: true,
+          fileRecordingsServiceSharingEnabled: true,
+          hiddenDomain: 'recorder.meet.jit.si',
+          
+          // Recording options
+          recordingService: {
+            enabled: true,
+            sharingEnabled: true,
+            hideStorageWarning: false,
+          },
+          
+          // Dropbox integration (optional)
+          dropbox: {
+            appKey: '', // Optional: Add Dropbox app key for cloud storage
+            redirectURI: '',
+          },
+          
+          // Local recording (browser-based)
+          localRecording: {
+            enabled: true,
+            format: 'flac',
+          },
+          
+          // Live streaming (optional)
           liveStreamingEnabled: false,
+          
+          // ========================================
           
           // DISABLE LOBBY/MODERATOR REQUIREMENT
           enableLobby: false,

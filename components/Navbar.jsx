@@ -73,10 +73,11 @@ export default function Navbar({ hideNavbar = false }) {
       items: [
         
         { label: "Our Approach", href: "/pages/howwehelp#approach" },
-        { label: "PLEP", href: "/pages/plep" },
-        { label: "PLCA", href: "/pages/plca" },
-        { label: "PPC", href: "/pages/ppc" },
-        { label: "VETA", href: "/pages/veta" }
+        { label: "PLEP", href: "/pages/wanacplep" },
+        { label: "PLCA", href: "/pages/wanaplca" },
+        { label: "PPC", href: "/pages/wanappc" },
+        { label: "VETA", href: "/pages/wanaveta" },
+        { label: "CPPC", href: "/pages/wanacppc" }
       ]
     },
     action: {
@@ -119,12 +120,13 @@ export default function Navbar({ hideNavbar = false }) {
   };
 
   // Function to handle navigation
- const router = useRouter();
+  const router = useRouter();
 
-const handleNavigation = (href) => {
-  setActiveDropdown(null);
-  router.push(href); // client-side route change
-};
+  const handleNavigation = (href) => {
+    setActiveDropdown(null);
+    setIsMobileMenuOpen(false);
+    router.push(href); // client-side route change
+  };
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
@@ -337,7 +339,7 @@ const handleNavigation = (href) => {
               {/* Action Buttons - More Compact & Modern */}
               <div className="flex items-center gap-2">
                 <Link
-                  href="/donate"
+                  href="/pages/donate"
                   className="bg-gradient-to-r from-orange-500 to-orange-600 text-white text-xs font-bold px-3 py-2 hover:shadow-lg hover:shadow-orange-500/30 hover:scale-105 transform transition-all duration-200 whitespace-nowrap"
                 >
                   DONATE
@@ -349,7 +351,7 @@ const handleNavigation = (href) => {
                   FREE SESSION
                 </Link>
                 <Link
-                  href="/workshops"
+                  href="/pages/workshops"
                   className="border-2 border-orange-500 text-orange-600 text-xs font-bold px-3 py-1.5 hover:bg-orange-500 hover:text-white transform hover:scale-105 transition-all duration-200 whitespace-nowrap"
                 >
                   SHOP
@@ -363,16 +365,12 @@ const handleNavigation = (href) => {
                 <div className="max-w-7xl mx-auto flex items-center justify-center flex-wrap gap-x-8 gap-y-3 px-8">
                   {navigation[activeDropdown]?.items.map((item, index) => (
                     <React.Fragment key={index}>
-                      <Link
-                        href={item.href}
-                        className="text-sm hover:text-orange-400 transition-all duration-200 hover:scale-105 transform font-medium"
-                        onClick={() => {
-                          setActiveDropdown(null);
-                          handleNavigation(item.href);
-                        }}
+                      <button
+                        onClick={() => handleNavigation(item.href)}
+                        className="text-sm hover:text-orange-400 transition-all duration-200 hover:scale-105 transform font-medium bg-transparent border-none cursor-pointer"
                       >
                         {item.label}
-                      </Link>
+                      </button>
                       {index < navigation[activeDropdown].items.length - 1 && (
                         <span className="text-orange-500 text-xs">★</span>
                       )}
@@ -440,21 +438,16 @@ const handleNavigation = (href) => {
                       {activeDropdown === key && (
                         <div className="bg-gradient-to-br from-orange-50 to-white py-2 animate-fadeIn">
                           {section.items.map((item, index) => (
-                            <Link
+                            <button
                               key={index}
-                              href={item.href}
-                              className="block px-8 py-2.5 text-sm text-gray-700 hover:text-orange-500 hover:bg-white transition-all duration-150 group"
-                              onClick={() => {
-                                setIsMobileMenuOpen(false);
-                                setActiveDropdown(null);
-                                handleNavigation(item.href);
-                              }}
+                              onClick={() => handleNavigation(item.href)}
+                              className="block w-full text-left px-8 py-2.5 text-sm text-gray-700 hover:text-orange-500 hover:bg-white transition-all duration-150 group bg-transparent border-none cursor-pointer"
                             >
                               <span className="flex items-center gap-2">
                                 <span className="text-orange-400 text-xs">★</span>
                                 <span className="group-hover:translate-x-1 transition-transform duration-200">{item.label}</span>
                               </span>
-                            </Link>
+                            </button>
                           ))}
                         </div>
                       )}
@@ -464,33 +457,33 @@ const handleNavigation = (href) => {
                 
                 {/* Mobile Action Buttons */}
                 <div className="px-6 py-6 space-y-3 bg-gray-50">
-                  <button
+                  <Link
+                    href="/pages/donate"
                     className="block w-full text-center py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white hover:shadow-lg hover:shadow-orange-500/30 transition-all duration-200 font-semibold text-sm"
                     onClick={() => {
                       setIsMobileMenuOpen(false);
-                      handleNavigation('/pages/donate');
                     }}
                   >
                     DONATE
-                  </button>
-                  <button
+                  </Link>
+                  <Link
+                    href="/pages/programintakeform"
                     className="block w-full text-center py-3 bg-gradient-to-r from-[#002147] to-[#003368] text-white hover:shadow-lg transition-all duration-200 font-semibold text-sm"
                     onClick={() => {
                       setIsMobileMenuOpen(false);
-                      handleNavigation('/pages/programintakeform');
                     }}
                   >
                     FREE STRATEGY SESSION
-                  </button>
-                  <button
+                  </Link>
+                  <Link
+                    href="/pages/workshops"
                     className="block w-full text-center py-3 border-2 border-orange-500 text-orange-600 hover:bg-orange-500 hover:text-white transition-all duration-200 font-semibold text-sm"
                     onClick={() => {
                       setIsMobileMenuOpen(false);
-                      handleNavigation('/pages/workshops');
                     }}
                   >
                     SHOP
-                  </button>
+                  </Link>
                 </div>
               </div>
             </>

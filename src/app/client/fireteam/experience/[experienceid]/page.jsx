@@ -13,7 +13,6 @@ import { useToast } from "../hooks/useToast";
 import MeetingTopBar from "../components/MeetingTopBar";
 import JitsiVideoContainer from "../components/JitsiVideoContainer";
 import MeetingFooter from "../components/MeetingFooter";
-import ProcessingOverlay from "../components/ProcessingOverlay";
 import { ToastContainer } from "../components/Toast";
 import ConfirmDialog from "../components/ConfirmDialog";
 
@@ -350,6 +349,18 @@ export default function FireteamExperienceMeeting() {
           onNext={handleNext}
           duration={currentStepDuration}
           onTimerComplete={handleTimerComplete}
+          controlBarComponent={
+            <WanacControlBar
+              showSlide={showSlide}
+              onToggleView={() => setShowSlide(!showSlide)}
+              isRecording={isRecording}
+              onToggleRecording={handleToggleRecording}
+              onLeaveMeeting={handleLeaveMeeting}
+              recordingBlob={recordingBlob}
+              processingRecording={processingRecording}
+              onProcessRecording={handleProcessRecording}
+            />
+          }
         />
 
         <div className="flex flex-1 overflow-hidden">
@@ -388,18 +399,6 @@ export default function FireteamExperienceMeeting() {
                 />
               </div>
             )}
-
-            {/* WANAC Custom Controls - Only unique features */}
-            <WanacControlBar
-              showSlide={showSlide}
-              onToggleView={() => setShowSlide(!showSlide)}
-              isRecording={isRecording}
-              onProcessRecording={handleProcessRecording}
-              recordingBlob={recordingBlob}
-              processingRecording={processingRecording}
-              currentStepTitle={agenda[currentStep]?.title || "Current Step"}
-              timeLeft={0} // Can be connected to timer if needed
-            />
           </section>
 
           {/* Agenda Sidebar */}
@@ -439,9 +438,6 @@ export default function FireteamExperienceMeeting() {
           userRole={isAdmin ? "admin" : "participant"}
         />
       )}
-
-      {/* Processing Overlay */}
-      <ProcessingOverlay isProcessing={processingRecording} />
     </div>
   );
 }

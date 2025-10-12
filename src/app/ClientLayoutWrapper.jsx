@@ -21,7 +21,6 @@ const excludedPaths = [
   '/pages/transitionreadinessquiz',
   '/pages/scholarshipelidgibilityestimator',
   '/pages/cohortapplication',
-  '/pages/vetaacademy',
 
 ];
 

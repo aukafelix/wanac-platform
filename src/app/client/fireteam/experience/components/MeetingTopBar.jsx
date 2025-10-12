@@ -2,7 +2,7 @@ import React from 'react';
 import CompactTimer from './CompactTimer';
 
 /**
- * Top navigation bar with title and slide navigation
+ * Top navigation bar with title, timer, and slide navigation
  */
 export default function MeetingTopBar({
   isAdmin,
@@ -13,6 +13,7 @@ export default function MeetingTopBar({
   onNext,
   duration,
   onTimerComplete,
+  controlBarComponent, // New prop for control bar
 }) {
   return (
     <div className="flex justify-between items-center px-6 py-4 border-b bg-white">
@@ -34,6 +35,17 @@ export default function MeetingTopBar({
           onTimeUp={onTimerComplete}
           stepTitle={`Step ${currentStep + 1} of ${totalSteps}`}
         />
+        
+        {/* Control Bar Component */}
+        {controlBarComponent && (
+          <>
+            <div className="w-px h-8 bg-gray-300"></div>
+            {controlBarComponent}
+          </>
+        )}
+        
+        <div className="w-px h-8 bg-gray-300"></div>
+        
         <button
           className="bg-gray-200 text-gray-700 text-sm px-4 py-2 rounded-lg hover:bg-gray-300 disabled:opacity-50 transition-colors"
           onClick={onPrevious}
