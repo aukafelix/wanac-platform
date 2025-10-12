@@ -10,7 +10,23 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="bg-[#002147] text-gray-800">
       <head>
+        <title>WANAC COACHING PLATFORM - Empowering Veterans to Thrive After Service</title>
+        <meta name="description" content="Get tailored coaching, smart tools, and a community that truly understands your veteran journey. Join 5000+ veterans in our supportive community." />
+        <meta name="keywords" content="veteran coaching, military transition, career coaching, veteran support, PTSD support, veteran community, Promise Land Education Pathway, Peak Performance Coaching" />
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+        
+        {/* Open Graph */}
+        <meta property="og:title" content="WANAC COACHING PLATFORM" />
+        <meta property="og:description" content="Empowering Veterans to Thrive After Service" />
+        <meta property="og:image" content="/landingpage4.jpg" />
+        <meta property="og:type" content="website" />
+        
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="WANAC COACHING PLATFORM" />
+        <meta name="twitter:description" content="Empowering Veterans to Thrive After Service" />
+        <meta name="twitter:image" content="/landingpage4.jpg" />
+        
         <link rel="icon" href="/WANAC N 8 Old Glory.svg" type="image/svg+xml" />
         <link rel="stylesheet" href="/jitsi-custom.css" />
       </head>

@@ -25,30 +25,35 @@ const navItems = [
   { name: 'Reports', href: '/client/reports', icon: <BarChart2 size={18} /> },
 ]
 
-export default function Sidebar() {
+export default function Sidebar({ collapsed: collapsedProp, setCollapsed: setCollapsedProp }) {
   const pathname = usePathname()
+  const router = useRouter();
+  
+  // If no props provided, use internal state (fallback for backward compatibility)
+  const [internalCollapsed, setInternalCollapsed] = useState(true);
+  const collapsed = collapsedProp !== undefined ? collapsedProp : internalCollapsed;
+  const setCollapsed = setCollapsedProp || setInternalCollapsed;
+  
   // collapsed: user's preference; hovered: current mouse state
-  const [collapsed, setCollapsed] = useState(true)
   const [hovered, setHovered] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
-  const router = useRouter();
 
-  // Load sidebar state from localStorage
+  // Load sidebar state from localStorage only if not controlled by props
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (collapsedProp === undefined && typeof window !== 'undefined') {
       const stored = localStorage.getItem('wanacSidebarCollapsed');
       if (stored !== null) {
-        setCollapsed(stored === 'true');
+        setInternalCollapsed(stored === 'true');
       }
     }
-  }, []);
+  }, [collapsedProp]);
 
-  // Persist sidebar state to localStorage
+  // Persist sidebar state to localStorage only if not controlled by props
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('wanacSidebarCollapsed', collapsed);
+    if (collapsedProp === undefined && typeof window !== 'undefined') {
+      localStorage.setItem('wanacSidebarCollapsed', internalCollapsed);
     }
-  }, [collapsed]);
+  }, [internalCollapsed, collapsedProp]);
 
   // Logout handler
   const handleLogout = () => {

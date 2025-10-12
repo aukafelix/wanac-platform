@@ -9,14 +9,18 @@ import {
   FaFileDownload,
   FaPlus,
   FaStickyNote,
-  FaTimes
+  FaTimes,
+  FaRobot,
+  FaArrowLeft
 } from "react-icons/fa";
 import { sessionsService } from "../../../../../services/api/sessions.service";
 import { clientsService } from '../../../../../services/api/clients.service';
 import CoachSidebar from "../../../../../../components/dashboardcomponents/CoachSidebar";
 import ClientTopbar from "../../../../../../components/dashboardcomponents/clienttopbar";
+import { useRouter } from "next/navigation";
 
 export default function SessionDetailsClient({ sessionId }) {
+  const router = useRouter();
   const [session, setSession] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showAddParticipant, setShowAddParticipant] = useState(false);
@@ -74,8 +78,8 @@ export default function SessionDetailsClient({ sessionId }) {
     fetchSession();
   }, [sessionId]);
 
-  if (loading) return <div className="p-8">Loading session...</div>;
-  if (!session) return <div className="p-8">Session not found.</div>;
+  if (loading) return <div className="p-4 text-sm">Loading session...</div>;
+  if (!session) return <div className="p-4 text-sm">Session not found.</div>;
 
   const dateObj = session.scheduled_at ? new Date(session.scheduled_at) : null;
   const dateStr = dateObj?.toLocaleDateString(undefined, {
@@ -90,144 +94,182 @@ export default function SessionDetailsClient({ sessionId }) {
   });
 
   return (
-    <div className="flex min-h-screen bg-white">
+    <div className="flex min-h-screen bg-white font-body">
       <CoachSidebar />
       <div className="flex-1 flex flex-col min-h-screen">
         <ClientTopbar user={{ name: "Coach" }} />
-        <main className="flex-1 px-4 md:px-6 py-8">
-          <div className="max-w-4xl mx-auto space-y-8">
-            {/* Header */}
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+        <main className="flex-1 px-3 md:px-4 py-3 bg-gray-50">
+          <div className="max-w-4xl mx-auto space-y-3">
+            {/* Back Button */}
+            <button
+              onClick={() => router.push('/coach/sessions')}
+              className="flex items-center gap-2 text-[#002147] hover:text-orange-500 transition-colors text-xs font-medium group"
+            >
+              <FaArrowLeft className="text-xs group-hover:-translate-x-1 transition-transform duration-200" />
+              Back to Sessions
+            </button>
+
+            {/* Header with gradient */}
+            <div className="bg-gradient-to-br from-[#002147] to-[#003875] rounded-lg p-4 shadow-lg relative overflow-hidden">
+              <div className="absolute inset-0 opacity-10">
+                <img 
+                  src="/veterancommunity.png" 
+                  alt="Background" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-2">
               <div>
-                <h1 className="text-3xl font-bold text-gray-900 mb-1">
+                  <h1 className="text-lg font-bold text-white mb-1">
                   {session.title}
                 </h1>
-                <p className="text-gray-600 max-w-xl">
+                  <p className="text-xs text-white/90 max-w-xl">
                   {session.description || "No description provided."}
                 </p>
               </div>
               {session.session_link && (
                 <button
-                  className="mt-4 md:mt-0 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg flex items-center gap-2"
+                    className="px-3 py-1.5 bg-green-500 hover:bg-green-600 text-white rounded-lg text-xs font-medium flex items-center gap-1.5 whitespace-nowrap shadow-sm transition-colors"
                   onClick={() => window.open(session.session_link, "_blank")}
                 >
-                  <FaCheckCircle /> Join Session
+                    <FaCheckCircle className="text-xs" /> Join Session
                 </button>
               )}
+              </div>
             </div>
 
             {/* Session Info Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="rounded-xl border p-4 shadow-sm bg-white">
-                <div className="text-blue-600 flex items-center gap-2 font-medium">
-                  <FaCalendarAlt /> Scheduled
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+              <div className="rounded-lg border border-blue-100 bg-gradient-to-br from-blue-50 to-white p-2.5 shadow-sm hover:shadow-md transition-shadow">
+                <div className="text-blue-600 flex items-center gap-1.5 font-semibold text-xs">
+                  <FaCalendarAlt className="text-xs" /> Scheduled
                 </div>
-                <div className="text-lg font-semibold text-gray-800 mt-2">
+                <div className="text-sm font-bold text-[#002147] mt-1.5">
                   {dateStr || "N/A"}
                 </div>
-                <div className="text-sm text-gray-500">{timeStr} • 90 minutes</div>
+                <div className="text-[10px] text-gray-600">{timeStr} • 90 minutes</div>
               </div>
-              <div className="rounded-xl border p-4 shadow-sm bg-white">
-                <div className="text-green-600 flex items-center gap-2 font-medium">
-                  <FaUser /> Participants
+              <div className="rounded-lg border border-green-100 bg-gradient-to-br from-green-50 to-white p-2.5 shadow-sm hover:shadow-md transition-shadow">
+                <div className="text-green-600 flex items-center gap-1.5 font-semibold text-xs">
+                  <FaUser className="text-xs" /> Participants
                 </div>
-                <div className="text-lg font-semibold text-gray-800 mt-2">
+                <div className="text-sm font-bold text-[#002147] mt-1.5">
                   {session.session_members?.length || 0} Members
                 </div>
-                <div className="text-sm text-gray-500">All confirmed</div>
+                <div className="text-[10px] text-gray-600">All confirmed</div>
               </div>
-              <div className="rounded-xl border p-4 shadow-sm bg-white">
-                <div className="text-emerald-600 flex items-center gap-2 font-medium">
-                  <FaLink /> Session Link
+              <div className="rounded-lg border border-emerald-100 bg-gradient-to-br from-emerald-50 to-white p-2.5 shadow-sm hover:shadow-md transition-shadow">
+                <div className="text-emerald-600 flex items-center gap-1.5 font-semibold text-xs">
+                  <FaLink className="text-xs" /> Session Link
                 </div>
-                <div className="text-lg font-semibold text-green-700 mt-2">
+                <div className="text-sm font-bold text-[#002147] mt-1.5">
                   {session.session_link ? "Ready to Join" : "N/A"}
                 </div>
-                <div className="text-sm text-gray-500 break-all">
+                <div className="text-[10px] text-gray-600 break-all truncate">
                   {session.session_link || "No link available"}
                 </div>
               </div>
             </div>
 
+            {/* Participants & Resources - Two Column Layout */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
             {/* Participants */}
-            <section>
-              <div className="flex items-center justify-between mb-3">
-                <h2 className="text-xl font-semibold text-gray-800">
-                  Session Participants
+              <section className="bg-white border border-gray-200 rounded-lg p-3 shadow-sm hover:shadow-md transition-shadow">
+                <div className="flex items-center justify-between mb-2">
+                  <h2 className="text-sm font-semibold text-[#002147] flex items-center gap-1.5">
+                    <FaUser className="text-orange-500 text-xs" />
+                    Participants
+                    {session.session_members?.length > 0 && (
+                      <span className="text-[10px] text-gray-500 font-normal">({session.session_members.length})</span>
+                    )}
                 </h2>
-                <button className="text-sm px-3 py-1 bg-green-100 text-green-800 rounded hover:bg-green-200 flex items-center gap-1" onClick={() => setShowAddParticipant(true)}>
-                  <FaPlus /> Add Participant
+                  <button 
+                    className="text-[10px] px-2 py-1 bg-green-500 text-white rounded hover:bg-green-600 flex items-center gap-1 transition-colors font-medium" 
+                    onClick={() => setShowAddParticipant(true)}
+                  >
+                    <FaPlus className="text-[10px]" /> Add
                 </button>
               </div>
-              <div className="space-y-2">
+                <div className="space-y-1.5 max-h-32 overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
                 {session.session_members?.map((member, i) => (
                   <div
                     key={i}
-                    className="bg-gray-50 border rounded-lg px-4 py-3 flex justify-between items-center"
+                      className="bg-gradient-to-r from-blue-50 to-white border border-blue-100 rounded px-2 py-1.5 flex justify-between items-center hover:from-blue-100 hover:to-blue-50 transition-colors"
                   >
                     <div>
-                      <div className="font-medium text-gray-900">
+                        <div className="font-semibold text-gray-900 text-xs">
                         {member.client?.user?.name}
                       </div>
-                      <div className="text-sm text-gray-500">
+                        <div className="text-[10px] text-gray-600 truncate max-w-[150px]">
                         {member.client?.user?.email}
                       </div>
                     </div>
-                    <span className="text-sm bg-green-100 text-green-800 px-2 py-1 rounded">
+                      <span className="text-[10px] bg-green-500 text-white px-1.5 py-0.5 rounded font-medium whitespace-nowrap">
                       Confirmed
                     </span>
                   </div>
                 ))}
                 {session.session_members?.length === 0 && (
-                  <p className="text-sm text-gray-500">No participants yet.</p>
+                    <p className="text-xs text-gray-500 text-center py-2">No participants yet.</p>
                 )}
               </div>
             </section>
 
             {/* Resources */}
-            <section>
-              <div className="flex items-center justify-between mb-3">
-                <h2 className="text-xl font-semibold text-gray-800">
-                  Session Resources
+              <section className="bg-white border border-gray-200 rounded-lg p-3 shadow-sm hover:shadow-md transition-shadow">
+                <div className="flex items-center justify-between mb-2">
+                  <h2 className="text-sm font-semibold text-[#002147] flex items-center gap-1.5">
+                    <FaFileDownload className="text-orange-500 text-xs" />
+                    Resources
+                    {session.session_resources?.length > 0 && (
+                      <span className="text-[10px] text-gray-500 font-normal">({session.session_resources.length})</span>
+                    )}
                 </h2>
-                <button className="text-sm px-3 py-1 bg-blue-100 text-blue-800 rounded hover:bg-blue-200 flex items-center gap-1" onClick={() => setShowAddResource(true)}>
-                  <FaPlus /> Add Resource
+                  <button 
+                    className="text-[10px] px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 flex items-center gap-1 transition-colors font-medium" 
+                    onClick={() => setShowAddResource(true)}
+                  >
+                    <FaPlus className="text-[10px]" /> Add
                 </button>
               </div>
-              <div className="space-y-2">
+                <div className="space-y-1.5 max-h-32 overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
                 {session.session_resources?.map((res, i) => (
                   <div
                     key={i}
-                    className="bg-white border rounded-lg px-4 py-3 flex justify-between items-center"
-                  >
-                    <div>
-                      <div className="font-medium text-gray-900">{res.name}</div>
-                      <div className="text-sm text-gray-500">{res.description}</div>
+                      className="bg-gradient-to-r from-purple-50 to-white border border-purple-100 rounded px-2 py-1.5 flex justify-between items-center hover:from-purple-100 hover:to-purple-50 transition-colors"
+                    >
+                      <div className="flex-1 min-w-0">
+                        <div className="font-semibold text-gray-900 text-xs truncate">{res.name}</div>
+                        <div className="text-[10px] text-gray-600 truncate">{res.description}</div>
                     </div>
-                    <button className="text-blue-600 hover:underline flex items-center gap-1 text-sm">
-                      <FaFileDownload /> Download
+                      <button className="text-blue-600 hover:text-blue-800 flex items-center gap-1 text-[10px] font-medium transition-colors ml-2 whitespace-nowrap">
+                        <FaFileDownload className="text-[10px]" />
                     </button>
                   </div>
                 ))}
                 {session.session_resources?.length === 0 && (
-                  <p className="text-sm text-gray-500">No resources yet.</p>
+                    <p className="text-xs text-gray-500 text-center py-2">No resources yet.</p>
                 )}
               </div>
             </section>
+            </div>
 
             {/* Notes */}
-            <section>
-              <h2 className="text-xl font-semibold text-gray-800 mb-2">Session Notes</h2>
+            <section className="bg-white border border-gray-200 rounded-lg p-3 shadow-sm hover:shadow-md transition-shadow">
+              <h2 className="text-sm font-semibold text-[#002147] mb-2 flex items-center gap-1.5">
+                <FaStickyNote className="text-orange-500 text-xs" />
+                Session Notes
+              </h2>
               <textarea
-                placeholder="Enter your session observations, participant feedback, or action items here..."
-                className="w-full border border-gray-300 rounded-lg p-3 mb-3 resize-none focus:outline-none focus:ring focus:ring-blue-100"
-                rows={4}
+                placeholder="Enter session observations, feedback, or action items..."
+                className="w-full border-2 border-gray-300 rounded p-2 mb-2 resize-none focus:outline-none focus:border-[#002147] focus:ring-2 focus:ring-[#002147]/20 text-xs transition-all"
+                rows={2}
                 value={noteText}
                 onChange={e => setNoteText(e.target.value)}
                 disabled={addNoteLoading}
               />
               <button
-                className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800 mb-4 disabled:opacity-60"
+                className="bg-[#002147] text-white px-3 py-1.5 rounded hover:bg-[#003875] mb-2 disabled:opacity-60 text-xs font-medium transition-colors shadow-sm"
                 onClick={async () => {
                   if (!noteText.trim()) {
                     setAddNoteError("Note cannot be empty.");
@@ -253,36 +295,40 @@ export default function SessionDetailsClient({ sessionId }) {
                 {addNoteLoading ? "Adding..." : "+ Add Note"}
               </button>
               {addNoteError && (
-                <div className="text-red-600 text-sm mb-2">{addNoteError}</div>
+                <div className="text-red-600 text-xs mb-2 bg-red-50 border border-red-200 rounded p-2">{addNoteError}</div>
               )}
-              <div className="space-y-3">
+              <div className="space-y-2">
                 {session.session_notes?.map((note, i) => (
-                  <div key={i} className="bg-yellow-100 rounded-lg p-4 shadow-sm">
-                    <div className="text-gray-800">{note.note || note.content}</div>
-                    <div className="text-xs text-gray-600 mt-2">
-                      <FaStickyNote className="inline mr-1" />
+                  <div key={i} className="bg-gradient-to-r from-yellow-50 to-amber-50 border border-yellow-200 rounded p-2.5 shadow-sm hover:shadow transition-shadow">
+                    <div className="text-gray-800 text-xs font-medium">{note.note || note.content}</div>
+                    <div className="text-[10px] text-gray-600 mt-1.5 flex items-center gap-1">
+                      <FaStickyNote className="text-[10px]" />
                       {note.created_at ? new Date(note.created_at).toLocaleString() : null}
                     </div>
                   </div>
                 ))}
                 {session.session_notes?.length === 0 && (
-                  <p className="text-sm text-gray-500">No notes yet.</p>
+                  <p className="text-xs text-gray-500 text-center py-2">No notes yet.</p>
                 )}
               </div>
             </section>
 
             {/* AI Summary */}
-            <section>
-              <h2 className="text-xl font-semibold text-gray-800 mb-2">AI Summary</h2>
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 shadow-sm">
-                <div className="text-gray-800">
+            <section className="bg-white border border-gray-200 rounded-lg p-3 shadow-sm hover:shadow-md transition-shadow">
+              <h2 className="text-sm font-semibold text-[#002147] mb-2 flex items-center gap-1.5">
+                <FaRobot className="text-purple-500 text-xs" />
+                AI Summary
+              </h2>
+              <div className="bg-gradient-to-br from-purple-50 via-blue-50 to-white border border-purple-200 rounded p-2.5 shadow-sm">
+                <div className="text-gray-800 text-xs space-y-1.5">
                   {/* Mock AI summary data */}
-                  <p><strong>Key Points:</strong> The session focused on goal setting, progress review, and identifying new action items for the upcoming week.</p>
-                  <p><strong>Sentiment:</strong> Positive and engaged participation from all members.</p>
-                  <p><strong>Action Items:</strong> Each participant to submit a weekly progress update and review shared resources before the next session.</p>
+                  <p><strong className="text-purple-700">Key Points:</strong> Goal setting, progress review, and action items for the upcoming week.</p>
+                  <p><strong className="text-blue-700">Sentiment:</strong> Positive and engaged participation.</p>
+                  <p><strong className="text-green-700">Action Items:</strong> Submit weekly progress update and review resources.</p>
                 </div>
-                <div className="text-xs text-gray-600 mt-2">
-                  <span>Generated by AI </span>
+                <div className="text-[10px] text-gray-600 mt-2 flex items-center gap-1 font-medium">
+                  <FaRobot className="text-[10px] text-purple-500" />
+                  <span>Generated by AI</span>
                 </div>
               </div>
             </section>
@@ -292,23 +338,29 @@ export default function SessionDetailsClient({ sessionId }) {
 
       {/* Add Participant Modal */}
       {showAddParticipant && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/30 backdrop-blur-sm">
-          <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md relative">
-            <button className="absolute top-2 right-2 text-gray-500 hover:text-gray-700" onClick={() => {
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+          <div className="bg-white rounded-xl shadow-2xl p-4 w-full max-w-md relative border-2 border-gray-200">
+            <button 
+              className="absolute top-3 right-3 text-gray-400 hover:text-gray-700 hover:bg-gray-100 rounded-full p-1 transition-colors" 
+              onClick={() => {
               setShowAddParticipant(false);
               setClientSearch("");
               setSelectedClient(null);
               setAddParticipantError("");
-            }}>
-              <FaTimes />
+              }}
+            >
+              <FaTimes className="text-sm" />
             </button>
-            <h3 className="text-lg font-semibold mb-4">Add Participant</h3>
+            <h3 className="text-sm font-bold text-[#002147] mb-3 flex items-center gap-2">
+              <FaUser className="text-orange-500" />
+              Add Participant
+            </h3>
             {clientsLoading ? (
-              <div className="text-gray-500 text-sm">Loading clients...</div>
+              <div className="text-gray-500 text-xs">Loading clients...</div>
             ) : clientsError ? (
-              <div className="text-red-600 text-sm">{clientsError}</div>
+              <div className="text-red-600 text-xs">{clientsError}</div>
             ) : (
-            <form className="space-y-4" onSubmit={async (e) => {
+            <form className="space-y-3" onSubmit={async (e) => {
               e.preventDefault();
               if (!selectedClient) {
                 setAddParticipantError("Please select a client.");
@@ -332,10 +384,10 @@ export default function SessionDetailsClient({ sessionId }) {
               }
             }}>
               <div>
-                <label className="block text-sm font-medium mb-1">Search Client</label>
+                <label className="block text-xs font-medium text-gray-700 mb-1.5">Search Client</label>
                 <input
                   type="text"
-                  className="w-full border rounded px-3 py-2"
+                  className="w-full border-2 border-gray-300 rounded-lg px-3 py-1.5 text-xs focus:border-[#002147] focus:ring-2 focus:ring-[#002147]/20 focus:outline-none transition-all"
                   placeholder="Type name or email..."
                   value={clientSearch}
                   onChange={(e) => {
@@ -345,36 +397,38 @@ export default function SessionDetailsClient({ sessionId }) {
                   autoComplete="off"
                 />
                 {clientSearch && (
-                  <div className="border rounded bg-white mt-1 max-h-40 overflow-y-auto shadow">
+                  <div className="border-2 border-gray-200 rounded-lg bg-white mt-2 max-h-32 overflow-y-auto shadow-lg">
                     {filteredClients.length === 0 && (
-                      <div className="p-2 text-gray-500 text-sm">No clients found.</div>
+                      <div className="p-3 text-gray-500 text-xs text-center">No clients found.</div>
                     )}
                     {filteredClients.map((client) => (
                       <div
                         key={client.id}
-                        className={`p-2 cursor-pointer hover:bg-green-100 ${selectedClient?.id === client.id ? "bg-green-50" : ""}`}
+                        className={`p-2.5 cursor-pointer hover:bg-green-50 transition-colors ${selectedClient?.id === client.id ? "bg-green-100 border-l-4 border-green-500" : ""}`}
                         onClick={() => {
                           setSelectedClient(client);
                           setClientSearch((client.user?.name || "") + (client.user?.email ? " (" + client.user.email + ")" : ""));
                         }}
                       >
-                        <div className="font-medium">{client.user?.name}</div>
-                        <div className="text-xs text-gray-500">{client.user?.email}</div>
+                        <div className="font-semibold text-xs">{client.user?.name}</div>
+                        <div className="text-[10px] text-gray-600">{client.user?.email}</div>
                       </div>
                     ))}
                   </div>
                 )}
                 {selectedClient && (
-                  <div className="mt-2 text-green-700 text-sm">Selected: {selectedClient.user?.name} ({selectedClient.user?.email})</div>
+                  <div className="mt-2 text-green-700 text-xs bg-green-50 border border-green-200 rounded p-2 font-medium">
+                    ✓ Selected: {selectedClient.user?.name} ({selectedClient.user?.email})
+                  </div>
                 )}
               </div>
               {addParticipantError && (
-                <div className="text-red-600 text-sm">{addParticipantError}</div>
+                <div className="text-red-600 text-xs bg-red-50 border border-red-200 rounded p-2">{addParticipantError}</div>
               )}
               <div className="flex justify-end gap-2 mt-4">
                 <button
                   type="button"
-                  className="px-4 py-2 bg-gray-200 rounded"
+                  className="px-4 py-1.5 bg-gray-200 text-gray-700 rounded-lg text-xs font-medium hover:bg-gray-300 transition-colors"
                   onClick={() => {
                     setShowAddParticipant(false);
                     setClientSearch("");
@@ -387,10 +441,10 @@ export default function SessionDetailsClient({ sessionId }) {
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+                  className="px-4 py-1.5 bg-green-500 text-white rounded-lg hover:bg-green-600 text-xs font-medium transition-colors shadow-sm disabled:opacity-50"
                   disabled={addParticipantLoading}
                 >
-                  {addParticipantLoading ? "Adding..." : "Add"}
+                  {addParticipantLoading ? "Adding..." : "Add Participant"}
                 </button>
               </div>
             </form>
@@ -401,20 +455,26 @@ export default function SessionDetailsClient({ sessionId }) {
 
       {/* Add Resource Modal */}
       {showAddResource && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/30 backdrop-blur-sm">
-          <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md relative">
-            <button className="absolute top-2 right-2 text-gray-500 hover:text-gray-700" onClick={() => {
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+          <div className="bg-white rounded-xl shadow-2xl p-4 w-full max-w-md relative border-2 border-gray-200">
+            <button 
+              className="absolute top-3 right-3 text-gray-400 hover:text-gray-700 hover:bg-gray-100 rounded-full p-1 transition-colors" 
+              onClick={() => {
               setShowAddResource(false);
               setResourceName("");
               setResourceDescription("");
               setResourceFile(null);
               setResourceLink("");
               setAddResourceError("");
-            }}>
-              <FaTimes />
+              }}
+            >
+              <FaTimes className="text-sm" />
             </button>
-            <h3 className="text-lg font-semibold mb-4">Add Resource</h3>
-            <form className="space-y-4" onSubmit={async (e) => {
+            <h3 className="text-sm font-bold text-[#002147] mb-3 flex items-center gap-2">
+              <FaFileDownload className="text-orange-500" />
+              Add Resource
+            </h3>
+            <form className="space-y-3" onSubmit={async (e) => {
               e.preventDefault();
               setAddResourceError("");
               if (!resourceName) {
@@ -454,10 +514,10 @@ export default function SessionDetailsClient({ sessionId }) {
               }
             }}>
               <div>
-                <label className="block text-sm font-medium mb-1">Resource Name</label>
+                <label className="block text-xs font-medium text-gray-700 mb-1.5">Resource Name</label>
                 <input
                   type="text"
-                  className="w-full border rounded px-3 py-2"
+                  className="w-full border-2 border-gray-300 rounded-lg px-3 py-1.5 text-xs focus:border-[#002147] focus:ring-2 focus:ring-[#002147]/20 focus:outline-none transition-all"
                   placeholder="Enter resource name"
                   value={resourceName}
                   onChange={e => setResourceName(e.target.value)}
@@ -465,9 +525,9 @@ export default function SessionDetailsClient({ sessionId }) {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-1">Description (optional)</label>
+                <label className="block text-xs font-medium text-gray-700 mb-1.5">Description (optional)</label>
                 <textarea
-                  className="w-full border rounded px-3 py-2"
+                  className="w-full border-2 border-gray-300 rounded-lg px-3 py-1.5 text-xs focus:border-[#002147] focus:ring-2 focus:ring-[#002147]/20 focus:outline-none transition-all"
                   placeholder="Enter description"
                   value={resourceDescription}
                   onChange={e => setResourceDescription(e.target.value)}
@@ -475,10 +535,10 @@ export default function SessionDetailsClient({ sessionId }) {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-1">File Upload</label>
+                <label className="block text-xs font-medium text-gray-700 mb-1.5">File Upload</label>
                 <input
                   type="file"
-                  className="w-full"
+                  className="w-full text-xs border-2 border-gray-300 rounded-lg p-1.5 file:mr-2 file:px-3 file:py-1 file:rounded file:border-0 file:text-xs file:bg-[#002147] file:text-white hover:file:bg-[#003875] transition-all"
                   onChange={e => {
                     setResourceFile(e.target.files[0] || null);
                     if (e.target.files[0]) setResourceLink("");
@@ -487,10 +547,10 @@ export default function SessionDetailsClient({ sessionId }) {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-1">Or Link</label>
+                <label className="block text-xs font-medium text-gray-700 mb-1.5">Or Link</label>
                 <input
                   type="url"
-                  className="w-full border rounded px-3 py-2"
+                  className="w-full border-2 border-gray-300 rounded-lg px-3 py-1.5 text-xs focus:border-[#002147] focus:ring-2 focus:ring-[#002147]/20 focus:outline-none transition-all"
                   placeholder="https://example.com/resource"
                   value={resourceLink}
                   onChange={e => {
@@ -501,12 +561,12 @@ export default function SessionDetailsClient({ sessionId }) {
                 />
               </div>
               {addResourceError && (
-                <div className="text-red-600 text-sm">{addResourceError}</div>
+                <div className="text-red-600 text-xs bg-red-50 border border-red-200 rounded p-2">{addResourceError}</div>
               )}
               <div className="flex justify-end gap-2 mt-4">
                 <button
                   type="button"
-                  className="px-4 py-2 bg-gray-200 rounded"
+                  className="px-4 py-1.5 bg-gray-200 text-gray-700 rounded-lg text-xs font-medium hover:bg-gray-300 transition-colors"
                   onClick={() => {
                     setShowAddResource(false);
                     setResourceName("");
@@ -521,10 +581,10 @@ export default function SessionDetailsClient({ sessionId }) {
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                  className="px-4 py-1.5 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-xs font-medium transition-colors shadow-sm disabled:opacity-50"
                   disabled={addResourceLoading}
                 >
-                  {addResourceLoading ? "Adding..." : "Add"}
+                  {addResourceLoading ? "Adding..." : "Add Resource"}
                 </button>
               </div>
             </form>

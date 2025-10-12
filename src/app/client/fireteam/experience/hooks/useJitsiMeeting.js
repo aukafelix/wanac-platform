@@ -142,12 +142,50 @@ export function useJitsiMeeting(jitsiContainerId) {
         configOverwrite: {
           startWithAudioMuted: false,
           startWithVideoMuted: false,
+          
+          // Disable prejoin to avoid moderator issues
           prejoinPageEnabled: false,
+          
           disableDeepLinking: true,
           enableWelcomePage: false,
-          toolbarButtons: [],
-          hideConferenceSubject: true,
-          notifications: [],
+          
+          // Enable full Jitsi toolbar with all buttons
+          toolbarButtons: [
+            'microphone',
+            'camera',
+            'closedcaptions',
+            'desktop',
+            'embedmeeting',
+            'fullscreen',
+            'fodeviceselection',
+            'hangup',
+            'profile',
+            'chat',
+            'recording',
+            'livestreaming',
+            'etherpad',
+            'sharedvideo',
+            'shareaudio',
+            'settings',
+            'raisehand',
+            'videoquality',
+            'filmstrip',
+            'invite',
+            'feedback',
+            'stats',
+            'shortcuts',
+            'tileview',
+            'select-background',
+            'download',
+            'help',
+            'mute-everyone',
+            'mute-video-everyone',
+            'security',
+          ],
+          
+          hideConferenceSubject: false, // Show conference subject
+          hideConferenceTimer: false, // Show meeting timer
+          notifications: [], // Enable all Jitsi notifications
           filmstrip: {
             enabled: true,
             disableStageFilmstrip: false,
@@ -185,38 +223,59 @@ export function useJitsiMeeting(jitsiContainerId) {
           enableClosePage: false,
           fileRecordingsEnabled: true,
           liveStreamingEnabled: false,
+          
+          // DISABLE LOBBY/MODERATOR REQUIREMENT
           enableLobby: false,
+          enableLobbyChat: false,
+          requireDisplayName: false,
+          
+          // Security - Allow anyone to join without waiting
+          disableModeratorIndicator: false,
+          moderatorRights: {
+            local: true, // Give moderator rights to first user
+          },
+          
           defaultLocalDisplayName: 'You',
           defaultRemoteDisplayName: 'Participant',
           defaultLogoUrl: '',
         },
         interfaceConfigOverwrite: {
-          APP_NAME: 'WANAC Platform',
-          NATIVE_APP_NAME: 'WANAC Platform',
-          PROVIDER_NAME: 'WANAC',
-          SHOW_JITSI_WATERMARK: false,
-          SHOW_WATERMARK_FOR_GUESTS: false,
+          APP_NAME: 'WANAC Meeting',
+          NATIVE_APP_NAME: 'WANAC Meeting',
+          PROVIDER_NAME: 'WANAC Platform',
+          
+          // Watermarks (keep Jitsi watermark on free tier)
+          SHOW_JITSI_WATERMARK: true,
+          SHOW_WATERMARK_FOR_GUESTS: true,
           SHOW_BRAND_WATERMARK: false,
-          JITSI_WATERMARK_LINK: '',
-          BRAND_WATERMARK_LINK: '',
+          
+          // Disable promotional content
           SHOW_POWERED_BY: false,
           SHOW_PROMOTIONAL_CLOSE_PAGE: false,
           SHOW_CHROME_EXTENSION_BANNER: false,
           MOBILE_APP_PROMO: false,
+          
+          // Welcome page
           GENERATE_ROOMNAMES_ON_WELCOME_PAGE: false,
           DISPLAY_WELCOME_PAGE_CONTENT: false,
           DISPLAY_WELCOME_PAGE_ADDITIONAL_CARD: false,
           DISPLAY_WELCOME_PAGE_TOOLBAR_ADDITIONAL_CONTENT: false,
           DISPLAY_WELCOME_FOOTER: false,
-          HIDE_INVITE_MORE_HEADER: true,
-          TOOLBAR_BUTTONS: [],
-          SETTINGS_SECTIONS: ['devices', 'language', 'moderator', 'profile'],
+          
+          // UI Settings
+          HIDE_INVITE_MORE_HEADER: false, // Allow invites
+          SETTINGS_SECTIONS: ['devices', 'language', 'moderator', 'profile', 'calendar'],
           VIDEO_LAYOUT_FIT: 'both',
           FILM_STRIP_MAX_HEIGHT: 120,
           TILE_VIEW_MAX_COLUMNS: 5,
           VERTICAL_FILMSTRIP: true,
-          DEFAULT_LOGO_URL: '',
-          DEFAULT_WELCOME_PAGE_LOGO_URL: '',
+          
+          // Toolbar always visible settings
+          TOOLBAR_ALWAYS_VISIBLE: false, // Auto-hide when not in use
+          TOOLBAR_TIMEOUT: 4000,
+          
+          // Recent list
+          RECENT_LIST_ENABLED: false,
         },
         userInfo: {
           displayName: 'Participant',

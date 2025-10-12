@@ -519,6 +519,43 @@ export default function ExperienceDetailPage() {
     }
   };
 
+  const handleDeleteLink = async () => {
+    if (!experience.link) {
+      setError('No link to delete.');
+      return;
+    }
+
+    if (!window.confirm('Are you sure you want to delete this meeting link? Participants will no longer be able to join using the current link.')) {
+      return;
+    }
+
+    setIsSavingLink(true);
+    try {
+      const updateData = {
+        title: experience.title,
+        experience: experience.experience,
+        link: '', // Clear the meeting link
+        status: experience.status,
+        report: experience.report,
+        summary: experience.summary,
+        admin: experience.admin,
+      };
+      
+      console.log('🗑️ [DELETE LINK] Removing meeting link');
+      
+      await experienceService.updateExperience(experience.id, updateData);
+      
+      setSuccess('Meeting link deleted successfully!');
+      setGeneratedLink('');
+      await fetchExperienceDetails();
+    } catch (err) {
+      console.error('❌ [DELETE LINK] Error deleting link:', err);
+      setError('Failed to delete meeting link: ' + (err.response?.data?.message || err.message));
+    } finally {
+      setIsSavingLink(false);
+    }
+  };
+
   const handleCopyLink = async (link) => {
     try {
       await navigator.clipboard.writeText(link);
@@ -942,6 +979,17 @@ export default function ExperienceDetailPage() {
                     >
                       <Save className="w-3.5 h-3.5" />
                       {isSavingLink ? 'Saving...' : 'Save Link'}
+                    </button>
+                  )}
+                  
+                  {experience.link && (
+                    <button
+                      onClick={handleDeleteLink}
+                      disabled={isSavingLink}
+                      className="w-full flex items-center justify-center gap-1.5 px-3 py-1.5 bg-red-600 hover:bg-red-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white rounded-md transition-colors text-xs font-medium"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                      Delete Link
                     </button>
                   )}
                 </div>

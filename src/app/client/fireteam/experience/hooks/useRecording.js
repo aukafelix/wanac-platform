@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
-import axios from 'axios';
 import { openaiService } from '../../../../../services/api/openai.service';
+import { meetingService } from '../../../../../services/api/meeting.service';
 
 /**
  * Custom hook to manage meeting recording and AI processing
@@ -126,14 +126,8 @@ export function useRecording(jitsiApiRef, jitsiReady) {
       console.log('✅ AI summaries generated');
       console.log('📤 Uploading to backend...');
 
-      // Step 3: Upload recording file with metadata to backend
-      const formData = new FormData();
-      formData.append('file', recordingBlob, 'meeting-recording.webm');
-      formData.append('fire_team_id', ftId);
-
-      // Add metadata as JSON string in the form data
+      // Step 3: Upload recording with metadata using new service
       const metadata = {
-        experience_id: expId,
         transcript: transcript,
         summaries: summaries,
         participants: meetingData.attendanceLog || [],
@@ -142,23 +136,17 @@ export function useRecording(jitsiApiRef, jitsiReady) {
         duration: meetingData.duration || '0 mins',
         user_id: userId,
         user_name: userName,
+        attendance_log: meetingData.attendanceLog || [],
       };
 
-      formData.append('metadata', JSON.stringify(metadata));
-
-      // Upload to backend API
-      const response = await axios.post(
-        'https://wanac-api.kuzasports.com/api/v1/fireteams/recordings/add',
-        formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
-          },
-        }
+      await meetingService.uploadRecording(
+        ftId,
+        expId,
+        recordingBlob,
+        metadata
       );
 
-      console.log('✅ Recording uploaded successfully:', response.data);
+      console.log('✅ Recording uploaded successfully');
 
       // Set summaries for modal display
       setMeetingSummaries(summaries);

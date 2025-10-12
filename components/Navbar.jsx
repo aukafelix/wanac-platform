@@ -194,32 +194,35 @@ const handleNavigation = (href) => {
 
   return (
     <>
-      <header className="sticky top-0 z-50 bg-white/70 backdrop-blur-md shadow-md">
-        {/* Top Bar */}
-        <div className="w-full text-white text-xs md:text-sm flex items-center justify-between px-4 py-1 border-b border-gray-700 bg-gray-800">
-          <div className="flex items-center gap-6">
+      <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-lg shadow-sm border-b border-gray-100">
+        {/* Top Bar - Compact & Modern */}
+        <div className="w-full text-white text-xs flex items-center justify-between px-4 lg:px-6 py-1.5 bg-gradient-to-r from-[#002147] to-[#003368]">
+          <div className="flex items-center gap-4 lg:gap-6">
             {/* Language Selector Dropdown */}
-            <div className="relative flex items-center gap-1 select-none" ref={langDropdownRef}>
+            <div className="relative flex items-center select-none" ref={langDropdownRef}>
               <button
                 type="button"
-                className="flex items-center gap-1 cursor-pointer focus:outline-none"
+                className="flex items-center gap-1.5 px-2 py-1 hover:bg-white/10 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-orange-400"
                 onClick={e => { e.stopPropagation(); setShowLangDropdown(v => !v); }}
                 aria-haspopup="listbox"
                 aria-expanded={showLangDropdown}
               >
-                <span className="w-4 h-4 bg-gray-700 rounded-full inline-block mr-1" />
-                {language}
-                <svg className="w-3 h-3 ml-1" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="10"/>
+                  <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                </svg>
+                <span className="hidden sm:inline">{language}</span>
+                <svg className={`w-3 h-3 transition-transform duration-200 ${showLangDropdown ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
               {showLangDropdown && (
-                <div className="absolute left-0 mt-7 min-w-[100px] bg-white text-gray-900 rounded shadow z-50" role="listbox">
+                <div className="absolute top-full left-0 mt-2 min-w-[140px] bg-white text-gray-900 shadow-xl border border-gray-200 overflow-hidden z-50 animate-fadeIn" role="listbox">
                   {languageOptions.map((lang) => (
                     <button
                       key={lang}
                       type="button"
-                      className={`w-full text-left px-4 py-2 hover:bg-gray-200 cursor-pointer ${lang === language ? "font-bold bg-gray-100" : ""}`}
+                      className={`w-full text-left px-4 py-2.5 hover:bg-orange-50 transition-colors duration-150 ${lang === language ? "font-semibold bg-orange-50 text-orange-600" : "text-gray-700"}`}
                       onClick={e => { e.stopPropagation(); setLanguage(lang); setShowLangDropdown(false); }}
                       role="option"
                       aria-selected={lang === language}
@@ -231,27 +234,29 @@ const handleNavigation = (href) => {
               )}
             </div>
             {/* High Contrast Toggle */}
-            <div className="flex items-center gap-1">
-              <span className="w-4 h-4 bg-gray-700 rounded-full inline-block mr-1" />
-              High Contrast
-              <label className="ml-2 relative inline-flex items-center cursor-pointer">
+            <div className="hidden md:flex items-center gap-2">
+              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="5"/><path d="M12 1v6m0 6v6M5.64 5.64l4.24 4.24m4.24 4.24l4.24 4.24M1 12h6m6 0h6M5.64 18.36l4.24-4.24m4.24-4.24l4.24-4.24"/>
+              </svg>
+              <span className="text-xs hidden lg:inline">High Contrast</span>
+              <label className="relative inline-flex items-center cursor-pointer group">
                 <input
                   type="checkbox"
                   className="sr-only peer"
                   checked={isDark}
                   onChange={() => setIsDark(!isDark)}
                 />
-                <div className="w-9 h-5 bg-gray-600 rounded-full peer peer-checked:bg-yellow-500 transition-all"></div>
-                <div className={`absolute left-1 top-1 w-3 h-3 bg-white rounded-full transition-all ${isDark ? "translate-x-4" : ""}`}></div>
+                <div className="w-9 h-5 bg-white/20 rounded-full peer peer-checked:bg-orange-500 transition-all duration-300 group-hover:ring-2 ring-white/30"></div>
+                <div className={`absolute left-0.5 top-0.5 w-4 h-4 bg-white rounded-full shadow-md transition-all duration-300 ${isDark ? "translate-x-4" : ""}`}></div>
               </label>
             </div>
           </div>
           {/* Search, Customer & Support, and Log In */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1 sm:gap-2">
             {/* Search Icon and Input */}
             <div className="relative flex items-center">
               <button
-                className="p-2 rounded hover:bg-gray-700 transition-colors duration-200"
+                className="p-1.5 sm:p-2 hover:bg-white/10 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-orange-400"
                 onClick={() => setShowSearch((v) => !v)}
                 aria-label="Search"
               >
@@ -263,38 +268,42 @@ const handleNavigation = (href) => {
               {showSearch && (
                 <input
                   type="text"
-                  className="ml-2 px-2 py-1 rounded bg-gray-100 text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-400 text-xs md:text-sm"
+                  className="absolute right-0 top-full mt-2 px-3 py-1.5 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-400 text-xs shadow-lg border border-gray-200 animate-fadeIn"
                   placeholder="Search..."
                   value={searchValue}
                   onChange={e => setSearchValue(e.target.value)}
                   autoFocus
-                  onBlur={() => setShowSearch(false)}
+                  onBlur={() => setTimeout(() => setShowSearch(false), 200)}
                   onKeyDown={e => { if (e.key === 'Escape') setShowSearch(false); }}
-                  style={{ minWidth: '120px' }}
+                  style={{ minWidth: '180px' }}
                 />
               )}
             </div>
-            <a href="/pages/helpcenter" className="flex items-center gap-1 px-3 py-1 rounded hover:bg-gray-700 transition-colors duration-200">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><path d="M9.09 9a3 3 0 1 1 5.82 0c0 1.5-1.5 2.25-2.25 2.25S12 13.5 12 15" /><circle cx="12" cy="18" r="1" /></svg>
-              Customer & Support
+            <a href="/pages/helpcenter" className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 hover:bg-white/10 transition-all duration-200 text-xs">
+              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" />
+                <path d="M9.09 9a3 3 0 1 1 5.82 0c0 1.5-1.5 2.25-2.25 2.25S12 13.5 12 15" />
+                <circle cx="12" cy="18" r="1" />
+              </svg>
+              <span className="hidden lg:inline">Support</span>
             </a>
-            <a href="/login" className="px-3 py-1 rounded border border-orange-400 text-orange-400 hover:bg-orange-500 hover:text-white transition-colors duration-200 font-semibold">Log In</a>
+            <a href="/login" className="px-2.5 sm:px-3 py-1 border border-orange-400 text-orange-400 hover:bg-orange-500 hover:text-white hover:border-orange-500 transition-all duration-200 font-semibold text-xs">Log In</a>
           </div>
         </div>
         <nav
           ref={navRef}
-          className="text-sm py-3 px-4 items-center transition duration-300 bg-transparent"
+          className="relative text-sm py-2.5 px-4 lg:px-6 items-center transition duration-300 bg-transparent"
           role="navigation"
           aria-label="Main navigation"
         >
           <div className="flex justify-between items-center max-w-7xl mx-auto">
             <div className="flex items-center">
-              <Link href="/" aria-label="WANAC Home">
+              <Link href="/" aria-label="WANAC Home" className="transform hover:scale-105 transition-transform duration-200">
                 <Image
                   src="/WANAC N 8 Old Glory.png"
                   alt="WANAC Logo"
-                  width={180}
-                  height={70}
+                  width={160}
+                  height={60}
                   priority
                   className="object-contain"
                 />
@@ -302,157 +311,189 @@ const handleNavigation = (href) => {
             </div>
 
             {/* Desktop Menu */}
-            <div className="hidden md:flex items-center justify-end gap-6 flex-1" ref={dropdownRef}>
+            <div className="hidden lg:flex items-center justify-end gap-6 xl:gap-8 flex-1" ref={dropdownRef}>
               {Object.entries(navigation).map(([key, section]) => (
                 <div key={key} className="relative">
                   <button
                     onClick={() => toggleDropdown(key)}
                     onKeyDown={(e) => handleKeyDown(e, key)}
-                    className={`flex items-center text-sm font-medium transition duration-300 whitespace-nowrap ${
-                      activeDropdown === key ? "text-orange-500" : "text-black"
+                    className={`flex items-center text-xs xl:text-sm font-semibold transition-all duration-200 whitespace-nowrap px-3 py-2 hover:bg-gray-50 ${
+                      activeDropdown === key ? "text-orange-500 bg-orange-50" : "text-gray-800 hover:text-orange-500"
                     }`}
                     aria-expanded={activeDropdown === key}
                     aria-haspopup="true"
                   >
                     {section.title}
                     <ChevronDown 
-                      className={`ml-1 w-3 h-3 transition-transform duration-300 ${
+                      className={`ml-1 w-3.5 h-3.5 transition-transform duration-300 ${
                         activeDropdown === key ? "rotate-180" : ""
                       }`} 
                       aria-hidden="true" 
                     />
                   </button>
-
-                  {activeDropdown === key && (
-                    <div className="fixed top-[64px] left-0 w-full bg-[#001f4d] text-white py-4 z-50 shadow-md">
-                      <div className="max-w-7xl mx-auto flex items-center justify-center space-x-6 px-8">
-                        {section.items.map((item, index) => (
-                          <React.Fragment key={index}>
-                            <Link
-                              href={item.href}
-                              className="text-sm hover:text-orange-400 transition-colors duration-300"
-                              onClick={() => {
-                                setActiveDropdown(null);
-                                handleNavigation(item.href);
-                              }}
-                            >
-                              {item.label}
-                            </Link>
-                            {index < section.items.length - 1 && (
-                              <span className="text-white opacity-50">★</span>
-                            )}
-                          </React.Fragment>
-                        ))}
-                      </div>
-                    </div>
-                  )}
                 </div>
               ))}
 
-              {/* Action Buttons */}
-              <div className="flex items-center gap-3">
+              {/* Action Buttons - More Compact & Modern */}
+              <div className="flex items-center gap-2">
                 <Link
                   href="/donate"
-                  className="bg-orange-500 text-white text-sm font-bold px-4 py-2 rounded-md hover:bg-orange-600 transition duration-300 whitespace-nowrap"
+                  className="bg-gradient-to-r from-orange-500 to-orange-600 text-white text-xs font-bold px-3 py-2 hover:shadow-lg hover:shadow-orange-500/30 hover:scale-105 transform transition-all duration-200 whitespace-nowrap"
                 >
                   DONATE
                 </Link>
                 <Link
                   href="/pages/programintakeform"
-                  className="bg-orange-500 text-white text-sm font-bold px-4 py-2 rounded-md hover:bg-orange-600 transition duration-300 whitespace-nowrap"
+                  className="bg-gradient-to-r from-[#002147] to-[#003368] text-white text-xs font-bold px-3 py-2 hover:shadow-lg hover:shadow-blue-900/30 hover:scale-105 transform transition-all duration-200 whitespace-nowrap"
                 >
-                  FREE STRATEGY SESSION
+                  FREE SESSION
                 </Link>
                 <Link
                   href="/workshops"
-                  className="bg-blue-600 text-white text-sm font-bold px-4 py-2 rounded-md hover:bg-orange-500 transition duration-300 whitespace-nowrap"
+                  className="border-2 border-orange-500 text-orange-600 text-xs font-bold px-3 py-1.5 hover:bg-orange-500 hover:text-white transform hover:scale-105 transition-all duration-200 whitespace-nowrap"
                 >
                   SHOP
                 </Link>
               </div>
             </div>
 
+            {/* Dropdown Menu - Positioned relative to nav */}
+            {activeDropdown && (
+              <div className="absolute top-full left-0 w-full bg-gradient-to-r from-[#002147] to-[#003368] text-white py-6 z-50 shadow-xl border-t border-orange-500/20 animate-fadeIn">
+                <div className="max-w-7xl mx-auto flex items-center justify-center flex-wrap gap-x-8 gap-y-3 px-8">
+                  {navigation[activeDropdown]?.items.map((item, index) => (
+                    <React.Fragment key={index}>
+                      <Link
+                        href={item.href}
+                        className="text-sm hover:text-orange-400 transition-all duration-200 hover:scale-105 transform font-medium"
+                        onClick={() => {
+                          setActiveDropdown(null);
+                          handleNavigation(item.href);
+                        }}
+                      >
+                        {item.label}
+                      </Link>
+                      {index < navigation[activeDropdown].items.length - 1 && (
+                        <span className="text-orange-500 text-xs">★</span>
+                      )}
+                    </React.Fragment>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* Mobile Menu Button */}
             <button
-              className="md:hidden p-2"
+              className="lg:hidden p-2 hover:bg-gray-100 transition-colors duration-200"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-expanded={isMobileMenuOpen}
               aria-label="Toggle mobile menu"
             >
-              <Menu className="w-6 h-6" />
+              <Menu className={`w-6 h-6 text-gray-800 transition-transform duration-200 ${isMobileMenuOpen ? 'rotate-90' : ''}`} />
             </button>
           </div>
 
-          {/* Mobile Menu */}
+          {/* Mobile Menu - Modern Slide-in Design */}
           {isMobileMenuOpen && (
-            <div className="fixed inset-0 z-50 bg-white overflow-y-auto md:hidden">
-              {Object.entries(navigation).map(([key, section]) => (
-                <div key={key} className="border-b border-gray-200">
-                  <button
-                    onClick={() => toggleDropdown(key)}
-                    className="w-full px-4 py-2 flex justify-between items-center"
-                    aria-expanded={activeDropdown === key}
-                  >
-                    {section.title}
-                    <ChevronDown 
-                      className={`w-4 h-4 transition-transform duration-300 ${
-                        activeDropdown === key ? "rotate-180" : ""
-                      }`}
-                    />
-                  </button>
-                  
-                  {activeDropdown === key && (
-                    <div className="bg-gray-50 py-2">
-                      {section.items.map((item, index) => (
-                        <Link
-                          key={index}
-                          href={item.href}
-                          className="block px-8 py-2 text-sm text-gray-700 hover:text-orange-500"
-                          onClick={() => {
-                            setIsMobileMenuOpen(false);
-                            setActiveDropdown(null);
-                            handleNavigation(item.href);
-                          }}
-                        >
-                          ★ {item.label}
-                        </Link>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ))}
+            <>
+              {/* Backdrop */}
+              <div 
+                className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm lg:hidden animate-fadeIn"
+                onClick={() => setIsMobileMenuOpen(false)}
+              />
               
-              {/* Mobile Action Buttons */}
-              <div className="px-4 py-4 space-y-2">
-                <button
-                  className="block w-full text-center py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600"
-                  onClick={() => {
-                    setIsMobileMenuOpen(false);
-                    handleNavigation('/pages/donate');
-                  }}
-                >
-                  DONATE
-                </button>
-                <button
-                  className="block w-full text-center py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600"
-                  onClick={() => {
-                    setIsMobileMenuOpen(false);
-                    handleNavigation('/pages/programintakeform');
-                  }}
-                >
-                  FREE STRATEGY SESSION
-                </button>
-                <button
-                  className="block w-full text-center py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-                  onClick={() => {
-                    setIsMobileMenuOpen(false);
-                    handleNavigation('/pages/workshops');
-                  }}
-                >
-                  SHOP
-                </button>
+              {/* Menu Panel */}
+              <div className="fixed inset-y-0 right-0 z-50 w-full max-w-sm bg-white shadow-2xl overflow-y-auto lg:hidden animate-slideInRight">
+                {/* Header */}
+                <div className="sticky top-0 bg-gradient-to-r from-[#002147] to-[#003368] text-white px-6 py-4 flex justify-between items-center">
+                  <h2 className="text-lg font-bold">Menu</h2>
+                  <button
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="p-2 hover:bg-white/10 transition-colors duration-200"
+                    aria-label="Close menu"
+                  >
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+
+                {/* Navigation Sections */}
+                <div className="py-4">
+                  {Object.entries(navigation).map(([key, section]) => (
+                    <div key={key} className="border-b border-gray-100">
+                      <button
+                        onClick={() => toggleDropdown(key)}
+                        className="w-full px-6 py-3.5 flex justify-between items-center hover:bg-gray-50 transition-colors duration-200 group"
+                        aria-expanded={activeDropdown === key}
+                      >
+                        <span className="font-semibold text-gray-800 group-hover:text-orange-500 transition-colors text-sm">
+                          {section.title}
+                        </span>
+                        <ChevronDown 
+                          className={`w-4 h-4 text-gray-500 transition-transform duration-300 ${
+                            activeDropdown === key ? "rotate-180 text-orange-500" : ""
+                          }`}
+                        />
+                      </button>
+                      
+                      {activeDropdown === key && (
+                        <div className="bg-gradient-to-br from-orange-50 to-white py-2 animate-fadeIn">
+                          {section.items.map((item, index) => (
+                            <Link
+                              key={index}
+                              href={item.href}
+                              className="block px-8 py-2.5 text-sm text-gray-700 hover:text-orange-500 hover:bg-white transition-all duration-150 group"
+                              onClick={() => {
+                                setIsMobileMenuOpen(false);
+                                setActiveDropdown(null);
+                                handleNavigation(item.href);
+                              }}
+                            >
+                              <span className="flex items-center gap-2">
+                                <span className="text-orange-400 text-xs">★</span>
+                                <span className="group-hover:translate-x-1 transition-transform duration-200">{item.label}</span>
+                              </span>
+                            </Link>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+                
+                {/* Mobile Action Buttons */}
+                <div className="px-6 py-6 space-y-3 bg-gray-50">
+                  <button
+                    className="block w-full text-center py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white hover:shadow-lg hover:shadow-orange-500/30 transition-all duration-200 font-semibold text-sm"
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      handleNavigation('/pages/donate');
+                    }}
+                  >
+                    DONATE
+                  </button>
+                  <button
+                    className="block w-full text-center py-3 bg-gradient-to-r from-[#002147] to-[#003368] text-white hover:shadow-lg transition-all duration-200 font-semibold text-sm"
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      handleNavigation('/pages/programintakeform');
+                    }}
+                  >
+                    FREE STRATEGY SESSION
+                  </button>
+                  <button
+                    className="block w-full text-center py-3 border-2 border-orange-500 text-orange-600 hover:bg-orange-500 hover:text-white transition-all duration-200 font-semibold text-sm"
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      handleNavigation('/pages/workshops');
+                    }}
+                  >
+                    SHOP
+                  </button>
+                </div>
               </div>
-            </div>
+            </>
           )}
         </nav>
       </header>

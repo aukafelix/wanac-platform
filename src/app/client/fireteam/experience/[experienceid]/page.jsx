@@ -1,24 +1,26 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 
 // Custom Hooks
 import { useJitsiMeeting } from "../hooks/useJitsiMeeting";
 import { useRecording } from "../hooks/useRecording";
 import { useMeetingData } from "../hooks/useMeetingData";
+import { useToast } from "../hooks/useToast";
 
 // UI Components
 import MeetingTopBar from "../components/MeetingTopBar";
 import JitsiVideoContainer from "../components/JitsiVideoContainer";
 import MeetingFooter from "../components/MeetingFooter";
 import ProcessingOverlay from "../components/ProcessingOverlay";
+import { ToastContainer } from "../components/Toast";
+import ConfirmDialog from "../components/ConfirmDialog";
 
 // Existing Components
 import EnhancedAgendaSidebar from "../../components/EnhancedAgendaSidebar";
 import Slide from "../../components/SlideComponent";
-import EnhancedMeetingControls from "../../components/EnhancedMeetingControls";
-import AgendaTimer from "../../components/AgendaTimer";
+import WanacControlBar from "../../components/WanacControlBar";
 import Sidebar from "../../../../../../components/dashboardcomponents/sidebar.jsx";
 import AdminSidebar from "../../../../../../components/dashboardcomponents/adminsidebar";
 import MeetingSummaryModal from "../../components/MeetingSummaryModal";
@@ -33,13 +35,27 @@ export default function FireteamExperienceMeeting() {
 
   // UI State
   const [currentStep, setCurrentStep] = useState(0);
-  const [showSlide, setShowSlide] = useState(true);
-  const [collapsed, setCollapsed] = useState(false);
+  const [showSlide, setShowSlide] = useState(false); // Start with video view to show Jitsi UI
+  const [collapsed, setCollapsed] = useState(true); // Start collapsed by default
   const [chatMessages, setChatMessages] = useState([]);
   const [showSummaryModal, setShowSummaryModal] = useState(false);
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [jitsiContainerId] = useState(
-    () => `jitsi-container-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
+    () => `jitsi-container-${crypto.randomUUID?.() || `${Date.now()}-${Math.random().toString(36).substring(2, 9)}`}`
   );
+
+  // Load sidebar collapsed state from localStorage
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem(isAdmin ? 'wanacAdminSidebarCollapsed' : 'wanacSidebarCollapsed');
+      if (stored !== null) {
+        setCollapsed(stored === 'true');
+      }
+    }
+  }, [isAdmin]);
+
+  // Toast notifications
+  const toast = useToast();
 
   // Custom Hooks
   const {
@@ -155,47 +171,32 @@ export default function FireteamExperienceMeeting() {
   }, [searchParams?.get("id"), searchParams?.get("fireteamId"), searchParams?.get("link")]);
 
   // ============================================================================
-  // VISIBILITY TOGGLE (Slide vs Video)
+  // VISIBILITY TOGGLE (Slide vs Video) - Now handled by CSS classes in render
   // ============================================================================
 
   useEffect(() => {
     console.log("🔄 View mode changed:", showSlide ? "SLIDES" : "VIDEO");
-
-    const container = document.getElementById(jitsiContainerId);
-    if (container && jitsiApiRef.current) {
-      if (showSlide) {
-        console.log("📋 Switching to slides - Jitsi continues in background");
-        container.style.visibility = "hidden";
-        container.style.position = "absolute";
-        container.style.opacity = "0";
-        container.style.pointerEvents = "none";
-      } else {
-        console.log("📹 Switching to video - Jitsi becomes visible");
-        container.style.visibility = "visible";
-        container.style.position = "relative";
-        container.style.opacity = "1";
-        container.style.pointerEvents = "auto";
-      }
-    }
-  }, [showSlide, jitsiContainerId, jitsiApiRef]);
+  }, [showSlide]);
 
   // ============================================================================
   // EVENT HANDLERS
   // ============================================================================
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     if (currentStep < agenda.length - 1) {
       setCurrentStep(currentStep + 1);
+      setShowSlide(true); // Auto-switch to slide view when navigating
     }
-  };
+  }, [currentStep, agenda.length]);
 
-  const handlePrevious = () => {
+  const handlePrevious = useCallback(() => {
     if (currentStep > 0) {
       setCurrentStep(currentStep - 1);
+      setShowSlide(true); // Auto-switch to slide view when navigating
     }
-  };
+  }, [currentStep]);
 
-  const handleSendChatMessage = (message) => {
+  const handleSendChatMessage = useCallback((message) => {
     const newMessage = {
       id: Date.now(),
       sender: "You",
@@ -204,17 +205,18 @@ export default function FireteamExperienceMeeting() {
       isOwn: true,
     };
     setChatMessages((prev) => [...prev, newMessage]);
-  };
+  }, []);
 
-  const handleToggleRecording = async () => {
+  const handleToggleRecording = useCallback(async () => {
     try {
       await toggleRecording();
+      toast.success(isRecording ? "Recording stopped" : "Recording started");
     } catch (err) {
-      alert(err.message);
+      toast.error(err.message || "Failed to toggle recording");
     }
-  };
+  }, [toggleRecording, isRecording, toast]);
 
-  const handleProcessRecording = async () => {
+  const handleProcessRecording = useCallback(async () => {
     try {
       const userId = localStorage.getItem("user_id") || "unknown";
       const userName = localStorage.getItem("user_name") || "Participant";
@@ -239,14 +241,16 @@ export default function FireteamExperienceMeeting() {
         startTime: meetingStartTime ? meetingStartTime.toISOString() : new Date().toISOString(),
       };
 
+      toast.info("Processing recording... This may take a minute.");
       const summaries = await processRecording(meetingData, searchParams);
       setShowSummaryModal(true);
+      toast.success("AI summary generated successfully!");
     } catch (err) {
-      alert(err.message);
+      toast.error(err.message || "Failed to process recording");
     }
-  };
+  }, [experience, agenda, participants, calculateTotalTime, attendanceLog, meetingStartTime, processRecording, searchParams, toast]);
 
-  const handleLeaveMeeting = async () => {
+  const handleLeaveMeeting = useCallback(async () => {
     // Stop recording if active
     if (isRecording) {
       await handleToggleRecording();
@@ -254,13 +258,8 @@ export default function FireteamExperienceMeeting() {
 
     // Prompt to process recording if available
     if (recordingBlob && !processingRecording) {
-      const shouldProcess = window.confirm(
-        "Would you like to generate an AI summary of this meeting? This may take a minute."
-      );
-
-      if (shouldProcess) {
-        await handleProcessRecording();
-      }
+      setShowConfirmDialog(true);
+      return;
     }
 
     // Leave meeting
@@ -268,33 +267,77 @@ export default function FireteamExperienceMeeting() {
 
     // Redirect to fireteam page
     window.location.href = "/client/fireteam";
-  };
+  }, [isRecording, recordingBlob, processingRecording, handleToggleRecording, leaveMeeting]);
 
-  const handleTimerComplete = () => {
+  const handleConfirmProcessRecording = useCallback(async () => {
+    setShowConfirmDialog(false);
+    await handleProcessRecording();
+    leaveMeeting();
+    window.location.href = "/client/fireteam";
+  }, [handleProcessRecording, leaveMeeting]);
+
+  const handleCancelProcessRecording = useCallback(() => {
+    setShowConfirmDialog(false);
+    leaveMeeting();
+    window.location.href = "/client/fireteam";
+  }, [leaveMeeting]);
+
+  const handleTimerComplete = useCallback(() => {
     console.log("⏰ Timer completed for step:", currentStep);
-  };
+    toast.info(`Step "${agenda[currentStep]?.title}" time is up!`);
+  }, [currentStep, agenda, toast]);
+
+  // ============================================================================
+  // MEMOIZED VALUES
+  // ============================================================================
+
+  const agendaArray = useMemo(
+    () => agenda.map(({ title, duration }) => [title, duration]),
+    [agenda]
+  );
+
+  const currentStepDuration = useMemo(
+    () => agenda[currentStep]?.duration,
+    [agenda, currentStep]
+  );
+
+  const participantsForSidebar = useMemo(
+    () => participants.map((p) => ({ id: p.id, name: p.name })),
+    [participants]
+  );
 
   // ============================================================================
   // RENDER
   // ============================================================================
 
   return (
-    <div className="h-screen flex bg-gray-50">
-      {/* Sidebar - Admin or Regular */}
-      {isAdmin ? (
-        <AdminSidebar />
-      ) : (
-        <Sidebar
-          className="w-56 bg-white border-r border-gray-200"
-          collapsed={collapsed}
-          setCollapsed={setCollapsed}
+    <div className="h-screen flex bg-gray-50" role="main">
+      {/* Toast Notifications */}
+      <ToastContainer toasts={toast.toasts} onRemoveToast={toast.removeToast} />
+
+      {/* Confirm Dialog */}
+      {showConfirmDialog && (
+        <ConfirmDialog
+          title="Generate AI Summary?"
+          message="Would you like to generate an AI summary of this meeting? This may take a minute."
+          confirmText="Generate Summary"
+          cancelText="Skip"
+          onConfirm={handleConfirmProcessRecording}
+          onCancel={handleCancelProcessRecording}
         />
       )}
 
-      {/* Main Content */}
+      {/* Sidebar - Admin or Regular */}
+      {isAdmin ? (
+        <AdminSidebar collapsed={collapsed} setCollapsed={setCollapsed} />
+      ) : (
+        <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
+      )}
+
+      {/* Main Content - Adjust margin based on sidebar collapsed state */}
       <div
         className={`flex-1 flex flex-col h-full transition-all duration-300 ${
-          isAdmin ? "ml-16 md:ml-56" : ""
+          collapsed ? "md:ml-16" : "md:ml-56"
         }`}
       >
         {/* Top Bar */}
@@ -305,32 +348,39 @@ export default function FireteamExperienceMeeting() {
           totalSteps={agenda.length}
           onPrevious={handlePrevious}
           onNext={handleNext}
+          duration={currentStepDuration}
+          onTimerComplete={handleTimerComplete}
         />
 
         <div className="flex flex-1 overflow-hidden">
-          {/* Agenda Timer - Fixed position */}
-          <div className="absolute top-20 left-8 z-10">
-            <AgendaTimer
-              duration={agenda[currentStep]?.duration}
-              isActive={true}
-              onTimeUp={handleTimerComplete}
-              stepTitle={agenda[currentStep]?.title || "Current Step"}
-            />
-          </div>
-
           {/* Middle content area */}
-          <section className="flex-1 flex flex-col justify-center items-center p-8 relative bg-gray-100">
-            {/* Jitsi Video Container */}
-            <JitsiVideoContainer
-              jitsiContainerId={jitsiContainerId}
-              showSlide={showSlide}
-              loading={jitsiLoading}
-              error={jitsiError}
-            />
+          <section 
+            className="flex-1 flex flex-col justify-center items-center p-8 relative bg-gray-100"
+            aria-label="Meeting content area"
+          >
+            {/* Jitsi Video Container - Visibility controlled by CSS classes */}
+            <div 
+              className={`w-full h-full ${
+                showSlide 
+                  ? 'invisible absolute opacity-0 pointer-events-none' 
+                  : 'visible relative opacity-100 pointer-events-auto'
+              }`}
+            >
+              <JitsiVideoContainer
+                jitsiContainerId={jitsiContainerId}
+                showSlide={showSlide}
+                loading={jitsiLoading}
+                error={jitsiError}
+              />
+            </div>
 
             {/* Slide content */}
             {showSlide && (
-              <div className="w-full h-full flex items-center justify-center p-8">
+              <div 
+                className="w-full h-full flex items-center justify-center p-8"
+                role="region"
+                aria-label={`Slide ${currentStep + 1}: ${agenda[currentStep]?.title}`}
+              >
                 <Slide
                   step={agenda[currentStep]}
                   participants={participants}
@@ -339,35 +389,22 @@ export default function FireteamExperienceMeeting() {
               </div>
             )}
 
-            {/* Meeting Controls */}
-            <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 w-full">
-              <EnhancedMeetingControls
-                jitsiApiRef={jitsiApiRef}
-                jitsiReady={jitsiReady}
-                isRecording={isRecording}
-                onToggleRecording={handleToggleRecording}
-                currentLayout={showSlide ? "slide" : "grid"}
-                onLeave={handleLeaveMeeting}
-                onLogout={() => {
-                  if (jitsiApiRef.current) {
-                    try {
-                      jitsiApiRef.current.dispose();
-                      jitsiApiRef.current = null;
-                    } catch (err) {
-                      console.error("Failed to dispose Jitsi:", err);
-                    }
-                  }
-                  window.location.href = "/login";
-                }}
-                isManager={true}
-                onToggleLayout={() => setShowSlide((v) => !v)}
-              />
-            </div>
+            {/* WANAC Custom Controls - Only unique features */}
+            <WanacControlBar
+              showSlide={showSlide}
+              onToggleView={() => setShowSlide(!showSlide)}
+              isRecording={isRecording}
+              onProcessRecording={handleProcessRecording}
+              recordingBlob={recordingBlob}
+              processingRecording={processingRecording}
+              currentStepTitle={agenda[currentStep]?.title || "Current Step"}
+              timeLeft={0} // Can be connected to timer if needed
+            />
           </section>
 
-          {/* Enhanced Agenda Sidebar */}
+          {/* Agenda Sidebar */}
           <EnhancedAgendaSidebar
-            agenda={agenda.map(({ title, duration }) => [title, duration])}
+            agenda={agendaArray}
             moduleTitle={experience?.title || "Customer Discovery"}
             moduleDescription={
               experience?.description ||
@@ -375,8 +412,11 @@ export default function FireteamExperienceMeeting() {
               "In this module, you will explore key concepts and engage with your fireteam."
             }
             currentStep={currentStep}
-            onStepClick={setCurrentStep}
-            peers={participants}
+            onStepClick={(step) => {
+              setCurrentStep(step);
+              setShowSlide(true); // Show slide when clicking agenda item
+            }}
+            peers={participantsForSidebar}
             exhibits={exhibits}
             chatMessages={chatMessages}
             onSendMessage={handleSendChatMessage}
