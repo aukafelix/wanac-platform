@@ -9,6 +9,7 @@ import React from "react";
 
 export default function Navbar({ hideNavbar = false }) {
   const [activeDropdown, setActiveDropdown] = useState(null);
+  const [activeMobileDropdown, setActiveMobileDropdown] = useState(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const dropdownRef = useRef(null);
   const navRef = useRef(null);
@@ -77,7 +78,8 @@ export default function Navbar({ hideNavbar = false }) {
         { label: "PLCA", href: "/pages/wanacplca" },
         { label: "PPC", href: "/pages/wanacppc" },
         { label: "VETA", href: "/pages/vetaacademy" },
-        { label: "CPPC", href: "/pages/wanacppc" }
+        { label: "CPPC", href: "/pages/wanacppc" },
+        { label: "VSO CLAIM", href: "/pages/vsoclaimsupport" }
       ]
     },
     action: {
@@ -85,7 +87,9 @@ export default function Navbar({ hideNavbar = false }) {
       items: [
         { label: "Volunteer", href: "/pages/volunteer" },
         { label: "Ways to Support", href: "/pages/donate" },
-        { label: "Testimonials", href: "/pages/testimonials" }
+        { label: "Testimonials", href: "/pages/testimonials" },
+        { label: "University Partner", href: "/pages/wanacuniversityInstitutionalpartner" },
+        { label: "Webinar Registration", href: "/pages/wanacwebinarregistration" }
       ]
     },
     resources: {
@@ -93,7 +97,10 @@ export default function Navbar({ hideNavbar = false }) {
       items: [
         { label: "Free Workshops", href: "/pages/workshops" },
         { label: "Help Center", href: "/pages/helpcenter" },
-        { label: "WANAC Careers", href: "/pages/contact&career" }
+        { label: "WANAC Careers", href: "/pages/wanaccareers" },
+        { label: "Scholarships", href: "/pages/scholarshipelidgibilityestimator" },
+        { label: "Hiring Partners", href: "/pages/employerandhiringpartner" },
+        { label: "Transition Quiz", href: "/pages/transitionreadinessquiz" }
       ]
     }
   };
@@ -124,6 +131,7 @@ export default function Navbar({ hideNavbar = false }) {
 
   const handleNavigation = (href) => {
     setActiveDropdown(null);
+    setActiveMobileDropdown(null);
     setIsMobileMenuOpen(false);
     router.push(href); // client-side route change
   };
@@ -383,7 +391,10 @@ export default function Navbar({ hideNavbar = false }) {
             {/* Mobile Menu Button */}
             <button
               className="lg:hidden p-2 hover:bg-gray-100 transition-colors duration-200"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              onClick={() => {
+                setIsMobileMenuOpen(!isMobileMenuOpen);
+                setActiveMobileDropdown(null);
+              }}
               aria-expanded={isMobileMenuOpen}
               aria-label="Toggle mobile menu"
             >
@@ -397,7 +408,10 @@ export default function Navbar({ hideNavbar = false }) {
               {/* Backdrop */}
               <div 
                 className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm lg:hidden animate-fadeIn"
-                onClick={() => setIsMobileMenuOpen(false)}
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  setActiveMobileDropdown(null);
+                }}
               />
               
               {/* Menu Panel */}
@@ -406,7 +420,10 @@ export default function Navbar({ hideNavbar = false }) {
                 <div className="sticky top-0 bg-gradient-to-r from-[#002147] to-[#003368] text-white px-6 py-4 flex justify-between items-center">
                   <h2 className="text-lg font-bold">Menu</h2>
                   <button
-                    onClick={() => setIsMobileMenuOpen(false)}
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      setActiveMobileDropdown(null);
+                    }}
                     className="p-2 hover:bg-white/10 transition-colors duration-200"
                     aria-label="Close menu"
                   >
@@ -421,21 +438,21 @@ export default function Navbar({ hideNavbar = false }) {
                   {Object.entries(navigation).map(([key, section]) => (
                     <div key={key} className="border-b border-gray-100">
                       <button
-                        onClick={() => toggleDropdown(key)}
+                        onClick={() => setActiveMobileDropdown(activeMobileDropdown === key ? null : key)}
                         className="w-full px-6 py-3.5 flex justify-between items-center hover:bg-gray-50 transition-colors duration-200 group"
-                        aria-expanded={activeDropdown === key}
+                        aria-expanded={activeMobileDropdown === key}
                       >
                         <span className="font-semibold text-gray-800 group-hover:text-orange-500 transition-colors text-sm">
                           {section.title}
                         </span>
                         <ChevronDown 
                           className={`w-4 h-4 text-gray-500 transition-transform duration-300 ${
-                            activeDropdown === key ? "rotate-180 text-orange-500" : ""
+                            activeMobileDropdown === key ? "rotate-180 text-orange-500" : ""
                           }`}
                         />
                       </button>
                       
-                      {activeDropdown === key && (
+                      {activeMobileDropdown === key && (
                         <div className="bg-gradient-to-br from-orange-50 to-white py-2 animate-fadeIn">
                           {section.items.map((item, index) => (
                             <button
@@ -462,6 +479,7 @@ export default function Navbar({ hideNavbar = false }) {
                     className="block w-full text-center py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white hover:shadow-lg hover:shadow-orange-500/30 transition-all duration-200 font-semibold text-sm"
                     onClick={() => {
                       setIsMobileMenuOpen(false);
+                      setActiveMobileDropdown(null);
                     }}
                   >
                     DONATE
@@ -471,6 +489,7 @@ export default function Navbar({ hideNavbar = false }) {
                     className="block w-full text-center py-3 bg-gradient-to-r from-[#002147] to-[#003368] text-white hover:shadow-lg transition-all duration-200 font-semibold text-sm"
                     onClick={() => {
                       setIsMobileMenuOpen(false);
+                      setActiveMobileDropdown(null);
                     }}
                   >
                     FREE STRATEGY SESSION
@@ -480,6 +499,7 @@ export default function Navbar({ hideNavbar = false }) {
                     className="block w-full text-center py-3 border-2 border-orange-500 text-orange-600 hover:bg-orange-500 hover:text-white transition-all duration-200 font-semibold text-sm"
                     onClick={() => {
                       setIsMobileMenuOpen(false);
+                      setActiveMobileDropdown(null);
                     }}
                   >
                     SHOP
