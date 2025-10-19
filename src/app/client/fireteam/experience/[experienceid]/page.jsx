@@ -39,6 +39,7 @@ export default function FireteamExperienceMeeting() {
   const [chatMessages, setChatMessages] = useState([]);
   const [showSummaryModal, setShowSummaryModal] = useState(false);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+  const [wasRecording, setWasRecording] = useState(false); // Track if recording was active during session
   const [jitsiContainerId] = useState(
     () => `jitsi-container-${crypto.randomUUID?.() || `${Date.now()}-${Math.random().toString(36).substring(2, 9)}`}`
   );
@@ -209,6 +210,10 @@ export default function FireteamExperienceMeeting() {
   const handleToggleRecording = useCallback(async () => {
     try {
       await toggleRecording();
+      if (!isRecording) {
+        // Recording is starting
+        setWasRecording(true);
+      }
       toast.success(isRecording ? "Recording stopped" : "Recording started");
     } catch (err) {
       toast.error(err.message || "Failed to toggle recording");
@@ -241,9 +246,10 @@ export default function FireteamExperienceMeeting() {
       };
 
       toast.info("Processing recording... This may take a minute.");
-      const summaries = await processRecording(meetingData, searchParams);
+      const result = await processRecording(meetingData, searchParams);
       setShowSummaryModal(true);
       toast.success("AI summary generated successfully!");
+      return result;
     } catch (err) {
       toast.error(err.message || "Failed to process recording");
     }
@@ -253,10 +259,21 @@ export default function FireteamExperienceMeeting() {
     // Stop recording if active
     if (isRecording) {
       await handleToggleRecording();
+      
+      // Wait a moment for the recording blob to be processed
+      // The recording blob is set asynchronously in the onstop event
+      await new Promise(resolve => setTimeout(resolve, 1000));
     }
 
     // Prompt to process recording if available
     if (recordingBlob && !processingRecording) {
+      setShowConfirmDialog(true);
+      return;
+    }
+
+    // If we were recording during the session, show confirmation dialog
+    // This ensures users can always choose to process their recording
+    if (wasRecording) {
       setShowConfirmDialog(true);
       return;
     }
@@ -266,25 +283,92 @@ export default function FireteamExperienceMeeting() {
 
     // Redirect to fireteam page
     window.location.href = "/client/fireteam";
-  }, [isRecording, recordingBlob, processingRecording, handleToggleRecording, leaveMeeting]);
+  }, [isRecording, recordingBlob, processingRecording, wasRecording, handleToggleRecording, leaveMeeting]);
 
   const handleConfirmProcessRecording = useCallback(async () => {
     setShowConfirmDialog(false);
-    await handleProcessRecording();
+    const result = await handleProcessRecording();
     leaveMeeting();
-    window.location.href = "/client/fireteam";
-  }, [handleProcessRecording, leaveMeeting]);
+    
+    const expId = searchParams?.get('id');
+    const ftId = searchParams?.get('fireteamId');
+    const recordingId = result?.recordingId || 'unknown';
+    window.location.href = `/client/fireteam/experience/${expId}/evaluation?fireteamId=${ftId}&recordingId=${recordingId}&hasAI=true`;
+  }, [handleProcessRecording, leaveMeeting, searchParams]);
 
   const handleCancelProcessRecording = useCallback(() => {
     setShowConfirmDialog(false);
     leaveMeeting();
-    window.location.href = "/client/fireteam";
-  }, [leaveMeeting]);
+    
+    const expId = searchParams?.get('id');
+    const ftId = searchParams?.get('fireteamId');
+    window.location.href = `/client/fireteam/experience/${expId}/evaluation?fireteamId=${ftId}&hasAI=false`;
+  }, [leaveMeeting, searchParams]);
 
   const handleTimerComplete = useCallback(() => {
     console.log("⏰ Timer completed for step:", currentStep);
     toast.info(`Step "${agenda[currentStep]?.title}" time is up!`);
   }, [currentStep, agenda, toast]);
+
+  // ============================================================================
+  // AUTOMATIC RECORDING START AFTER INTRODUCTION
+  // ============================================================================
+
+  useEffect(() => {
+    // Auto-start recording when reaching the Introduction step (step 1, after Waiting Room)
+    if (currentStep === 1 && agenda[currentStep]?.title === 'Introduction' && !isRecording && jitsiReady) {
+      console.log('🎬 Auto-starting recording for Introduction step...');
+      setWasRecording(true); // Mark that recording will be active
+      handleToggleRecording().catch((err) => {
+        console.error('❌ Failed to auto-start recording:', err);
+        toast.error('Failed to start recording automatically');
+      });
+    }
+  }, [currentStep, agenda, isRecording, jitsiReady, handleToggleRecording, toast]);
+
+  // ============================================================================
+  // AUTOMATIC RECORDING STOP AND AI SUMMARY GENERATION AT SESSION PROCESSING
+  // ============================================================================
+
+  useEffect(() => {
+    // Auto-stop recording and start AI summary generation when reaching Session Processing step
+    if (agenda[currentStep]?.title === 'Session Processing' || agenda[currentStep]?.isProcessing) {
+      console.log('🛑 Auto-stopping recording and starting AI summary generation...');
+      
+      const processSession = async () => {
+        try {
+          // Stop recording if active
+          if (isRecording) {
+            console.log('🛑 Stopping recording...');
+            await handleToggleRecording();
+            
+            // Wait for recording blob to be processed
+            await new Promise(resolve => setTimeout(resolve, 2000));
+          }
+
+          // Start AI summary generation
+          if (wasRecording || recordingBlob) {
+            console.log('🤖 Starting AI summary generation...');
+            toast.info('Generating AI summary... This may take a moment.');
+            
+            const result = await handleProcessRecording();
+            if (result) {
+              console.log('✅ AI summary generated successfully');
+              toast.success('AI summary generated successfully!');
+            }
+          } else {
+            console.log('⚠️ No recording to process');
+            toast.info('No recording available to process');
+          }
+        } catch (err) {
+          console.error('❌ Failed to process session:', err);
+          toast.error('Failed to generate AI summary: ' + (err.message || 'Unknown error'));
+        }
+      };
+
+      processSession();
+    }
+  }, [currentStep, agenda, isRecording, wasRecording, recordingBlob, handleToggleRecording, handleProcessRecording, toast]);
 
   // ============================================================================
   // MEMOIZED VALUES

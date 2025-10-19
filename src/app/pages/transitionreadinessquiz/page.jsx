@@ -90,80 +90,31 @@ const TransitionReadinessQuiz = () => {
 
   return (
     <div className="min-h-screen bg-[#faf9f7]">
-      {/* Header Navigation */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
-        {/* Top bar */}
-        <div className="bg-white border-b border-gray-100">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center py-2 text-sm">
-              <div className="flex items-center space-x-4">
-                <select className="bg-transparent border-none text-gray-600 focus:outline-none cursor-pointer">
-                  <option>English</option>
-                </select>
-                <a href="#" className="text-gray-600 hover:text-gray-900 transition-colors">Sign in/Sign up</a>
-                <a href="#" className="text-gray-600 hover:text-gray-900 transition-colors">Customer Support</a>
-              </div>
-              <div className="flex items-center space-x-4">
-                <button className="p-1 text-gray-600 hover:text-gray-900 transition-colors">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                  </svg>
-                </button>
-                <a href="#" className="text-gray-600 hover:text-gray-900 transition-colors">Log in</a>
-                <button className="bg-[#ff5e1a] text-white px-4 py-2 rounded-md hover:bg-[#e54e16] transition-colors">
-                  Join
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Main navigation */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
-            <div className="flex items-center">
-              <Image
-                src="/WANAC N 8 Old Glory.svg"
-                alt="WANAC Logo"
-                width={120}
-                height={40}
-                className="h-8 w-auto cursor-pointer"
-                onClick={() => router.push('/')}
-              />
-            </div>
-            <nav className="hidden md:flex space-x-8">
-              <a href="#" className="text-gray-700 hover:text-[#ff5e1a] font-medium transition-colors">Products</a>
-              <a href="#" className="text-gray-700 hover:text-[#ff5e1a] font-medium transition-colors">Solutions</a>
-              <a href="#" className="text-gray-700 hover:text-[#ff5e1a] font-medium transition-colors">Pricing</a>
-              <a href="#" className="text-gray-700 hover:text-[#ff5e1a] font-medium transition-colors">Resources</a>
-            </nav>
-            <div className="hidden md:flex space-x-4">
-              <button className="bg-[#002147] text-white px-6 py-2 rounded-md hover:bg-[#001530] transition-colors text-sm">
-                Start Claim Check
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-b from-[#faf9f7] to-white py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="bg-gradient-to-b from-[#faf9f7] to-white py-16 sm:py-20 md:py-24 lg:py-32">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-5xl lg:text-6xl font-bold text-[#002147] mb-6 leading-tight">
+            <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[#002147] mb-4 leading-tight tracking-tight">
                 WANAC Transition Readiness Quiz
               </h1>
-            <p className="text-2xl text-gray-600 mb-4 font-semibold">
+            <p className="text-sm sm:text-base md:text-lg text-gray-600 mb-4 font-semibold">
               Know your mission plan in 3 minutes
             </p>
-            <p className="text-lg text-gray-600 mb-8 leading-relaxed max-w-3xl mx-auto">
+            <p className="text-xs sm:text-sm md:text-base text-gray-600 mb-6 leading-relaxed max-w-3xl mx-auto">
               Diagnose your benefits, education, career, entrepreneurship, and performance readiness—then get a personalized plan and the right next step (PLEP, PLCA, VETA, PPC/CPPC) or VSO Claim Support if benefits are the bottleneck.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
-              <button className="bg-[#ff5e1a] text-white px-10 py-4 rounded-lg text-lg font-semibold hover:bg-[#e54e16] transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105">
+            <div className="flex flex-col xs:flex-row gap-3 sm:gap-4 justify-center mb-6">
+              <button className="group relative px-5 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold text-center overflow-hidden hover:shadow-2xl hover:shadow-orange-500/50 transition-all duration-300 text-sm">
+                <span className="relative z-10 flex items-center justify-center gap-2">
                 Take the 3-minute quiz
+                  <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
+                </span>
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
                 </button>
-              <button className="border-2 border-[#002147] text-[#002147] px-10 py-4 rounded-lg text-lg font-semibold hover:bg-[#002147] hover:text-white transition-all duration-200">
+              <button className="px-5 sm:px-6 py-2.5 sm:py-3 bg-white/10 backdrop-blur-sm border-2 border-[#002147] text-[#002147] font-semibold text-center hover:bg-[#002147] hover:text-white transition-all duration-300 text-sm">
                 Prefer to talk? Book a 15-minute consult
                 </button>
               </div>
@@ -198,13 +149,14 @@ const TransitionReadinessQuiz = () => {
       </section>
 
       {/* The Problem Section */}
-      <section className="bg-white py-16">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-4xl font-bold text-[#002147] mb-4">
+      <section className="bg-white py-16 sm:py-20 md:py-24">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10 md:mb-12">
+            <h2 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold mb-3 uppercase text-[#002147]">
               The problem (and what's at stake)
             </h2>
-            <p className="text-lg text-gray-700 leading-relaxed max-w-3xl mx-auto">
+            <div className="w-12 h-1 bg-[#ff5e1a] mx-auto rounded-full mb-3" aria-hidden="true"/>
+            <p className="text-xs sm:text-sm md:text-base text-gray-700 leading-relaxed max-w-3xl mx-auto">
               Transition gets treated like separate checklists—TAP here, resume there, claims "somewhere." That fragmentation costs time, delays benefits, and creates missed school or hiring windows. <span className="font-semibold text-[#ff5e1a]">Every week without a plan is momentum lost.</span>
             </p>
           </div>
@@ -212,70 +164,92 @@ const TransitionReadinessQuiz = () => {
       </section>
 
       {/* The Solution Section */}
-      <section className="bg-[#faf9f7] py-20">
+      <section className="bg-[#faf9f7] py-16 sm:py-20 md:py-24">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-4xl font-bold text-[#002147] mb-6">
+          <div className="text-center mb-10 md:mb-12">
+            <h2 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold mb-3 uppercase text-[#002147]">
               The WANAC solution (at a glance)
             </h2>
-            <p className="text-2xl font-semibold text-[#ff5e1a] mb-8">
+            <div className="w-12 h-1 bg-[#ff5e1a] mx-auto rounded-full mb-3" aria-hidden="true"/>
+            <p className="text-sm sm:text-base md:text-lg font-semibold text-[#ff5e1a] mb-6">
               One quiz. One mission plan.
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-10 md:mb-12">
             {/* Features Card */}
-            <div className="bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300">
-              <div className="w-16 h-16 bg-[#ff5e1a] bg-opacity-10 rounded-full flex items-center justify-center mb-6">
-                <svg className="w-8 h-8 text-[#ff5e1a]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="group relative bg-white overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 flex flex-col">
+              {/* Gradient border effect on hover */}
+              <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 via-transparent to-blue-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              
+              <div className="relative p-4 sm:p-5 flex flex-col flex-grow">
+                <div className="w-12 h-12 bg-[#ff5e1a] bg-opacity-10 flex items-center justify-center mb-4">
+                  <svg className="w-6 h-6 text-[#ff5e1a]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                 </svg>
               </div>
-              <h3 className="text-2xl font-bold text-[#002147] mb-4">Features</h3>
-              <p className="text-gray-600">
+                <h3 className="text-sm sm:text-base md:text-lg font-bold text-[#002147] group-hover:text-orange-600 transition-colors leading-snug mb-2">Features</h3>
+                <p className="text-gray-600 text-xs leading-relaxed flex-grow">
                 12 quick questions across Benefits, Education, Career, Entrepreneurship, Performance.
               </p>
+              </div>
             </div>
 
             {/* Advantages Card */}
-            <div className="bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300">
-              <div className="w-16 h-16 bg-[#002147] bg-opacity-10 rounded-full flex items-center justify-center mb-6">
-                <svg className="w-8 h-8 text-[#002147]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="group relative bg-white overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 flex flex-col">
+              {/* Gradient border effect on hover */}
+              <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 via-transparent to-blue-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              
+              <div className="relative p-4 sm:p-5 flex flex-col flex-grow">
+                <div className="w-12 h-12 bg-[#002147] bg-opacity-10 flex items-center justify-center mb-4">
+                  <svg className="w-6 h-6 text-[#002147]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
               </div>
-              <h3 className="text-2xl font-bold text-[#002147] mb-4">Advantages</h3>
-              <p className="text-gray-600">
+                <h3 className="text-sm sm:text-base md:text-lg font-bold text-[#002147] group-hover:text-orange-600 transition-colors leading-snug mb-2">Advantages</h3>
+                <p className="text-gray-600 text-xs leading-relaxed flex-grow">
                 Instant Red/Amber/Green score by domain, step-by-step plan, and a routed next step (cohort or claim support).
               </p>
+              </div>
             </div>
 
             {/* Benefits Card */}
-            <div className="bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300">
-              <div className="w-16 h-16 bg-green-600 bg-opacity-10 rounded-full flex items-center justify-center mb-6">
-                <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="group relative bg-white overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 flex flex-col">
+              {/* Gradient border effect on hover */}
+              <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 via-transparent to-blue-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              
+              <div className="relative p-4 sm:p-5 flex flex-col flex-grow">
+                <div className="w-12 h-12 bg-green-600 bg-opacity-10 flex items-center justify-center mb-4">
+                  <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
                 </svg>
               </div>
-              <h3 className="text-2xl font-bold text-[#002147] mb-4">Benefits</h3>
-              <p className="text-gray-600">
+                <h3 className="text-sm sm:text-base md:text-lg font-bold text-[#002147] group-hover:text-orange-600 transition-colors leading-snug mb-2">Benefits</h3>
+                <p className="text-gray-600 text-xs leading-relaxed flex-grow">
                 Clarity in minutes, not months—so you move immediately toward funded school, a targeted job search, or a validated venture.
               </p>
+              </div>
             </div>
           </div>
 
           <div className="text-center">
-            <button className="bg-[#ff5e1a] text-white px-10 py-4 rounded-lg text-lg font-semibold hover:bg-[#e54e16] transition-all duration-200 shadow-lg hover:shadow-xl">
+            <button className="group relative px-5 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold text-center overflow-hidden hover:shadow-2xl hover:shadow-orange-500/50 transition-all duration-300 text-sm">
+              <span className="relative z-10 flex items-center justify-center gap-2">
               Take the 3-minute quiz
+                <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </span>
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
             </button>
           </div>
         </div>
       </section>
 
       {/* Proof/Testimonial Section */}
-      <section className="bg-white py-16">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-gradient-to-r from-[#002147] to-[#003366] rounded-2xl shadow-xl p-8 md:p-12 text-white">
+      <section className="bg-white py-16 sm:py-20 md:py-24">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-gradient-to-r from-[#002147] to-[#003366] shadow-xl p-6 sm:p-8 md:p-12 text-white">
             <div className="flex items-start gap-4 mb-6">
               <svg className="w-12 h-12 text-[#ff5e1a] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
@@ -292,57 +266,58 @@ const TransitionReadinessQuiz = () => {
       </section>
 
       {/* Results & Impact Section - HubSpot Inspired */}
-      <section className="bg-[#002147] py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-white mb-4">
+      <section className="bg-[#002147] py-16 sm:py-20 md:py-24">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10 md:mb-12">
+            <h2 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold mb-3 uppercase text-white">
               WANAC quiz takers see results within 90 days
             </h2>
-            <p className="text-xl text-gray-300">
+            <div className="w-12 h-1 bg-orange-500 mx-auto rounded-full mb-3" aria-hidden="true"/>
+            <p className="text-xs sm:text-sm md:text-base text-gray-300">
               Veterans who complete the quiz and follow their personalized plan
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-10 md:mb-12">
             <div className="text-center">
-              <div className="w-20 h-20 bg-white bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-6">
-                <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="w-16 h-16 bg-white bg-opacity-10 flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
-              <h3 className="text-5xl font-bold text-white mb-3">87%</h3>
-              <p className="text-xl text-gray-300">File claims within 2 weeks</p>
-              <p className="text-sm text-gray-400 mt-2">With complete evidence packages</p>
+              <h3 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-2">87%</h3>
+              <p className="text-sm sm:text-base md:text-lg text-gray-300">File claims within 2 weeks</p>
+              <p className="text-xs text-gray-400 mt-1">With complete evidence packages</p>
             </div>
             
             <div className="text-center">
-              <div className="w-20 h-20 bg-white bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-6">
-                <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="w-16 h-16 bg-white bg-opacity-10 flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                 </svg>
               </div>
-              <h3 className="text-5xl font-bold text-white mb-3">3.2x</h3>
-              <p className="text-xl text-gray-300">Faster program enrollment</p>
-              <p className="text-sm text-gray-400 mt-2">Compared to unguided transition</p>
+              <h3 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-2">3.2x</h3>
+              <p className="text-sm sm:text-base md:text-lg text-gray-300">Faster program enrollment</p>
+              <p className="text-xs text-gray-400 mt-1">Compared to unguided transition</p>
             </div>
             
             <div className="text-center">
-              <div className="w-20 h-20 bg-white bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-6">
-                <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="w-16 h-16 bg-white bg-opacity-10 flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                 </svg>
               </div>
-              <h3 className="text-5xl font-bold text-white mb-3">94%</h3>
-              <p className="text-xl text-gray-300">Report reduced anxiety</p>
-              <p className="text-sm text-gray-400 mt-2">About their transition plan</p>
+              <h3 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-2">94%</h3>
+              <p className="text-sm sm:text-base md:text-lg text-gray-300">Report reduced anxiety</p>
+              <p className="text-xs text-gray-400 mt-1">About their transition plan</p>
             </div>
           </div>
           
           <div className="text-center">
-            <p className="text-white text-lg mb-6">
+            <p className="text-white text-sm sm:text-base md:text-lg mb-6">
               Join thousands of veterans who've found clarity and direction
             </p>
-            <button className="border-2 border-white text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-white hover:text-[#002147] transition-colors shadow-lg">
+            <button className="px-5 sm:px-6 py-2.5 sm:py-3 bg-white/10 backdrop-blur-sm border-2 border-white text-white font-semibold text-center hover:bg-white hover:text-[#002147] transition-all duration-300 text-sm">
               Take the quiz now
             </button>
           </div>
@@ -350,60 +325,61 @@ const TransitionReadinessQuiz = () => {
       </section>
 
       {/* Trusted By / Social Proof - HubSpot Style */}
-      <section className="bg-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <p className="text-sm text-gray-500 uppercase tracking-wide font-semibold mb-4">
+      <section className="bg-white py-16 sm:py-20 md:py-24">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10 md:mb-12">
+            <p className="text-xs text-gray-500 uppercase tracking-wide font-semibold mb-3">
               Trusted by Service Members Worldwide
             </p>
-            <h3 className="text-3xl font-bold text-[#002147] mb-2">
+            <h3 className="text-xl xs:text-2xl sm:text-3xl font-bold text-[#002147] mb-2">
               240,000+ veterans served across 135+ countries
             </h3>
-            <p className="text-lg text-gray-600">
+            <div className="w-12 h-1 bg-[#ff5e1a] mx-auto rounded-full mb-3" aria-hidden="true"/>
+            <p className="text-sm sm:text-base md:text-lg text-gray-600">
               Transitioning successfully with WANAC's support
             </p>
           </div>
           
           {/* Stats Row */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mb-10 md:mb-12">
             <div className="text-center">
-              <div className="text-4xl font-bold text-[#ff5e1a] mb-2">98%</div>
-              <div className="text-sm text-gray-600">Satisfaction Rate</div>
+              <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#ff5e1a] mb-2">98%</div>
+              <div className="text-xs sm:text-sm text-gray-600">Satisfaction Rate</div>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-bold text-[#ff5e1a] mb-2">50+</div>
-              <div className="text-sm text-gray-600">Partner Organizations</div>
+              <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#ff5e1a] mb-2">50+</div>
+              <div className="text-xs sm:text-sm text-gray-600">Partner Organizations</div>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-bold text-[#ff5e1a] mb-2">24/7</div>
-              <div className="text-sm text-gray-600">Support Available</div>
+              <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#ff5e1a] mb-2">24/7</div>
+              <div className="text-xs sm:text-sm text-gray-600">Support Available</div>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-bold text-[#ff5e1a] mb-2">&lt;3min</div>
-              <div className="text-sm text-gray-600">Average Quiz Time</div>
+              <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#ff5e1a] mb-2">&lt;3min</div>
+              <div className="text-xs sm:text-sm text-gray-600">Average Quiz Time</div>
             </div>
           </div>
 
           {/* Partner Logos Placeholder */}
-          <div className="border-t border-gray-200 pt-12">
-            <p className="text-center text-sm text-gray-500 uppercase tracking-wide font-semibold mb-8">
+          <div className="border-t border-gray-200 pt-8 sm:pt-10 md:pt-12">
+            <p className="text-center text-xs text-gray-500 uppercase tracking-wide font-semibold mb-6 sm:mb-8">
               Partnered with Leading Organizations
             </p>
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-8 items-center opacity-60">
-              <div className="bg-gray-100 rounded-lg p-6 text-center">
-                <div className="text-gray-600 font-bold text-sm">VA</div>
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-4 sm:gap-6 items-center opacity-60">
+              <div className="bg-gray-100 p-4 sm:p-6 text-center">
+                <div className="text-gray-600 font-bold text-xs sm:text-sm">VA</div>
               </div>
-              <div className="bg-gray-100 rounded-lg p-6 text-center">
-                <div className="text-gray-600 font-bold text-sm">DOD</div>
+              <div className="bg-gray-100 p-4 sm:p-6 text-center">
+                <div className="text-gray-600 font-bold text-xs sm:text-sm">DOD</div>
               </div>
-              <div className="bg-gray-100 rounded-lg p-6 text-center">
-                <div className="text-gray-600 font-bold text-sm">VFW</div>
+              <div className="bg-gray-100 p-4 sm:p-6 text-center">
+                <div className="text-gray-600 font-bold text-xs sm:text-sm">VFW</div>
               </div>
-              <div className="bg-gray-100 rounded-lg p-6 text-center">
-                <div className="text-gray-600 font-bold text-sm">American Legion</div>
+              <div className="bg-gray-100 p-4 sm:p-6 text-center">
+                <div className="text-gray-600 font-bold text-xs sm:text-sm">American Legion</div>
               </div>
-              <div className="bg-gray-100 rounded-lg p-6 text-center">
-                <div className="text-gray-600 font-bold text-sm">DAV</div>
+              <div className="bg-gray-100 p-4 sm:p-6 text-center">
+                <div className="text-gray-600 font-bold text-xs sm:text-sm">DAV</div>
               </div>
             </div>
           </div>
@@ -411,196 +387,229 @@ const TransitionReadinessQuiz = () => {
       </section>
 
       {/* Quiz Coverage Section */}
-      <section className="bg-[#faf9f7] py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-[#002147] mb-4">
+      <section className="bg-[#faf9f7] py-16 sm:py-20 md:py-24">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10 md:mb-12">
+            <h2 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold mb-3 uppercase text-[#002147]">
               What the quiz covers (and what you'll get)
             </h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+            <div className="w-12 h-1 bg-[#ff5e1a] mx-auto rounded-full mb-3" aria-hidden="true"/>
+            <p className="text-xs sm:text-sm md:text-base text-gray-600 max-w-3xl mx-auto">
               Our comprehensive assessment evaluates your readiness across five critical domains of transition
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-10 md:mb-12">
             {quizCoverageAreas.map((area, index) => (
-              <div key={index} className="bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl transition-all duration-300 border-t-4 border-[#ff5e1a]">
-                <div className="w-16 h-16 bg-[#ff5e1a] bg-opacity-10 rounded-full flex items-center justify-center mb-6 text-[#ff5e1a]">
+              <div key={index} className="group relative bg-white overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 flex flex-col border-t-4 border-[#ff5e1a]">
+                {/* Gradient border effect on hover */}
+                <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 via-transparent to-blue-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                
+                <div className="relative p-4 sm:p-5 flex flex-col flex-grow">
+                  <div className="w-12 h-12 bg-[#ff5e1a] bg-opacity-10 flex items-center justify-center mb-4 text-[#ff5e1a]">
                   {area.icon}
                 </div>
-                <h3 className="text-xl font-bold text-[#002147] mb-4">{area.title}</h3>
-                <div className="mb-4">
-                  <p className="text-sm font-semibold text-gray-700 mb-2">Checks:</p>
-                  <p className="text-sm text-gray-600 mb-4">{area.checks}</p>
-                  <p className="text-sm font-semibold text-gray-700 mb-2">Output:</p>
-                  <p className="text-sm text-gray-600">{area.output}</p>
+                  <h3 className="text-sm sm:text-base md:text-lg font-bold text-[#002147] group-hover:text-orange-600 transition-colors leading-snug mb-3">{area.title}</h3>
+                  <div className="mb-4 flex-grow">
+                    <p className="text-xs font-semibold text-gray-700 mb-1">Checks:</p>
+                    <p className="text-xs text-gray-600 mb-3">{area.checks}</p>
+                    <p className="text-xs font-semibold text-gray-700 mb-1">Output:</p>
+                    <p className="text-xs text-gray-600">{area.output}</p>
+                  </div>
                 </div>
               </div>
             ))}
               </div>
 
           <div className="text-center">
-            <button className="bg-[#ff5e1a] text-white px-10 py-4 rounded-lg text-lg font-semibold hover:bg-[#e54e16] transition-all duration-200 shadow-lg hover:shadow-xl inline-flex items-center gap-2">
+            <button className="group relative px-5 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold text-center overflow-hidden hover:shadow-2xl hover:shadow-orange-500/50 transition-all duration-300 text-sm inline-flex items-center gap-2">
+              <span className="relative z-10 flex items-center justify-center gap-2">
               Get my personalized plan (free)
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>
+              </span>
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
               </button>
             </div>
         </div>
       </section>
 
       {/* How it Works Section */}
-      <section className="bg-white py-20">
+      <section className="bg-white py-16 sm:py-20 md:py-24">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-[#002147] mb-4">
+          <div className="text-center mb-10 md:mb-12">
+            <h2 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold mb-3 uppercase text-[#002147]">
               How it works (3 steps)
             </h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+            <div className="w-12 h-1 bg-[#ff5e1a] mx-auto rounded-full mb-3" aria-hidden="true"/>
+            <p className="text-xs sm:text-sm md:text-base text-gray-600 max-w-3xl mx-auto">
               Simple, fast, and actionable
             </p>
             </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-10 md:mb-12">
             {/* Step 1 */}
             <div className="relative">
               <div className="text-center">
-                <div className="w-20 h-20 bg-[#ff5e1a] text-white rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-6 shadow-lg">
+                <div className="w-16 h-16 bg-[#ff5e1a] text-white flex items-center justify-center text-2xl font-bold mx-auto mb-4 shadow-lg">
                   1
               </div>
-                <h3 className="text-xl font-bold text-[#002147] mb-3">
+                <h3 className="text-sm sm:text-base md:text-lg font-bold text-[#002147] mb-2">
                   Answer the 12 prompts
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-xs sm:text-sm text-gray-600">
                   Takes approximately 3 minutes. Quick, focused questions about your transition readiness.
                 </p>
               </div>
               {/* Connector Line */}
-              <div className="hidden md:block absolute top-10 left-full w-full h-1 bg-gray-200" style={{ width: 'calc(100% - 40px)', left: 'calc(50% + 40px)' }}></div>
+              <div className="hidden md:block absolute top-8 left-full w-full h-1 bg-gray-200" style={{ width: 'calc(100% - 32px)', left: 'calc(50% + 32px)' }}></div>
             </div>
 
             {/* Step 2 */}
             <div className="relative">
               <div className="text-center">
-                <div className="w-20 h-20 bg-[#002147] text-white rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-6 shadow-lg">
+                <div className="w-16 h-16 bg-[#002147] text-white flex items-center justify-center text-2xl font-bold mx-auto mb-4 shadow-lg">
                   2
               </div>
-                <h3 className="text-xl font-bold text-[#002147] mb-3">
+                <h3 className="text-sm sm:text-base md:text-lg font-bold text-[#002147] mb-2">
                   See your R/A/G score
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-xs sm:text-sm text-gray-600">
                   Get instant Red/Amber/Green scoring and a concise plan for each domain.
                 </p>
               </div>
               {/* Connector Line */}
-              <div className="hidden md:block absolute top-10 left-full w-full h-1 bg-gray-200" style={{ width: 'calc(100% - 40px)', left: 'calc(50% + 40px)' }}></div>
+              <div className="hidden md:block absolute top-8 left-full w-full h-1 bg-gray-200" style={{ width: 'calc(100% - 32px)', left: 'calc(50% + 32px)' }}></div>
             </div>
 
             {/* Step 3 */}
             <div className="text-center">
-              <div className="w-20 h-20 bg-green-600 text-white rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-6 shadow-lg">
+              <div className="w-16 h-16 bg-green-600 text-white flex items-center justify-center text-2xl font-bold mx-auto mb-4 shadow-lg">
                 3
               </div>
-              <h3 className="text-xl font-bold text-[#002147] mb-3">
+              <h3 className="text-sm sm:text-base md:text-lg font-bold text-[#002147] mb-2">
                 Act today
               </h3>
-              <p className="text-gray-600">
+              <p className="text-xs sm:text-sm text-gray-600">
                 Book claims support, apply for a cohort, or grab your next task immediately.
               </p>
             </div>
           </div>
 
           <div className="text-center">
-            <button className="bg-[#ff5e1a] text-white px-10 py-4 rounded-lg text-lg font-semibold hover:bg-[#e54e16] transition-all duration-200 shadow-lg hover:shadow-xl">
+            <button className="group relative px-5 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold text-center overflow-hidden hover:shadow-2xl hover:shadow-orange-500/50 transition-all duration-300 text-sm">
+              <span className="relative z-10 flex items-center justify-center gap-2">
               Take the 3-minute quiz
+                <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </span>
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
             </button>
           </div>
         </div>
       </section>
 
       {/* Where it Plugs In Section */}
-      <section className="bg-[#faf9f7] py-20">
+      <section className="bg-[#faf9f7] py-16 sm:py-20 md:py-24">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-4xl font-bold text-[#002147] mb-4">
+          <div className="text-center mb-10 md:mb-12">
+            <h2 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold mb-3 uppercase text-[#002147]">
               Where it plugs in (integration & fit)
             </h2>
+            <div className="w-12 h-1 bg-[#ff5e1a] mx-auto rounded-full mb-3" aria-hidden="true"/>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-            <div className="bg-white rounded-xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300">
-              <div className="w-14 h-14 bg-blue-600 bg-opacity-10 rounded-full flex items-center justify-center mb-4">
-                <svg className="w-7 h-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-10 md:mb-12">
+            <div className="group relative bg-white overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 flex flex-col">
+              {/* Gradient border effect on hover */}
+              <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 via-transparent to-blue-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              
+              <div className="relative p-4 sm:p-5 flex flex-col flex-grow">
+                <div className="w-12 h-12 bg-blue-600 bg-opacity-10 flex items-center justify-center mb-4">
+                  <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold text-[#002147] mb-3">Claim-first routing</h3>
-              <p className="text-gray-600">
+                <h3 className="text-sm sm:text-base md:text-lg font-bold text-[#002147] group-hover:text-orange-600 transition-colors leading-snug mb-2">Claim-first routing</h3>
+                <p className="text-gray-600 text-xs leading-relaxed flex-grow">
                 If you're ≤12 months from separation or on active duty, we route you to accredited VSO claim support (including BDD).
               </p>
+              </div>
             </div>
             
-            <div className="bg-white rounded-xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300">
-              <div className="w-14 h-14 bg-[#ff5e1a] bg-opacity-10 rounded-full flex items-center justify-center mb-4">
-                <svg className="w-7 h-7 text-[#ff5e1a]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="group relative bg-white overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 flex flex-col">
+              {/* Gradient border effect on hover */}
+              <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 via-transparent to-blue-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              
+              <div className="relative p-4 sm:p-5 flex flex-col flex-grow">
+                <div className="w-12 h-12 bg-[#ff5e1a] bg-opacity-10 flex items-center justify-center mb-4">
+                  <svg className="w-6 h-6 text-[#ff5e1a]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold text-[#002147] mb-3">Program routing</h3>
-              <p className="text-gray-600">
+                <h3 className="text-sm sm:text-base md:text-lg font-bold text-[#002147] group-hover:text-orange-600 transition-colors leading-snug mb-2">Program routing</h3>
+                <p className="text-gray-600 text-xs leading-relaxed flex-grow">
                 Education → PLEP, Career → PLCA, Entrepreneurship → VETA, Performance → PPC/CPPC.
               </p>
+              </div>
             </div>
             
-            <div className="bg-white rounded-xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300">
-              <div className="w-14 h-14 bg-green-600 bg-opacity-10 rounded-full flex items-center justify-center mb-4">
-                <svg className="w-7 h-7 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="group relative bg-white overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 flex flex-col">
+              {/* Gradient border effect on hover */}
+              <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 via-transparent to-blue-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              
+              <div className="relative p-4 sm:p-5 flex flex-col flex-grow">
+                <div className="w-12 h-12 bg-green-600 bg-opacity-10 flex items-center justify-center mb-4">
+                  <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold text-[#002147] mb-3">Funding next step</h3>
-              <p className="text-gray-600">
+                <h3 className="text-sm sm:text-base md:text-lg font-bold text-[#002147] group-hover:text-orange-600 transition-colors leading-snug mb-2">Funding next step</h3>
+                <p className="text-gray-600 text-xs leading-relaxed flex-grow">
                 Links to the Scholarship Eligibility Estimator and cohort dates.
               </p>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Who Should Take This Section */}
-      <section className="bg-white py-20">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-4xl font-bold text-[#002147] mb-8">
+      <section className="bg-white py-16 sm:py-20 md:py-24">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10 md:mb-12">
+            <h2 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold mb-3 uppercase text-[#002147]">
               Who should take this
             </h2>
+            <div className="w-12 h-1 bg-[#ff5e1a] mx-auto rounded-full mb-3" aria-hidden="true"/>
                 </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-gradient-to-br from-[#ff5e1a] to-[#e54e16] rounded-xl shadow-lg p-8 text-white text-center hover:shadow-xl transition-shadow duration-300">
-              <svg className="w-12 h-12 mx-auto mb-4" fill="currentColor" viewBox="0 0 20 20">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+            <div className="bg-gradient-to-br from-[#ff5e1a] to-[#e54e16] shadow-lg p-4 sm:p-6 text-white text-center hover:shadow-xl transition-shadow duration-300">
+              <svg className="w-8 h-8 mx-auto mb-3" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
               </svg>
-              <p className="font-semibold text-lg">
+              <p className="font-semibold text-sm sm:text-base">
                 Active duty within BDD window or ≤12 months from separation
               </p>
             </div>
 
-            <div className="bg-gradient-to-br from-[#002147] to-[#003366] rounded-xl shadow-lg p-8 text-white text-center hover:shadow-xl transition-shadow duration-300">
-              <svg className="w-12 h-12 mx-auto mb-4" fill="currentColor" viewBox="0 0 20 20">
+            <div className="bg-gradient-to-br from-[#002147] to-[#003366] shadow-lg p-4 sm:p-6 text-white text-center hover:shadow-xl transition-shadow duration-300">
+              <svg className="w-8 h-8 mx-auto mb-3" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
               </svg>
-              <p className="font-semibold text-lg">
+              <p className="font-semibold text-sm sm:text-base">
                 Recently separated veterans ready to prioritize benefits, school, job, or venture
               </p>
               </div>
 
-            <div className="bg-gradient-to-br from-green-600 to-green-700 rounded-xl shadow-lg p-8 text-white text-center hover:shadow-xl transition-shadow duration-300">
-              <svg className="w-12 h-12 mx-auto mb-4" fill="currentColor" viewBox="0 0 20 20">
+            <div className="bg-gradient-to-br from-green-600 to-green-700 shadow-lg p-4 sm:p-6 text-white text-center hover:shadow-xl transition-shadow duration-300">
+              <svg className="w-8 h-8 mx-auto mb-3" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
               </svg>
-              <p className="font-semibold text-lg">
+              <p className="font-semibold text-sm sm:text-base">
                 Anyone stuck in "where do I start?" who wants a single, clear plan
               </p>
             </div>
@@ -609,27 +618,28 @@ const TransitionReadinessQuiz = () => {
       </section>
 
       {/* FAQ Section */}
-      <section className="bg-[#faf9f7] py-20">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-4xl font-bold text-[#002147] mb-4">
+      <section className="bg-[#faf9f7] py-16 sm:py-20 md:py-24">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10 md:mb-12">
+            <h2 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold mb-3 uppercase text-[#002147]">
               Frequently Asked Questions
             </h2>
-            <p className="text-lg text-gray-600">
+            <div className="w-12 h-1 bg-[#ff5e1a] mx-auto rounded-full mb-3" aria-hidden="true"/>
+            <p className="text-xs sm:text-sm md:text-base text-gray-600">
               Risk reversal & objections answered
             </p>
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             {faqs.map((faq, index) => (
-              <div key={index} className="bg-white rounded-xl shadow-md overflow-hidden">
+              <div key={index} className="bg-white shadow-md overflow-hidden">
                 <button
-                  className="w-full text-left px-6 py-5 flex justify-between items-center hover:bg-gray-50 transition-colors"
+                  className="w-full text-left px-4 sm:px-6 py-4 sm:py-5 flex justify-between items-center hover:bg-gray-50 transition-colors"
                   onClick={() => toggleFaq(index)}
                 >
-                  <span className="text-lg font-semibold text-[#002147]">{faq.question}</span>
+                  <span className="text-sm sm:text-base md:text-lg font-semibold text-[#002147]">{faq.question}</span>
                   <svg
-                    className={`w-6 h-6 text-[#ff5e1a] transition-transform duration-200 ${
+                    className={`w-5 h-5 sm:w-6 sm:h-6 text-[#ff5e1a] transition-transform duration-200 ${
                       openFaq === index ? 'transform rotate-180' : ''
                     }`}
                     fill="none"
@@ -640,7 +650,7 @@ const TransitionReadinessQuiz = () => {
                   </svg>
                 </button>
                 {openFaq === index && (
-                  <div className="px-6 pb-5 text-gray-600 animate-fadeIn">
+                  <div className="px-4 sm:px-6 pb-4 sm:pb-5 text-gray-600 animate-fadeIn text-xs sm:text-sm">
                     {faq.answer}
                   </div>
                 )}
@@ -651,20 +661,27 @@ const TransitionReadinessQuiz = () => {
       </section>
 
       {/* Final CTA Section */}
-      <section className="bg-gradient-to-r from-[#002147] to-[#003366] py-20">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="bg-gradient-to-r from-[#002147] to-[#003366] py-16 sm:py-20 md:py-24">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center text-white">
-            <h2 className="text-4xl lg:text-5xl font-bold mb-6">
+            <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
               Start your transition plan today
             </h2>
-            <p className="text-xl mb-10 text-gray-200 max-w-3xl mx-auto">
+            <div className="w-12 h-1 bg-orange-500 mx-auto rounded-full mb-4" aria-hidden="true"/>
+            <p className="text-sm sm:text-base md:text-lg mb-8 text-gray-200 max-w-3xl mx-auto">
               Get your personalized readiness assessment in just 3 minutes
             </p>
-            <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <button className="bg-[#ff5e1a] text-white px-12 py-5 rounded-lg text-xl font-semibold hover:bg-[#e54e16] transition-all duration-200 shadow-xl hover:shadow-2xl transform hover:scale-105">
+            <div className="flex flex-col xs:flex-row gap-3 sm:gap-4 justify-center">
+              <button className="group relative px-5 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold text-center overflow-hidden hover:shadow-2xl hover:shadow-orange-500/50 transition-all duration-300 text-sm">
+                <span className="relative z-10 flex items-center justify-center gap-2">
                 Take the 3-minute quiz
+                  <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
+                </span>
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
               </button>
-              <button className="border-3 border-white text-white px-12 py-5 rounded-lg text-xl font-semibold hover:bg-white hover:text-[#002147] transition-all duration-200 shadow-xl">
+              <button className="px-5 sm:px-6 py-2.5 sm:py-3 bg-white/10 backdrop-blur-sm border-2 border-white text-white font-semibold text-center hover:bg-white hover:text-[#002147] transition-all duration-300 text-sm">
                 Book a 15-minute consult
               </button>
             </div>
@@ -673,89 +690,16 @@ const TransitionReadinessQuiz = () => {
       </section>
 
       {/* Compliance Section */}
-      <section className="bg-gray-100 py-8">
+      <section className="bg-gray-100 py-6 sm:py-8">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <p className="text-sm text-gray-600 leading-relaxed">
+            <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
               <span className="font-semibold">Compliance & Privacy:</span> WANAC provides accredited VSO representation for eligible veterans within 12 months of separation and for active-duty BDD claims, and partners with accredited organizations for others. WANAC is not a law firm and is not affiliated with the U.S. Department of Veterans Affairs. Your information is handled securely and shared only with your consent.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-[#002147] text-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
-            <div>
-              <h4 className="font-bold text-lg mb-4">Programs</h4>
-              <ul className="space-y-3 text-gray-300">
-                <li><a href="#" className="hover:text-[#ff5e1a] transition-colors">PLEP (Education)</a></li>
-                <li><a href="#" className="hover:text-[#ff5e1a] transition-colors">PLCA (Career)</a></li>
-                <li><a href="#" className="hover:text-[#ff5e1a] transition-colors">VETA (Entrepreneurship)</a></li>
-                <li><a href="#" className="hover:text-[#ff5e1a] transition-colors">PPC/CPPC (Performance)</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-bold text-lg mb-4">Resources</h4>
-              <ul className="space-y-3 text-gray-300">
-                <li><a href="#" className="hover:text-[#ff5e1a] transition-colors">Transition Guide</a></li>
-                <li><a href="#" className="hover:text-[#ff5e1a] transition-colors">VSO Claim Support</a></li>
-                <li><a href="#" className="hover:text-[#ff5e1a] transition-colors">Scholarship Estimator</a></li>
-                <li><a href="#" className="hover:text-[#ff5e1a] transition-colors">Success Stories</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-bold text-lg mb-4">Company</h4>
-              <ul className="space-y-3 text-gray-300">
-                <li><a href="#" className="hover:text-[#ff5e1a] transition-colors">About Us</a></li>
-                <li><a href="#" className="hover:text-[#ff5e1a] transition-colors">Contact</a></li>
-                <li><a href="#" className="hover:text-[#ff5e1a] transition-colors">Privacy Policy</a></li>
-                <li><a href="#" className="hover:text-[#ff5e1a] transition-colors">Terms of Service</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-bold text-lg mb-4">Connect</h4>
-              <div className="flex space-x-4 mb-6">
-                <a href="#" className="w-10 h-10 bg-white bg-opacity-10 rounded-full flex items-center justify-center hover:bg-[#ff5e1a] transition-colors">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
-                  </svg>
-                </a>
-                <a href="#" className="w-10 h-10 bg-white bg-opacity-10 rounded-full flex items-center justify-center hover:bg-[#ff5e1a] transition-colors">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm3 8h-1.35c-.538 0-.65.221-.65.778V10h2l-.209 2H13v7h-3v-7H8v-2h2V7.692C10 5.923 10.931 5 13.029 5H15v3z"/>
-                  </svg>
-                </a>
-                <a href="#" className="w-10 h-10 bg-white bg-opacity-10 rounded-full flex items-center justify-center hover:bg-[#ff5e1a] transition-colors">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                  </svg>
-                </a>
-              </div>
-              <p className="text-sm text-gray-300">
-                Supporting veterans in their transition journey
-              </p>
-            </div>
-          </div>
-          <div className="border-t border-gray-700 pt-8">
-            <div className="flex flex-col md:flex-row justify-between items-center text-gray-400 text-sm">
-              <div className="mb-4 md:mb-0">
-                <p>&copy; 2025 WANAC. All rights reserved.</p>
-              </div>
-              <div className="flex items-center gap-2">
-                <Image
-                  src="/WANAC N 8 Old Glory.svg"
-                  alt="WANAC Logo"
-                  width={80}
-                  height={30}
-                  className="opacity-80"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 };

@@ -186,7 +186,11 @@ export function useRecording(jitsiApiRef, jitsiReady) {
       // Set summaries for modal display
       setMeetingSummaries(summaries);
 
-      return summaries;
+      // Return both summaries and recording ID
+      return {
+        summaries,
+        recordingId: tempRecordingId || currentRecordingId
+      };
     } catch (error) {
       console.error('❌ Failed to process recording:', error);
       throw new Error(

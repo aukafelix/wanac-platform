@@ -52,6 +52,133 @@ export default function Slide({ step, participants = [], experienceTitle = "" })
     );
   }
 
+  // Introduction slide content
+  if (step.title === "Introduction" || step.isIntroduction) {
+    return (
+      <div className="bg-gradient-to-br from-[#002147] to-[#003875] rounded-xl shadow-lg p-10 text-center w-full mx-auto h-[420px] md:h-[520px] lg:h-[620px] flex flex-col justify-center text-white">
+        <h1 className="text-3xl font-black leading-tight mb-6">
+          What is the Fireteam Experience?
+        </h1>
+        
+        <div className="space-y-4 mb-6">
+          <p className="text-lg leading-relaxed">
+            Fireteam is a collaborative learning environment where you work alongside fellow veterans to complete experiences, share insights, and grow together.
+          </p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+            <div className="bg-white/10 rounded-lg p-4 backdrop-blur-sm">
+              <h3 className="font-bold text-lg mb-2">🎯 Collaborative Learning</h3>
+              <p className="text-sm">Work together with your team to achieve common goals and share knowledge</p>
+            </div>
+            <div className="bg-white/10 rounded-lg p-4 backdrop-blur-sm">
+              <h3 className="font-bold text-lg mb-2">💬 Interactive Sessions</h3>
+              <p className="text-sm">Participate in group discussions and hands-on activities</p>
+            </div>
+            <div className="bg-white/10 rounded-lg p-4 backdrop-blur-sm">
+              <h3 className="font-bold text-lg mb-2">📚 Structured Content</h3>
+              <p className="text-sm">Follow a guided agenda with clear objectives and outcomes</p>
+            </div>
+            <div className="bg-white/10 rounded-lg p-4 backdrop-blur-sm">
+              <h3 className="font-bold text-lg mb-2">🤝 Peer Support</h3>
+              <p className="text-sm">Learn from and support your fellow veterans throughout the journey</p>
+            </div>
+          </div>
+        </div>
+        
+        <div className="mt-6">
+          <p className="text-sm text-white/80">
+            Ready to begin your collaborative learning experience?
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // Session Processing slide content
+  if (step.title === "Session Processing" || step.isProcessing) {
+    return (
+      <div className="bg-gradient-to-br from-purple-600 to-purple-800 rounded-xl shadow-lg p-10 text-center w-full mx-auto h-[420px] md:h-[520px] lg:h-[620px] flex flex-col justify-center text-white">
+        <div className="mb-6">
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-white/20 rounded-full mb-4">
+            <svg className="w-10 h-10 text-white animate-spin" fill="none" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+          </div>
+          <h1 className="text-3xl font-black leading-tight mb-4">
+            Processing Session Data
+          </h1>
+          <p className="text-lg mb-6 text-white/90">
+            {step.subtitle || "Analyzing your session and generating AI insights..."}
+          </p>
+        </div>
+        
+        <div className="space-y-4 mb-8">
+          <div className="flex items-center justify-center gap-3 text-white/80">
+            <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+            <span className="text-sm">Stopping recording...</span>
+          </div>
+          <div className="flex items-center justify-center gap-3 text-white/80">
+            <div className="w-2 h-2 bg-white rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+            <span className="text-sm">Transcribing audio...</span>
+          </div>
+          <div className="flex items-center justify-center gap-3 text-white/80">
+            <div className="w-2 h-2 bg-white rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
+            <span className="text-sm">Generating AI summaries...</span>
+          </div>
+          <div className="flex items-center justify-center gap-3 text-white/80">
+            <div className="w-2 h-2 bg-white rounded-full animate-pulse" style={{ animationDelay: '1.5s' }}></div>
+            <span className="text-sm">Preparing results...</span>
+          </div>
+        </div>
+        
+        <div className="text-sm text-white/70">
+          This may take a few moments. Please wait...
+        </div>
+      </div>
+    );
+  }
+
+  // AI Summary Report slide content
+  if (step.title === "AI Summary Report" || step.isSummary) {
+    return (
+      <div className="bg-gradient-to-br from-green-600 to-green-800 rounded-xl shadow-lg p-10 text-center w-full mx-auto h-[420px] md:h-[520px] lg:h-[620px] flex flex-col justify-center text-white">
+        <div className="mb-6">
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-white/20 rounded-full mb-4">
+            <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h1 className="text-3xl font-black leading-tight mb-4">
+            AI Summary Report
+          </h1>
+          <p className="text-lg mb-6 text-white/90">
+            {step.subtitle || "Your session analysis is complete!"}
+          </p>
+        </div>
+        
+        <div className="space-y-3 mb-8">
+          <div className="flex items-center justify-center gap-3 text-white/80">
+            <div className="w-2 h-2 bg-green-300 rounded-full"></div>
+            <span className="text-sm">Session transcribed successfully</span>
+          </div>
+          <div className="flex items-center justify-center gap-3 text-white/80">
+            <div className="w-2 h-2 bg-green-300 rounded-full"></div>
+            <span className="text-sm">AI insights generated</span>
+          </div>
+          <div className="flex items-center justify-center gap-3 text-white/80">
+            <div className="w-2 h-2 bg-green-300 rounded-full"></div>
+            <span className="text-sm">Summary report ready</span>
+          </div>
+        </div>
+        
+        <div className="text-sm text-white/70">
+          Your detailed AI analysis is now available for review.
+        </div>
+      </div>
+    );
+  }
+
   // Custom content for AI-generated Results step
   if (step.title === "AI-generated Results") {
     return (

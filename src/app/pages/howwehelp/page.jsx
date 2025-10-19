@@ -1,6 +1,6 @@
+import Image from 'next/image';
 import { MdSchool, MdWork, MdStar, MdBusiness } from 'react-icons/md';
 import { FaUserGraduate } from 'react-icons/fa';
-import { BsJournalText } from 'react-icons/bs';
 
 export default function HowWeHelp() {
   const supportAreas = [
@@ -64,312 +64,555 @@ export default function HowWeHelp() {
   ];
 
   return (
-    <div style={{ fontFamily: "var(--font-body)" }}>
+    <div className="bg-background text-foreground relative overflow-x-hidden">
       {/* Hero Section */}
-      <header className="relative bg-[#002147] text-white min-h-[420px] flex items-center justify-center overflow-hidden">
+      <section className="min-h-[70vh] md:min-h-[75vh] bg-[#002147] text-white py-16 sm:py-20 md:py-24 lg:py-32 relative overflow-hidden">
         <div 
           className="absolute inset-0 w-full h-full"
           style={{
-            backgroundImage: 'url("/landingpage1.jpg")',
+            backgroundImage: `linear-gradient(135deg, rgba(0,33,71,0.95) 0%, rgba(0,33,71,0.85) 50%, rgba(255,94,26,0.35) 100%), url('/landingpage1.jpg')`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat'
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-[#002147]/90 via-[#002147]/80 to-[#ff5e1a]/40"></div>
-        <div className="relative z-10 py-20 px-4 w-full max-w-4xl mx-auto text-center flex flex-col items-center">
-          <h1 className="text-4xl md:text-5xl font-extrabold mb-4 leading-tight drop-shadow-lg" style={{ fontFamily: "var(--font-heading)" }}>
-            Empowering Your Next Chapter
-          </h1>
-          <p className="text-lg md:text-2xl max-w-2xl mx-auto mb-6 text-blue-100 font-medium drop-shadow">
-          At WANAC, we proudly offer specialized programs designed to equip transitioning service members, veterans, and
-          aspiring coaches with the skills and knowledge required to succeed personally, professionally, and entrepreneurially.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mt-4">
-           
-            <a
-              href="/pages/programintakeform"
-              className="w-full sm:w-auto bg-transparent text-white border-2 border-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-[#002147] transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl text-center"
-              aria-label="Program Intake Form"
-            >
-              TRANSITION PROGRAM INTAKE FORM
-            </a>
-          </div>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mt-4">
-           
-            <a
-              href="/pages/programintakeform"
-              className="w-full sm:w-auto bg-transparent text-white border-2 border-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-[#002147] transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl text-center"
-              aria-label="Program Intake Form"
-            >
-              VA BENEFITS CLAIM INTAKE FORM
-            </a>
+        
+        <div className="absolute top-1/4 right-0 w-64 md:w-96 h-64 md:h-96 bg-gradient-to-l from-orange-500/15 to-transparent rounded-full blur-3xl animate-pulse" />
+        
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
+          <div className="max-w-4xl mx-auto text-center">
+            <h1 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 uppercase">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-orange-200">
+                Empowering Your Next Chapter
+              </span>
+            </h1>
+            <div className="w-12 h-1 bg-orange-500 mx-auto rounded-full mb-3" />
+            <p className="text-sm sm:text-base md:text-lg text-gray-200 mb-6 max-w-3xl mx-auto leading-relaxed">
+              At WANAC, we proudly offer specialized programs designed to equip transitioning service members, veterans, and
+              aspiring coaches with the skills and knowledge required to succeed personally, professionally, and entrepreneurially.
+            </p>
+            
+            {/* CTA Buttons */}
+            <div className="flex flex-col xs:flex-row justify-center gap-3 sm:gap-4">
+              <a 
+                href="/pages/programintakeform" 
+                className="group relative px-5 sm:px-6 py-2.5 sm:py-3 bg-orange-500 overflow-hidden shadow-xl hover:shadow-orange-500/30 transition-all duration-300"
+                aria-label="Transition Program Intake Form"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-orange-600 to-orange-500 transform group-hover:scale-105 transition-transform duration-300"></div>
+                <span className="relative flex items-center justify-center gap-2 text-sm sm:text-base font-semibold">
+                  TRANSITION PROGRAM INTAKE
+                  <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
+                </span>
+              </a>
+              
+              <a 
+                href="/pages/vsoclaimsupport" 
+                className="group relative px-5 sm:px-6 py-2.5 sm:py-3 bg-white overflow-hidden shadow-xl hover:shadow-white/20 transition-all duration-300"
+                aria-label="VA Benefits Claim Intake Form"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-white to-gray-100 transform group-hover:scale-105 transition-transform duration-300"></div>
+                <span className="relative flex items-center justify-center gap-2 text-sm sm:text-base font-semibold text-[#002147] group-hover:text-orange-500 transition-colors">
+                  VA BENEFITS CLAIM INTAKE
+                  <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
+                </span>
+              </a>
+            </div>
           </div>
         </div>
-      </header>
+      </section>
 
-      {/* section Navigation Bar */}
-      <section>
-        <div className="relative w-full h-16 bg-[#002147] overflow-hidden flex items-center justify-center">
-          <nav className="relative z-10 flex space-x-8 px-4">
-            <a href="#about" className="group flex flex-col items-center justify-center text-white text-base font-medium transition-colors flex-none no-underline hover:no-underline">
-              <div className="flex flex-col items-center w-full h-full px-6 py-3 transition-colors group-hover:bg-orange-500 group-hover:text-white">
-                <span className="whitespace-nowrap text-center w-full">UNDERSTANDING CHALLENGES</span>
-                <svg className="w-4 h-4 mt-1 transition-colors" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                </svg>
-              </div>
-            </a>
-            <a href="#program-offerings" className="group flex flex-col items-center justify-center text-white text-base font-medium transition-colors flex-none no-underline hover:no-underline">
-              <div className="flex flex-col items-center w-full h-full px-6 py-3 transition-colors group-hover:bg-orange-500 group-hover:text-white">
-                <span className="whitespace-nowrap text-center w-full">OUR PROGRAMS</span>
-                <svg className="w-4 h-4 mt-1 transition-colors" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                </svg>
-              </div>
-            </a>
-            <a href="#why-wanac" className="group flex flex-col items-center justify-center text-white text-base font-medium transition-colors flex-none no-underline hover:no-underline">
-              <div className="flex flex-col items-center w-full h-full px-6 py-3 transition-colors group-hover:bg-orange-500 group-hover:text-white">
-                <span className="whitespace-nowrap text-center w-full">WHY WANAC?</span>
-                <svg className="w-4 h-4 mt-1 transition-colors" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                </svg>
-              </div>
-            </a>
+      {/* Navigation */}
+      <section className="bg-[#002147] py-4">
+        <div className="max-w-6xl mx-auto px-4">
+          <nav className="flex flex-wrap justify-center gap-4 sm:gap-6">
+            {[
+              { href: "#challenges", label: "UNDERSTANDING CHALLENGES" },
+              { href: "#programs", label: "OUR PROGRAMS" },
+              { href: "#why-wanac", label: "WHY WANAC?" }
+            ].map((item) => (
+              <a 
+                key={item.href}
+                href={item.href} 
+                className="px-4 py-2 text-white hover:text-orange-400 hover:bg-orange-500/10 transition-all duration-300 text-sm font-medium"
+              >
+                {item.label}
+              </a>
+            ))}
           </nav>
-          <div 
-            className="absolute inset-0 w-full" 
-            style={{
-              animation: 'slide 20s linear infinite',
-            }}
-          >
-            <div className="h-full bg-gradient-to-r from-blue-600 via-[#002147] to-blue-600 w-[200%]"></div>
-          </div>
         </div>
       </section>
       
 
       {/* Understanding Your Challenges Section */}
-      <section className="relative py-16 bg-white overflow-hidden">
-        <div className="max-w-4xl mx-auto px-4 grid md:grid-cols-2 gap-10 items-center">
-          {/* Infographic Wheel with Icons */}
-          <div className="relative w-[320px] h-[320px] mx-auto flex items-center justify-center">
-            <div className="absolute left-1/2 top-1/2 w-[320px] h-[320px] -translate-x-1/2 -translate-y-1/2">
-              {/* Top */}
-              <div className="absolute left-1/2 top-0 -translate-x-1/2 flex flex-col items-center">
-                <img src="/bussinessacademyphase1.jpg" alt="Career Transitions" className="w-16 h-16 object-cover rounded-full shadow mb-2" />
-                <span className="text-xs text-center text-gray-700 font-medium w-24">Career Transitions</span>
-              </div>
-              {/* Right */}
-              <div className="absolute right-0 top-1/2 -translate-y-1/2 flex flex-col items-center">
-                <img src="/aIandfeatires.jpg" alt="Educational Paths" className="w-16 h-16 object-cover rounded-full shadow mb-2" />
-                <span className="text-xs text-center text-gray-700 font-medium w-24">Educational Paths</span>
-              </div>
-              
-              {/* Left */}
-              <div className="absolute left-0 top-1/2 -translate-y-1/2 flex flex-col items-center">
-                <img src="/high perfomance coaching.jpg" alt="High Performance" className="w-16 h-16 object-cover rounded-full shadow mb-2" />
-                <span className="text-xs text-center text-gray-700 font-medium w-24">Entrepreneurial Ventures</span>
-              </div>
-              {/* Center circle for visual effect */}
-              <div className="absolute left-1/2 top-1/2 w-24 h-24 bg-gradient-to-br from-orange-200 via-white to-blue-200 rounded-full -translate-x-1/2 -translate-y-1/2 border-4 border-white shadow-lg flex items-center justify-center">
-                <span className="text-center text-sm font-bold text-[#002147]">Your Challenges</span>
-              </div>
-            </div>
-          </div>
-          {/* Section Text */}
-          <div className="max-w-md mx-auto text-center md:text-left">
-            <h2 className="text-3xl md:text-4xl font-bold text-[#002147] mb-4" style={{ fontFamily: "var(--font-heading)" }}>
+      <section id="challenges" className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 lg:px-8 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-10 md:mb-12">
+            <h2 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold mb-3 uppercase text-[#002147]">
               Understanding Your Challenges
             </h2>
-            <p className="text-lg text-[#002147] mb-6">
-              We recognize the unique obstacles faced by our participants. Explore the key areas where WANAC supports your journey:
+            <div className="w-12 h-1 bg-orange-500 mx-auto rounded-full mb-3" />
+            <p className="text-xs sm:text-sm md:text-base text-gray-600 max-w-xl mx-auto leading-relaxed">
+              We recognize the unique obstacles faced by our participants
             </p>
-            <ul className="space-y-3 text-left text-gray-700 text-sm">
-              <li><span className="font-semibold text-[#ff5e1a]">Career Transitions:</span> Navigating complex career transitions</li>
-              <li><span className="font-semibold text-[#ff5e1a]">Educational Paths:</span> Overcoming uncertainty about educational paths</li>
-              <li><span className="font-semibold text-[#ff5e1a]">Entrepreneurial Ventures:</span> Developing entrepreneurial ventures</li>
-            </ul>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            {/* Infographic Wheel */}
+            <div className="relative w-[320px] h-[320px] mx-auto flex items-center justify-center">
+              <div className="absolute left-1/2 top-1/2 w-[320px] h-[320px] -translate-x-1/2 -translate-y-1/2">
+                {/* Top */}
+                <div className="absolute left-1/2 top-0 -translate-x-1/2 flex flex-col items-center">
+                  <div className="relative w-16 h-16 overflow-hidden rounded-full shadow-lg mb-2">
+                    <Image
+                      src="/bussinessacademyphase1.jpg"
+                      alt="Career Transitions"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <span className="text-xs text-center text-gray-700 font-medium w-24">Career Transitions</span>
+                </div>
+                {/* Right */}
+                <div className="absolute right-0 top-1/2 -translate-y-1/2 flex flex-col items-center">
+                  <div className="relative w-16 h-16 overflow-hidden rounded-full shadow-lg mb-2">
+                    <Image
+                      src="/aIandfeatires.jpg"
+                      alt="Educational Paths"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <span className="text-xs text-center text-gray-700 font-medium w-24">Educational Paths</span>
+                </div>
+                {/* Left */}
+                <div className="absolute left-0 top-1/2 -translate-y-1/2 flex flex-col items-center">
+                  <div className="relative w-16 h-16 overflow-hidden rounded-full shadow-lg mb-2">
+                    <Image
+                      src="/high perfomance coaching.jpg"
+                      alt="Entrepreneurial Ventures"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <span className="text-xs text-center text-gray-700 font-medium w-24">Entrepreneurial Ventures</span>
+                </div>
+                {/* Center circle */}
+                <div className="absolute left-1/2 top-1/2 w-24 h-24 bg-gradient-to-br from-orange-200 via-white to-blue-200 rounded-full -translate-x-1/2 -translate-y-1/2 border-4 border-white shadow-lg flex items-center justify-center">
+                  <span className="text-center text-sm font-bold text-[#002147]">Your Challenges</span>
+                </div>
+              </div>
+            </div>
+            
+            {/* Content */}
+            <div>
+              <p className="text-sm sm:text-base text-gray-700 mb-6 leading-relaxed">
+                We recognize the unique obstacles faced by our participants. Explore the key areas where WANAC supports your journey:
+              </p>
+              <ul className="space-y-4">
+                <li className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-orange-500 rounded-full mt-2 flex-shrink-0"></div>
+                  <div>
+                    <span className="font-bold text-[#002147]">Career Transitions:</span>
+                    <span className="text-gray-700"> Navigating complex career transitions with confidence</span>
+                  </div>
+                </li>
+                <li className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-orange-500 rounded-full mt-2 flex-shrink-0"></div>
+                  <div>
+                    <span className="font-bold text-[#002147]">Educational Paths:</span>
+                    <span className="text-gray-700"> Overcoming uncertainty about educational paths</span>
+                  </div>
+                </li>
+                <li className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-orange-500 rounded-full mt-2 flex-shrink-0"></div>
+                  <div>
+                    <span className="font-bold text-[#002147]">Entrepreneurial Ventures:</span>
+                    <span className="text-gray-700"> Developing successful entrepreneurial ventures</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </section>
 
-      <section id="Program offerings" className="relative py-16">
-        {/* Background image with gradient overlay */}
-        <div 
-          className="absolute inset-0 w-full h-full z-0"
-          style={{
-            backgroundImage: `linear-gradient(150deg, rgba(0,33,71,0.85) 10%, rgba(255,94,26,0.60) 300%, rgba(255,255,255,0.90) 100%), url('/landingpage4.jpg')`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat',
-            pointerEvents: 'none',
-          }}
-          aria-hidden="true"
-        />
-        <div className="relative z-10">
-        <div className="mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-8">
-            <h2 className="text-3xl font-bold text-white mb-2" style={{ fontFamily: "var(--font-heading)" }}>
+      <section id="programs" className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 lg:px-8 text-center relative overflow-hidden" 
+               style={{ background: 'linear-gradient(160deg, #002147 0%, #FF7D33 15%, #FF5E1A 30%, #002147 50%)' }}>
+        
+        <div className="absolute top-1/3 left-0 w-64 md:w-80 h-64 md:h-80 bg-gradient-to-br from-orange-400/10 to-transparent rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
+        
+        <div className="relative max-w-6xl mx-auto z-10">
+          <div className="mb-10 md:mb-12">
+            <h2 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold mb-3 uppercase text-white">
               Our Programs
             </h2>
-            <p className="text-lg text-white">
+            <div className="w-12 h-1 bg-white mx-auto rounded-full mb-3" />
+            <p className="text-xs sm:text-sm md:text-base text-gray-200 max-w-xl mx-auto leading-relaxed">
               Comprehensive programs tailored for veterans, transitioning service members, and aspiring coaches
             </p>
           </div>
-          <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-5 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
             {/* VSO Claim Support */}
-            <div className="group relative bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-500 p-4 border border-gray-100 overflow-hidden min-h-[220px] flex flex-col justify-between">
-              <div className="flex items-center mb-2">
-                <MdBusiness size={32} className="text-orange-400 mr-2" />
-                <h3 className="text-lg font-bold text-brand-navy" style={{ fontFamily: "var(--font-heading)" }}>VSO Claim Support</h3>
+            <div className="group relative bg-white overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 flex flex-col">
+              <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 via-transparent to-blue-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              
+              <div className="relative p-4 sm:p-5 flex flex-col flex-grow">
+                <div className="flex items-center mb-3">
+                  <MdBusiness size={28} className="text-orange-600 mr-2" />
+                  <h3 className="text-sm sm:text-base md:text-lg font-bold text-[#002147] group-hover:text-orange-600 transition-colors leading-snug">
+                    VSO Claim Support
+                  </h3>
+                </div>
+                <p className="text-orange-600 font-medium text-xs mb-3">Streamlined Support for VA Claims</p>
+                
+                <ul className="text-gray-600 text-xs leading-relaxed mb-3 space-y-1.5 flex-grow text-left">
+                  <li className="flex items-start gap-2">
+                    <span className="text-orange-500 mt-0.5">•</span>
+                    <span>Expert assistance from accredited VSOs</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-orange-500 mt-0.5">•</span>
+                    <span>Comprehensive help for disability compensation</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-orange-500 mt-0.5">•</span>
+                    <span>Seamless integration with WANAC programs</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-orange-500 mt-0.5">•</span>
+                    <span>Tailored support for transitioning service members</span>
+                  </li>
+                </ul>
+
+                <a
+                  href="/pages/vsoclaimssupportprogram"
+                  className="inline-flex items-center justify-center gap-2 w-full px-3 py-2 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold shadow-lg hover:shadow-orange-500/50 transform hover:-translate-y-0.5 transition-all duration-300 text-xs mt-auto"
+                >
+                  Explore Program
+                  <svg className="w-3 h-3 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </a>
               </div>
-              <p className="text-xs text-brand-blue mb-2">Streamlined Support for VA Claims</p>
-              <ul className="list-disc list-inside text-gray-700 space-y-1 mb-2 text-xs">
-                <li>Expert assistance from accredited Veteran Service Officers (VSOs)</li>
-                <li>Comprehensive help for disability compensation, appeals, and benefits</li>
-                <li>Seamless integration with WANAC's education and career programs</li>
-                <li>Tailored support exclusively for transitioning service members and recently separated veterans</li>
-              </ul>
-              <a href="/pages/vsoclaimssupportprogram" className="inline-block mt-2 px-3 py-1 bg-orange-400 text-white rounded hover:bg-[#002147] transition-colors duration-300 shadow text-xs font-semibold">Explore VSO Claim Support &rarr;</a>
             </div>
             {/* PLEP */}
-            <div className="group relative bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-500 p-4 border border-gray-100 overflow-hidden min-h-[220px] flex flex-col justify-between">
-              <div className="flex items-center mb-2">
-                <MdSchool size={32} className="text-orange-400 mr-2" />
-                <h3 className="text-lg font-bold text-brand-navy" style={{ fontFamily: "var(--font-heading)" }}>Promise Land Education Pathway (PLEP)</h3>
+            <div className="group relative bg-white overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 flex flex-col">
+              <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 via-transparent to-blue-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              
+              <div className="relative p-4 sm:p-5 flex flex-col flex-grow">
+                <div className="flex items-center mb-3">
+                  <MdSchool size={28} className="text-orange-600 mr-2" />
+                  <h3 className="text-sm sm:text-base md:text-lg font-bold text-[#002147] group-hover:text-orange-600 transition-colors leading-snug">
+                    Promise Land Education Pathway (PLEP)
+                  </h3>
+                </div>
+                <p className="text-orange-600 font-medium text-xs mb-3">Navigate Your Educational Journey</p>
+                
+                <ul className="text-gray-600 text-xs leading-relaxed mb-3 space-y-1.5 flex-grow text-left">
+                  <li className="flex items-start gap-2">
+                    <span className="text-orange-500 mt-0.5">•</span>
+                    <span>Structured academic transition support</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-orange-500 mt-0.5">•</span>
+                    <span>Personalized mentoring through admissions and financial aid</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-orange-500 mt-0.5">•</span>
+                    <span>Veteran-specific resources and academic planning</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-orange-500 mt-0.5">•</span>
+                    <span>Community-focused academic networking and support</span>
+                  </li>
+                </ul>
+
+                <a
+                  href="/pages/wanacplep"
+                  className="inline-flex items-center justify-center gap-2 w-full px-3 py-2 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold shadow-lg hover:shadow-orange-500/50 transform hover:-translate-y-0.5 transition-all duration-300 text-xs mt-auto"
+                >
+                  Explore PLEP
+                  <svg className="w-3 h-3 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </a>
               </div>
-              <p className="text-xs text-brand-blue mb-2">Navigate Your Educational Journey</p>
-              <ul className="list-disc list-inside text-gray-700 space-y-1 mb-2 text-xs">
-                <li>Structured academic transition support</li>
-                <li>Personalized mentoring through admissions and financial aid</li>
-                <li>Veteran-specific resources and academic planning</li>
-                <li>Community-focused academic networking and support</li>
-              </ul>
-              <a href="/pages/plep" className="inline-block mt-2 px-3 py-1 bg-orange-400 text-white rounded hover:bg-[#002147] transition-colors duration-300 shadow text-xs font-semibold">Explore PLEP &rarr;</a>
             </div>
+            
             {/* PLCA */}
-            <div className="group relative bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-500 p-4 border border-gray-100 overflow-hidden min-h-[220px] flex flex-col justify-between">
-              <div className="flex items-center mb-2">
-                <MdWork size={32} className="text-orange-400 mr-2" />
-                <h3 className="text-lg font-bold text-brand-navy" style={{ fontFamily: "var(--font-heading)" }}>Promise Land Career Accelerator (PLCA)</h3>
+            <div className="group relative bg-white overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 flex flex-col">
+              <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 via-transparent to-blue-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              
+              <div className="relative p-4 sm:p-5 flex flex-col flex-grow">
+                <div className="flex items-center mb-3">
+                  <MdWork size={28} className="text-orange-600 mr-2" />
+                  <h3 className="text-sm sm:text-base md:text-lg font-bold text-[#002147] group-hover:text-orange-600 transition-colors leading-snug">
+                    Promise Land Career Accelerator (PLCA)
+                  </h3>
+                </div>
+                <p className="text-orange-600 font-medium text-xs mb-3">Accelerate Your Professional Success</p>
+                
+                <ul className="text-gray-600 text-xs leading-relaxed mb-3 space-y-1.5 flex-grow text-left">
+                  <li className="flex items-start gap-2">
+                    <span className="text-orange-500 mt-0.5">•</span>
+                    <span>Comprehensive career management skills</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-orange-500 mt-0.5">•</span>
+                    <span>Internship and targeted job search strategies</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-orange-500 mt-0.5">•</span>
+                    <span>Personal branding, networking, and interviewing mastery</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-orange-500 mt-0.5">•</span>
+                    <span>Strategic career decision-making and goal achievement</span>
+                  </li>
+                </ul>
+
+                <a
+                  href="/pages/wanaplca"
+                  className="inline-flex items-center justify-center gap-2 w-full px-3 py-2 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold shadow-lg hover:shadow-orange-500/50 transform hover:-translate-y-0.5 transition-all duration-300 text-xs mt-auto"
+                >
+                  Discover PLCA
+                  <svg className="w-3 h-3 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </a>
               </div>
-              <p className="text-xs text-brand-blue mb-2">Accelerate Your Professional Success</p>
-              <ul className="list-disc list-inside text-gray-700 space-y-1 mb-2 text-xs">
-                <li>Comprehensive career management skills</li>
-                <li>Internship and targeted job search strategies</li>
-                <li>Personal branding, networking, and interviewing mastery</li>
-                <li>Strategic career decision-making and goal achievement</li>
-              </ul>
-              <a href="/pages/plca" className="inline-block mt-2 px-3 py-1 bg-orange-400 text-white rounded hover:bg-[#002147] transition-colors duration-300 shadow text-xs font-semibold">Discover PLCA &rarr;</a>
             </div>
+            
             {/* PPC */}
-            <div className="group relative bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-500 p-4 border border-gray-100 overflow-hidden min-h-[220px] flex flex-col justify-between">
-              <div className="flex items-center mb-2">
-                <MdStar size={32} className="text-orange-400 mr-2" />
-                <h3 className="text-lg font-bold text-brand-navy" style={{ fontFamily: "var(--font-heading)" }}>Peak Performance Coaching (PPC)</h3>
+            <div className="group relative bg-white overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 flex flex-col">
+              <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 via-transparent to-blue-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              
+              <div className="relative p-4 sm:p-5 flex flex-col flex-grow">
+                <div className="flex items-center mb-3">
+                  <MdStar size={28} className="text-orange-600 mr-2" />
+                  <h3 className="text-sm sm:text-base md:text-lg font-bold text-[#002147] group-hover:text-orange-600 transition-colors leading-snug">
+                    Peak Performance Coaching (PPC)
+                  </h3>
+                </div>
+                <p className="text-orange-600 font-medium text-xs mb-3">Master Personal & Professional Excellence</p>
+                
+                <ul className="text-gray-600 text-xs leading-relaxed mb-3 space-y-1.5 flex-grow text-left">
+                  <li className="flex items-start gap-2">
+                    <span className="text-orange-500 mt-0.5">•</span>
+                    <span>12-session structured coaching model</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-orange-500 mt-0.5">•</span>
+                    <span>Enhances clarity, energy, courage, productivity, and influence</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-orange-500 mt-0.5">•</span>
+                    <span>Personalized sessions and peer group workshops</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-orange-500 mt-0.5">•</span>
+                    <span>Proven methodologies for sustained high-performance outcomes</span>
+                  </li>
+                </ul>
+
+                <a
+                  href="/pages/wanappc"
+                  className="inline-flex items-center justify-center gap-2 w-full px-3 py-2 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold shadow-lg hover:shadow-orange-500/50 transform hover:-translate-y-0.5 transition-all duration-300 text-xs mt-auto"
+                >
+                  Learn More
+                  <svg className="w-3 h-3 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </a>
               </div>
-              <p className="text-xs text-brand-blue mb-2">Master Personal & Professional Excellence</p>
-              <ul className="list-disc list-inside text-gray-700 space-y-1 mb-2 text-xs">
-                <li>12-session structured coaching model</li>
-                <li>Enhances clarity, energy, courage, productivity, and influence</li>
-                <li>Personalized sessions and peer group workshops</li>
-                <li>Proven methodologies for sustained high-performance outcomes</li>
-              </ul>
-              <a href="/pages/ppc" className="inline-block mt-2 px-3 py-1 bg-orange-400 text-white rounded hover:bg-[#002147] transition-colors duration-300 shadow text-xs font-semibold">Learn More &rarr;</a>
             </div>
+            
             {/* CPPC */}
-            <div className="group relative bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-500 p-4 border border-gray-100 overflow-hidden min-h-[220px] flex flex-col justify-between">
-              <div className="flex items-center mb-2">
-                <FaUserGraduate size={32} className="text-orange-400 mr-2" />
-                <h3 className="text-lg font-bold text-brand-navy" style={{ fontFamily: "var(--font-heading)" }}>Certified Peak Performance Coach (CPPC)</h3>
+            <div className="group relative bg-white overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 flex flex-col">
+              <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 via-transparent to-blue-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              
+              <div className="relative p-4 sm:p-5 flex flex-col flex-grow">
+                <div className="flex items-center mb-3">
+                  <FaUserGraduate size={28} className="text-orange-600 mr-2" />
+                  <h3 className="text-sm sm:text-base md:text-lg font-bold text-[#002147] group-hover:text-orange-600 transition-colors leading-snug">
+                    Certified Peak Performance Coach (CPPC)
+                  </h3>
+                </div>
+                <p className="text-orange-600 font-medium text-xs mb-3">Become a Recognized Coaching Leader</p>
+                
+                <ul className="text-gray-600 text-xs leading-relaxed mb-3 space-y-1.5 flex-grow text-left">
+                  <li className="flex items-start gap-2">
+                    <span className="text-orange-500 mt-0.5">•</span>
+                    <span>In-depth professional certification in peak performance coaching</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-orange-500 mt-0.5">•</span>
+                    <span>Master core psychological, physiological, and productivity strategies</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-orange-500 mt-0.5">•</span>
+                    <span>Expand your professional opportunities and coaching practice</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-orange-500 mt-0.5">•</span>
+                    <span>Gain credibility as a certified performance expert</span>
+                  </li>
+                </ul>
+
+                <a
+                  href="/pages/cppc"
+                  className="inline-flex items-center justify-center gap-2 w-full px-3 py-2 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold shadow-lg hover:shadow-orange-500/50 transform hover:-translate-y-0.5 transition-all duration-300 text-xs mt-auto"
+                >
+                  Get Certified
+                  <svg className="w-3 h-3 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </a>
               </div>
-              <p className="text-xs text-brand-blue mb-2">Become a Recognized Coaching Leader</p>
-              <ul className="list-disc list-inside text-gray-700 space-y-1 mb-2 text-xs">
-                <li>In-depth professional certification in peak performance coaching</li>
-                <li>Master core psychological, physiological, and productivity strategies</li>
-                <li>Expand your professional opportunities and coaching practice</li>
-                <li>Gain credibility as a certified performance expert</li>
-              </ul>
-              <a href="/pages/cppc" className="inline-block mt-2 px-3 py-1 bg-orange-400 text-white rounded hover:bg-[#002147] transition-colors duration-300 shadow text-xs font-semibold">Get Certified &rarr;</a>
             </div>
+            
             {/* VETA */}
-            <div className="group relative bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-500 p-4 border border-gray-100 overflow-hidden min-h-[220px] flex flex-col justify-between">
-              <div className="flex items-center mb-2">
-                <MdBusiness size={32} className="text-orange-400 mr-2" />
-                <h3 className="text-lg font-bold text-brand-navy" style={{ fontFamily: "var(--font-heading)" }}>Vetrepreneurship Academy (VETA)</h3>
+            <div className="group relative bg-white overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 flex flex-col">
+              <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 via-transparent to-blue-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              
+              <div className="relative p-4 sm:p-5 flex flex-col flex-grow">
+                <div className="flex items-center mb-3">
+                  <MdBusiness size={28} className="text-orange-600 mr-2" />
+                  <h3 className="text-sm sm:text-base md:text-lg font-bold text-[#002147] group-hover:text-orange-600 transition-colors leading-snug">
+                    Vetrepreneurship Academy (VETA)
+                  </h3>
+                </div>
+                <p className="text-orange-600 font-medium text-xs mb-3">Build Your Entrepreneurial Legacy</p>
+                
+                <ul className="text-gray-600 text-xs leading-relaxed mb-3 space-y-1.5 flex-grow text-left">
+                  <li className="flex items-start gap-2">
+                    <span className="text-orange-500 mt-0.5">•</span>
+                    <span>Comprehensive entrepreneurship and business planning curriculum</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-orange-500 mt-0.5">•</span>
+                    <span>Financial modeling, market research, and competitive analysis</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-orange-500 mt-0.5">•</span>
+                    <span>Business model evaluation and customer discovery methods</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-orange-500 mt-0.5">•</span>
+                    <span>Extensive mentorship from successful entrepreneurs</span>
+                  </li>
+                </ul>
+
+                <a
+                  href="/pages/vetaacademy"
+                  className="inline-flex items-center justify-center gap-2 w-full px-3 py-2 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold shadow-lg hover:shadow-orange-500/50 transform hover:-translate-y-0.5 transition-all duration-300 text-xs mt-auto"
+                >
+                  Join the Academy
+                  <svg className="w-3 h-3 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </a>
               </div>
-              <p className="text-xs text-brand-blue mb-2">Build Your Entrepreneurial Legacy</p>
-              <ul className="list-disc list-inside text-gray-700 space-y-1 mb-2 text-xs">
-                <li>Comprehensive entrepreneurship and business planning curriculum</li>
-                <li>Financial modeling, market research, and competitive analysis</li>
-                <li>Business model evaluation and customer discovery methods</li>
-                <li>Extensive mentorship from successful entrepreneurs</li>
-              </ul>
-              <a href="/pages/veta" className="inline-block mt-2 px-3 py-1 bg-orange-400 text-white rounded hover:bg-[#002147] transition-colors duration-300 shadow text-xs font-semibold">Join the Academy &rarr;</a>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
         
 
-        {/* CTA Section */}
-        <section className="relative overflow-hidden" style={{ background: 'linear-gradient(120deg, #FF7D33 0%, #FF5E1A 30%, #002147 100%)' }}>
-          {/* Gradient + background image overlay */}
-          <div 
-            className="absolute inset-0 w-full h-full z-0"
-            style={{
-              backgroundImage: `linear-gradient(300deg, rgba(255,125,51,0.85) 0%, rgba(255,94,26,0.70) 20%, rgba(0,33,71,0.90) 100%), url('/jamesthompson.jpg')`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center 20%',
-              backgroundRepeat: 'no-repeat',
-              pointerEvents: 'none',
-            }}
-            aria-hidden="true"
-          />
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 z-10">
-            <div className="text-center">
-              <div className="max-w-3xl mx-auto">
-                <h3 className="text-3xl md:text-4xl font-bold text-white mb-8" style={{ fontFamily: "var(--font-heading)" }}>
-                  Why Choose WANAC?
-                </h3>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-                  <div className="bg-white rounded-xl shadow p-6 border border-gray-100 text-left flex flex-col justify-between">
-                    <h4 className="font-semibold text-xl mb-2 text-[#002147] whitespace-nowrap" style={{ fontFamily: "var(--font-heading)", whiteSpace: "nowrap" }}>Tailored Programs</h4>
-                    <p className="text-gray-700">Specifically designed for transitioning service members, veterans, and professionals.</p>
-                  </div>
-                  <div className="bg-white rounded-xl shadow p-6 border border-gray-100 text-left flex flex-col justify-between">
-                    <h4 className="font-semibold text-xl mb-2 text-[#002147] whitespace-nowrap" style={{ fontFamily: "var(--font-heading)", whiteSpace: "nowrap" }}>Proven Results</h4>
-                    <p className="text-gray-700">Structured, actionable frameworks delivering measurable outcomes.</p>
-                  </div>
-                  <div className="bg-white rounded-xl shadow p-6 border border-gray-100 text-left flex flex-col justify-between">
-                    <h4 className="font-semibold text-xl mb-2 text-[#002147] whitespace-nowrap" style={{ fontFamily: "var(--font-heading)", whiteSpace: "nowrap" }}>Dedicated Support</h4>
-                    <p className="text-gray-700">Ongoing mentorship, community connections, and robust resources.</p>
-                  </div>
+        {/* Why Choose WANAC Section */}
+        <section id="why-wanac" className="relative bg-[#002147] text-white text-center py-16 sm:py-20 md:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 overflow-hidden">
+          <div className="absolute inset-0 bg-[url('/jamesthompson.jpg')] bg-cover bg-center opacity-10"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#002147]/50 to-[#002147]"></div>
+          
+          <div className="absolute inset-0">
+            <div className="absolute top-10 left-5 sm:left-10 w-24 sm:w-32 h-24 sm:h-32 bg-orange-500/10 rounded-full blur-xl animate-pulse"></div>
+            <div className="absolute bottom-10 right-5 sm:right-10 w-32 sm:w-40 h-32 sm:h-40 bg-blue-500/10 rounded-full blur-xl animate-pulse" style={{ animationDelay: '700ms' }}></div>
+          </div>
+
+          <div className="relative z-10 max-w-6xl mx-auto">
+            <h2 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 uppercase">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-orange-200">
+                Why Choose WANAC?
+              </span>
+            </h2>
+            <p className="mb-8 sm:mb-12 text-sm sm:text-base md:text-lg text-gray-200 max-w-xl mx-auto leading-relaxed">
+              Discover what makes WANAC the trusted partner for veteran success
+            </p>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-12">
+              <div className="group relative bg-white/5 backdrop-blur-md p-5 sm:p-6 border border-white/20 hover:bg-white/10 hover:border-white/40 transition-all duration-500 hover:scale-105">
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-orange-500 to-blue-500 opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-500" />
+                <div className="relative">
+                  <h3 className="text-base sm:text-lg md:text-xl font-bold mb-3 text-white group-hover:text-orange-400 transition-colors">
+                    Tailored Programs
+                  </h3>
+                  <p className="text-xs sm:text-sm text-gray-200 leading-relaxed">
+                    Specifically designed for transitioning service members, veterans, and professionals.
+                  </p>
                 </div>
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
-                  <button
-                    className="w-full sm:w-auto bg-[#ff5e1a] text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-[#ff5e1a] transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
-                    aria-label="Contact WANAC"
-                  >
-                    Contact WANAC
-                  </button>
-                  <button
-                    className="w-full sm:w-auto bg-transparent text-white border-2 border-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-[#002147] transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
-                    aria-label="Explore Programs"
-                  >
-                    Explore Programs
-                  </button>
+              </div>
+              
+              <div className="group relative bg-white/5 backdrop-blur-md p-5 sm:p-6 border border-white/20 hover:bg-white/10 hover:border-white/40 transition-all duration-500 hover:scale-105">
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-orange-500 to-blue-500 opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-500" />
+                <div className="relative">
+                  <h3 className="text-base sm:text-lg md:text-xl font-bold mb-3 text-white group-hover:text-orange-400 transition-colors">
+                    Proven Results
+                  </h3>
+                  <p className="text-xs sm:text-sm text-gray-200 leading-relaxed">
+                    Structured, actionable frameworks delivering measurable outcomes.
+                  </p>
+                </div>
+              </div>
+              
+              <div className="group relative bg-white/5 backdrop-blur-md p-5 sm:p-6 border border-white/20 hover:bg-white/10 hover:border-white/40 transition-all duration-500 hover:scale-105">
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-orange-500 to-blue-500 opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-500" />
+                <div className="relative">
+                  <h3 className="text-base sm:text-lg md:text-xl font-bold mb-3 text-white group-hover:text-orange-400 transition-colors">
+                    Dedicated Support
+                  </h3>
+                  <p className="text-xs sm:text-sm text-gray-200 leading-relaxed">
+                    Ongoing mentorship, community connections, and robust resources.
+                  </p>
                 </div>
               </div>
             </div>
+            
+            <div className="flex flex-col xs:flex-row justify-center gap-3 sm:gap-4">
+              <a 
+                href="/contact" 
+                className="group relative px-5 sm:px-6 py-2.5 sm:py-3 bg-orange-500 overflow-hidden shadow-xl hover:shadow-orange-500/30 transition-all duration-300"
+                aria-label="Contact WANAC"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-orange-600 to-orange-500 transform group-hover:scale-105 transition-transform duration-300"></div>
+                <span className="relative flex items-center justify-center gap-2 text-sm sm:text-base font-semibold">
+                  Contact WANAC
+                  <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
+                </span>
+              </a>
+              
+              <a 
+                href="#programs" 
+                className="group relative px-5 sm:px-6 py-2.5 sm:py-3 bg-white overflow-hidden shadow-xl hover:shadow-white/20 transition-all duration-300"
+                aria-label="Explore Programs"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-white to-gray-100 transform group-hover:scale-105 transition-transform duration-300"></div>
+                <span className="relative flex items-center justify-center gap-2 text-sm sm:text-base font-semibold text-[#002147] group-hover:text-orange-500 transition-colors">
+                  Explore Programs
+                  <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
+                </span>
+              </a>
+            </div>
           </div>
-
-          {/* Decorative Elements */}
-          <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-72 h-72 bg-[#ff5e1a] rounded-full opacity-10 blur-3xl"></div>
-          <div className="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/2 w-72 h-72 bg-white rounded-full opacity-10 blur-3xl"></div>
         </section>
         
       </div>

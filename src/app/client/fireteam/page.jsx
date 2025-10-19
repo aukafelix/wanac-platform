@@ -7,7 +7,7 @@ import { FaFire, FaUsers, FaChartLine, FaCalendarAlt } from 'react-icons/fa';
 import { fireteamService } from '../../../services/api/fireteam.service';
 import { experienceService } from '../../../services/api/experience.service';
 
-export default function BreakoutRoomPage() {
+export default function FireteamPage() {
   const [collapsed, setCollapsed] = useState(false);
   const [user, setUser] = useState(null);
   const [stats, setStats] = useState({

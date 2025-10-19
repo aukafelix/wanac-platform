@@ -18,8 +18,6 @@ const excludedPaths = [
   '/pages/breakoutroom',
   '/pages/coach',
   '/pages/vsoclaimsupport',
-  '/pages/transitionreadinessquiz',
-  '/pages/scholarshipelidgibilityestimator',
   '/pages/cohortapplication',
 
 ];

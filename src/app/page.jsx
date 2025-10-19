@@ -84,10 +84,10 @@ const FEATURES = [
     description: 'Get personalized assistance with our AI-driven assistant, designed to streamline your tasks and improve productivity.'
   },
   {
-    id: 'real-time-updates',
-    icon: 'https://cdn.lordicon.com/nayeills.json',
-    title: 'Real-Time Updates',
-    description: 'Stay informed with real-time notifications and updates, ensuring you\'re always in the loop.'
+    id: 'Fire Team Experience',
+      icon: 'https://cdn.lordicon.com/thtrcqvk.json',
+    title: 'Fireteams',
+    description: 'Connect with fellow veterans in small support and discussion groups, fostering teamwork and camaraderie in your transition journey.'
   }
 ];
 
@@ -101,18 +101,18 @@ const MANAGEMENT_CARDS = [
     ariaLabel: 'Coaching Preferences - Customize your coaching experience'
   },
   {
-    id: 'subscriptions',
+    id: 'Journaling and Task Management',
     icon: 'https://cdn.lordicon.com/kbtmbyzy.json',
-    title: 'Subscriptions & Sessions',
-    description: 'Track and manage your subscriptions and upcoming sessions',
-    ariaLabel: 'Subscriptions & Sessions - Track and manage your subscriptions'
+    title: 'Journaling and Task Management',
+      description: 'Track your progress with smart journaling and task management tools',
+      ariaLabel: 'Journaling and Task Management - Track your progress and manage tasks'
   },
   {
-    id: 'notifications',
-    icon: 'https://cdn.lordicon.com/psnhyobz.json',
-    title: 'Notification Settings',
-    description: 'Set up your preferred notification preferences',
-    ariaLabel: 'Notification Settings - Set up your preferred notification preferences'
+    id: 'Career and Education Compass',
+     icon: 'https://cdn.lordicon.com/zhiiqoue.json',
+    title: 'Career and Education Compass',
+    description: 'Get personalized guidance on your career and education goals',
+    ariaLabel: 'Career and Education Compass - Get personalized guidance on your career and education goals'
   }
 ];
 
@@ -307,7 +307,7 @@ export default function Homepage() {
         className="py-16 sm:py-20 md:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 bg-[#002147] text-white relative overflow-hidden"
         aria-labelledby="features-heading"
       >
-        {/* Simplified background with cleaner gradient */}
+        {/* background with cleaner gradient */}
         <div 
           className="absolute inset-0 w-full h-full"
           style={{

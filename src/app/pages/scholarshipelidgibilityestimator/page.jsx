@@ -41,107 +41,51 @@ const ScholarshipEligibilityEstimator = () => {
 
   return (
     <div className="min-h-screen bg-[#faf9f7]">
-      {/* Header Navigation */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
-        {/* Top bar */}
-        <div className="bg-white border-b border-gray-100">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center py-2 text-sm">
-              <div className="flex items-center space-x-4">
-                <select className="bg-transparent border-none text-gray-600 focus:outline-none cursor-pointer">
-                  <option>English</option>
-                </select>
-                <a href="#" className="text-gray-600 hover:text-gray-900 transition-colors">Sign in/Sign up</a>
-                <a href="#" className="text-gray-600 hover:text-gray-900 transition-colors">Customer Support</a>
-              </div>
-              <div className="flex items-center space-x-4">
-                <button className="p-1 text-gray-600 hover:text-gray-900 transition-colors">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                  </svg>
-                </button>
-                <a href="#" className="text-gray-600 hover:text-gray-900 transition-colors">Log in</a>
-                <button className="bg-[#ff5e1a] text-white px-4 py-2 rounded-md hover:bg-[#e54e16] transition-colors">
-                  Join
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Main navigation */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
-            <div className="flex items-center">
-              <Image
-                src="/WANAC N 8 Old Glory.svg"
-                alt="WANAC Logo"
-                width={120}
-                height={40}
-                className="h-8 w-auto cursor-pointer"
-                onClick={() => router.push('/')}
-              />
-            </div>
-            <nav className="hidden md:flex space-x-8">
-              <a href="#" className="text-gray-700 hover:text-[#ff5e1a] font-medium transition-colors">Products</a>
-              <a href="#" className="text-gray-700 hover:text-[#ff5e1a] font-medium transition-colors">Solutions</a>
-              <a href="#" className="text-gray-700 hover:text-[#ff5e1a] font-medium transition-colors">Pricing</a>
-              <a href="#" className="text-gray-700 hover:text-[#ff5e1a] font-medium transition-colors">Resources</a>
-            </nav>
-            <div className="hidden md:flex space-x-4">
-              <button className="bg-[#002147] text-white px-6 py-2 rounded-md hover:bg-[#001530] transition-colors text-sm">
-                Check Eligibility
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
-
       {/* Hero Section */}
-      <section className="bg-gradient-to-b from-[#faf9f7] to-white py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-4xl mx-auto">
-            <div className="inline-block bg-purple-100 text-purple-800 px-4 py-2 rounded-full text-sm font-semibold mb-6">
+      <section className="bg-gradient-to-b from-[#faf9f7] to-white py-12 sm:py-16 sm:py-12 sm:py-12 sm:py-16">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto">
+            <div className="inline-block bg-purple-100 text-purple-800 px-3 py-1.5 text-xs font-semibold mb-4">
               FREE Eligibility Check • One Award Per Year
             </div>
-            <h1 className="text-5xl lg:text-6xl font-bold text-[#002147] mb-6 leading-tight">
+            <h1 className="text-base sm:text-sm sm:text-base xs:text-3xl sm:text-4xl md:text-5xl font-bold text-[#002147] mb-4 leading-tight">
               WANAC Scholarship Eligibility Estimator
             </h1>
-            <p className="text-2xl text-gray-600 mb-4 font-semibold">
+            <p className="text-base sm:text-sm sm:text-base md:text-sm sm:text-base text-gray-600 mb-3 font-semibold">
               Find out if you qualify in 3 minutes
             </p>
-            <p className="text-lg text-gray-600 mb-8 leading-relaxed max-w-3xl mx-auto">
+            <p className="text-sm sm:text-base text-gray-600 mb-6 leading-relaxed max-w-2xl mx-auto">
               Provisional eligibility for PLEP, PLCA, PPC, CPPC, and VETA program scholarships—funded by partners and sponsors. One scholarship per veteran per year.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
-              <button className="bg-[#ff5e1a] text-white px-10 py-4 rounded-lg text-lg font-semibold hover:bg-[#e54e16] transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105">
+            <div className="flex flex-col xs:flex-row gap-3 sm:gap-4 justify-center mb-4">
+              <button className="bg-[#ff5e1a] text-white px-5 sm:px-6 py-2.5 sm:py-3 text-sm font-semibold hover:bg-[#e54e16] transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105">
                 Check my eligibility
               </button>
-              <button className="border-2 border-[#002147] text-[#002147] px-10 py-4 rounded-lg text-lg font-semibold hover:bg-[#002147] hover:text-white transition-all duration-200">
+              <button className="border-2 border-[#002147] text-[#002147] px-5 sm:px-6 py-2.5 sm:py-3 text-sm font-semibold hover:bg-[#002147] hover:text-white transition-all duration-200">
                 Prefer to talk? Book a 15-minute consult
               </button>
             </div>
-            <div className="flex items-center justify-center gap-6 text-sm text-gray-600 flex-wrap">
-              <span className="flex items-center gap-2">
-                <svg className="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+            <div className="flex items-center justify-center gap-3 sm:gap-4 text-xs text-gray-600 flex-wrap">
+              <span className="flex items-center gap-1.5">
+                <svg className="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
                 No cost to apply
               </span>
-              <span className="flex items-center gap-2">
-                <svg className="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+              <span className="flex items-center gap-1.5">
+                <svg className="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
                 National
               </span>
-              <span className="flex items-center gap-2">
-                <svg className="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+              <span className="flex items-center gap-1.5">
+                <svg className="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
                 Private & secure
               </span>
-              <span className="flex items-center gap-2">
-                <svg className="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+              <span className="flex items-center gap-1.5">
+                <svg className="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
                 One award per year
@@ -152,13 +96,13 @@ const ScholarshipEligibilityEstimator = () => {
       </section>
 
       {/* The Problem Section */}
-      <section className="bg-white py-16">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-4xl font-bold text-[#002147] mb-4">
+      <section className="bg-white py-12 sm:py-12 sm:py-16">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-8 sm:mb-10">
+            <h2 className="text-sm sm:text-base xs:text-base sm:text-sm sm:text-base sm:text-3xl font-bold text-[#002147] mb-3">
               The problem (and what's at stake)
             </h2>
-            <p className="text-lg text-gray-700 leading-relaxed max-w-3xl mx-auto">
+            <p className="text-sm sm:text-base text-gray-700 leading-relaxed max-w-2xl mx-auto">
               Great programs fall through when funding is unclear. Veterans delay cohorts, miss enrollment windows, and lose momentum after TAP—<span className="font-semibold text-[#ff5e1a]">while benefits sit unused.</span>
             </p>
           </div>
@@ -166,53 +110,53 @@ const ScholarshipEligibilityEstimator = () => {
       </section>
 
       {/* The Solution Section */}
-      <section className="bg-[#faf9f7] py-20">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-4xl font-bold text-[#002147] mb-6">
+      <section className="bg-[#faf9f7] py-12 sm:py-12 sm:py-16">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-8 sm:mb-10">
+            <h2 className="text-sm sm:text-base xs:text-base sm:text-sm sm:text-base sm:text-3xl font-bold text-[#002147] mb-4">
               The WANAC solution (at a glance)
             </h2>
-            <p className="text-2xl font-semibold text-[#ff5e1a] mb-8">
+            <p className="text-base sm:text-sm sm:text-base md:text-sm sm:text-base font-semibold text-[#ff5e1a] mb-6">
               One form. Fast clarity.
             </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
             {/* Features Card */}
-            <div className="bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300">
-              <div className="w-16 h-16 bg-[#ff5e1a] bg-opacity-10 rounded-full flex items-center justify-center mb-6">
+            <div className="bg-white shadow-lg p-4 sm:p-6 hover:shadow-xl transition-shadow duration-300">
+              <div className="w-16 h-16 bg-[#ff5e1a] bg-opacity-10  flex items-center justify-center mb-6">
                 <svg className="w-8 h-8 text-[#ff5e1a]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
                 </svg>
               </div>
-              <h3 className="text-2xl font-bold text-[#002147] mb-4">Features</h3>
+              <h3 className="text-base sm:text-sm sm:text-base font-bold text-[#002147] mb-4">Features</h3>
               <p className="text-gray-600">
                 8–10 quick questions → instant provisional eligibility for PLEP, PLCA, PPC, CPPC, VETA.
               </p>
             </div>
 
             {/* Advantages Card */}
-            <div className="bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300">
-              <div className="w-16 h-16 bg-[#002147] bg-opacity-10 rounded-full flex items-center justify-center mb-6">
+            <div className="bg-white shadow-lg p-4 sm:p-6 hover:shadow-xl transition-shadow duration-300">
+              <div className="w-16 h-16 bg-[#002147] bg-opacity-10  flex items-center justify-center mb-6">
                 <svg className="w-8 h-8 text-[#002147]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                 </svg>
               </div>
-              <h3 className="text-2xl font-bold text-[#002147] mb-4">Advantages</h3>
+              <h3 className="text-base sm:text-sm sm:text-base font-bold text-[#002147] mb-4">Advantages</h3>
               <p className="text-gray-600">
                 Know where you stand before you apply; see exactly what documents are needed.
               </p>
             </div>
 
             {/* Benefits Card */}
-            <div className="bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300">
-              <div className="w-16 h-16 bg-green-600 bg-opacity-10 rounded-full flex items-center justify-center mb-6">
+            <div className="bg-white shadow-lg p-4 sm:p-6 hover:shadow-xl transition-shadow duration-300">
+              <div className="w-16 h-16 bg-green-600 bg-opacity-10  flex items-center justify-center mb-6">
                 <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
               </div>
-              <h3 className="text-2xl font-bold text-[#002147] mb-4">Benefits</h3>
+              <h3 className="text-base sm:text-sm sm:text-base font-bold text-[#002147] mb-4">Benefits</h3>
               <p className="text-gray-600">
                 Make decisions quickly—reserve a seat, line up documents, and start on time.
               </p>
@@ -220,7 +164,7 @@ const ScholarshipEligibilityEstimator = () => {
           </div>
 
           <div className="text-center">
-            <button className="bg-[#ff5e1a] text-white px-10 py-4 rounded-lg text-lg font-semibold hover:bg-[#e54e16] transition-all duration-200 shadow-lg hover:shadow-xl">
+            <button className="bg-[#ff5e1a] text-white px-5 sm:px-6 py-2.5 sm:py-3 text-sm font-semibold hover:bg-[#e54e16] transition-all duration-200 shadow-lg hover:shadow-xl">
               Check my eligibility
             </button>
           </div>
@@ -228,18 +172,18 @@ const ScholarshipEligibilityEstimator = () => {
       </section>
 
       {/* Proof/Testimonial Section */}
-      <section className="bg-white py-16">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-gradient-to-r from-[#002147] to-[#003366] rounded-2xl shadow-xl p-8 md:p-12 text-white">
-            <div className="flex items-start gap-4 mb-6">
-              <svg className="w-12 h-12 text-[#ff5e1a] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+      <section className="bg-white py-12 sm:py-12 sm:py-16">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-gradient-to-r from-[#002147] to-[#003366] shadow-xl p-6 sm:p-8 text-white">
+            <div className="flex items-start gap-3 sm:gap-4 mb-4 sm:mb-6">
+              <svg className="w-8 h-8 sm:w-10 sm:h-10 text-[#ff5e1a] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
               </svg>
               <div>
-                <p className="text-xl md:text-2xl font-semibold mb-4 leading-relaxed">
+                <p className="text-base sm:text-sm sm:text-base md:text-sm sm:text-base font-semibold mb-3 sm:mb-4 leading-relaxed">
                   "Seeing I was provisionally eligible let me reserve a PLCA seat and gather docs the same day."
                 </p>
-                <p className="text-gray-300 font-medium">— U.S. Navy veteran</p>
+                <p className="text-gray-300 font-medium text-sm sm:text-base">— U.S. Navy veteran</p>
               </div>
             </div>
           </div>
@@ -247,22 +191,22 @@ const ScholarshipEligibilityEstimator = () => {
       </section>
 
       {/* What Scholarship Covers Section */}
-      <section className="bg-[#faf9f7] py-20">
+      <section className="bg-[#faf9f7] py-12 sm:py-12 sm:py-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-[#002147] mb-4">
+            <h2 className="text-sm sm:text-base xs:text-base sm:text-sm sm:text-base sm:text-3xl font-bold text-[#002147] mb-4">
               What this scholarship can cover
             </h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
             {/* What's Covered */}
-            <div className="bg-white rounded-2xl shadow-lg p-8 border-t-4 border-green-600">
+            <div className="bg-white  shadow-lg p-8 border-t-4 border-green-600">
               <div className="flex items-center gap-3 mb-6">
                 <svg className="w-10 h-10 text-green-600" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
-                <h3 className="text-2xl font-bold text-[#002147]">Covered</h3>
+                <h3 className="text-base sm:text-sm sm:text-base font-bold text-[#002147]">Covered</h3>
               </div>
               <ul className="space-y-3">
                 <li className="flex items-start gap-3">
@@ -281,12 +225,12 @@ const ScholarshipEligibilityEstimator = () => {
             </div>
 
             {/* What's Not Covered */}
-            <div className="bg-white rounded-2xl shadow-lg p-8 border-t-4 border-red-600">
+            <div className="bg-white  shadow-lg p-8 border-t-4 border-red-600">
               <div className="flex items-center gap-3 mb-6">
                 <svg className="w-10 h-10 text-red-600" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
                 </svg>
-                <h3 className="text-2xl font-bold text-[#002147]">Not Covered</h3>
+                <h3 className="text-base sm:text-sm sm:text-base font-bold text-[#002147]">Not Covered</h3>
               </div>
               <ul className="space-y-3">
                 <li className="flex items-start gap-3">
@@ -317,7 +261,7 @@ const ScholarshipEligibilityEstimator = () => {
             </div>
           </div>
 
-          <div className="bg-blue-50 border-l-4 border-blue-600 p-6 rounded-lg">
+          <div className="bg-blue-50 border-l-4 border-blue-600 p-6 ">
             <p className="text-gray-700">
               <span className="font-semibold text-blue-800">Note:</span> VSO Claim Support is free and does not require a scholarship.
             </p>
@@ -326,13 +270,13 @@ const ScholarshipEligibilityEstimator = () => {
       </section>
 
       {/* How it Works */}
-      <section className="bg-white py-20">
+      <section className="bg-white py-12 sm:py-12 sm:py-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-[#002147] mb-4">
+            <h2 className="text-sm sm:text-base xs:text-base sm:text-sm sm:text-base sm:text-3xl font-bold text-[#002147] mb-4">
               How it works (4 steps)
             </h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+            <p className="text-sm sm:text-base text-gray-600 max-w-3xl mx-auto">
               From estimator to enrollment—fast and clear
             </p>
           </div>
@@ -340,10 +284,10 @@ const ScholarshipEligibilityEstimator = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
             {/* Step 1 */}
             <div className="text-center">
-              <div className="w-20 h-20 bg-[#ff5e1a] text-white rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-6 shadow-lg">
+              <div className="w-20 h-20 bg-[#ff5e1a] text-white  flex items-center justify-center text-3xl font-bold mx-auto mb-6 shadow-lg">
                 1
               </div>
-              <h3 className="text-xl font-bold text-[#002147] mb-3">
+              <h3 className="text-sm sm:text-base font-bold text-[#002147] mb-3">
                 Answer the estimator
               </h3>
               <p className="text-gray-600">
@@ -353,10 +297,10 @@ const ScholarshipEligibilityEstimator = () => {
 
             {/* Step 2 */}
             <div className="text-center">
-              <div className="w-20 h-20 bg-[#002147] text-white rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-6 shadow-lg">
+              <div className="w-20 h-20 bg-[#002147] text-white  flex items-center justify-center text-3xl font-bold mx-auto mb-6 shadow-lg">
                 2
               </div>
-              <h3 className="text-xl font-bold text-[#002147] mb-3">
+              <h3 className="text-sm sm:text-base font-bold text-[#002147] mb-3">
                 See your result
               </h3>
               <p className="text-gray-600">
@@ -366,10 +310,10 @@ const ScholarshipEligibilityEstimator = () => {
 
             {/* Step 3 */}
             <div className="text-center">
-              <div className="w-20 h-20 bg-purple-600 text-white rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-6 shadow-lg">
+              <div className="w-20 h-20 bg-purple-600 text-white  flex items-center justify-center text-3xl font-bold mx-auto mb-6 shadow-lg">
                 3
               </div>
-              <h3 className="text-xl font-bold text-[#002147] mb-3">
+              <h3 className="text-sm sm:text-base font-bold text-[#002147] mb-3">
                 Upload & submit
               </h3>
               <p className="text-gray-600">
@@ -379,10 +323,10 @@ const ScholarshipEligibilityEstimator = () => {
 
             {/* Step 4 */}
             <div className="text-center">
-              <div className="w-20 h-20 bg-green-600 text-white rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-6 shadow-lg">
+              <div className="w-20 h-20 bg-green-600 text-white  flex items-center justify-center text-3xl font-bold mx-auto mb-6 shadow-lg">
                 4
               </div>
-              <h3 className="text-xl font-bold text-[#002147] mb-3">
+              <h3 className="text-sm sm:text-base font-bold text-[#002147] mb-3">
                 Get decision
               </h3>
               <p className="text-gray-600">
@@ -392,7 +336,7 @@ const ScholarshipEligibilityEstimator = () => {
           </div>
 
           <div className="text-center">
-            <button className="bg-[#ff5e1a] text-white px-10 py-4 rounded-lg text-lg font-semibold hover:bg-[#e54e16] transition-all duration-200 shadow-lg hover:shadow-xl">
+            <button className="bg-[#ff5e1a] text-white px-5 sm:px-6 py-2.5 sm:py-3  text-sm sm:text-base font-semibold hover:bg-[#e54e16] transition-all duration-200 shadow-lg hover:shadow-xl">
               Check my eligibility
             </button>
           </div>
@@ -400,38 +344,38 @@ const ScholarshipEligibilityEstimator = () => {
       </section>
 
       {/* Who We Prioritize */}
-      <section className="bg-[#faf9f7] py-20">
+      <section className="bg-[#faf9f7] py-12 sm:py-12 sm:py-16">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-4xl font-bold text-[#002147] mb-8">
+            <h2 className="text-sm sm:text-base xs:text-base sm:text-sm sm:text-base sm:text-3xl font-bold text-[#002147] mb-8">
               Who we prioritize
             </h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-gradient-to-br from-[#ff5e1a] to-[#e54e16] rounded-xl shadow-lg p-8 text-white text-center hover:shadow-xl transition-shadow duration-300">
+            <div className="bg-gradient-to-br from-[#ff5e1a] to-[#e54e16]  shadow-lg p-8 text-white text-center hover:shadow-xl transition-shadow duration-300">
               <svg className="w-12 h-12 mx-auto mb-4" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
               </svg>
-              <p className="font-semibold text-lg">
+              <p className="font-semibold text-sm sm:text-base">
                 Active duty in the BDD window or ≤ 12 months from separation
               </p>
             </div>
 
-            <div className="bg-gradient-to-br from-[#002147] to-[#003366] rounded-xl shadow-lg p-8 text-white text-center hover:shadow-xl transition-shadow duration-300">
+            <div className="bg-gradient-to-br from-[#002147] to-[#003366]  shadow-lg p-8 text-white text-center hover:shadow-xl transition-shadow duration-300">
               <svg className="w-12 h-12 mx-auto mb-4" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
               </svg>
-              <p className="font-semibold text-lg">
+              <p className="font-semibold text-sm sm:text-base">
                 MEB / medical separation
               </p>
             </div>
 
-            <div className="bg-gradient-to-br from-green-600 to-green-700 rounded-xl shadow-lg p-8 text-white text-center hover:shadow-xl transition-shadow duration-300">
+            <div className="bg-gradient-to-br from-green-600 to-green-700  shadow-lg p-8 text-white text-center hover:shadow-xl transition-shadow duration-300">
               <svg className="w-12 h-12 mx-auto mb-4" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
               </svg>
-              <p className="font-semibold text-lg">
+              <p className="font-semibold text-sm sm:text-base">
                 Recently separated veterans ready to commit to a cohort (weekly mission cadence)
               </p>
             </div>
@@ -440,17 +384,17 @@ const ScholarshipEligibilityEstimator = () => {
       </section>
 
       {/* What You'll Need */}
-      <section className="bg-white py-20">
+      <section className="bg-white py-12 sm:py-12 sm:py-16">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-4xl font-bold text-[#002147] mb-4">
+            <h2 className="text-sm sm:text-base xs:text-base sm:text-sm sm:text-base sm:text-3xl font-bold text-[#002147] mb-4">
               What you'll need for the full application
             </h2>
-            <p className="text-lg text-gray-600">(after the estimator)</p>
+            <p className="text-sm sm:text-base text-gray-600">(after the estimator)</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-[#ff5e1a]">
+            <div className="bg-white  shadow-lg p-6 border-l-4 border-[#ff5e1a]">
               <div className="flex items-start gap-3">
                 <svg className="w-6 h-6 text-[#ff5e1a] flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
@@ -462,7 +406,7 @@ const ScholarshipEligibilityEstimator = () => {
               </div>
             </div>
 
-            <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-[#002147]">
+            <div className="bg-white  shadow-lg p-6 border-l-4 border-[#002147]">
               <div className="flex items-start gap-3">
                 <svg className="w-6 h-6 text-[#002147] flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
@@ -474,7 +418,7 @@ const ScholarshipEligibilityEstimator = () => {
               </div>
             </div>
 
-            <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-purple-600">
+            <div className="bg-white  shadow-lg p-6 border-l-4 border-purple-600">
               <div className="flex items-start gap-3">
                 <svg className="w-6 h-6 text-purple-600 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
@@ -486,7 +430,7 @@ const ScholarshipEligibilityEstimator = () => {
               </div>
             </div>
 
-            <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-blue-600">
+            <div className="bg-white  shadow-lg p-6 border-l-4 border-blue-600">
               <div className="flex items-start gap-3">
                 <svg className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
@@ -498,7 +442,7 @@ const ScholarshipEligibilityEstimator = () => {
               </div>
             </div>
 
-            <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-green-600">
+            <div className="bg-white  shadow-lg p-6 border-l-4 border-green-600">
               <div className="flex items-start gap-3">
                 <svg className="w-6 h-6 text-green-600 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
@@ -514,46 +458,46 @@ const ScholarshipEligibilityEstimator = () => {
       </section>
 
       {/* Integration & Fit */}
-      <section className="bg-[#faf9f7] py-16">
+      <section className="bg-[#faf9f7] py-12 sm:py-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-4xl font-bold text-[#002147] mb-4">
+            <h2 className="text-sm sm:text-base xs:text-base sm:text-sm sm:text-base sm:text-3xl font-bold text-[#002147] mb-4">
               Integration & fit
             </h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white rounded-xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300">
-              <div className="w-14 h-14 bg-[#ff5e1a] bg-opacity-10 rounded-full flex items-center justify-center mb-4">
+            <div className="bg-white  shadow-lg p-8 hover:shadow-xl transition-shadow duration-300">
+              <div className="w-14 h-14 bg-[#ff5e1a] bg-opacity-10  flex items-center justify-center mb-4">
                 <svg className="w-7 h-7 text-[#ff5e1a]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold text-[#002147] mb-3">From clarity to action</h3>
+              <h3 className="text-sm sm:text-base font-bold text-[#002147] mb-3">From clarity to action</h3>
               <p className="text-gray-600">
                 Your scholarship result links directly to cohort dates for PLEP/PLCA/PPC/CPPC/VETA.
               </p>
             </div>
 
-            <div className="bg-white rounded-xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300">
-              <div className="w-14 h-14 bg-blue-600 bg-opacity-10 rounded-full flex items-center justify-center mb-4">
+            <div className="bg-white  shadow-lg p-8 hover:shadow-xl transition-shadow duration-300">
+              <div className="w-14 h-14 bg-blue-600 bg-opacity-10  flex items-center justify-center mb-4">
                 <svg className="w-7 h-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold text-[#002147] mb-3">Claims first when needed</h3>
+              <h3 className="text-sm sm:text-base font-bold text-[#002147] mb-3">Claims first when needed</h3>
               <p className="text-gray-600">
                 If the estimator flags benefits bottlenecks, you'll be routed to accredited VSO Claim Support (including BDD for active duty).
               </p>
             </div>
 
-            <div className="bg-white rounded-xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300">
-              <div className="w-14 h-14 bg-purple-600 bg-opacity-10 rounded-full flex items-center justify-center mb-4">
+            <div className="bg-white  shadow-lg p-8 hover:shadow-xl transition-shadow duration-300">
+              <div className="w-14 h-14 bg-purple-600 bg-opacity-10  flex items-center justify-center mb-4">
                 <svg className="w-7 h-7 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold text-[#002147] mb-3">One award per year</h3>
+              <h3 className="text-sm sm:text-base font-bold text-[#002147] mb-3">One award per year</h3>
               <p className="text-gray-600">
                 Awards can't be stacked; choose the program with the most immediate impact.
               </p>
@@ -563,25 +507,25 @@ const ScholarshipEligibilityEstimator = () => {
       </section>
 
       {/* FAQ Section */}
-      <section className="bg-white py-20">
+      <section className="bg-white py-12 sm:py-12 sm:py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-4xl font-bold text-[#002147] mb-4">
+            <h2 className="text-sm sm:text-base xs:text-base sm:text-sm sm:text-base sm:text-3xl font-bold text-[#002147] mb-4">
               Frequently Asked Questions
             </h2>
-            <p className="text-lg text-gray-600">
+            <p className="text-sm sm:text-base text-gray-600">
               Risk reversal & objections answered
             </p>
           </div>
 
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div key={index} className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
+              <div key={index} className="bg-white  shadow-md overflow-hidden border border-gray-200">
                 <button
                   className="w-full text-left px-6 py-5 flex justify-between items-center hover:bg-gray-50 transition-colors"
                   onClick={() => toggleFaq(index)}
                 >
-                  <span className="text-lg font-semibold text-[#002147]">{faq.question}</span>
+                  <span className="text-sm sm:text-base font-semibold text-[#002147]">{faq.question}</span>
                   <svg
                     className={`w-6 h-6 text-[#ff5e1a] transition-transform duration-200 ${
                       openFaq === index ? 'transform rotate-180' : ''
@@ -605,20 +549,20 @@ const ScholarshipEligibilityEstimator = () => {
       </section>
 
       {/* Final CTA Section */}
-      <section className="bg-gradient-to-r from-[#002147] to-[#003366] py-20">
+      <section className="bg-gradient-to-r from-[#002147] to-[#003366] py-12 sm:py-12 sm:py-16">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center text-white">
-            <h2 className="text-4xl lg:text-5xl font-bold mb-6">
+            <h2 className="text-base sm:text-sm sm:text-base xs:text-3xl sm:text-4xl font-bold mb-6">
               Check your eligibility today
             </h2>
-            <p className="text-xl mb-10 text-gray-200 max-w-3xl mx-auto">
+            <p className="text-sm sm:text-base mb-10 text-gray-200 max-w-3xl mx-auto">
               Find out if you qualify for program scholarships in just 3 minutes
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <button className="bg-[#ff5e1a] text-white px-12 py-5 rounded-lg text-xl font-semibold hover:bg-[#e54e16] transition-all duration-200 shadow-xl hover:shadow-2xl transform hover:scale-105">
+              <button className="bg-[#ff5e1a] text-white px-5 sm:px-6 py-2.5 sm:py-3  text-sm sm:text-base font-semibold hover:bg-[#e54e16] transition-all duration-200 shadow-xl hover:shadow-2xl transform hover:scale-105">
                 Check my eligibility
               </button>
-              <button className="border-3 border-white text-white px-12 py-5 rounded-lg text-xl font-semibold hover:bg-white hover:text-[#002147] transition-all duration-200 shadow-xl">
+              <button className="border-3 border-white text-white px-5 sm:px-6 py-2.5 sm:py-3  text-sm sm:text-base font-semibold hover:bg-white hover:text-[#002147] transition-all duration-200 shadow-xl">
                 Book a 15-minute consult
               </button>
             </div>
@@ -637,79 +581,7 @@ const ScholarshipEligibilityEstimator = () => {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-[#002147] text-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
-            <div>
-              <h4 className="font-bold text-lg mb-4">Programs</h4>
-              <ul className="space-y-3 text-gray-300">
-                <li><a href="#" className="hover:text-[#ff5e1a] transition-colors">PLEP (Education)</a></li>
-                <li><a href="#" className="hover:text-[#ff5e1a] transition-colors">PLCA (Career)</a></li>
-                <li><a href="#" className="hover:text-[#ff5e1a] transition-colors">PPC/CPPC (Performance)</a></li>
-                <li><a href="#" className="hover:text-[#ff5e1a] transition-colors">VETA (Entrepreneurship)</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-bold text-lg mb-4">Scholarships</h4>
-              <ul className="space-y-3 text-gray-300">
-                <li><a href="#" className="hover:text-[#ff5e1a] transition-colors">Eligibility Estimator</a></li>
-                <li><a href="#" className="hover:text-[#ff5e1a] transition-colors">Application Guide</a></li>
-                <li><a href="#" className="hover:text-[#ff5e1a] transition-colors">Award Timeline</a></li>
-                <li><a href="#" className="hover:text-[#ff5e1a] transition-colors">Success Stories</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-bold text-lg mb-4">Company</h4>
-              <ul className="space-y-3 text-gray-300">
-                <li><a href="#" className="hover:text-[#ff5e1a] transition-colors">About Us</a></li>
-                <li><a href="#" className="hover:text-[#ff5e1a] transition-colors">Contact</a></li>
-                <li><a href="#" className="hover:text-[#ff5e1a] transition-colors">Privacy Policy</a></li>
-                <li><a href="#" className="hover:text-[#ff5e1a] transition-colors">Terms of Service</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-bold text-lg mb-4">Connect</h4>
-              <div className="flex space-x-4 mb-6">
-                <a href="#" className="w-10 h-10 bg-white bg-opacity-10 rounded-full flex items-center justify-center hover:bg-[#ff5e1a] transition-colors">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
-                  </svg>
-                </a>
-                <a href="#" className="w-10 h-10 bg-white bg-opacity-10 rounded-full flex items-center justify-center hover:bg-[#ff5e1a] transition-colors">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm3 8h-1.35c-.538 0-.65.221-.65.778V10h2l-.209 2H13v7h-3v-7H8v-2h2V7.692C10 5.923 10.931 5 13.029 5H15v3z"/>
-                  </svg>
-                </a>
-                <a href="#" className="w-10 h-10 bg-white bg-opacity-10 rounded-full flex items-center justify-center hover:bg-[#ff5e1a] transition-colors">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                  </svg>
-                </a>
-              </div>
-              <p className="text-sm text-gray-300">
-                Supporting veteran education and career growth
-              </p>
-            </div>
-          </div>
-          <div className="border-t border-gray-700 pt-8">
-            <div className="flex flex-col md:flex-row justify-between items-center text-gray-400 text-sm">
-              <div className="mb-4 md:mb-0">
-                <p>&copy; 2025 WANAC. All rights reserved.</p>
-              </div>
-              <div className="flex items-center gap-2">
-                <Image
-                  src="/WANAC N 8 Old Glory.svg"
-                  alt="WANAC Logo"
-                  width={80}
-                  height={30}
-                  className="opacity-80"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer>
+
     </div>
   );
 };

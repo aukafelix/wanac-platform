@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import Navbar from '../../../../components/Navbar';
 
 const WanacUniversityPartner = () => {
   const router = useRouter();
@@ -169,111 +170,141 @@ const WanacUniversityPartner = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#faf9f7]">
-      {/* Header Navigation */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
-        {/* Top bar */}
-        <div className="bg-white border-b border-gray-100">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center py-2 text-sm">
-              <div className="flex items-center space-x-4">
-                <select className="bg-transparent border-none text-gray-600 focus:outline-none cursor-pointer">
-                  <option>English</option>
-                </select>
-                <a href="#" className="text-gray-600 hover:text-gray-900 transition-colors">Sign in/Sign up</a>
-                <a href="#" className="text-gray-600 hover:text-gray-900 transition-colors">Customer Support</a>
-              </div>
-              <div className="flex items-center space-x-4">
-                <button className="p-1 text-gray-600 hover:text-gray-900 transition-colors">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                  </svg>
-                </button>
-                <a href="#" className="text-gray-600 hover:text-gray-900 transition-colors">Log in</a>
-                <button className="bg-[#ff5e1a] text-white px-4 py-2 rounded-md hover:bg-[#e54e16] transition-colors">
-                  Join
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+    <>
+      <style jsx>{`
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        @keyframes pulse {
+          0%, 100% {
+            opacity: 1;
+          }
+          50% {
+            opacity: 0.5;
+          }
+        }
+        
+        .animate-fadeInUp {
+          animation: fadeInUp 0.6s ease-out;
+        }
+        
+        .animation-delay-2000 {
+          animation-delay: 2s;
+        }
+        
+        .animation-delay-4000 {
+          animation-delay: 4s;
+        }
+        
+        .hover-lift {
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .hover-lift:hover {
+          transform: translateY(-8px);
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+      `}</style>
+      <div className="min-h-screen bg-[#faf9f7]">
+      {/* Use the shared Navbar component */}
 
-        {/* Main navigation */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
-            <div className="flex items-center">
-              <Image
-                src="/WANAC N 8 Old Glory.svg"
-                alt="WANAC Logo"
-                width={120}
-                height={40}
-                className="h-8 w-auto cursor-pointer"
-                onClick={() => router.push('/')}
-              />
-            </div>
-            <nav className="hidden md:flex space-x-8">
-              <a href="#" className="text-gray-700 hover:text-[#ff5e1a] font-medium transition-colors">Products</a>
-              <a href="#" className="text-gray-700 hover:text-[#ff5e1a] font-medium transition-colors">Solutions</a>
-              <a href="#" className="text-gray-700 hover:text-[#ff5e1a] font-medium transition-colors">Pricing</a>
-              <a href="#" className="text-gray-700 hover:text-[#ff5e1a] font-medium transition-colors">Resources</a>
-            </nav>
-            <div className="hidden md:flex space-x-4">
-              <button className="bg-[#002147] text-white px-6 py-2 rounded-md hover:bg-[#001530] transition-colors text-sm">
-                Become a Partner
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-b from-[#faf9f7] to-white py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="relative bg-gradient-to-br from-[#faf9f7] via-white to-blue-50 py-16 sm:py-20 md:py-24 overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute top-20 left-10 w-48 h-48 bg-[#ff5e1a] rounded-full mix-blend-multiply filter blur-xl animate-pulse"></div>
+          <div className="absolute top-40 right-10 w-48 h-48 bg-blue-600 rounded-full mix-blend-multiply filter blur-xl animate-pulse animation-delay-2000"></div>
+          <div className="absolute -bottom-8 left-1/2 w-48 h-48 bg-purple-600 rounded-full mix-blend-multiply filter blur-xl animate-pulse animation-delay-4000"></div>
+        </div>
+        
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="text-center max-w-4xl mx-auto">
-            <div className="inline-block bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-semibold mb-6">
+            <div className="inline-flex items-center bg-gradient-to-r from-blue-100 to-blue-200 text-blue-800 px-4 py-2 rounded-full text-xs font-semibold mb-6 shadow-lg">
+              <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+              </svg>
               B2B Partnership • Institutional Solutions
             </div>
-            <h1 className="text-5xl lg:text-6xl font-bold text-[#002147] mb-6 leading-tight">
-              WANAC University & Institutional Partner
+            <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[#002147] mb-6 leading-tight">
+              WANAC University & 
+              <span className="bg-gradient-to-r from-[#ff5e1a] to-orange-600 bg-clip-text text-transparent"> Institutional Partner</span>
             </h1>
-            <p className="text-2xl text-gray-600 mb-4 font-semibold">
-              Enroll and graduate more veteran students—with funded, on-time starts
+            <p className="text-lg sm:text-xl md:text-2xl text-gray-700 mb-4 font-bold leading-tight">
+              Enroll and graduate more veteran students—with 
+              <span className="text-[#ff5e1a]"> funded, on-time starts</span>
             </p>
-            <p className="text-lg text-gray-600 mb-8 leading-relaxed max-w-3xl mx-auto">
+            <p className="text-sm sm:text-base md:text-lg text-gray-600 mb-8 leading-relaxed max-w-3xl mx-auto">
               Partner with WANAC to build veteran-ready pipelines into your programs. We align benefits → admissions → career outcomes, streamline JST/transfer mapping, and prepare candidates via our cohorts (PLEP, PLCA, PPC, CPPC, VETA).
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
-              <button className="bg-[#ff5e1a] text-white px-10 py-4 rounded-lg text-lg font-semibold hover:bg-[#e54e16] transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105">
-                Start a partnership conversation
+            
+            {/* Key Metrics */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-8 max-w-4xl mx-auto">
+              <div className="bg-white rounded-lg p-3 sm:p-4 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow">
+                <div className="text-lg sm:text-xl font-bold text-[#ff5e1a] mb-1">85%</div>
+                <div className="text-xs text-gray-600">On-time starts</div>
+              </div>
+              <div className="bg-white rounded-lg p-3 sm:p-4 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow">
+                <div className="text-lg sm:text-xl font-bold text-blue-600 mb-1">92%</div>
+                <div className="text-xs text-gray-600">Persistence rate</div>
+              </div>
+              <div className="bg-white rounded-lg p-3 sm:p-4 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow">
+                <div className="text-lg sm:text-xl font-bold text-green-600 mb-1">$2.3M</div>
+                <div className="text-xs text-gray-600">Scholarships awarded</div>
+              </div>
+              <div className="bg-white rounded-lg p-3 sm:p-4 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow">
+                <div className="text-lg sm:text-xl font-bold text-purple-600 mb-1">150+</div>
+                <div className="text-xs text-gray-600">Partner institutions</div>
+              </div>
+            </div>
+            
+            <div className="flex flex-col xs:flex-row gap-3 sm:gap-4 justify-center mb-8">
+              <button className="group relative px-5 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-[#ff5e1a] to-orange-600 text-white font-semibold text-center overflow-hidden hover:shadow-2xl hover:shadow-orange-500/50 transition-all duration-300 text-sm">
+                <span className="relative z-10 flex items-center justify-center gap-2">
+                  Start a partnership conversation
+                  <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
+                </span>
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
               </button>
-              <button className="border-2 border-[#002147] text-[#002147] px-10 py-4 rounded-lg text-lg font-semibold hover:bg-[#002147] hover:text-white transition-all duration-200">
+              <button className="px-5 sm:px-6 py-2.5 sm:py-3 bg-white/10 backdrop-blur-sm border-2 border-[#002147] text-[#002147] font-semibold text-center hover:bg-[#002147] hover:text-white transition-all duration-300 text-sm">
                 Book a 20-minute intro
               </button>
             </div>
-            <div className="flex items-center justify-center gap-6 text-sm text-gray-600 flex-wrap">
-              <span className="flex items-center gap-2">
-                <svg className="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+            
+            <div className="flex items-center justify-center gap-4 sm:gap-6 text-xs sm:text-sm text-gray-600 flex-wrap">
+              <span className="flex items-center gap-2 bg-white px-3 py-1.5 rounded-full shadow-md">
+                <svg className="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
-                National
+                <span className="font-semibold">National</span>
               </span>
-              <span className="flex items-center gap-2">
-                <svg className="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+              <span className="flex items-center gap-2 bg-white px-3 py-1.5 rounded-full shadow-md">
+                <svg className="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
-                Veteran student success focus
+                <span className="font-semibold">Veteran success focus</span>
               </span>
-              <span className="flex items-center gap-2">
-                <svg className="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+              <span className="flex items-center gap-2 bg-white px-3 py-1.5 rounded-full shadow-md">
+                <svg className="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
-                Pipeline development
+                <span className="font-semibold">Pipeline development</span>
               </span>
-              <span className="flex items-center gap-2">
-                <svg className="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+              <span className="flex items-center gap-2 bg-white px-3 py-1.5 rounded-full shadow-md">
+                <svg className="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
-                Scholarship co-funding
+                <span className="font-semibold">Scholarship co-funding</span>
               </span>
             </div>
           </div>
@@ -281,13 +312,13 @@ const WanacUniversityPartner = () => {
       </section>
 
       {/* The Problem Section */}
-      <section className="bg-white py-16">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-4xl font-bold text-[#002147] mb-4">
+      <section className="bg-white py-12 sm:py-16">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-8">
+            <h2 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold text-[#002147] mb-3">
               The problem (and what's at stake)
             </h2>
-            <p className="text-lg text-gray-700 leading-relaxed max-w-3xl mx-auto">
+            <p className="text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed max-w-3xl mx-auto">
               Veterans arrive with fragmented guidance: TAP checklists, unclear GI Bill timelines, and ad-hoc advising. Result: missed terms, incomplete files, under-utilized benefits, and melt. <span className="font-semibold text-[#ff5e1a]">Programs lose qualified, motivated learners because the path isn't integrated.</span>
             </p>
           </div>
@@ -295,80 +326,192 @@ const WanacUniversityPartner = () => {
       </section>
 
       {/* The Solution Section */}
-      <section className="bg-[#faf9f7] py-20">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-4xl font-bold text-[#002147] mb-6">
+      <section className="bg-[#faf9f7] py-12 sm:py-16 md:py-20">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-8">
+            <h2 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold text-[#002147] mb-4">
               The WANAC solution (at a glance)
             </h2>
-            <p className="text-2xl font-semibold text-[#ff5e1a] mb-8">
+            <p className="text-lg sm:text-xl md:text-2xl font-semibold text-[#ff5e1a] mb-6">
               One partnership. One veteran-ready operating picture.
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-8">
             {/* For Institutions */}
-            <div className="bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300 border-t-4 border-blue-600">
-              <div className="w-16 h-16 bg-blue-600 bg-opacity-10 rounded-full flex items-center justify-center mb-6">
-                <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="bg-white rounded-xl shadow-lg p-5 sm:p-6 hover:shadow-xl transition-shadow duration-300 border-t-4 border-blue-600">
+              <div className="w-12 h-12 bg-blue-600 bg-opacity-10 rounded-full flex items-center justify-center mb-4">
+                <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path d="M12 14l9-5-9-5-9 5 9 5z" />
                   <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
                 </svg>
               </div>
-              <h3 className="text-2xl font-bold text-[#002147] mb-4">For institutions</h3>
-              <p className="text-gray-600">
+              <h3 className="text-lg sm:text-xl font-bold text-[#002147] mb-3">For institutions</h3>
+              <p className="text-sm sm:text-base text-gray-600">
                 Pipeline planning, articulation/JST translation support, admissions calendar alignment, GI Bill usage mapping, co-branded scholarship funnels, veteran success dashboards.
               </p>
             </div>
 
             {/* For Candidates */}
-            <div className="bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300 border-t-4 border-[#ff5e1a]">
-              <div className="w-16 h-16 bg-[#ff5e1a] bg-opacity-10 rounded-full flex items-center justify-center mb-6">
-                <svg className="w-8 h-8 text-[#ff5e1a]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="bg-white rounded-xl shadow-lg p-5 sm:p-6 hover:shadow-xl transition-shadow duration-300 border-t-4 border-[#ff5e1a]">
+              <div className="w-12 h-12 bg-[#ff5e1a] bg-opacity-10 rounded-full flex items-center justify-center mb-4">
+                <svg className="w-6 h-6 text-[#ff5e1a]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
               </div>
-              <h3 className="text-2xl font-bold text-[#002147] mb-4">For candidates</h3>
-              <p className="text-gray-600">
+              <h3 className="text-lg sm:text-xl font-bold text-[#002147] mb-3">For candidates</h3>
+              <p className="text-sm sm:text-base text-gray-600">
                 PLEP cohort to finalize program fit, documents, and deadlines; PLCA/PPC/VETA to sustain momentum into graduation and career outcomes.
               </p>
             </div>
           </div>
 
-          <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl shadow-lg p-8 border-l-4 border-green-600">
-            <div className="flex items-start gap-4">
-              <svg className="w-10 h-10 text-green-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+          <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg shadow-lg p-5 sm:p-6 border-l-4 border-green-600">
+            <div className="flex items-start gap-3">
+              <svg className="w-8 h-8 text-green-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
               </svg>
               <div>
-                <p className="font-bold text-green-900 mb-2 text-lg">Benefits</p>
-                <p className="text-gray-700">Higher on-time starts, better persistence, clearer outcomes—and a scalable, repeatable playbook for veteran success.</p>
+                <p className="font-bold text-green-900 mb-2 text-base">Benefits</p>
+                <p className="text-sm sm:text-base text-gray-700">Higher on-time starts, better persistence, clearer outcomes—and a scalable, repeatable playbook for veteran success.</p>
               </div>
             </div>
           </div>
 
-          <div className="text-center mt-12">
-            <button className="bg-[#ff5e1a] text-white px-10 py-4 rounded-lg text-lg font-semibold hover:bg-[#e54e16] transition-all duration-200 shadow-lg hover:shadow-xl">
-              Start a partnership conversation
+          <div className="text-center mt-8">
+            <button className="group relative px-5 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-[#ff5e1a] to-orange-600 text-white font-semibold text-center overflow-hidden hover:shadow-2xl hover:shadow-orange-500/50 transition-all duration-300 text-sm">
+              <span className="relative z-10 flex items-center justify-center gap-2">
+                Start a partnership conversation
+                <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </span>
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
             </button>
           </div>
         </div>
       </section>
 
       {/* Proof/Testimonial Section */}
-      <section className="bg-white py-16">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-gradient-to-r from-[#002147] to-[#003366] rounded-2xl shadow-xl p-8 md:p-12 text-white">
-            <div className="flex items-start gap-4 mb-6">
-              <svg className="w-12 h-12 text-[#ff5e1a] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-              </svg>
-              <div>
-                <p className="text-xl md:text-2xl font-semibold mb-4 leading-relaxed">
-                  "WANAC's PLEP cohort delivered complete files on schedule and reduced melt. Veterans arrived enrollment-ready with funding mapped."
-                </p>
-                <p className="text-gray-300 font-medium">— Director of Admissions</p>
+      <section className="bg-gradient-to-br from-gray-50 to-white py-12 sm:py-16 md:py-20">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10 md:mb-12">
+            <h2 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold text-[#002147] mb-3">
+              Trusted by Leading Institutions
+            </h2>
+            <p className="text-sm sm:text-base md:text-lg text-gray-600 max-w-3xl mx-auto">
+              See how WANAC partnerships are transforming veteran enrollment and success rates
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 mb-10">
+            {/* Testimonial 1 */}
+            <div className="bg-white rounded-xl shadow-lg p-5 sm:p-6 hover:shadow-xl transition-all duration-300 border-t-4 border-[#ff5e1a]">
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 bg-[#ff5e1a] bg-opacity-10 rounded-full flex items-center justify-center mr-3">
+                  <svg className="w-6 h-6 text-[#ff5e1a]" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                </div>
+                <div>
+                  <h4 className="font-bold text-[#002147] text-sm sm:text-base">Sarah Mitchell</h4>
+                  <p className="text-xs sm:text-sm text-gray-600">Director of Admissions</p>
+                  <p className="text-xs text-gray-500">State University</p>
+                </div>
+              </div>
+              <p className="text-gray-700 text-sm sm:text-base leading-relaxed mb-3">
+                "WANAC's PLEP cohort delivered complete files on schedule and reduced melt by 40%. Veterans arrived enrollment-ready with funding mapped and prerequisites clear."
+              </p>
+              <div className="flex text-[#ff5e1a]">
+                {[...Array(5)].map((_, i) => (
+                  <svg key={i} className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                ))}
+              </div>
+            </div>
+
+            {/* Testimonial 2 */}
+            <div className="bg-white rounded-xl shadow-lg p-5 sm:p-6 hover:shadow-xl transition-all duration-300 border-t-4 border-blue-600">
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 bg-blue-600 bg-opacity-10 rounded-full flex items-center justify-center mr-3">
+                  <svg className="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                </div>
+                <div>
+                  <h4 className="font-bold text-[#002147] text-sm sm:text-base">Dr. Michael Chen</h4>
+                  <p className="text-xs sm:text-sm text-gray-600">Veteran Services Director</p>
+                  <p className="text-xs text-gray-500">Community College System</p>
+                </div>
+              </div>
+              <p className="text-gray-700 text-sm sm:text-base leading-relaxed mb-3">
+                "The JST translation support and GI Bill coordination saved our team 15 hours per week. Veteran persistence rates increased to 92% in the first semester."
+              </p>
+              <div className="flex text-blue-600">
+                {[...Array(5)].map((_, i) => (
+                  <svg key={i} className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                ))}
+              </div>
+            </div>
+
+            {/* Testimonial 3 */}
+            <div className="bg-white rounded-xl shadow-lg p-5 sm:p-6 hover:shadow-xl transition-all duration-300 border-t-4 border-green-600">
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 bg-green-600 bg-opacity-10 rounded-full flex items-center justify-center mr-3">
+                  <svg className="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                </div>
+                <div>
+                  <h4 className="font-bold text-[#002147] text-sm sm:text-base">Jennifer Rodriguez</h4>
+                  <p className="text-xs sm:text-sm text-gray-600">Career Services Director</p>
+                  <p className="text-xs text-gray-500">Private University</p>
+                </div>
+              </div>
+              <p className="text-gray-700 text-sm sm:text-base leading-relaxed mb-3">
+                "PLCA cohorts transformed our veteran career outcomes. 78% of participants secured employment within 90 days of graduation, compared to 45% before the partnership."
+              </p>
+              <div className="flex text-green-600">
+                {[...Array(5)].map((_, i) => (
+                  <svg key={i} className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Partner Logos */}
+          <div className="bg-white rounded-xl shadow-lg p-5 sm:p-6">
+            <h3 className="text-lg sm:text-xl font-bold text-[#002147] text-center mb-6">Trusted by Leading Institutions</h3>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 items-center opacity-60">
+              <div className="text-center">
+                <div className="w-16 h-12 bg-gray-200 rounded-lg mx-auto mb-2 flex items-center justify-center">
+                  <span className="text-gray-500 font-semibold text-xs">State U</span>
+                </div>
+                <p className="text-xs text-gray-600">State University</p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-12 bg-gray-200 rounded-lg mx-auto mb-2 flex items-center justify-center">
+                  <span className="text-gray-500 font-semibold text-xs">CCS</span>
+                </div>
+                <p className="text-xs text-gray-600">Community College</p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-12 bg-gray-200 rounded-lg mx-auto mb-2 flex items-center justify-center">
+                  <span className="text-gray-500 font-semibold text-xs">Tech U</span>
+                </div>
+                <p className="text-xs text-gray-600">Tech University</p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-12 bg-gray-200 rounded-lg mx-auto mb-2 flex items-center justify-center">
+                  <span className="text-gray-500 font-semibold text-xs">Private U</span>
+                </div>
+                <p className="text-xs text-gray-600">Private University</p>
               </div>
             </div>
           </div>
@@ -376,41 +519,174 @@ const WanacUniversityPartner = () => {
       </section>
 
       {/* Partnership Use Cases Section */}
-      <section className="bg-[#faf9f7] py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-[#002147] mb-4">
-              Partnership use cases (choose one—or combine)
+      <section className="bg-gradient-to-br from-[#faf9f7] to-blue-50 py-12 sm:py-16 md:py-20">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10 md:mb-12">
+            <div className="inline-block bg-gradient-to-r from-[#ff5e1a] to-orange-600 text-white px-4 py-2 rounded-full text-xs font-bold mb-4 shadow-lg">
+              Partnership Solutions
+            </div>
+            <h2 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold text-[#002147] mb-4">
+              Partnership use cases
+              <span className="block text-lg sm:text-xl md:text-2xl text-gray-600 font-normal mt-1">(choose one—or combine)</span>
             </h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Flexible partnership models to fit your institution's goals
+            <p className="text-sm sm:text-base md:text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              Flexible partnership models designed to fit your institution's unique goals and veteran enrollment objectives
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-10">
             {partnershipUseCases.map((useCase, index) => {
               const colors = colorClasses[useCase.color];
               return (
-                <div key={index} className={`bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl transition-all duration-300 border-t-4 ${colors.border}`}>
-                  <div className={`w-16 h-16 ${colors.bgOpacity} rounded-full flex items-center justify-center mb-6 ${colors.text}`}>
-                    {useCase.icon}
-                  </div>
-                  <h3 className="text-xl font-bold text-[#002147] mb-4">{useCase.title}</h3>
-                  <div className="mb-4">
-                    <p className="text-sm font-semibold text-gray-700 mb-2">Outcome:</p>
-                    <p className="text-sm text-gray-600 mb-4">{useCase.outcome}</p>
-                    <p className="text-sm font-semibold text-gray-700 mb-2">What we do:</p>
-                    <p className="text-sm text-gray-600">{useCase.whatWeDo}</p>
+                <div key={index} className={`group bg-white rounded-xl shadow-lg p-5 sm:p-6 hover:shadow-xl transition-all duration-300 border-t-4 ${colors.border} hover:-translate-y-1`}>
+                  <div className="flex items-start gap-4">
+                    <div className={`w-12 h-12 ${colors.bgOpacity} rounded-lg flex items-center justify-center ${colors.text} group-hover:scale-110 transition-transform duration-300`}>
+                      {useCase.icon}
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-lg sm:text-xl font-bold text-[#002147] mb-4 group-hover:text-[#ff5e1a] transition-colors duration-300">
+                        {useCase.title}
+                      </h3>
+                      <div className="space-y-3">
+                        <div className="bg-gray-50 rounded-lg p-3">
+                          <p className="text-xs font-bold text-gray-800 mb-1 flex items-center gap-2">
+                            <svg className="w-3 h-3 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                            </svg>
+                            Expected Outcome
+                          </p>
+                          <p className="text-sm text-gray-700 font-medium">{useCase.outcome}</p>
+                        </div>
+                        <div className="bg-blue-50 rounded-lg p-3">
+                          <p className="text-xs font-bold text-gray-800 mb-1 flex items-center gap-2">
+                            <svg className="w-3 h-3 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
+                            </svg>
+                            What We Do
+                          </p>
+                          <p className="text-sm text-gray-700">{useCase.whatWeDo}</p>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               );
             })}
           </div>
 
-          <div className="text-center mt-12">
-            <button className="bg-[#ff5e1a] text-white px-10 py-4 rounded-lg text-lg font-semibold hover:bg-[#e54e16] transition-all duration-200 shadow-lg hover:shadow-xl inline-flex items-center gap-2">
-              Book a 20-minute intro
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="text-center">
+            <button className="group relative px-5 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-[#ff5e1a] to-orange-600 text-white font-semibold text-center overflow-hidden hover:shadow-2xl hover:shadow-orange-500/50 transition-all duration-300 text-sm">
+              <span className="relative z-10 flex items-center justify-center gap-2">
+                Book a 20-minute intro
+                <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </span>
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* How Partnership Works */}
+      <section className="bg-gradient-to-br from-white to-gray-50 py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-20">
+            <div className="inline-block bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-full text-sm font-bold mb-6 shadow-lg">
+              Partnership Process
+            </div>
+            <h2 className="text-4xl lg:text-5xl font-bold text-[#002147] mb-6">
+              How partnership works
+              <span className="block text-2xl lg:text-3xl text-gray-600 font-normal mt-2">(4 simple steps)</span>
+            </h2>
+            <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
+              From initial discovery to full-scale implementation—a streamlined process designed for success
+            </p>
+          </div>
+
+          <div className="relative">
+            {/* Connection Lines */}
+            <div className="hidden lg:block absolute top-20 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-600 via-[#ff5e1a] via-purple-600 to-green-600"></div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+            {/* Step 1 */}
+              <div className="group relative text-center">
+                <div className="relative z-10 w-24 h-24 bg-gradient-to-br from-blue-600 to-blue-700 text-white rounded-2xl flex items-center justify-center text-3xl font-bold mx-auto mb-8 shadow-2xl group-hover:scale-110 transition-all duration-300">
+                1
+              </div>
+                <div className="bg-white rounded-2xl shadow-xl p-8 hover:shadow-2xl transition-all duration-300 group-hover:-translate-y-2">
+                  <h3 className="text-2xl font-bold text-[#002147] mb-4 group-hover:text-blue-600 transition-colors">
+                    Discovery & Scope
+              </h3>
+                  <div className="inline-block bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-semibold mb-4">
+                    30–45 minutes
+                  </div>
+                  <p className="text-gray-600 leading-relaxed">
+                    Programs, calendars, enrollment targets, and veteran services landscape assessment
+                  </p>
+                </div>
+            </div>
+
+            {/* Step 2 */}
+              <div className="group relative text-center">
+                <div className="relative z-10 w-24 h-24 bg-gradient-to-br from-[#ff5e1a] to-orange-600 text-white rounded-2xl flex items-center justify-center text-3xl font-bold mx-auto mb-8 shadow-2xl group-hover:scale-110 transition-all duration-300">
+                2
+              </div>
+                <div className="bg-white rounded-2xl shadow-xl p-8 hover:shadow-2xl transition-all duration-300 group-hover:-translate-y-2">
+                  <h3 className="text-2xl font-bold text-[#002147] mb-4 group-hover:text-[#ff5e1a] transition-colors">
+                    Pilot Design
+              </h3>
+                  <div className="inline-block bg-orange-100 text-orange-800 px-4 py-2 rounded-full text-sm font-semibold mb-4">
+                    2–3 weeks
+                  </div>
+                  <p className="text-gray-600 leading-relaxed">
+                Define funnel sources, cohort capacity/dates, scholarship co-branding, and success metrics
+              </p>
+                </div>
+            </div>
+
+            {/* Step 3 */}
+              <div className="group relative text-center">
+                <div className="relative z-10 w-24 h-24 bg-gradient-to-br from-purple-600 to-purple-700 text-white rounded-2xl flex items-center justify-center text-3xl font-bold mx-auto mb-8 shadow-2xl group-hover:scale-110 transition-all duration-300">
+                3
+              </div>
+                <div className="bg-white rounded-2xl shadow-xl p-8 hover:shadow-2xl transition-all duration-300 group-hover:-translate-y-2">
+                  <h3 className="text-2xl font-bold text-[#002147] mb-4 group-hover:text-purple-600 transition-colors">
+                    Launch & Run
+              </h3>
+                  <div className="inline-block bg-purple-100 text-purple-800 px-4 py-2 rounded-full text-sm font-semibold mb-4">
+                    12 weeks
+                  </div>
+                  <p className="text-gray-600 leading-relaxed">
+                PLEP/PLCA/PPC/CPPC/VETA cohorts execute; admissions gets complete files and ready-to-enroll candidates
+              </p>
+                </div>
+            </div>
+
+            {/* Step 4 */}
+              <div className="group relative text-center">
+                <div className="relative z-10 w-24 h-24 bg-gradient-to-br from-green-600 to-green-700 text-white rounded-2xl flex items-center justify-center text-3xl font-bold mx-auto mb-8 shadow-2xl group-hover:scale-110 transition-all duration-300">
+                4
+              </div>
+                <div className="bg-white rounded-2xl shadow-xl p-8 hover:shadow-2xl transition-all duration-300 group-hover:-translate-y-2">
+                  <h3 className="text-2xl font-bold text-[#002147] mb-4 group-hover:text-green-600 transition-colors">
+                    Measure & Scale
+              </h3>
+                  <div className="inline-block bg-green-100 text-green-800 px-4 py-2 rounded-full text-sm font-semibold mb-4">
+                    Monthly
+                  </div>
+                  <p className="text-gray-600 leading-relaxed">
+                Dashboards (starts, persistence, cohort completion, scholarship utilization) and optimization plan
+              </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="text-center">
+            <button className="group bg-gradient-to-r from-[#ff5e1a] to-orange-600 text-white px-12 py-5 rounded-xl text-xl font-bold hover:from-orange-600 hover:to-[#ff5e1a] transition-all duration-300 shadow-2xl hover:shadow-3xl transform hover:scale-105 hover:-translate-y-1 inline-flex items-center gap-3">
+              Start a partnership conversation
+              <svg className="w-6 h-6 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>
             </button>
@@ -418,110 +694,53 @@ const WanacUniversityPartner = () => {
         </div>
       </section>
 
-      {/* How Partnership Works */}
-      <section className="bg-white py-20">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-[#002147] mb-4">
-              How partnership works (4 steps)
-            </h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              From discovery to scale
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-            {/* Step 1 */}
-            <div className="text-center">
-              <div className="w-20 h-20 bg-blue-600 text-white rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-6 shadow-lg">
-                1
-              </div>
-              <h3 className="text-xl font-bold text-[#002147] mb-3">
-                Discovery & scope
-              </h3>
-              <p className="text-gray-600 text-sm mb-2">(30–45 min)</p>
-              <p className="text-gray-600">
-                Programs, calendars, enrollment targets, and veteran services landscape
-              </p>
-            </div>
-
-            {/* Step 2 */}
-            <div className="text-center">
-              <div className="w-20 h-20 bg-[#ff5e1a] text-white rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-6 shadow-lg">
-                2
-              </div>
-              <h3 className="text-xl font-bold text-[#002147] mb-3">
-                Pilot design
-              </h3>
-              <p className="text-gray-600 text-sm mb-2">(2–3 weeks)</p>
-              <p className="text-gray-600">
-                Define funnel sources, cohort capacity/dates, scholarship co-branding, and success metrics
-              </p>
-            </div>
-
-            {/* Step 3 */}
-            <div className="text-center">
-              <div className="w-20 h-20 bg-purple-600 text-white rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-6 shadow-lg">
-                3
-              </div>
-              <h3 className="text-xl font-bold text-[#002147] mb-3">
-                Launch & run
-              </h3>
-              <p className="text-gray-600 text-sm mb-2">(12 weeks)</p>
-              <p className="text-gray-600">
-                PLEP/PLCA/PPC/CPPC/VETA cohorts execute; admissions gets complete files and ready-to-enroll candidates
-              </p>
-            </div>
-
-            {/* Step 4 */}
-            <div className="text-center">
-              <div className="w-20 h-20 bg-green-600 text-white rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-6 shadow-lg">
-                4
-              </div>
-              <h3 className="text-xl font-bold text-[#002147] mb-3">
-                Measure & scale
-              </h3>
-              <p className="text-gray-600 text-sm mb-2">(monthly)</p>
-              <p className="text-gray-600">
-                Dashboards (starts, persistence, cohort completion, scholarship utilization) and optimization plan
-              </p>
-            </div>
-          </div>
-
-          <div className="text-center">
-            <button className="bg-[#ff5e1a] text-white px-10 py-4 rounded-lg text-lg font-semibold hover:bg-[#e54e16] transition-all duration-200 shadow-lg hover:shadow-xl">
-              Start a partnership conversation
-            </button>
-          </div>
-        </div>
-      </section>
-
       {/* What You'll Receive Section */}
-      <section className="bg-[#faf9f7] py-20">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-[#002147] mb-4">
-              What you'll receive (institution deliverables)
+      <section className="bg-gradient-to-br from-[#faf9f7] to-white py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-20">
+            <div className="inline-block bg-gradient-to-r from-green-600 to-emerald-600 text-white px-6 py-3 rounded-full text-sm font-bold mb-6 shadow-lg">
+              Partnership Deliverables
+            </div>
+            <h2 className="text-4xl lg:text-5xl font-bold text-[#002147] mb-6">
+              What you'll receive
+              <span className="block text-2xl lg:text-3xl text-gray-600 font-normal mt-2">(institution deliverables)</span>
             </h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Comprehensive partnership support and resources
+            <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
+              Comprehensive partnership support and resources designed to maximize your veteran enrollment success
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {deliverables.map((deliverable, index) => (
-              <div key={index} className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300 border-l-4 border-blue-600">
-                <div className="flex items-start gap-3">
-                  <div className="w-10 h-10 bg-blue-600 bg-opacity-10 rounded-full flex items-center justify-center text-blue-600 flex-shrink-0">
+              <div key={index} className="group bg-white rounded-2xl shadow-xl p-8 hover:shadow-2xl transition-all duration-300 border-l-4 border-blue-600 hover:-translate-y-2">
+                <div className="flex items-start gap-4">
+                  <div className="w-14 h-14 bg-gradient-to-br from-blue-600 to-blue-700 bg-opacity-10 rounded-2xl flex items-center justify-center text-blue-600 flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
                     {deliverable.icon}
                   </div>
-                  <div>
-                    <h3 className="font-bold text-[#002147] mb-2">{deliverable.title}</h3>
-                    <p className="text-gray-600 text-sm">{deliverable.description}</p>
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold text-[#002147] mb-3 group-hover:text-blue-600 transition-colors">
+                      {deliverable.title}
+                    </h3>
+                    <p className="text-gray-600 leading-relaxed">{deliverable.description}</p>
                   </div>
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* Additional Value Proposition */}
+          <div className="mt-16 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-3xl p-12 text-center">
+            <div className="w-20 h-20 bg-gradient-to-br from-blue-600 to-indigo-600 text-white rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-2xl">
+              <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <h3 className="text-3xl font-bold text-[#002147] mb-6">
+              Plus Ongoing Support & Optimization
+            </h3>
+            <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
+              Regular check-ins, performance analytics, and continuous improvement recommendations to ensure your partnership delivers maximum value for veteran students.
+            </p>
           </div>
         </div>
       </section>
@@ -673,23 +892,70 @@ const WanacUniversityPartner = () => {
       </section>
 
       {/* Final CTA Section */}
-      <section className="bg-gradient-to-r from-[#002147] to-[#003366] py-20">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="relative bg-gradient-to-br from-[#002147] via-[#003366] to-[#001530] py-24 overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-10 left-10 w-96 h-96 bg-[#ff5e1a] rounded-full mix-blend-multiply filter blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-10 right-10 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl animate-pulse animation-delay-2000"></div>
+        </div>
+        
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="text-center text-white">
-            <h2 className="text-4xl lg:text-5xl font-bold mb-6">
-              Partner with WANAC today
+            <div className="inline-block bg-white bg-opacity-20 backdrop-blur-sm text-white px-6 py-3 rounded-full text-sm font-bold mb-8 shadow-lg">
+              Ready to Transform Veteran Success?
+            </div>
+            <h2 className="text-5xl lg:text-6xl font-bold mb-8 leading-tight">
+              Partner with WANAC
+              <span className="block bg-gradient-to-r from-[#ff5e1a] to-orange-400 bg-clip-text text-transparent">today</span>
             </h2>
-            <p className="text-xl mb-10 text-gray-200 max-w-3xl mx-auto">
-              Build veteran-ready pipelines and increase enrollment, persistence, and career outcomes
+            <p className="text-2xl mb-12 text-gray-200 max-w-4xl mx-auto leading-relaxed">
+              Build veteran-ready pipelines and increase enrollment, persistence, and career outcomes with our proven partnership model
             </p>
+            
+            {/* Urgency Elements */}
+            <div className="flex flex-wrap justify-center gap-8 mb-12 text-lg">
+              <div className="flex items-center gap-3 bg-white bg-opacity-10 backdrop-blur-sm px-6 py-3 rounded-full">
+                <svg className="w-6 h-6 text-[#ff5e1a]" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                <span className="font-semibold">No setup fees</span>
+              </div>
+              <div className="flex items-center gap-3 bg-white bg-opacity-10 backdrop-blur-sm px-6 py-3 rounded-full">
+                <svg className="w-6 h-6 text-[#ff5e1a]" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                <span className="font-semibold">Quick implementation</span>
+              </div>
+              <div className="flex items-center gap-3 bg-white bg-opacity-10 backdrop-blur-sm px-6 py-3 rounded-full">
+                <svg className="w-6 h-6 text-[#ff5e1a]" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                <span className="font-semibold">Proven results</span>
+              </div>
+            </div>
+            
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <button className="bg-[#ff5e1a] text-white px-12 py-5 rounded-lg text-xl font-semibold hover:bg-[#e54e16] transition-all duration-200 shadow-xl hover:shadow-2xl transform hover:scale-105">
+              <button className="group bg-gradient-to-r from-[#ff5e1a] to-orange-600 text-white px-16 py-6 rounded-2xl text-2xl font-bold hover:from-orange-600 hover:to-[#ff5e1a] transition-all duration-300 shadow-2xl hover:shadow-3xl transform hover:scale-105 hover:-translate-y-2">
+                <span className="flex items-center justify-center gap-4">
                 Start a partnership conversation
+                  <svg className="w-8 h-8 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
+                </span>
               </button>
-              <button className="border-3 border-white text-white px-12 py-5 rounded-lg text-xl font-semibold hover:bg-white hover:text-[#002147] transition-all duration-200 shadow-xl">
+              <button className="group border-3 border-white text-white px-16 py-6 rounded-2xl text-2xl font-bold hover:bg-white hover:text-[#002147] transition-all duration-300 shadow-2xl hover:shadow-3xl transform hover:scale-105">
+                <span className="flex items-center justify-center gap-4">
                 Book a 20-minute intro
+                  <svg className="w-8 h-8 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                </span>
               </button>
             </div>
+            
+            <p className="text-lg text-gray-300 mt-8 max-w-2xl mx-auto">
+              Join 150+ institutions already transforming veteran success through WANAC partnerships
+            </p>
           </div>
         </div>
       </section>
@@ -779,6 +1045,7 @@ const WanacUniversityPartner = () => {
         </div>
       </footer>
     </div>
+    </>
   );
 };
 

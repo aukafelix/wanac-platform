@@ -65,9 +65,27 @@ export function useMeetingData(searchParams) {
             isWaitingRoom: true,
           },
           {
+            title: 'Introduction',
+            subtitle: 'What is the Fireteam Experience?',
+            duration: '3 mins',
+            isIntroduction: true,
+          },
+          {
             title: 'Session Starting',
             subtitle: 'Loading session details...',
             duration: '5 mins',
+          },
+          {
+            title: 'Session Processing',
+            subtitle: 'Processing session data and generating insights',
+            duration: '3 mins',
+            isProcessing: true,
+          },
+          {
+            title: 'AI Summary Report',
+            subtitle: 'Review AI-generated session summary and insights',
+            duration: '5 mins',
+            isSummary: true,
           },
         ];
         setAgenda(defaultAgenda);
@@ -118,7 +136,14 @@ export function useMeetingData(searchParams) {
             isWaitingRoom: true,
           };
 
-          const finalAgenda = [waitingRoom, ...normalizedAgenda];
+          const introduction = {
+            title: 'Introduction',
+            subtitle: 'What is the Fireteam Experience?',
+            duration: '3 mins',
+            isIntroduction: true,
+          };
+
+          const finalAgenda = [waitingRoom, introduction, ...normalizedAgenda];
 
           if (normalizedAgenda.length === 0) {
             console.log('⚠️ No agenda found, using default');
@@ -128,6 +153,21 @@ export function useMeetingData(searchParams) {
               duration: '45 mins',
             });
           }
+
+          // Add Session Processing and AI Summary Report steps at the end
+          finalAgenda.push({
+            title: 'Session Processing',
+            subtitle: 'Processing session data and generating insights',
+            duration: '3 mins',
+            isProcessing: true,
+          });
+
+          finalAgenda.push({
+            title: 'AI Summary Report',
+            subtitle: 'Review AI-generated session summary and insights',
+            duration: '5 mins',
+            isSummary: true,
+          });
 
           console.log('✅ Final agenda with waiting room:', finalAgenda);
           setAgenda(finalAgenda);
