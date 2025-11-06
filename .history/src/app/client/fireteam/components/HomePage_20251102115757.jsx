@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { experienceService } from "../../../../services/api/experience.service";
 import { fireteamService } from "../../../../services/api/fireteam.service";
@@ -18,77 +18,25 @@ function ChatModal({ isOpen, onClose, experience }) {
     }
   ]);
 
-  const backdropRef = useRef(null);
-  const inputRef = useRef(null);
-
-  useEffect(() => {
-    if (!isOpen) return;
-
-    // focus input when modal opens
-    const timer = setTimeout(() => {
-      inputRef.current?.focus();
-    }, 50);
-
-    const handleKeyDown = (e) => {
-      if (e.key === 'Escape') {
-        e.stopPropagation();
-        onClose();
-      }
-
-      if (e.key === 'Tab') {
-        // simple focus trap
-        const focusable = backdropRef.current?.querySelectorAll(
-          'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
-        );
-        if (!focusable || focusable.length === 0) return;
-        const first = focusable[0];
-        const last = focusable[focusable.length - 1];
-        if (e.shiftKey && document.activeElement === first) {
-          e.preventDefault();
-          last.focus();
-        } else if (!e.shiftKey && document.activeElement === last) {
-          e.preventDefault();
-          first.focus();
-        }
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => {
-      clearTimeout(timer);
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [isOpen, onClose]);
-
   if (!isOpen) return null;
 
   const handleSendMessage = (e) => {
     e.preventDefault();
     if (message.trim()) {
       const newMessage = {
-        id: Date.now(),
+        id: messages.length + 1,
         sender: "You",
         text: message,
         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         isCoach: false
       };
-      setMessages(prev => [...prev, newMessage]);
+      setMessages([...messages, newMessage]);
       setMessage("");
-      inputRef.current?.focus();
     }
   };
 
   return (
-    <div
-      ref={backdropRef}
-      onMouseDown={(e) => {
-        // close when clicking on backdrop (outside modal content)
-        if (e.target === backdropRef.current) onClose();
-      }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm"
-      role="dialog"
-      aria-modal="true"
-    >
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
       <div className="bg-white rounded-xl w-full max-w-2xl max-h-[600px] shadow-2xl flex flex-col">
         {/* Header */}
         <div className="bg-gradient-to-r from-[#002147] to-[#003875] p-4 rounded-t-xl flex items-center justify-between">
@@ -97,7 +45,7 @@ function ChatModal({ isOpen, onClose, experience }) {
               <FaComments className="text-white text-lg" />
             </div>
             <div>
-              <h3 id="chat-title" className="text-white font-bold text-sm">Experience Chat</h3>
+              <h3 className="text-white font-bold text-sm">Experience Chat</h3>
               <p className="text-white/80 text-xs">{experience?.title || 'Discussion'}</p>
             </div>
           </div>
@@ -142,7 +90,6 @@ function ChatModal({ isOpen, onClose, experience }) {
         <div className="p-4 border-t border-gray-200 bg-white rounded-b-xl">
           <form onSubmit={handleSendMessage} className="flex gap-2">
             <input
-              ref={inputRef}
               type="text"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
@@ -400,28 +347,8 @@ export default function HomePage() {
                     </td>
                   </tr>
                 ) : (
-                  filteredAssignments.map(a => {
-                    const buildUrl = () => {
-                      const baseUrl = `/client/fireteam/experience/${a.experienceId}?id=${a.experienceId}&fireteamId=${a.fireteamId}`;
-                      return a.meetingLink ? `${baseUrl}&link=${encodeURIComponent(a.meetingLink)}` : baseUrl;
-                    };
-                    const handleRowNavigate = () => router.push(buildUrl());
-                    const onRowKeyDown = (e) => {
-                      if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        handleRowNavigate();
-                      }
-                    };
-
-                    return (
-                    <tr
-                      key={a.id}
-                      role="button"
-                      tabIndex={0}
-                      onClick={handleRowNavigate}
-                      onKeyDown={onRowKeyDown}
-                      className="border-b border-gray-100 last:border-b-0 hover:bg-blue-50/50 transition-colors group cursor-pointer"
-                    >
+                  filteredAssignments.map(a => (
+                    <tr key={a.id} className="border-b border-gray-100 last:border-b-0 hover:bg-blue-50/50 transition-colors group">
                       <td className="py-3 px-3 align-middle">
                         <div className="font-semibold text-[11px] text-gray-900">{a.course}</div>
                         <div className="text-[9px] text-gray-500">ID: {a.fireteamId}</div>
@@ -474,18 +401,18 @@ export default function HomePage() {
                       <td className="px-3 align-middle">
                         <button
                           className="text-[11px] text-[#002147] font-bold hover:text-orange-500 group-hover:underline transition-colors flex items-center gap-1"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            router.push(buildUrl());
+                          onClick={() => {
+                            const baseUrl = `/client/fireteam/experience/${a.experienceId}?id=${a.experienceId}&fireteamId=${a.fireteamId}`;
+                            const fullUrl = a.meetingLink ? `${baseUrl}&link=${encodeURIComponent(a.meetingLink)}` : baseUrl;
+                            router.push(fullUrl);
                           }}
-                          aria-label={`Open ${a.action} for ${a.experience?.title}`}
                         >
                           {a.action}
                           <span className="group-hover:translate-x-0.5 transition-transform">→</span>
                         </button>
                       </td>
                     </tr>
-                  )})
+                  ))
                 )}
               </tbody>
             </table>

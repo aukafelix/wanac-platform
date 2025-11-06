@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useMemo, useCallback, useRef } from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 
 // Custom Hooks
@@ -25,7 +25,6 @@ import AdminSidebar from "../../../../../../components/dashboardcomponents/admin
 import MeetingSummaryModal from "../../components/MeetingSummaryModal";
 
 export default function FireteamExperienceMeeting() {
-  const sessionProcessedRef = useRef(false); // Prevent multiple session processing
   // ============================================================================
   // STATE & HOOKS
   // ============================================================================
@@ -39,10 +38,8 @@ export default function FireteamExperienceMeeting() {
   const [collapsed, setCollapsed] = useState(true); // Start collapsed by default
   const [chatMessages, setChatMessages] = useState([]);
   const [showSummaryModal, setShowSummaryModal] = useState(false);
-  const [processingSession, setProcessingSession] = useState(false); // Show spinner during session processing
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [wasRecording, setWasRecording] = useState(false); // Track if recording was active during session
-  const [autoStartedRecording, setAutoStartedRecording] = useState(false); // Ensure auto-start only happens once
   const [jitsiContainerId] = useState(
     () => `jitsi-container-${crypto.randomUUID?.() || `${Date.now()}-${Math.random().toString(36).substring(2, 9)}`}`
   );
@@ -362,23 +359,16 @@ export default function FireteamExperienceMeeting() {
   // ============================================================================
 
   useEffect(() => {
-    // Auto-start recording robustly when Introduction step and Jitsi are ready
-    if (
-      currentStep === 1 &&
-      agenda[currentStep]?.title === 'Introduction' &&
-      !isRecording &&
-      jitsiReady &&
-      !autoStartedRecording
-    ) {
-      setAutoStartedRecording(true);
-      setWasRecording(true); // Mark that recording will be active
+    // Auto-start recording when reaching the Introduction step (step 1, after Waiting Room)
+    if (currentStep === 1 && agenda[currentStep]?.title === 'Introduction' && !isRecording && jitsiReady) {
       console.log('🎬 Auto-starting recording for Introduction step...');
+      setWasRecording(true); // Mark that recording will be active
       handleToggleRecording().catch((err) => {
         console.error('❌ Failed to auto-start recording:', err);
         toast.error('Failed to start recording automatically');
       });
     }
-  }, [currentStep, agenda, isRecording, jitsiReady, handleToggleRecording, toast, autoStartedRecording]);
+  }, [currentStep, agenda, isRecording, jitsiReady, handleToggleRecording, toast]);
 
   // ============================================================================
   // AUTOMATIC RECORDING STOP AND AI SUMMARY GENERATION AT SESSION PROCESSING
@@ -386,53 +376,42 @@ export default function FireteamExperienceMeeting() {
 
   useEffect(() => {
     // Auto-stop recording and start AI summary generation when reaching Session Processing step
-    let cancelled = false;
-    async function processSession() {
-      if (sessionProcessedRef.current) return;
-      sessionProcessedRef.current = true;
-      setProcessingSession(true);
-      try {
-        // Stop recording if active
-        if (isRecording) {
-          console.log('🛑 Stopping recording...');
-          await handleToggleRecording();
-          // Wait for recordingBlob to be set (max 5s)
-          let waitCount = 0;
-          while (!recordingBlob && waitCount < 20 && !cancelled) {
-            await new Promise(resolve => setTimeout(resolve, 250));
-            waitCount++;
+    if (agenda[currentStep]?.title === 'Session Processing' || agenda[currentStep]?.isProcessing) {
+      console.log('🛑 Auto-stopping recording and starting AI summary generation...');
+      
+      const processSession = async () => {
+        try {
+          // Stop recording if active
+          if (isRecording) {
+            console.log('🛑 Stopping recording...');
+            await handleToggleRecording();
+            
+            // Wait for recording blob to be processed
+            await new Promise(resolve => setTimeout(resolve, 2000));
           }
-          console.log('Recording stopped, recordingBlob ready:', !!recordingBlob);
-        }
-        // Give a short delay before starting session processing
-        await new Promise(resolve => setTimeout(resolve, 500));
-        // Start AI summary generation
-        if ((wasRecording || recordingBlob) && !cancelled) {
-          console.log('🤖 Starting AI summary generation...');
-          toast.info('Generating AI summary... This may take a moment.');
-          const result = await handleProcessRecording();
-          if (result && !cancelled) {
-            console.log('✅ AI summary generated successfully');
-            toast.success('AI summary generated successfully!');
+
+          // Start AI summary generation
+          if (wasRecording || recordingBlob) {
+            console.log('🤖 Starting AI summary generation...');
+            toast.info('Generating AI summary... This may take a moment.');
+            
+            const result = await handleProcessRecording();
+            if (result) {
+              console.log('✅ AI summary generated successfully');
+              toast.success('AI summary generated successfully!');
+            }
+          } else {
+            console.log('⚠️ No recording to process');
+            toast.info('No recording available to process');
           }
-        } else if (!cancelled) {
-          console.log('⚠️ No recording to process');
-          toast.info('No recording available to process');
-        }
-      } catch (err) {
-        if (!cancelled) {
+        } catch (err) {
           console.error('❌ Failed to process session:', err);
           toast.error('Failed to generate AI summary: ' + (err.message || 'Unknown error'));
         }
-      } finally {
-        if (!cancelled) setProcessingSession(false);
-        console.log('Session Processing: End');
-      }
-    }
-    if ((agenda[currentStep]?.title === 'Session Processing' || agenda[currentStep]?.isProcessing) && !sessionProcessedRef.current) {
+      };
+
       processSession();
     }
-    return () => { cancelled = true; };
   }, [currentStep, agenda, isRecording, wasRecording, recordingBlob, handleToggleRecording, handleProcessRecording, toast]);
 
   // ============================================================================
@@ -473,19 +452,6 @@ export default function FireteamExperienceMeeting() {
           onConfirm={handleConfirmProcessRecording}
           onCancel={handleCancelProcessRecording}
         />
-      )}
-
-      {/* Processing Session Overlay */}
-      {processingSession && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
-          <div className="bg-white rounded-lg shadow-lg p-8 flex flex-col items-center">
-            <svg className="animate-spin h-8 w-8 text-blue-500 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
-            </svg>
-            <span className="text-lg font-semibold text-gray-700">Processing session, please wait...</span>
-          </div>
-        </div>
       )}
 
       {/* Sidebar - Admin or Regular */}

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState, useMemo, useCallback, useRef } from "react";
+  const sessionProcessedRef = useRef(false); // Prevent multiple session processing
 import { useSearchParams } from "next/navigation";
 
 // Custom Hooks
@@ -25,7 +26,6 @@ import AdminSidebar from "../../../../../../components/dashboardcomponents/admin
 import MeetingSummaryModal from "../../components/MeetingSummaryModal";
 
 export default function FireteamExperienceMeeting() {
-  const sessionProcessedRef = useRef(false); // Prevent multiple session processing
   // ============================================================================
   // STATE & HOOKS
   // ============================================================================

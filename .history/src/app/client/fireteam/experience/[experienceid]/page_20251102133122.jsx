@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useMemo, useCallback, useRef } from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 
 // Custom Hooks
@@ -25,7 +25,6 @@ import AdminSidebar from "../../../../../../components/dashboardcomponents/admin
 import MeetingSummaryModal from "../../components/MeetingSummaryModal";
 
 export default function FireteamExperienceMeeting() {
-  const sessionProcessedRef = useRef(false); // Prevent multiple session processing
   // ============================================================================
   // STATE & HOOKS
   // ============================================================================
@@ -388,24 +387,15 @@ export default function FireteamExperienceMeeting() {
     // Auto-stop recording and start AI summary generation when reaching Session Processing step
     let cancelled = false;
     async function processSession() {
-      if (sessionProcessedRef.current) return;
-      sessionProcessedRef.current = true;
       setProcessingSession(true);
       try {
         // Stop recording if active
         if (isRecording) {
           console.log('🛑 Stopping recording...');
           await handleToggleRecording();
-          // Wait for recordingBlob to be set (max 5s)
-          let waitCount = 0;
-          while (!recordingBlob && waitCount < 20 && !cancelled) {
-            await new Promise(resolve => setTimeout(resolve, 250));
-            waitCount++;
-          }
-          console.log('Recording stopped, recordingBlob ready:', !!recordingBlob);
+          // Wait for recording blob to be processed
+          await new Promise(resolve => setTimeout(resolve, 2000));
         }
-        // Give a short delay before starting session processing
-        await new Promise(resolve => setTimeout(resolve, 500));
         // Start AI summary generation
         if ((wasRecording || recordingBlob) && !cancelled) {
           console.log('🤖 Starting AI summary generation...');
@@ -426,10 +416,9 @@ export default function FireteamExperienceMeeting() {
         }
       } finally {
         if (!cancelled) setProcessingSession(false);
-        console.log('Session Processing: End');
       }
     }
-    if ((agenda[currentStep]?.title === 'Session Processing' || agenda[currentStep]?.isProcessing) && !sessionProcessedRef.current) {
+    if (agenda[currentStep]?.title === 'Session Processing' || agenda[currentStep]?.isProcessing) {
       processSession();
     }
     return () => { cancelled = true; };

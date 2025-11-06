@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useMemo, useCallback, useRef } from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 
 // Custom Hooks
@@ -25,7 +25,6 @@ import AdminSidebar from "../../../../../../components/dashboardcomponents/admin
 import MeetingSummaryModal from "../../components/MeetingSummaryModal";
 
 export default function FireteamExperienceMeeting() {
-  const sessionProcessedRef = useRef(false); // Prevent multiple session processing
   // ============================================================================
   // STATE & HOOKS
   // ============================================================================
@@ -42,7 +41,6 @@ export default function FireteamExperienceMeeting() {
   const [processingSession, setProcessingSession] = useState(false); // Show spinner during session processing
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [wasRecording, setWasRecording] = useState(false); // Track if recording was active during session
-  const [autoStartedRecording, setAutoStartedRecording] = useState(false); // Ensure auto-start only happens once
   const [jitsiContainerId] = useState(
     () => `jitsi-container-${crypto.randomUUID?.() || `${Date.now()}-${Math.random().toString(36).substring(2, 9)}`}`
   );
@@ -362,23 +360,16 @@ export default function FireteamExperienceMeeting() {
   // ============================================================================
 
   useEffect(() => {
-    // Auto-start recording robustly when Introduction step and Jitsi are ready
-    if (
-      currentStep === 1 &&
-      agenda[currentStep]?.title === 'Introduction' &&
-      !isRecording &&
-      jitsiReady &&
-      !autoStartedRecording
-    ) {
-      setAutoStartedRecording(true);
-      setWasRecording(true); // Mark that recording will be active
+    // Auto-start recording when reaching the Introduction step (step 1, after Waiting Room)
+    if (currentStep === 1 && agenda[currentStep]?.title === 'Introduction' && !isRecording && jitsiReady) {
       console.log('🎬 Auto-starting recording for Introduction step...');
+      setWasRecording(true); // Mark that recording will be active
       handleToggleRecording().catch((err) => {
         console.error('❌ Failed to auto-start recording:', err);
         toast.error('Failed to start recording automatically');
       });
     }
-  }, [currentStep, agenda, isRecording, jitsiReady, handleToggleRecording, toast, autoStartedRecording]);
+  }, [currentStep, agenda, isRecording, jitsiReady, handleToggleRecording, toast]);
 
   // ============================================================================
   // AUTOMATIC RECORDING STOP AND AI SUMMARY GENERATION AT SESSION PROCESSING
@@ -388,24 +379,15 @@ export default function FireteamExperienceMeeting() {
     // Auto-stop recording and start AI summary generation when reaching Session Processing step
     let cancelled = false;
     async function processSession() {
-      if (sessionProcessedRef.current) return;
-      sessionProcessedRef.current = true;
       setProcessingSession(true);
       try {
         // Stop recording if active
         if (isRecording) {
           console.log('🛑 Stopping recording...');
           await handleToggleRecording();
-          // Wait for recordingBlob to be set (max 5s)
-          let waitCount = 0;
-          while (!recordingBlob && waitCount < 20 && !cancelled) {
-            await new Promise(resolve => setTimeout(resolve, 250));
-            waitCount++;
-          }
-          console.log('Recording stopped, recordingBlob ready:', !!recordingBlob);
+          // Wait for recording blob to be processed
+          await new Promise(resolve => setTimeout(resolve, 2000));
         }
-        // Give a short delay before starting session processing
-        await new Promise(resolve => setTimeout(resolve, 500));
         // Start AI summary generation
         if ((wasRecording || recordingBlob) && !cancelled) {
           console.log('🤖 Starting AI summary generation...');
@@ -426,10 +408,9 @@ export default function FireteamExperienceMeeting() {
         }
       } finally {
         if (!cancelled) setProcessingSession(false);
-        console.log('Session Processing: End');
       }
     }
-    if ((agenda[currentStep]?.title === 'Session Processing' || agenda[currentStep]?.isProcessing) && !sessionProcessedRef.current) {
+    if (agenda[currentStep]?.title === 'Session Processing' || agenda[currentStep]?.isProcessing) {
       processSession();
     }
     return () => { cancelled = true; };

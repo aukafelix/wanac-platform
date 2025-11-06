@@ -400,28 +400,8 @@ export default function HomePage() {
                     </td>
                   </tr>
                 ) : (
-                  filteredAssignments.map(a => {
-                    const buildUrl = () => {
-                      const baseUrl = `/client/fireteam/experience/${a.experienceId}?id=${a.experienceId}&fireteamId=${a.fireteamId}`;
-                      return a.meetingLink ? `${baseUrl}&link=${encodeURIComponent(a.meetingLink)}` : baseUrl;
-                    };
-                    const handleRowNavigate = () => router.push(buildUrl());
-                    const onRowKeyDown = (e) => {
-                      if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        handleRowNavigate();
-                      }
-                    };
-
-                    return (
-                    <tr
-                      key={a.id}
-                      role="button"
-                      tabIndex={0}
-                      onClick={handleRowNavigate}
-                      onKeyDown={onRowKeyDown}
-                      className="border-b border-gray-100 last:border-b-0 hover:bg-blue-50/50 transition-colors group cursor-pointer"
-                    >
+                  filteredAssignments.map(a => (
+                    <tr key={a.id} className="border-b border-gray-100 last:border-b-0 hover:bg-blue-50/50 transition-colors group">
                       <td className="py-3 px-3 align-middle">
                         <div className="font-semibold text-[11px] text-gray-900">{a.course}</div>
                         <div className="text-[9px] text-gray-500">ID: {a.fireteamId}</div>
@@ -474,18 +454,18 @@ export default function HomePage() {
                       <td className="px-3 align-middle">
                         <button
                           className="text-[11px] text-[#002147] font-bold hover:text-orange-500 group-hover:underline transition-colors flex items-center gap-1"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            router.push(buildUrl());
+                          onClick={() => {
+                            const baseUrl = `/client/fireteam/experience/${a.experienceId}?id=${a.experienceId}&fireteamId=${a.fireteamId}`;
+                            const fullUrl = a.meetingLink ? `${baseUrl}&link=${encodeURIComponent(a.meetingLink)}` : baseUrl;
+                            router.push(fullUrl);
                           }}
-                          aria-label={`Open ${a.action} for ${a.experience?.title}`}
                         >
                           {a.action}
                           <span className="group-hover:translate-x-0.5 transition-transform">→</span>
                         </button>
                       </td>
                     </tr>
-                  )})
+                  ))
                 )}
               </tbody>
             </table>

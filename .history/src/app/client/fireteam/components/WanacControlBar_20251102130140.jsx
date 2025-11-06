@@ -11,7 +11,7 @@ export default function WanacControlBar({
   onLeaveMeeting,
 }) {
   return (
-    <div className="flex items-center gap-2">
+    <div className="fixed top-0 left-0 w-full flex items-center gap-2 px-6 py-3 z-50 bg-white bg-opacity-95 shadow-lg border-b border-yellow-400" style={{pointerEvents: 'auto'}}>
       {/* Toggle Slide/Video View */}
       <button
         onClick={onToggleView}
