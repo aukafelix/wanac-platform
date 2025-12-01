@@ -67,12 +67,12 @@ export default function Footer({ hideFooter = false }) {
         <div className="max-w-6xl mx-auto grid md:grid-cols-4 gap-8">
           <div className="space-y-6">
             <div className="transform hover:scale-105 transition-transform duration-300 group">
-              <Image 
-                src="/WANAC N 8 Old Glory.svg" 
-                width={240} 
-                height={100} 
-                className="mb-6 drop-shadow-xl group-hover:drop-shadow-2xl transition-all duration-300" 
-                alt="WANAC Logo" 
+              <Image
+                src="/WANAC N 8 Old Glory.svg"
+                width={240}
+                height={100}
+                className="mb-6 drop-shadow-xl group-hover:drop-shadow-2xl transition-all duration-300"
+                alt="WANAC Logo"
               />
             </div>
             <ul className="space-y-3 text-sm font-medium border-l border-[#002147]/10">
@@ -126,7 +126,7 @@ export default function Footer({ hideFooter = false }) {
                   <div className="w-full h-0.5 bg-[#000000] scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
                 </div>
                 <div className="group">
-                  
+
                   <FaYoutube className="text-[#FF0000] hover:text-[#cc0000] transform group-hover:scale-110 transition-all duration-300 cursor-pointer" />
                   <div className="w-full h-0.5 bg-[#FF0000] scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
                 </div>
@@ -135,7 +135,7 @@ export default function Footer({ hideFooter = false }) {
                   <div className="w-full h-0.5 bg-[#E4405F] scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
                 </div>
                 <div className="group">
-                  
+
                   <FaLinkedinIn className="text-[#0A66C2] hover:text-[#084c91] transform group-hover:scale-110 transition-all duration-300 cursor-pointer" />
                   <div className="w-full h-0.5 bg-[#0A66C2] scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
                 </div>
@@ -180,8 +180,8 @@ export default function Footer({ hideFooter = false }) {
                 {loading ? (
                   <span className="flex items-center gap-2">
                     <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"/>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                     </svg>
                     Subscribing...
                   </span>
@@ -204,6 +204,8 @@ export default function Footer({ hideFooter = false }) {
             <span className="hover:text-[#002147]">400 Continental Blvd Ste 6025</span>
             <span className="text-slate-300">|</span>
             <span className="hover:text-[#002147]">El Segundo, CA 90245</span>
+            <span className="text-slate-300">|</span>
+            <a href="/PrivacyPolicy.pdf" target="_blank" rel="noopener noreferrer" className="hover:text-[#002147] cursor-pointer underline-offset-2 hover:underline">Privacy Policy</a>
           </p>
         </div>
       </div>
