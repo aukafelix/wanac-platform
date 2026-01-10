@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "node_modules/next/dist/bin/next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postinstall": "next build" 
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
