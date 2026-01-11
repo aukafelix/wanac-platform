@@ -1,7 +1,7 @@
 import axios, { AxiosError, InternalAxiosRequestConfig, AxiosResponse } from 'axios';
 
 // Update base URL to match the documentation
-export const BASE_URL = 'https://wanac-api.kuzasports.com/';
+export const BASE_URL = process.env.API_BASE_URL;
 
 export const apiClient = axios.create({
   baseURL: BASE_URL,
@@ -12,7 +12,7 @@ export const apiClient = axios.create({
   withCredentials: true // Enable sending cookies in cross-origin requests
   // NOTE: When withCredentials is true, the server MUST specify an explicit
   // Access-Control-Allow-Origin value and cannot use wildcard (*)
-  // The server must also set Access-Control-Allow-Credentials: true
+  // The server must also set Access-Csontrol-Allow-Credentials: true
 });
 
 // Add a request interceptor for authentication
