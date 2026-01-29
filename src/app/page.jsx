@@ -196,8 +196,10 @@ export default function Homepage() {
         Get tailored coaching, smart tools, and a community that truly understands your journey.
       </p>
       <div className="flex flex-col xs:flex-row gap-3 sm:gap-4">
-                <Link
-                  href="/signup"
+                <a
+                  href="https://forms.clickup.com/90131427787/f/2ky40web-18193/AUMEQVSRCKS2O9HNHO"
+                  target="_blank"
+                  rel="noopener noreferrer"
           className="group relative px-5 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold text-center overflow-hidden hover:shadow-2xl hover:shadow-orange-500/50 transition-all duration-300 text-sm"
                 >
           <span className="relative z-10 flex items-center justify-center gap-2">
@@ -207,7 +209,7 @@ export default function Homepage() {
             </svg>
           </span>
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-                </Link>
+                </a>
                 <Link
           href="/pages/vsoclaimsupport"
           className="px-5 sm:px-6 py-2.5 sm:py-3 bg-white/10 backdrop-blur-sm border-2 border-white text-white font-semibold text-center hover:bg-white hover:text-[#002147] transition-all duration-300 text-sm"

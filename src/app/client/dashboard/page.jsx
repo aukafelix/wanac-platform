@@ -26,7 +26,7 @@ function NotificationsWidget() {
     { id: 3, text: 'Community event: Virtual coffee meetup this Friday.' },
   ];
   return (
-    <div className="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-shadow p-5">
+    <div className="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-shadow p-4 md:p-5">
       <h3 className="text-lg font-semibold text-[#002147] mb-4 flex items-center gap-2">
         <span className="inline-block w-2 h-2 bg-red-500 rounded-full animate-pulse" /> 
         Notifications
@@ -145,18 +145,18 @@ export default function ClientDashboard() {
     >
       {/* Sidebar */}
       <Sidebar className="w-56 bg-white border-r border-gray-200" collapsed={collapsed} setCollapsed={setCollapsed} />
-      {/* Main Area */}
-      <div className="flex-1 flex flex-col h-full transition-all duration-300">
+      {/* Main Area - pl-14 md:pl-0 reserves space for hamburger; min-w-0 avoids flex overflow; pb clears FAB + safe-area */}
+      <div className="flex-1 flex flex-col h-full min-w-0 transition-all duration-300 pl-14 md:pl-0">
         {/* Top Bar */}
         <ClientTopbar user={user} />
         {/* Main Content */}
-        <main className="flex-1 h-0 overflow-y-auto px-4 md:px-8 py-6 bg-gray-50">
+        <main className="flex-1 h-0 overflow-y-auto px-4 md:px-8 pt-6 pb-[calc(5rem+env(safe-area-inset-bottom,0px))] md:pb-6 bg-gray-50">
           <div className="max-w-7xl mx-auto">
-            <div className="flex flex-col lg:flex-row gap-6">
+            <div className="flex flex-col lg:flex-row gap-4 lg:gap-6">
               {/* Main Content */}
               <div className="flex-1 space-y-6">
                 {/* Welcome Section */}
-                <section className="bg-gradient-to-br from-[#002147] to-[#003875] rounded-2xl p-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4 shadow-lg animate-fadeIn relative overflow-hidden">
+                <section className="bg-gradient-to-br from-[#002147] to-[#003875] rounded-2xl p-5 md:p-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4 shadow-lg animate-fadeIn motion-reduce:animate-none relative overflow-hidden">
                   {/* Background pattern */}
                   <div className="absolute inset-0 opacity-10">
                     <img 
@@ -166,9 +166,9 @@ export default function ClientDashboard() {
                     />
                   </div>
                   
-                  <div className="relative z-10">
+                  <div className="relative z-10 flex-1 min-w-0">
                     <h2
-                      className="text-3xl md:text-4xl font-bold mb-2 text-white tracking-tight"
+                      className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 text-white tracking-tight"
                       style={{ fontFamily: 'var(--font-heading)' }}
                     >
                       Welcome Back{user?.name ? `, ${user.name}` : ''}!
@@ -179,13 +179,13 @@ export default function ClientDashboard() {
                   </div>
                   <img
                     src="/dashboard-illustration.svg"
-                    alt="Dashboard"
-                    className="w-24 h-24 md:w-32 md:h-32 object-contain hidden md:block opacity-80 relative z-10"
+                    alt=""
+                    className="w-16 h-16 sm:w-24 sm:h-24 md:w-32 md:h-32 object-contain opacity-80 relative z-10 shrink-0"
                   />
                 </section>
 
                 {/* Quick Actions Row */}
-                <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4">
                   <QuickActionCard
                     icon={FaUsers}
                     title="Community"
@@ -211,7 +211,7 @@ export default function ClientDashboard() {
                     icon={FaChartLine}
                     title="Life Score"
                     description="View your metrics"
-                    href="/client/lifescore"
+                    href="/client/lifescores"
                     color="warning"
                   />
                   <QuickActionCard
@@ -224,9 +224,9 @@ export default function ClientDashboard() {
                 </section>
 
                 {/* Content Grid */}
-                <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <section className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                   {/* Upcoming Sessions */}
-                  <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-200 animate-fadeIn">
+                  <div className="bg-white border border-gray-200 rounded-xl p-4 md:p-6 shadow-sm hover:shadow-md transition-all duration-200 animate-fadeIn motion-reduce:animate-none">
                     <h3
                       className="text-lg font-semibold mb-4 flex items-center gap-2 text-[#002147]"
                       style={{ fontFamily: 'var(--font-heading)' }}
@@ -248,10 +248,10 @@ export default function ClientDashboard() {
                           return (
                             <div
                               key={session.id}
-                              className="border-l-4 border-[#002147] pl-4 py-3 bg-blue-50/50 rounded-lg hover:bg-blue-50 transition-all duration-200 cursor-pointer"
+                              className="border-l-4 border-[#002147] pl-4 py-3 bg-blue-50/50 rounded-lg hover:bg-blue-50 active:bg-blue-100 transition-all duration-200 cursor-pointer"
                             >
-                              <div className="flex justify-between items-start">
-                                <div className="flex-1">
+                              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-1">
+                                <div className="flex-1 min-w-0">
                                   <p className="font-semibold text-gray-900">{session.type || session.title}</p>
                                   <p className="text-sm text-gray-600 mt-1">
                                     with {
@@ -261,9 +261,9 @@ export default function ClientDashboard() {
                                     }
                                   </p>
                                 </div>
-                                <div className="text-right">
+                                <div className="text-left sm:text-right shrink-0">
                                   <p className="text-sm font-semibold text-gray-900">{dateStr}</p>
-                                  <p className="text-xs text-gray-600 mt-1">{timeStr}</p>
+                                  <p className="text-xs text-gray-600 mt-0.5">{timeStr}</p>
                                 </div>
                               </div>
                             </div>
@@ -272,16 +272,16 @@ export default function ClientDashboard() {
                       )}
                     </div>
                     <button 
-                      className="mt-5 text-[#002147] hover:text-orange-500 text-sm font-semibold transition-colors duration-150 flex items-center gap-1 group" 
+                      className="mt-4 md:mt-5 py-2.5 md:py-1 min-h-[44px] md:min-h-0 w-full sm:w-auto justify-center sm:justify-start text-[#002147] hover:text-orange-500 text-sm font-semibold transition-colors duration-150 flex items-center gap-1 group rounded-lg hover:bg-gray-50 active:bg-gray-100 motion-reduce:transition-none [touch-action:manipulation]" 
                       onClick={() => router.push('/client/session')}
                     >
                       View All Sessions 
-                      <span className="group-hover:translate-x-1 transition-transform duration-150">→</span>
+                      <span className="group-hover:translate-x-1 transition-transform duration-150 motion-reduce:transition-none">→</span>
                     </button>
                   </div>
 
                   {/* Life Score */}
-                  <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-200 animate-fadeIn">
+                  <div className="bg-white border border-gray-200 rounded-xl p-4 md:p-6 shadow-sm hover:shadow-md transition-all duration-200 animate-fadeIn motion-reduce:animate-none">
                     <h3
                       className="text-lg font-semibold mb-4 flex items-center gap-2 text-[#002147]"
                       style={{ fontFamily: 'var(--font-heading)' }}
@@ -295,9 +295,9 @@ export default function ClientDashboard() {
                       ) : (
                         Object.entries(lifeScore).map(([category, score]) => (
                           <div key={category}>
-                            <div className="flex justify-between mb-2">
-                              <span className="capitalize font-medium text-gray-900">{category}</span>
-                              <span className="text-sm font-semibold text-gray-700">{score}/10</span>
+                            <div className="flex justify-between items-center gap-2 mb-2 min-w-0">
+                              <span className="capitalize font-medium text-gray-900 truncate">{category}</span>
+                              <span className="text-sm font-semibold text-gray-700 shrink-0">{score}/10</span>
                             </div>
                             <div className="h-2.5 bg-gray-200 rounded-full overflow-hidden">
                               <div
@@ -310,11 +310,11 @@ export default function ClientDashboard() {
                       )}
                     </div>
                     <button 
-                      className="mt-5 text-[#002147] hover:text-orange-500 text-sm font-semibold transition-colors duration-150 flex items-center gap-1 group"
+                      className="mt-4 md:mt-5 py-2.5 md:py-1 min-h-[44px] md:min-h-0 w-full sm:w-auto justify-center sm:justify-start text-[#002147] hover:text-orange-500 text-sm font-semibold transition-colors duration-150 flex items-center gap-1 group rounded-lg hover:bg-gray-50 active:bg-gray-100 motion-reduce:transition-none [touch-action:manipulation]"
                       onClick={() => router.push('/client/lifescores')}
                     >
                       View Detailed Analysis
-                      <span className="group-hover:translate-x-1 transition-transform duration-150">→</span>
+                      <span className="group-hover:translate-x-1 transition-transform duration-150 motion-reduce:transition-none">→</span>
                     </button>
                   </div>
 
@@ -326,7 +326,7 @@ export default function ClientDashboard() {
                 <NotificationsWidget />
                 
                 {/* Upcoming Fireteam Experiences */}
-                <div className="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-shadow p-5">
+                <div className="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-shadow p-4 md:p-5">
                   <h3 className="text-lg font-semibold text-[#002147] mb-4 flex items-center gap-2">
                     <FaFire className="text-orange-500" />
                     Fireteam Events
@@ -351,7 +351,7 @@ export default function ClientDashboard() {
                     )}
                   </div>
                   <button 
-                    className="mt-4 text-[#002147] hover:text-orange-500 text-sm font-medium transition-colors duration-150 w-full text-center"
+                    className="mt-4 py-2.5 min-h-[44px] text-[#002147] hover:text-orange-500 hover:bg-gray-50 active:bg-gray-100 text-sm font-medium transition-colors duration-150 w-full text-center rounded-lg motion-reduce:transition-none [touch-action:manipulation]"
                     onClick={() => router.push('/client/fireteam')}
                   >
                     View All →
@@ -382,14 +382,14 @@ function QuickActionCard({ icon: Icon, title, description, href, color }) {
   return (
     <a
       href={href}
-      className={`group p-5 rounded-xl transition-all duration-200 shadow-sm hover:shadow-lg transform hover:scale-105 flex flex-col items-center text-center gap-3 ${colorClasses[color]}`}
+      className={`group p-4 md:p-5 rounded-xl transition-all duration-200 shadow-sm hover:shadow-lg flex flex-col items-center text-center gap-2 md:gap-3 min-h-[88px] md:min-h-0 justify-center hover:scale-105 active:scale-[0.98] motion-reduce:transform-none [touch-action:manipulation] ${colorClasses[color]}`}
       style={{ fontFamily: 'var(--font-body)' }}
     >
-      <div className="p-3 bg-white/20 rounded-full group-hover:bg-white/30 transition-colors">
-        <Icon className="text-2xl" />
+      <div className="p-2.5 md:p-3 bg-white/20 rounded-full group-hover:bg-white/30 transition-colors shrink-0">
+        <Icon className="text-xl md:text-2xl" />
       </div>
-      <div>
-        <h3 className="text-sm font-bold mb-1" style={{ fontFamily: 'var(--font-heading)' }}>{title}</h3>
+      <div className="min-w-0">
+        <h3 className="text-sm font-bold mb-0.5 md:mb-1" style={{ fontFamily: 'var(--font-heading)' }}>{title}</h3>
         <p className="text-xs opacity-90 hidden md:block">{description}</p>
       </div>
     </a>

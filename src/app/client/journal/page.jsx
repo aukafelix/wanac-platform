@@ -1,8 +1,12 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import Sidebar from "../../../../components/dashboardcomponents/sidebar";
 import ClientTopbar from "../../../../components/dashboardcomponents/clienttopbar";
+import JournalModeToggle from "../../../../components/dashboardcomponents/JournalModeToggle";
+import GuidedPromptCard from "../../../../components/dashboardcomponents/GuidedPromptCard";
+import JournalingTipsPanel from "../../../../components/dashboardcomponents/JournalingTipsPanel";
+import WeeklyActionCard from "../../../../components/dashboardcomponents/WeeklyActionCard";
 import {
   FaSearch,
   FaCalendarAlt,
@@ -13,8 +17,11 @@ import {
   FaList,
   FaBook,
   FaSave,
+  FaLock,
 } from "react-icons/fa";
 import { journalService } from "../../../services/api/journal.service";
+import useGuidedJournalState from "../../../../hooks/useGuidedJournalState";
+import { getWeeklyAction, shouldShowWeeklyAction, markWeeklyActionCompleted } from "../../../../lib/weeklyActions";
 
 const tabs = [
   { key: "morning", label: "Morning Mindset" },
@@ -25,6 +32,10 @@ const tabs = [
 ];
 
 export default function JournalUI() {
+  // Journal mode: "free" or "guided"
+  const [journalMode, setJournalMode] = useState("free");
+  
+  // Free-write state
   const [selectedTab, setSelectedTab] = useState("morning");
   const [entry, setEntry] = useState("");
   const [search, setSearch] = useState("");
@@ -39,11 +50,25 @@ export default function JournalUI() {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(null);
   const [wordCount, setWordCount] = useState(0);
 
+  // Guided journal state
+  const guidedState = useGuidedJournalState(user?.id || "anonymous");
+  const [weeklyAction, setWeeklyAction] = useState(null);
+  const [weeklyActionCompleted, setWeeklyActionCompleted] = useState(false);
+
   // Calculate word count
   useEffect(() => {
     const words = entry.trim().split(/\s+/).filter(w => w.length > 0);
     setWordCount(words.length);
   }, [entry]);
+
+  // Initialize weekly action on mount
+  useEffect(() => {
+    if (user?.id) {
+      const action = getWeeklyAction();
+      setWeeklyAction(action);
+      setWeeklyActionCompleted(!shouldShowWeeklyAction(user.id));
+    }
+  }, [user]);
 
   // Fetch journals on tab change
   const fetchEntries = useCallback(async () => {
@@ -72,7 +97,10 @@ export default function JournalUI() {
     setError("");
     setSuccess("");
     try {
-      const tabLabel = tabs.find((t) => t.key === selectedTab)?.label;
+      const tabLabel = journalMode === "guided" 
+        ? `Guided - Prompt #${guidedState.currentPromptNumber}`
+        : tabs.find((t) => t.key === selectedTab)?.label;
+      
       if (editingEntry) {
         // Update existing entry
         await journalService.updateJournal(editingEntry.id, { title: tabLabel, content: entry });
@@ -80,8 +108,13 @@ export default function JournalUI() {
         setEditingEntry(null);
       } else {
         // Create new entry
-      await journalService.addJournal({ title: tabLabel, content: entry });
+        await journalService.addJournal({ title: tabLabel, content: entry });
         setSuccess("Entry saved successfully!");
+        
+        // If guided mode, mark prompt as complete and move to next
+        if (journalMode === "guided") {
+          guidedState.markPromptComplete();
+        }
       }
       setEntry("");
       setWordCount(0);
@@ -138,6 +171,30 @@ export default function JournalUI() {
     linkElement.click();
   };
 
+  // Handle guided mode prompt skip
+  const handleSkipPrompt = () => {
+    guidedState.skipPrompt();
+    setEntry("");
+  };
+
+  // Handle guided mode save for later
+  const handleSaveForLater = () => {
+    guidedState.saveForLater();
+    setEntry("");
+  };
+
+  // Handle weekly action completion
+  const handleCompleteWeeklyAction = (reflection) => {
+    markWeeklyActionCompleted(user?.id || "anonymous");
+    setWeeklyActionCompleted(true);
+    if (reflection) {
+      setSuccess("Thank you for reflecting on this week's action!");
+    } else {
+      setSuccess("Weekly action marked complete!");
+    }
+    setTimeout(() => setSuccess(""), 3000);
+  };
+
   // Group entries by date
   const groupedEntries = entries.reduce((acc, entry) => {
     const date = new Date(entry.created_at).toLocaleDateString();
@@ -176,7 +233,7 @@ export default function JournalUI() {
                   <div className="relative z-10 flex items-center justify-between">
                     <div>
                       <h1 className="text-xl font-bold text-white mb-1">Journal</h1>
-                      <p className="text-white/90 text-xs">Reflect, grow, and track your journey</p>
+                      <p className="text-white/90 text-xs">Reflect, grow, and track your journey • Your journal is private</p>
                     </div>
                     <div className="flex items-center gap-2">
                       <button
@@ -199,6 +256,13 @@ export default function JournalUI() {
                   </div>
                 </section>
 
+                {/* Journal Mode Toggle */}
+                <JournalModeToggle mode={journalMode} setMode={(mode) => {
+                  setJournalMode(mode);
+                  setEntry("");
+                  setEditingEntry(null);
+                }} />
+
                 {/* Success/Error Messages */}
                 {success && (
                   <div className="p-2 bg-green-50 border border-green-200 rounded-lg text-green-700 flex items-center gap-2 text-xs">
@@ -213,28 +277,52 @@ export default function JournalUI() {
                   </div>
                 )}
 
-                {/* Tabs */}
-                <div className="flex flex-wrap gap-2">
-                  {tabs.map((tab) => (
-                    <button
-                      key={tab.key}
-                      onClick={() => {
-                        setSelectedTab(tab.key);
-                        setEntry("");
-                        setEditingEntry(null);
-                      }}
-                      className={`px-3 py-1.5 rounded-lg border-2 transition-all font-semibold text-[11px]
-                        ${selectedTab === tab.key
-                          ? "bg-[#002147] text-white border-[#002147] shadow-sm"
-                          : "bg-white text-gray-700 border-gray-300 hover:border-orange-500"}
-                      `}
-                    >
-                      {tab.label}
-                    </button>
-                  ))}
-                </div>
+                {/* Tabs - Show only for Free Write mode */}
+                {journalMode === "free" && (
+                  <div className="flex flex-wrap gap-2">
+                    {tabs.map((tab) => (
+                      <button
+                        key={tab.key}
+                        onClick={() => {
+                          setSelectedTab(tab.key);
+                          setEntry("");
+                          setEditingEntry(null);
+                        }}
+                        className={`px-3 py-1.5 rounded-lg border-2 transition-all font-semibold text-[11px]
+                          ${selectedTab === tab.key
+                            ? "bg-[#002147] text-white border-[#002147] shadow-sm"
+                            : "bg-white text-gray-700 border-gray-300 hover:border-orange-500"}
+                        `}
+                      >
+                        {tab.label}
+                      </button>
+                    ))}
+                  </div>
+                )}
+
                 {/* Entry Form Section */}
                 <section className="bg-white border border-gray-200 rounded-xl p-3 shadow-sm hover:shadow-md transition-shadow">
+                  {/* Weekly Action Card - Show in both modes if eligible */}
+                  {weeklyAction && !weeklyActionCompleted && (
+                    <WeeklyActionCard
+                      weeklyAction={weeklyAction}
+                      onComplete={handleCompleteWeeklyAction}
+                      isCompleted={weeklyActionCompleted}
+                    />
+                  )}
+
+                  {/* Guided Prompt Card - Show only in guided mode */}
+                  {journalMode === "guided" && guidedState.isInitialized && guidedState.currentPrompt && (
+                    <GuidedPromptCard
+                      prompt={guidedState.currentPrompt}
+                      onSkip={handleSkipPrompt}
+                      onSaveForLater={handleSaveForLater}
+                    />
+                  )}
+
+                  {/* Journaling Tips Panel - Show in both modes */}
+                  <JournalingTipsPanel />
+
                   {editingEntry && (
                     <div className="mb-2 p-2 bg-blue-50 border border-blue-200 rounded-lg text-blue-700 flex items-center justify-between">
                       <span className="flex items-center gap-1.5 text-[10px]">
@@ -254,7 +342,10 @@ export default function JournalUI() {
                     <textarea
                       value={entry}
                       onChange={(e) => setEntry(e.target.value)}
-                        placeholder={`What's on your mind for ${tabs.find(t => t.key === selectedTab)?.label}?`}
+                        placeholder={journalMode === "guided" 
+                          ? "Write your thoughts based on this prompt..."
+                          : `What's on your mind for ${tabs.find(t => t.key === selectedTab)?.label}?`
+                        }
                         className="w-full p-3 min-h-[100px] resize-none border-2 border-gray-300 focus:border-[#002147] focus:ring-2 focus:ring-[#002147]/20 focus:outline-none rounded-lg text-gray-900 leading-relaxed text-sm"
                     ></textarea>
                       <div className="absolute bottom-2 right-2 text-[10px] text-gray-400 bg-white px-1.5 py-0.5 rounded">

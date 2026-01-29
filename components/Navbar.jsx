@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
-import { ChevronDown, Menu } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
@@ -11,6 +11,7 @@ export default function Navbar({ hideNavbar = false }) {
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [activeMobileDropdown, setActiveMobileDropdown] = useState(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [mobileNavView, setMobileNavView] = useState("main"); // "main" or section key
   const dropdownRef = useRef(null);
   const navRef = useRef(null);
   const pathname = usePathname();
@@ -300,11 +301,12 @@ export default function Navbar({ hideNavbar = false }) {
         </div>
         <nav
           ref={navRef}
-          className="relative text-sm py-2.5 px-4 lg:px-6 items-center transition duration-300 bg-transparent"
+          className="relative text-sm py-2.5 px-4 lg:px-6 transition duration-300 bg-transparent"
           role="navigation"
           aria-label="Main navigation"
         >
-          <div className="flex justify-between items-center max-w-7xl mx-auto">
+          {/* Desktop Nav */}
+          <div className="hidden lg:flex justify-between items-center max-w-7xl mx-auto">
             <div className="flex items-center">
               <Link href="/" aria-label="WANAC Home" className="transform hover:scale-105 transition-transform duration-200">
                 <Image
@@ -319,7 +321,7 @@ export default function Navbar({ hideNavbar = false }) {
             </div>
 
             {/* Desktop Menu */}
-            <div className="hidden lg:flex items-center justify-end gap-6 xl:gap-8 flex-1" ref={dropdownRef}>
+            <div className="flex items-center justify-end gap-6 xl:gap-8 flex-1" ref={dropdownRef}>
               {Object.entries(navigation).map(([key, section]) => (
                 <div key={key} className="relative">
                   <button
@@ -364,150 +366,265 @@ export default function Navbar({ hideNavbar = false }) {
                 </Link>
               </div>
             </div>
-
-            {/* Dropdown Menu - Positioned relative to nav */}
-            {activeDropdown && (
-              <div className="absolute top-full left-0 w-full bg-gradient-to-r from-[#002147] to-[#003368] text-white py-6 z-50 shadow-xl border-t border-orange-500/20 animate-fadeIn">
-                <div className="max-w-7xl mx-auto flex items-center justify-center flex-wrap gap-x-8 gap-y-3 px-8">
-                  {navigation[activeDropdown]?.items.map((item, index) => (
-                    <React.Fragment key={index}>
-                      <button
-                        onClick={() => handleNavigation(item.href)}
-                        className="text-sm hover:text-orange-400 transition-all duration-200 hover:scale-105 transform font-medium bg-transparent border-none cursor-pointer"
-                      >
-                        {item.label}
-                      </button>
-                      {index < navigation[activeDropdown].items.length - 1 && (
-                        <span className="text-orange-500 text-xs">★</span>
-                      )}
-                    </React.Fragment>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Mobile Menu Button */}
-            <button
-              className="lg:hidden p-2 hover:bg-gray-100 transition-colors duration-200"
-              onClick={() => {
-                setIsMobileMenuOpen(!isMobileMenuOpen);
-                setActiveMobileDropdown(null);
-              }}
-              aria-expanded={isMobileMenuOpen}
-              aria-label="Toggle mobile menu"
-            >
-              <Menu className={`w-6 h-6 text-gray-800 transition-transform duration-200 ${isMobileMenuOpen ? 'rotate-90' : ''}`} />
-            </button>
           </div>
 
-          {/* Mobile Menu - Modern Slide-in Design */}
-          {isMobileMenuOpen && (
-            <>
-              {/* Backdrop */}
-              <div 
-                className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm lg:hidden animate-fadeIn"
-                onClick={() => {
-                  setIsMobileMenuOpen(false);
-                  setActiveMobileDropdown(null);
-                }}
-              />
-              
-              {/* Menu Panel */}
-              <div className="fixed inset-y-0 right-0 z-50 w-full max-w-sm bg-white shadow-2xl overflow-y-auto lg:hidden animate-slideInRight">
-                {/* Header */}
-                <div className="sticky top-0 bg-gradient-to-r from-[#002147] to-[#003368] text-white px-6 py-4 flex justify-between items-center">
-                  <h2 className="text-lg font-bold">Menu</h2>
-                  <button
-                    onClick={() => {
-                      setIsMobileMenuOpen(false);
-                      setActiveMobileDropdown(null);
-                    }}
-                    className="p-2 hover:bg-white/10 transition-colors duration-200"
-                    aria-label="Close menu"
-                  >
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </button>
-                </div>
+          {/* Mobile Nav - Different layout */}
+          <div className="flex lg:hidden justify-between items-center max-w-7xl mx-auto">
+            <div className="flex items-center">
+              <Link href="/" aria-label="WANAC Home" className="flex items-center gap-2">
+                <Image
+                  src="/WANAC N 8 Old Glory.png"
+                  alt="WANAC Logo"
+                  width={130}
+                  height={48}
+                  priority
+                  className="object-contain"
+                />
+              </Link>
+            </div>
 
-                {/* Navigation Sections */}
-                <div className="py-4">
-                  {Object.entries(navigation).map(([key, section]) => (
-                    <div key={key} className="border-b border-gray-100">
-                      <button
-                        onClick={() => setActiveMobileDropdown(activeMobileDropdown === key ? null : key)}
-                        className="w-full px-6 py-3.5 flex justify-between items-center hover:bg-gray-50 transition-colors duration-200 group"
-                        aria-expanded={activeMobileDropdown === key}
-                      >
-                        <span className="font-semibold text-gray-800 group-hover:text-orange-500 transition-colors text-sm">
+            <div className="flex items-center gap-2">
+              <Link
+                href="/pages/donate"
+                className="px-3 py-1.5 text-xs font-semibold rounded-full bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-sm"
+              >
+                Donate
+              </Link>
+              <button
+                className="p-2 rounded-md hover:bg-gray-100 transition-colors duration-200 flex items-center justify-center"
+                onClick={() => {
+                  setIsMobileMenuOpen(!isMobileMenuOpen);
+                  setActiveMobileDropdown(null);
+                  setMobileNavView("main");
+                }}
+                aria-expanded={isMobileMenuOpen}
+                aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+                aria-controls="mobile-menu"
+              >
+                <span className="sr-only">{isMobileMenuOpen ? "Close menu" : "Open menu"}</span>
+                <div className="relative flex flex-col justify-between w-6 h-4">
+                  {/* top line */}
+                  <span
+                    className={`block h-0.5 w-full rounded-full bg-gray-800 transform transition-transform duration-300 ${
+                      isMobileMenuOpen ? "translate-y-1.5 rotate-45" : ""
+                    }`}
+                  />
+                  {/* middle line */}
+                  <span
+                    className={`block h-0.5 w-full rounded-full bg-gray-800 transition-opacity duration-300 ${
+                      isMobileMenuOpen ? "opacity-0" : "opacity-100"
+                    }`}
+                  />
+                  {/* bottom line */}
+                  <span
+                    className={`block h-0.5 w-full rounded-full bg-gray-800 transform transition-transform duration-300 ${
+                      isMobileMenuOpen ? "-translate-y-1.5 -rotate-45" : ""
+                    }`}
+                  />
+                </div>
+              </button>
+            </div>
+          </div>
+
+          {/* Dropdown Menu - Positioned relative to nav (desktop only) */}
+          {activeDropdown && (
+            <div className="hidden lg:block absolute top-full left-0 w-full bg-gradient-to-r from-[#002147] to-[#003368] text-white py-6 z-50 shadow-xl border-t border-orange-500/20 animate-fadeIn">
+              <div className="max-w-7xl mx-auto flex items-center justify-center flex-wrap gap-x-8 gap-y-3 px-8">
+                {navigation[activeDropdown]?.items.map((item, index) => (
+                  <React.Fragment key={index}>
+                    <button
+                      onClick={() => handleNavigation(item.href)}
+                      className="text-sm hover:text-orange-400 transition-all duration-200 hover:scale-105 transform font-medium bg-transparent border-none cursor-pointer"
+                    >
+                      {item.label}
+                    </button>
+                    {index < navigation[activeDropdown].items.length - 1 && (
+                      <span className="text-orange-500 text-xs">★</span>
+                    )}
+                  </React.Fragment>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Mobile Menu - Simple slide-out like reference design */}
+          {isMobileMenuOpen && (
+            <React.Fragment>
+              {/* Backdrop */}
+              <div
+                className="fixed inset-0 z-[90] bg-black/40 lg:hidden"
+                onClick={() => setIsMobileMenuOpen(false)}
+              />
+
+              {/* Right slide-out panel */}
+              <div
+                id="mobile-menu"
+                role="dialog"
+                aria-modal="true"
+                className="fixed inset-0 z-[95] lg:hidden flex items-stretch justify-end"
+              >
+                <div className="h-full w-[80vw] max-w-xs bg-white rounded-l-2xl shadow-2xl flex flex-col overflow-hidden">
+                  {/* Header row with close icon */}
+                  <div className="flex items-center justify-between px-5 py-4 border-b">
+                    <span className="sr-only">Navigation</span>
+                    <button
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="p-2 rounded-full hover:bg-gray-100 transition-colors duration-150"
+                      aria-label="Close menu"
+                    >
+                      <svg className="w-5 h-5 text-gray-800" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                  </div>
+
+                  {/* Links */}
+                  <div className="flex-1 overflow-y-auto px-5 py-4 space-y-4">
+                    {Object.entries(navigation).map(([key, section]) => (
+                      <div key={key} className="space-y-1">
+                        <div className="text-xs font-semibold tracking-wide text-gray-500">
                           {section.title}
-                        </span>
-                        <ChevronDown 
-                          className={`w-4 h-4 text-gray-500 transition-transform duration-300 ${
-                            activeMobileDropdown === key ? "rotate-180 text-orange-500" : ""
+                        </div>
+                        {section.items.map((item, index) => (
+                          <button
+                            key={index}
+                            onClick={() => handleNavigation(item.href)}
+                            className="block w-full text-left py-2 text-sm text-gray-900 hover:text-orange-500"
+                          >
+                            {item.label}
+                          </button>
+                        ))}
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Bottom CTAs */}
+                  <div className="px-5 py-4 border-t space-y-2">
+                    <Link
+                      href="/pages/donate"
+                      className="block w-full text-center py-2.5 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 text-white text-sm font-semibold"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      DONATE
+                    </Link>
+                    <Link
+                      href="/pages/programintakeform"
+                      className="block w-full text-center py-2.5 rounded-full bg-[#002147] text-white text-sm font-semibold"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      FREE STRATEGY SESSION
+                    </Link>
+                    <Link
+                      href="/pages/workshops"
+                      className="block w-full text-center py-2.5 rounded-full border border-orange-500 text-orange-600 text-sm font-semibold"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      SHOP
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </React.Fragment>
+          )}
+        </nav>
+      </header>
+
+      {/* Global Mobile Menu Overlay (outside header to avoid layout issues) */}
+      {isMobileMenuOpen && (
+        <React.Fragment>
+          {/* Backdrop */}
+          <div
+            className="fixed inset-0 z-[9998] bg-black/40 lg:hidden"
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
+
+          {/* Right slide-out panel */}
+          <div
+            id="mobile-menu"
+            role="dialog"
+            aria-modal="true"
+            className="fixed inset-y-0 right-0 z-[9999] lg:hidden flex items-stretch"
+          >
+            <div className="h-full w-[80vw] max-w-xs bg-white shadow-2xl flex flex-col overflow-hidden">
+              {/* Header row with close icon */}
+              <div className="flex items-center justify-between px-5 py-4 border-b">
+                <span className="sr-only">Navigation</span>
+                <button
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="p-2 rounded-full hover:bg-gray-100 transition-colors duration-150"
+                  aria-label="Close menu"
+                >
+                  <svg className="w-5 h-5 text-gray-800" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+
+              {/* Links - accordion style for mobile */}
+              <div className="flex-1 overflow-y-auto px-5 py-4 space-y-3">
+                {Object.entries(navigation).map(([key, section]) => {
+                  const isOpen = activeMobileDropdown === key;
+                  return (
+                    <div key={key} className="border-b border-gray-100 pb-2">
+                      <button
+                        onClick={() =>
+                          setActiveMobileDropdown(isOpen ? null : key)
+                        }
+                        className="w-full flex items-center justify-between py-2 text-sm font-semibold text-gray-900"
+                        aria-expanded={isOpen}
+                        aria-controls={`mobile-section-${key}`}
+                      >
+                        <span>{section.title}</span>
+                        <ChevronDown
+                          className={`w-4 h-4 text-gray-500 transition-transform duration-200 ${
+                            isOpen ? "rotate-180" : ""
                           }`}
+                          aria-hidden="true"
                         />
                       </button>
-                      
-                      {activeMobileDropdown === key && (
-                        <div className="bg-gradient-to-br from-orange-50 to-white py-2 animate-fadeIn">
+
+                      {isOpen && (
+                        <div
+                          id={`mobile-section-${key}`}
+                          className="mt-1 pl-2 space-y-1"
+                        >
                           {section.items.map((item, index) => (
                             <button
                               key={index}
                               onClick={() => handleNavigation(item.href)}
-                              className="block w-full text-left px-8 py-2.5 text-sm text-gray-700 hover:text-orange-500 hover:bg-white transition-all duration-150 group bg-transparent border-none cursor-pointer"
+                              className="block w-full text-left py-1.5 text-sm text-gray-700 hover:text-orange-500"
                             >
-                              <span className="flex items-center gap-2">
-                                <span className="text-orange-400 text-xs">★</span>
-                                <span className="group-hover:translate-x-1 transition-transform duration-200">{item.label}</span>
-                              </span>
+                              {item.label}
                             </button>
                           ))}
                         </div>
                       )}
                     </div>
-                  ))}
-                </div>
-                
-                {/* Mobile Action Buttons */}
-                <div className="px-6 py-6 space-y-3 bg-gray-50">
-                  <Link
-                    href="/pages/donate"
-                    className="block w-full text-center py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white hover:shadow-lg hover:shadow-orange-500/30 transition-all duration-200 font-semibold text-sm"
-                    onClick={() => {
-                      setIsMobileMenuOpen(false);
-                      setActiveMobileDropdown(null);
-                    }}
-                  >
-                    DONATE
-                  </Link>
-                  <Link
-                    href="/pages/programintakeform"
-                    className="block w-full text-center py-3 bg-gradient-to-r from-[#002147] to-[#003368] text-white hover:shadow-lg transition-all duration-200 font-semibold text-sm"
-                    onClick={() => {
-                      setIsMobileMenuOpen(false);
-                      setActiveMobileDropdown(null);
-                    }}
-                  >
-                    FREE STRATEGY SESSION
-                  </Link>
-                  <Link
-                    href="/pages/workshops"
-                    className="block w-full text-center py-3 border-2 border-orange-500 text-orange-600 hover:bg-orange-500 hover:text-white transition-all duration-200 font-semibold text-sm"
-                    onClick={() => {
-                      setIsMobileMenuOpen(false);
-                      setActiveMobileDropdown(null);
-                    }}
-                  >
-                    SHOP
-                  </Link>
-                </div>
+                  );
+                })}
               </div>
-            </>
-          )}
-        </nav>
-      </header>
+
+              {/* Bottom CTAs */}
+              <div className="px-5 py-4 border-t space-y-2">
+                <Link
+                  href="/pages/programintakeform"
+                  className="block w-full text-center py-2.5 rounded-full bg-[#002147] text-white text-sm font-semibold"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  FREE STRATEGY SESSION
+                </Link>
+                <Link
+                  href="/pages/workshops"
+                  className="block w-full text-center py-2.5 rounded-full border border-orange-500 text-orange-600 text-sm font-semibold"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  SHOP
+                </Link>
+              </div>
+            </div>
+          </div>
+        </React.Fragment>
+      )}
     </>
   );
 }
