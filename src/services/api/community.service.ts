@@ -64,12 +64,12 @@ export async function fetchCommunityById(communityId: any) {
 
 // Add a new feed post
 export async function addCommunityFeedPost(post: any) {
-  const res = await apiClient.post(`${API_BASE}/communities/posts/add`, post);
+  const res = await apiClient.post('https://wanac-api.kuzasports.com/api/v1/communities/posts/add', post);
   return res.data;
 }
 
 // Add a new event
 export async function addEvent(event: any) {
-  const res = await apiClient.post(`${API_BASE}/events/add`, event);
+  const res = await apiClient.post('https://wanac-api.kuzasports.com/api/v1/events/add', event);
   return res.data;
 } 

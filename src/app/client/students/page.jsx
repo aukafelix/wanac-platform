@@ -29,8 +29,7 @@ export default function StudentsPage() {
     if (!cohortId) return;
     async function fetchClients() {
       try {
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://wanac-api.kuzasports.com';
-        const response = await axios.get(`${apiUrl}/api/v1/clients`);
+        const response = await axios.get("https://wanac-api.kuzasports.com/api/v1/clients");
         // Assuming each client has a cohortId property
         const filtered = response.data.filter(client => client.cohortId === cohortId);
         setStudents(filtered);

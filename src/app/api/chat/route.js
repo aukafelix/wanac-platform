@@ -10,8 +10,7 @@ export async function POST(req) {
       return new Response(JSON.stringify({ error: 'OpenAI API key not configured' }), { status: 500 });
     }
 
-    const openaiBaseUrl = process.env.OPENAI_API_URL || 'https://api.openai.com/v1';
-    const openaiRes = await fetch(`${openaiBaseUrl}/chat/completions`, {
+    const openaiRes = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

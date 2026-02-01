@@ -66,7 +66,7 @@ export default function Login() {
 
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL || 'https://wanac-api.kuzasports.com'}/api/v1/auth/login`,
+          "https://wanac-api.kuzasports.com/api/v1/auth/login",
           {
             method: "POST",
             headers: {
@@ -141,7 +141,7 @@ export default function Login() {
     try {
       const googleUser = jwtDecode(credentialResponse.credential);
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL || 'https://wanac-api.kuzasports.com'}/api/v1/auth/login`,
+        "https://wanac-api.kuzasports.com/api/v1/auth/login",
         {
           method: "POST",
           headers: {
