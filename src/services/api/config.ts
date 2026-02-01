@@ -1,8 +1,7 @@
 import axios, { AxiosError, InternalAxiosRequestConfig, AxiosResponse } from 'axios';
 
-// Base URL from env (no trailing slash in env; we add it for axios)
-const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://wanac-api.kuzasports.com';
-export const BASE_URL = apiUrl.replace(/\/$/, '') + '/';
+// Update base URL to match the documentation
+export const BASE_URL = 'https://wanac-api.kuzasports.com/';
 
 export const apiClient = axios.create({
   baseURL: BASE_URL,

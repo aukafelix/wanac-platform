@@ -148,7 +148,7 @@ export default function Signup() {
       setSocialLoading(prev => ({ ...prev, google: true }));
       const googleUser = jwtDecode(credentialResponse.credential);
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL || 'https://wanac-api.kuzasports.com'}/api/v1/auth/register`,
+        "https://wanac-api.kuzasports.com/api/v1/auth/register",
         {
           method: "POST",
           headers: {
