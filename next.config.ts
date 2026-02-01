@@ -1,23 +1,13 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-
-
-  // ✅ Required when using next/image with static export
+  // ✅ Required if you use next/image with static export
   images: {
     unoptimized: true,
   },
 
-  // Exclude jitsi-meet directory from webpack compilation
-  webpack: (config, { webpack }) => {
-    config.plugins.push(
-      new webpack.IgnorePlugin({
-        resourceRegExp: /jitsi-meet/,
-      })
-    );
-
-    return config;
-  },
+  // No Webpack customizations needed for Jitsi API
+  // Turbopack will now work without warnings
 };
 
 export default nextConfig;
