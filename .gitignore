@@ -31,9 +31,13 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # env files (can opt-in for committing if needed)
+<<<<<<< Updated upstream
 .env
 .env.local 
 
+=======
+.env.local
+>>>>>>> Stashed changes
 .wanac-api-main
 # vercel
 .vercel
