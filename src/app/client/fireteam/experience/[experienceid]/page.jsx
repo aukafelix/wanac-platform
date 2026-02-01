@@ -228,7 +228,7 @@ export default function FireteamExperienceMeeting() {
     const formData = new FormData();
     formData.append('file', audioBlob, 'meeting_recording.webm');
     try {
-      const response = await fetch('https://whisper.wanac.org/transcribe', {
+      const response = await fetch('', {
         method: 'POST',
         body: formData,
       });

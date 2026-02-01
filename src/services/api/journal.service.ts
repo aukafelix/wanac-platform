@@ -6,13 +6,13 @@ export const journalService = {
     return response.data;
   },
 
-  async addJournal({ title, content }: { title: string; content?: string }) {
-    const response = await apiClient.post('/api/v1/journals/add', { title, content });
+  async addJournal({ title, content, prompt_number, day_number }: { title: string; content?: string; prompt_number?: number; day_number?: number }) {
+    const response = await apiClient.post('/api/v1/journals/add', { title, content, prompt_number, day_number });
     return response.data;
   },
 
-  async updateJournal(id: string, { title, content }: { title: string; content?: string }) {
-    const response = await apiClient.put(`/api/v1/journals/${id}`, { title, content });
+  async updateJournal(id: string, { title, content, prompt_number, day_number }: { title: string; content?: string; prompt_number?: number; day_number?: number }) {
+    const response = await apiClient.put(`/api/v1/journals/${id}`, { title, content, prompt_number, day_number });
     return response.data;
   },
 

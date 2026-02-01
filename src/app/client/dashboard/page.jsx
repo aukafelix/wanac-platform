@@ -8,6 +8,8 @@ import {
   FaChartLine,
   FaUsers,
   FaFire,
+  FaUserCircle,
+  FaVideo,
 } from 'react-icons/fa';
 import Sidebar from '../../../../components/dashboardcomponents/sidebar'
 import ClientTopbar from '../../../../components/dashboardcomponents/clienttopbar';
@@ -52,6 +54,13 @@ export default function ClientDashboard() {
   const [loading, setLoading] = useState(true);
 
   const router = useRouter();
+
+  const greeting = (() => {
+    const hour = new Date().getHours();
+    if (hour < 12) return 'Good Morning';
+    if (hour < 17) return 'Good Afternoon';
+    return 'Good Evening';
+  })();
 
   // Function to fetch upcoming fireteam experiences
   const fetchUpcomingExperiences = async () => {
@@ -155,37 +164,35 @@ export default function ClientDashboard() {
             <div className="flex flex-col lg:flex-row gap-6">
               {/* Main Content */}
               <div className="flex-1 space-y-6">
-                {/* Welcome Section */}
-                <section className="bg-gradient-to-br from-[#002147] to-[#003875] rounded-2xl p-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4 shadow-lg animate-fadeIn relative overflow-hidden">
-                  {/* Background pattern */}
-                  <div className="absolute inset-0 opacity-10">
-                    <img 
-                      src="/veterancommunity.png" 
-                      alt="Background" 
-                      className="w-full h-full object-cover"
-                    />
+                {/* Welcome block: avatar + greeting + CTA (reference-style) */}
+                <section className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 md:pb-6">
+                  <div className="flex items-center gap-3 md:gap-4">
+                    <div className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-[#002147] flex items-center justify-center shrink-0">
+                      <FaUserCircle className="text-white text-2xl md:text-3xl" />
+                    </div>
+                    <div>
+                      <h2
+                        className="text-xl md:text-3xl font-bold text-gray-900 tracking-tight"
+                        style={{ fontFamily: 'var(--font-heading)' }}
+                      >
+                        {greeting}{user?.name ? `, ${user.name.split(' ')[0]}` : ''}!
+                      </h2>
+                      <p className="text-gray-600 text-sm md:text-base mt-0.5">
+                        Your journey starts here.
+                      </p>
+                    </div>
                   </div>
-                  
-                  <div className="relative z-10">
-                    <h2
-                      className="text-3xl md:text-4xl font-bold mb-2 text-white tracking-tight"
-                      style={{ fontFamily: 'var(--font-heading)' }}
-                    >
-                      Welcome Back{user?.name ? `, ${user.name}` : ''}!
-                    </h2>
-                    <p className="text-white/90 text-base md:text-lg leading-relaxed">
-                      Your journey starts here. Track your progress and stay connected.
-                    </p>
-                  </div>
-                  <img
-                    src="/dashboard-illustration.svg"
-                    alt="Dashboard"
-                    className="w-24 h-24 md:w-32 md:h-32 object-contain hidden md:block opacity-80 relative z-10"
-                  />
+                  <button
+                    onClick={() => router.push('/client/session')}
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#002147] hover:bg-[#003875] text-white font-semibold px-4 py-3 rounded-xl shadow-sm transition-colors"
+                  >
+                    <FaVideo className="text-lg" />
+                    Schedule your next Session
+                  </button>
                 </section>
 
-                {/* Quick Actions Row */}
-                <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                {/* Quick Actions: 2x2 on mobile, row on desktop */}
+                <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4">
                   <QuickActionCard
                     icon={FaUsers}
                     title="Community"
@@ -221,64 +228,19 @@ export default function ClientDashboard() {
                     href="/client/fireteam"
                     color="fireteam"
                   />
+                  <QuickActionCard
+                    icon={FaCalendar}
+                    title="Sessions"
+                    description="Schedule your next session"
+                    href="/client/session"
+                    color="primary"
+                  />
                 </section>
 
                 {/* Content Grid */}
                 <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Upcoming Sessions */}
-                  <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-200 animate-fadeIn">
-                    <h3
-                      className="text-lg font-semibold mb-4 flex items-center gap-2 text-[#002147]"
-                      style={{ fontFamily: 'var(--font-heading)' }}
-                    >
-                      <FaCalendar className="text-orange-500" />
-                      Upcoming Sessions
-                    </h3>
-                    <div className="space-y-4">
-                      {loading ? (
-                        <p className="text-gray-500 text-sm">Loading...</p>
-                      ) : upcomingSessions.length === 0 ? (
-                        <p className="text-gray-500 text-sm">No sessions scheduled yet.</p>
-                      ) : (
-                        upcomingSessions.map((session) => {
-                          // Format date and time
-                          const dateObj = new Date(session.scheduled_at);
-                          const dateStr = dateObj.toLocaleDateString();
-                          const timeStr = dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                          return (
-                            <div
-                              key={session.id}
-                              className="border-l-4 border-[#002147] pl-4 py-3 bg-blue-50/50 rounded-lg hover:bg-blue-50 transition-all duration-200 cursor-pointer"
-                            >
-                              <div className="flex justify-between items-start">
-                                <div className="flex-1">
-                                  <p className="font-semibold text-gray-900">{session.type || session.title}</p>
-                                  <p className="text-sm text-gray-600 mt-1">
-                                    with {
-                                      typeof session.coach === 'object'
-                                        ? session.coach.name || session.coach.user?.name || '-'
-                                        : session.coach || '-'
-                                    }
-                                  </p>
-                                </div>
-                                <div className="text-right">
-                                  <p className="text-sm font-semibold text-gray-900">{dateStr}</p>
-                                  <p className="text-xs text-gray-600 mt-1">{timeStr}</p>
-                                </div>
-                              </div>
-                            </div>
-                          );
-                        })
-                      )}
-                    </div>
-                    <button 
-                      className="mt-5 text-[#002147] hover:text-orange-500 text-sm font-semibold transition-colors duration-150 flex items-center gap-1 group" 
-                      onClick={() => router.push('/client/session')}
-                    >
-                      View All Sessions 
-                      <span className="group-hover:translate-x-1 transition-transform duration-150">→</span>
-                    </button>
-                  </div>
+                  
 
                   {/* Life Score */}
                   <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-200 animate-fadeIn">
@@ -323,7 +285,7 @@ export default function ClientDashboard() {
 
               {/* Sidebar for Notifications */}
               <aside className="lg:w-80 space-y-6">
-                <NotificationsWidget />
+                
                 
                 {/* Upcoming Fireteam Experiences */}
                 <div className="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-shadow p-5">

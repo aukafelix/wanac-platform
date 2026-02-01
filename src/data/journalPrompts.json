@@ -1,0 +1,1462 @@
+[
+  {
+    "number": 1,
+    "text": "What does ‘happiness’ mean to you? Would you describe yourself as a naturally happy or an unhappy & worried person? Tell me about a time when you felt really happy and about a time when you made someone else feel happy."
+  },
+  {
+    "number": 2,
+    "text": "Create a list of resolutions you would like to keep over the next 365 days. Write as many as you can. Now circle the 3 that mean the most to you and for each one make a promise to your journal: I promise to (blank). I want to do this because achieving this would mean (blank). My reward will be (blank). I promise to (blank). I want to do this because achieving this would mean (blank). My reward will be (blank). I promise to (blank). I want to do this because achieving this would mean (blank). My reward will be (blank). I am fully aware that at times I will break my resolutions but instead of throwing in the towel and quitting, I will quickly get back on track without feeling any sense guilt or failure. Signed ........................... ...................."
+  },
+  {
+    "number": 3,
+    "text": "Combine one prompt from each column to create a plotline for a short story."
+  },
+  {
+    "number": 4,
+    "text": "Tell me about one of your earliest memories. Write down anything you can remember."
+  },
+  {
+    "number": 5,
+    "text": "If you had to be someone else for 24 hours, who would you choose and why? What would you do?"
+  },
+  {
+    "number": 6,
+    "text": "Would you rather be less attractive and extremely intelligent or extremely attractive and less intelligent? What do you think the pros and cons of each combination would be?"
+  },
+  {
+    "number": 7,
+    "text": "List as many things that you can see right now that you are grateful for?"
+  },
+  {
+    "number": 8,
+    "text": "What do you need to accept?"
+  },
+  {
+    "number": 9,
+    "text": "Tell me about an adventure you would love to have."
+  },
+  {
+    "number": 10,
+    "text": "Write about a dream you can remember. Go into as much detail as possible; fill in the gaps with your imagination. Capturing your dreams in a mind-map can also be good source of inspiration for a later date."
+  },
+  {
+    "number": 11,
+    "text": "Tell me about one of your most memorable experiences with nature."
+  },
+  {
+    "number": 12,
+    "text": "Make a list of all the things you would do or buy if you won the lottery jackpot."
+  },
+  {
+    "number": 13,
+    "text": "What are you waiting for?"
+  },
+  {
+    "number": 14,
+    "text": "In no particular order fill a double page spread in your journal with a list of people, things and places that make you happy."
+  },
+  {
+    "number": 15,
+    "text": "What ‘excess baggage’ are you carrying around? Create a list of all the negative things you would like to drop off at lost property. Such as a regret, a negative self-belief, a grudge or a past event etc. Tell me how releasing them would make you feel?"
+  },
+  {
+    "number": 16,
+    "text": "If you could click your fingers and be anywhere else right now , where would you be and why? What would you be doing? What would you see, hear, smell and taste?"
+  },
+  {
+    "number": 17,
+    "text": "Write about meeting someone you admire (real or fictional) in an empty elevator, you have 3 minutes to make conversation. What will you say? What do you want the outcome of the conversation to be? You could even write out the conversation in a script format."
+  },
+  {
+    "number": 18,
+    "text": "At home find a keepsake box or rummage through a ‘junk’ draw and find something that has a sentimental meaning to you, write about it. What or who does it represent? Alternatively find some old photographs and tell me about one of them."
+  },
+  {
+    "number": 19,
+    "text": "Who would you want to p lay you in a movie of your life and why? Who could play the other important roles? What songs would you choose for the soundtrack? Create the play list."
+  },
+  {
+    "number": 20,
+    "text": "What is some of the best advice you have ever received?"
+  },
+  {
+    "number": 21,
+    "text": "I am grateful for my sense of sight because..."
+  },
+  {
+    "number": 22,
+    "text": "At the top of the page write ‘I am awesome because...’ or ‘I am wonderful because…’ Now write a list dedicated to the awesomeness of you. All of your achievements, successes, talents, skills, quirky interests, qualifications, best experiences & proudest moments. Big and small in no particular order just write them down. Going right back to when you were a child."
+  },
+  {
+    "number": 23,
+    "text": "I would like to improve my relationship with ( blank ) because… What are the main problems? What solutions can you think of? What are some of the good points to the relationship? For example at the worst, this relationship may have taught you about how not to treat other people. What would the benefits of this relationship working better be?"
+  },
+  {
+    "number": 24,
+    "text": "Pick a song, a favorite or completely at random and use a line of lyrics as a title of a short story. Write about whatever the lyrics bring to mind."
+  },
+  {
+    "number": 25,
+    "text": "Tell me about a ‘perfect moment’ you have experienced. Where were you, who was there, what happened, how did you feel? How does it feel remembering this moment?"
+  },
+  {
+    "number": 26,
+    "text": "Think of 5 different ways you could treat yourself by spending less than $5. Action: Do one of them this week."
+  },
+  {
+    "number": 27,
+    "text": "If all of the karma you have earned in your life so far came back around to you today, do you think it would it be good or bad? Why? If good, how would you like to be rewarded? If bad, how do you think you could improve it from today onwards?"
+  },
+  {
+    "number": 28,
+    "text": "I am grateful for my sense of touch because..."
+  },
+  {
+    "number": 29,
+    "text": "What does ‘courage’ mean to you? When have you been courageous for yourself? When have you been courageous for others?"
+  },
+  {
+    "number": 30,
+    "text": "Create a list of all the places in the world you would like to visit. Ignore any money or logistic limitations; just write down your dream list in no particular order."
+  },
+  {
+    "number": 31,
+    "text": "Combine one prompt from each column to create a plotline for a short story."
+  },
+  {
+    "number": 32,
+    "text": "Tell me about your earliest memories of school. Can you remember your teachers name and appearance? What were they like? What were your friend’s names? What things were important to you then? What did you enjoy?"
+  },
+  {
+    "number": 33,
+    "text": "What would the name of your autobiography be and why? Title each chapter with a brief description."
+  },
+  {
+    "number": 34,
+    "text": "If you could relive one memory of your life over again, which would you choose and why?"
+  },
+  {
+    "number": 35,
+    "text": "I am grateful for my sense of taste because..."
+  },
+  {
+    "number": 36,
+    "text": "How are you ?"
+  },
+  {
+    "number": 37,
+    "text": "Create a list of experiences you want to have enjoyed in your life. Such as climbed a mountain, attended a party on a yacht, stayed in a 5 star hotel, been an extra in a movie, met your idol, volunteered at a wildlife sanctuary etc. Ignore any money or logistic limitations; just write down your dream list in no particular order."
+  },
+  {
+    "number": 38,
+    "text": "Walk around a bookstore or library and open a random book and select a page. Write down the first sentence of the second paragraph. Now write about whatever came to mind when you read the sentence. If you cannot make it to a bookstore or library use a book from your own bookshelf or eBook collection."
+  },
+  {
+    "number": 39,
+    "text": "Tell me about one of the best gifts you have ever received."
+  },
+  {
+    "number": 40,
+    "text": "In your journal write a letter to yourself at 13 years old. What advice would you give?"
+  },
+  {
+    "number": 41,
+    "text": "If you could go back in time and change one thing, would you take the opportunity? Why?"
+  },
+  {
+    "number": 42,
+    "text": "I am grateful for my sense of smell because..."
+  },
+  {
+    "number": 43,
+    "text": "In your journal write a letter (you will never send) to someone you have unresolved issues with. Who you are upset with, feel anger towards or to someone who has left you feeling ‘off centre’ after something they have said or done. You can even write the letter to yourself about a regret you are holding onto. Explain how you are feeling. Get it all out. If you are ready, at the end of the letter I encourage you to try and write I forgive you, I’m sorry, thank you, I love you . It is not for their benefit but for your own. This is from the Hawaiian practice of forgiveness known as Ho’oponopono. Created to help release you from holding onto negative emotions about a situation. Therefore allowing you to move forward."
+  },
+  {
+    "number": 44,
+    "text": "Create a list of all the achievements you want to have accomplished in your life. Such as the ability to speak another language, wrote a book, mastered a martial art, started your own business, raised a happy family, be a talented cupcake baker, earned a degree etc. Ignore any money or logistic limitations; just write down your dream list in no particular order."
+  },
+  {
+    "number": 45,
+    "text": "Think of a cause you are passionate about, or a disagreement you have had. Now write about it from the other side’s perspective. Why did they or why are they doing what they are doing? What drives them to do what it is you disagree with? From this point of view can you see any areas where both sides could come to a compromise?"
+  },
+  {
+    "number": 46,
+    "text": "Tell me about someone you miss. Either som eone who has passed away, moved or you simply drifted apart from. What experiences did you share? How did they make you feel? What did you learn from them? Write a letter in your journal to them updating them on your life since you last saw them."
+  },
+  {
+    "number": 47,
+    "text": "In your journal write a letter to yourself 10 years in the future."
+  },
+  {
+    "number": 48,
+    "text": "What makes you lose track of time?"
+  },
+  {
+    "number": 49,
+    "text": "I am grateful for my sense of hearing because..."
+  },
+  {
+    "number": 50,
+    "text": "Tell me about something you regret. Then after tell me about what letting go of this regret would do for your wellbeing. Or tell me about a mistake you have made in your life. Big or small. What happened? Was it really that bad? Beneath it tell me at least 3 good things to come out of the situation. Circumstances, experiences, lessons learned or any new opportunities?"
+  },
+  {
+    "number": 51,
+    "text": "Make a list of all the things you want to do, try and experience that you would find scary and challenging at the time, but would feel amazing after having conquered them. Such as Cage dived with a great white shark, bungee jumped, held a tarantula spider or snake, solo dined in a busy restaurant, sang at a karaoke bar etc. Ignore any money or logistic limitations; just write down your dream list in no particular order."
+  },
+  {
+    "number": 52,
+    "text": "Look out of the nearest window and write in vivid detail what you can see starting from left to right. Imagine you are telling someone who is not tall enough to look out of the window, use as much detail as possible."
+  },
+  {
+    "number": 53,
+    "text": "Tell me about a time you overcame a difficult situation? What did you learn?"
+  },
+  {
+    "number": 54,
+    "text": "What would your superhero power of choice be? What would you do with your amazing super power? What would your super hero or super heroine name be? What would your costume be like? Or if you wanted to become a super villain what would your name be? What would your abilities and ambitions be? Describe your secret liar where you make all your plans for world domination."
+  },
+  {
+    "number": 55,
+    "text": "Tell me about a time when you made what had once seemed impossible, possible."
+  },
+  {
+    "number": 56,
+    "text": "Looking back on yesterday, do you feel like you have lived that day over & over before? If so, how could you mix things up?"
+  },
+  {
+    "number": 57,
+    "text": "What do people say you are good at?"
+  },
+  {
+    "number": 58,
+    "text": "Tell me about something you want to do or try but your little nagging & self-doubting voice tells you not to. Making you hesitate to even take the first step. What reasons does it come up with? Let it have full control for a few moments; write down all the doubts it brings up. Now put a line through or scribble out each of its objections and stick an image representing your desire over their words. On top of the image write about how good proving that little critical voice wrong will feel."
+  },
+  {
+    "number": 59,
+    "text": "Today eavesdrop on a conversation for a few moments. Use what they were talking about as a starting point and continue their story in your journal. Change the names if you know the people."
+  },
+  {
+    "number": 60,
+    "text": "When you were younger what did you want to be when you were older and why?"
+  },
+  {
+    "number": 61,
+    "text": "If you found a magic lamp what 3 wishes would you ask the Genie for? What would each mean to you? No wishing for extra wishes, not my rules, the Genie’s rules."
+  },
+  {
+    "number": 62,
+    "text": "What cages have your fears built around you? How could you open the door?"
+  },
+  {
+    "number": 63,
+    "text": "Write a letter or an email to a company praising a member of their staff who recently helped you. Draft it out in your journal first. Report back to journal."
+  },
+  {
+    "number": 64,
+    "text": "What do you worry about the most? Are your worries realistic or do they always play out far worse in your head than in reality?"
+  },
+  {
+    "number": 65,
+    "text": "What would you do if you knew you could not fail?"
+  },
+  {
+    "number": 66,
+    "text": "Combine one prompt from each column to create a plotline for a short story."
+  },
+  {
+    "number": 67,
+    "text": "What were your favorite childhood games? Real or imaginary. What were the rules? Who did you play it with?"
+  },
+  {
+    "number": 68,
+    "text": "What would you do if you were invisible for 24 hours?"
+  },
+  {
+    "number": 69,
+    "text": "Set a timer for 5 minutes, now for the full 5 minutes do not stop writing. Whatever thoughts cross your mi nd write them down, do not censor yourself or worry about spelling and punctuation. Just clear all of the mental clutter out onto the page. After the 5 minutes relax and reward yourself."
+  },
+  {
+    "number": 70,
+    "text": "What are some of your favorite feel good songs? Do any of them have special meanings to you? Create a play list."
+  },
+  {
+    "number": 71,
+    "text": "What would you change about yourself or your life if you could? Why?"
+  },
+  {
+    "number": 72,
+    "text": "Write out your own ideal obituary for when you are really old and have peacefully past away in your sleep. Who do you want to be dearly missed by? What do you want to be remembered for? What do you want your list of achievements to have been? Imagine you could oversee your funeral, what would you want to over hear people saying about you? Note: This exercise can bring up ambitions and a sense of purpose you were not aware of before. So take hold of it and use to create starting points for your life right now and make a list of the things you would need to do in order to earn this amazing send off and remembrance."
+  },
+  {
+    "number": 73,
+    "text": "What do you appreciate about your life right now?"
+  },
+  {
+    "number": 74,
+    "text": "Tell me about your first date. Where did you go, what were they like? Or tell me about how you want your first date to go."
+  },
+  {
+    "number": 75,
+    "text": "In your journal create a double page collage of people you admire. Search for images online or cut them out of magazines. Next to each person write down one word to describe them."
+  },
+  {
+    "number": 76,
+    "text": "Tell me about some of the most important lessons you have learned from your parents."
+  },
+  {
+    "number": 77,
+    "text": "Write a letter in your journal (you don ’t have to send) thanking someone who gave you great advice or a nudge in the right direction. Tell them how you used their advice."
+  },
+  {
+    "number": 78,
+    "text": "Excluding people and pets what 5 things would you rescue from a fire? Why is each so important to you?"
+  },
+  {
+    "number": 79,
+    "text": "Who would your ideal partner be? What qualities do you want in them? What would you offer them? What will you enjoy experiencing together? If you are in a relationship, what are your partners best qualities? What do you offer them? What would you like to experience together?"
+  },
+  {
+    "number": 80,
+    "text": "Think of your 3 favorite actors; now create a brief movie plot for them together. Give each actor’s character a brief history, 3 distinct personality traits, a personal style and a powerful goal."
+  },
+  {
+    "number": 81,
+    "text": "Tell me about a pet you had growing up or a friend’s pet. What were they? What was their name? What were they like? Energetic, lazy, loving, scary? Stick in a photo if you have one."
+  },
+  {
+    "number": 82,
+    "text": "How would you spend $1,000,000 in fun and creative ways if it was handed to you right now? No saving it, paying off debts or donating it. You must spend-spend-spend!"
+  },
+  {
+    "number": 83,
+    "text": "Who do you love? How do you show them? Do you show them often enough?"
+  },
+  {
+    "number": 84,
+    "text": "Create a list of some of your favorite animals, places and events in nature."
+  },
+  {
+    "number": 85,
+    "text": "When do you feel most alive?"
+  },
+  {
+    "number": 86,
+    "text": "In detail tell me what your perfect day from start to end would be like?"
+  },
+  {
+    "number": 87,
+    "text": "Rewrite a movie ending."
+  },
+  {
+    "number": 88,
+    "text": "Tell me about your time at High School. What are some of your best memories? Who did you spend most of your time with? What were they like? What did you have in common? What fashion trends and popular crazes swept through your school while you were there? If you had to be defined by one subject in school during your high school years which subject would it of been? What did you want to be when you left high school?"
+  },
+  {
+    "number": 89,
+    "text": "Think of 10 different ways you could treat yourself with less than $10. Action: Do one of them this week."
+  },
+  {
+    "number": 90,
+    "text": "If you could do one thing everyday for the rest of your life, what would you choose and why?"
+  },
+  {
+    "number": 91,
+    "text": "I am grateful for my family because..."
+  },
+  {
+    "number": 92,
+    "text": "Tell me about one assumption that people make about you that is just not true. Why do you think they assume this? How does it make you feel?"
+  },
+  {
+    "number": 93,
+    "text": "Describe in detail a walkthrough of your dream home. Do not forget any outside spaces. How would you decorate it? Any stand out pieces of furniture? Even include a rough sketch of the floor plan."
+  },
+  {
+    "number": 94,
+    "text": "Who are some of your favorite fictional characters and why?"
+  },
+  {
+    "number": 95,
+    "text": "Tell me about a time when you felt completely free and in the flow of life. Where were you? What were you doing? Who was there? How did you feel?"
+  },
+  {
+    "number": 96,
+    "text": "Write out your star sign and description. Does your personality match your star sign description? What other star signs do you feel describe you? Make up your own, choose 5 of the personality traits you like the most and invent a name and symbol. Aries (March 21 - April 19) The Ram Direct, competitive, impulsive, independent, resourceful, temperamental, trusting, creative, honest. Taurus (April 20 - May 20) The Bull Patient, reliable, practical, determined, stable, observing, artistic/creative, loyal, stubborn, money focused. Gemini (May 21 – June 20) The Twins Curious, charming, versatile, expressive, persuasive, easily bored, changeable, intelligent, sociable, nervous. Cancer (June 21 – July 22) The Crab Emotional, reactive, intuitive, sensitive, tenacious, caring, sympathetic, moody, traditional, supportive. Leo (July 23 – August 22) The Lion Risk taker, idealistic, ambitious, graceful, proud, dramatic, giving, romantic, dominating, strong. Virgo (August 23 – September 22) The Virgin Efficient, gentle, focused, reliable, methodical, softly-spoken, compassionate, sincere, easily worried, calming, fussy. Libra (September 23 - October 22) The Scales Sociable, careful, creative, convincing, fair, idealistic, indecisive, fickle, laid back, friendly. Scorpio (October 23 – November 21) The Scorpion Intense, passionate, creative, private, intelligent, resourceful, loyal, focused, temperamental, jealous. Sagittarius (November 22 - December 21) The Archer Generous, witty, honest, daring, friendly, confident, optimistic, argumentative, blunt, fun loving. Capricorn (December 22 – January 19) The Goat Responsible, cautious, focused, suspicious, reserved, conventional, reliable, hardworking, unforgiving, successful. Aquarius (January 20 - February 18) The Water Bearer Impulsive, independent, friendly, strong-minded, curious, aware, forward thinker, temperamental, inventive. Pisces (February 19 - March 20) The Fish Imaginative, sensitive, caring, mysterious, adaptable, intuitive, idealistic, spiritual, gullible, trusting."
+  },
+  {
+    "number": 97,
+    "text": "How much money do you think is enough to live comfortably happy on per month? Why?"
+  },
+  {
+    "number": 98,
+    "text": "I am grateful for my body because..."
+  },
+  {
+    "number": 99,
+    "text": "What inspires you?"
+  },
+  {
+    "number": 100,
+    "text": "What skills do you want to learn and why?"
+  },
+  {
+    "number": 101,
+    "text": "Combine one prompt from each column to create a plotline for a short story."
+  },
+  {
+    "number": 102,
+    "text": "Tell me about a time when you took a big leap of faith or change of direction in your life. What motivated it?"
+  },
+  {
+    "number": 103,
+    "text": "What is on your mind?"
+  },
+  {
+    "number": 104,
+    "text": "List some of the compliments you can remember receiving, big and small."
+  },
+  {
+    "number": 105,
+    "text": "What do you like about the area where you live?"
+  },
+  {
+    "number": 106,
+    "text": "Tell me about one of your fears. Where does it come from? What happens to you physically and emotionally when you are feeling the fear? How does this fear hold you back? How could you challenge it? Write about how your life would improve after overcoming the fear."
+  },
+  {
+    "number": 107,
+    "text": "What other language(s) would you like to learn and why? Now go and find out how to say the following in one of the languages: “ Hello my name is (blank). I am (blank) years old. I live in (blank) with (blank) and I enjoy (blank), (blank) and (blank). Some of my favorite foods are (blank).” Now introduce yourself to your journal in your new language. Action: This week take one step towards learning your language of choice."
+  },
+  {
+    "number": 108,
+    "text": "Write a day in the life of someone you know, what do you think they get up to?"
+  },
+  {
+    "number": 109,
+    "text": "Tell me about your first job. What did you do? How much were you paid? Who did you work with? What were they like? Did you have to wear a uniform? If you haven't had a job yet write a list of ‘first jobs’ you would like and why?"
+  },
+  {
+    "number": 110,
+    "text": "In detail tell me about what your perfect meal would be like. > Starter > Main course > Dessert > Afters > Drinks Where would you be?"
+  },
+  {
+    "number": 111,
+    "text": "W hat things in life do you think should be free and available to everyone?"
+  },
+  {
+    "number": 112,
+    "text": "List as many things as you can think of in your favorite color."
+  },
+  {
+    "number": 113,
+    "text": "What did you learn from a recent challenge?"
+  },
+  {
+    "number": 114,
+    "text": "Make a list of all the things you want to do but are not making the time for, feel intimidated by or you are simply not feeling motivated enough. These include personal projects, business ideas, catching up with friends and family, vacations etc. Now instead of seeing them as overwhelming and daunting, break them down into 30-day mini goals, then down again into more manageable actions. For example: My goal is to (main goal) so over the next 30 days I am going to (mini goal) because (the reason it is important to you). I will start by: Manageable action No. 1. Manageable action No. 2. Manageable action No. 3. The benefits of doing this will be (list the benefits). For example if your goal is to write a book: My goal is to write a book so over the next 30 days I am going to complete one chapter of my book because I have always wanted to write a book and have been putting it off for far too long. I will start by: 1. Scheduling 30 minutes everyday to write. 2. Writing one page per day. 3. Keep my journal with me at all times to record any inspirations and ideas. The benefits of doing this will be having one chapter complete, I would have developed a habit of writing and the knowledge that if I carry on with writing a page a day by this time next year my book will be complete. Also in my journal I will have a resource of inspiration for future books."
+  },
+  {
+    "number": 115,
+    "text": "Create a fake biography for a stranger you can see or have seen recently. Where did they grow up, what jobs have they had, what have been their happiest and saddest times, what are their secrets and what are their dreams?"
+  },
+  {
+    "number": 116,
+    "text": "Tell me about your childhood or current home; take me on a tour in vivid detail. Even add a rough sketch of the layout."
+  },
+  {
+    "number": 117,
+    "text": "In your journal write a list of 10 famous people from the past, present or fictional that you would invite to a dinner party. Why did you choose each one? Layout the seating plan. What would you serve? What drinks would you offer? Who do you think would get on really well together? Who might need to be kept apart?"
+  },
+  {
+    "number": 118,
+    "text": "Tell me about something(s) you can do now that you were not able to do this time last year."
+  },
+  {
+    "number": 119,
+    "text": "Write a list of people you are grateful for being or having had been in your life. Choose one and tell me about why you are grateful for them in more detail."
+  },
+  {
+    "number": 120,
+    "text": "Who or what can always improve your mood?"
+  },
+  {
+    "number": 121,
+    "text": "My ideal friends would be..."
+  },
+  {
+    "number": 122,
+    "text": "Write the plot for an episode of one of your favorite TV Shows. Don’t forget to end on a cliffhanger."
+  },
+  {
+    "number": 123,
+    "text": "Tell me about a graduation or a time when you received an achievement/award. How was the ceremony? Who attended? What did you receive? What did you wear? How did you feel? Add a cringe worthy photo."
+  },
+  {
+    "number": 124,
+    "text": "Find a feel good story from the media; write about how it makes you feel."
+  },
+  {
+    "number": 125,
+    "text": "How would you live your life differently if you knew nobody would judge or disapprove?"
+  },
+  {
+    "number": 126,
+    "text": "What do you think about the statement ‘crying is a sign of weakness’?"
+  },
+  {
+    "number": 127,
+    "text": "How do you express your creativity?"
+  },
+  {
+    "number": 128,
+    "text": "My perfect job would be..."
+  },
+  {
+    "number": 129,
+    "text": "Find a photo from the news and without reading the article create your own story."
+  },
+  {
+    "number": 130,
+    "text": "Stick in an old family photograph and tell me as much about it as you can. Who are the people? What are they doing? Where was the photo taken?"
+  },
+  {
+    "number": 131,
+    "text": "Dedicate a double page spread to some of your favorite quotes."
+  },
+  {
+    "number": 132,
+    "text": "If you could give one piece of advice or a self-belief to every child, what would it be and why?"
+  },
+  {
+    "number": 133,
+    "text": "Tell me 5 good things about today or yesterday."
+  },
+  {
+    "number": 134,
+    "text": "Who do you find inspiring? Why?"
+  },
+  {
+    "number": 135,
+    "text": "Job interview skills are always useful to have prepared and ready should your dream job come up. So for each of the following questions, write a simple easy to remember response. Keep them positive and never criticize anyone else. Pretend your journal is the interviewer. Tell us a little about yourself. How would co-workers describe you? Are you a good team player? Example. Give me an example when you went above and beyond the call of duty. An example of a time when a suggestion you made was used. What are your hobbies and interests outside of work? What are some of your weaknesses? Where do you see yourself in 5 years? An example where you corrected a mistake you made. An example where you have dealt with a difficult co-worker or boss. Describe yourself in 5 words. If you had to be any animal what would you be and why?"
+  },
+  {
+    "number": 136,
+    "text": "Combine one prompt from each column to create a plotline for a short story."
+  },
+  {
+    "number": 137,
+    "text": "Tell me about a time when you really impressed yourself."
+  },
+  {
+    "number": 138,
+    "text": "Draw a line down the centre of a page (or fold and unfold a page in half). Then fill both columns starting with the left side by playing word association with yourself. Start from one of the following words: > Hot > Sharp > Snow > Tree > Secret > Money > Shoes > Words > New > Wonderful > Shady"
+  },
+  {
+    "number": 139,
+    "text": "What is your number one goal or intention for the next six months? Mind map a few ideas and then for the goal that resonates with you the strongest write it out in the present tense, as if you have already achieved it. Starting with I HAVE NOW … or I NOW HAVE… For example: I have now published a book. I have now enjoyed a gondola ride in Venice, Italy. I now have the latest iPhone. I now have enough money for the house deposit. Then copy your goal/intention on to a piece of paper or Post-It note and keep it somewhere you will see often to help keep you motivated and inspired."
+  },
+  {
+    "number": 140,
+    "text": "What are some of your favorite books and why?"
+  },
+  {
+    "number": 141,
+    "text": "What are you proud of yourself for?"
+  },
+  {
+    "number": 142,
+    "text": "Use your journal to draft up an ‘elevator pitch’ for yourself. This is a short introduction to be used when meeting new people should they ask the dreaded questions “so what do you do?” or “tell me a little about yourself”. Include what you do for a living, a current project you are working on or how you spend your days and some interests. Having an elevator pitch ready can take the sting out of the fear of meeting new people in forced situations such as networking *shudders*. Also imagine this is the brief description a talk show host or award host would use to introduce you to the stage. Draft out a few variations of your pitch until you are comfortable with it. I know from experience the worst question anyone can ask you when you are out of work is “so what do you do?” It can feel like a kick in the teeth, so if you are out of work adapt your pitch to saying what type of job you are looking for or say you have a few ideas in the pipeline then move onto your interests. Remember you are more than what you do for a living; it is your interests that make you interesting. Note: As an interest travel is useful because it is the easiest conversation starter, it is like throwing a small talk lifeline to the other person for something to talk about. Almost everybody has an interest in traveling. Even if you feel like you haven't been anywhere yet, talking about where you want to go or about where they have been is a great way to break the ice."
+  },
+  {
+    "number": 143,
+    "text": "Fill an entire page writing about something you use daily, without using the name or explaining exactly what it does."
+  },
+  {
+    "number": 144,
+    "text": "Tell me about a memorable moment as a child."
+  },
+  {
+    "number": 145,
+    "text": "If I had an unlimited supply of money I would..."
+  },
+  {
+    "number": 146,
+    "text": "Tell me about how an extra £1000 a month would change or improve your life?"
+  },
+  {
+    "number": 147,
+    "text": "Some things I love and enjoy about my life are..."
+  },
+  {
+    "number": 148,
+    "text": "Tell me how you would react if someone spoke to you as harshly as you criticize yourself. Would you tolerate it, feel hurt or fight back? Why do you let yourself get away with being so hard? How could you be kinder to yourself?"
+  },
+  {
+    "number": 149,
+    "text": "Write a list of the books on your ‘to-read’ list?"
+  },
+  {
+    "number": 150,
+    "text": "Write a day in the life of your pet or a friend’s pet."
+  },
+  {
+    "number": 151,
+    "text": "Make a list of some of the acts of kindness you have received. Big and small."
+  },
+  {
+    "number": 152,
+    "text": "Create a list of things you would put into Room 101 (banish from the world if your could). From the serious to the small irritating things."
+  },
+  {
+    "number": 153,
+    "text": "Tell me about something you can do or have that other people want."
+  },
+  {
+    "number": 154,
+    "text": "I am truly grateful for my home because..."
+  },
+  {
+    "number": 155,
+    "text": "What does the expression ‘too live not simply exist’ mean to you?"
+  },
+  {
+    "number": 156,
+    "text": "Fill out the following statement in vivid detail while visualizing your ideal life. Ignore any money or logistic limitations. Just enjoy using your imagination bringing your first class life to life on the pages of your journal. Hello my name is (blank). I live in (blank), in a wonderful apartment/house with incredible views of (blank) I share my home with (blank). My home is filled with (blank). People who visit describe my home as (blank). The reasons I jump out of bed in the morning with a spring in my step are (blank). I am thankful to spend my time (blank). One of my proudest moments was (blank). When traveling I have had the most amazing experiences in (blank), especially the time I (blank). I still can’t believe I was brave enough to (blank). I maintain my wonderful health by (blank). I am grateful for my loving relationships with (blank). I am fortunate enough to have an abundance of money in my life and I am now in a position to contribute to causes and organizations such as (blank)."
+  },
+  {
+    "number": 157,
+    "text": "Write a day in the life of a child you know."
+  },
+  {
+    "number": 158,
+    "text": "In as much detail as you can tell me about a memorable family occasion such as a wedding, anniversary, birthday party etc. Add a photo if possible."
+  },
+  {
+    "number": 159,
+    "text": "What would you do if you woke up to discover you were last person on earth?"
+  },
+  {
+    "number": 160,
+    "text": "When you are 100 years old, what do you think will have really mattered the most to you?"
+  },
+  {
+    "number": 161,
+    "text": "What relationships are you grateful for and why?"
+  },
+  {
+    "number": 162,
+    "text": "What do you need to make time for?"
+  },
+  {
+    "number": 163,
+    "text": "Write down 3-5 things that you would love to happen to you or accomplish over the next 30 days. Add as much detail as possible and write them in the past tense as if they have already happened. Leave some space in your journal and bookmark the page so in 30 days time you can report back. Did any of them come true? Are there any signs of them starting to happen? In 30 days time I will remind you on prompt No. 193."
+  },
+  {
+    "number": 164,
+    "text": "Write a day in the life of one of your favorite wild animals. Where do they live? What other creatures do they interact with? What are their daily challenges?"
+  },
+  {
+    "number": 165,
+    "text": "Tell me about your first crush."
+  },
+  {
+    "number": 166,
+    "text": "What would you do if you knew you would not get into trouble for doing anything you wanted for 24 hours?"
+  },
+  {
+    "number": 167,
+    "text": "What do you think stands in-between you and your happiness?"
+  },
+  {
+    "number": 168,
+    "text": "Tell me about one of your favorite places. Why do you like it?"
+  },
+  {
+    "number": 169,
+    "text": "Describe your relationships with your closet family members."
+  },
+  {
+    "number": 170,
+    "text": "If money was no concern, what job would you do for free and why?"
+  },
+  {
+    "number": 171,
+    "text": "Combine one prompt from each column to create a plotline for a short story."
+  },
+  {
+    "number": 172,
+    "text": "What was your favorite childhood toy? Describe it in detail. What did it do? What memories does it bring back? What adventures did you share?"
+  },
+  {
+    "number": 173,
+    "text": "Who is your famous dream date and why? Where would you go? What would you do? If you are in a relationship who is your famous ‘free pass’ date?"
+  },
+  {
+    "number": 174,
+    "text": "Tell me about one of the most spontaneous and impulsive things you have ever done."
+  },
+  {
+    "number": 175,
+    "text": "What opportunities do you have that you are grateful for?"
+  },
+  {
+    "number": 176,
+    "text": "Describe your relationships with your friends."
+  },
+  {
+    "number": 177,
+    "text": "How would you like to make the world a better place?"
+  },
+  {
+    "number": 178,
+    "text": "Find 2 random words from a dictionary; together they will be your ‘theme’. Write a short story about one of the first images the combination of words brought to mind."
+  },
+  {
+    "number": 179,
+    "text": "Draw your family tree. It does not have to be detailed, just simple lines and names. Go as far back as you know."
+  },
+  {
+    "number": 180,
+    "text": "Which fairytale or Disney movie character are you most similar too and why? Or which would you like to be more like and why?"
+  },
+  {
+    "number": 181,
+    "text": "Tell me about one of the best decisions you have ever made."
+  },
+  {
+    "number": 182,
+    "text": "I am grateful for the money I have today because..."
+  },
+  {
+    "number": 183,
+    "text": "Which would you choose & why? Financial security for the rest of your life & living a luxurious lifestyle with every material possession you could ever wish for BUT to be in a loveless relationship. To be madly in love with someone BUT never knowing where the next $1 was coming from, living in debt and on the edge from month to month."
+  },
+  {
+    "number": 184,
+    "text": "Tell me about some ways you could help others."
+  },
+  {
+    "number": 185,
+    "text": "How would you describe in detail your favorite food or drink to someone who has never tried it before?"
+  },
+  {
+    "number": 186,
+    "text": "Who has been a great role model for you? Why? How have they influenced you? Note: You do not have to know them."
+  },
+  {
+    "number": 187,
+    "text": "If you could travel back in time, how far back would you go and why? What would you want to see or do there?"
+  },
+  {
+    "number": 188,
+    "text": "Through it all, who has been there for you? Write a letter in your journal thanking them."
+  },
+  {
+    "number": 189,
+    "text": "What are you taking for granted?"
+  },
+  {
+    "number": 190,
+    "text": "Tell me about what death means to you. Simply the end, reincarnation or is there an afterlife? What scares you about death? Is it leaving people behind? Not accomplishing what you wanted or simply not knowing what is next? Write about what you are expecting from your afterlife or write about who or what you would like to be reincarnated as the next time around. Use as much detail as possible."
+  },
+  {
+    "number": 191,
+    "text": "Create a list of people you would love to meet. For your top 5 write about why you would like to meet them."
+  },
+  {
+    "number": 192,
+    "text": "Write a review for a movie, book, album or restaurant you recently watched, read, heard or visited."
+  },
+  {
+    "number": 193,
+    "text": "Tell me about one of your biggest adventures so far. Reminder: 30-day update for prompt No. 163"
+  },
+  {
+    "number": 194,
+    "text": "If you could travel into the future, how far forward would you choose to go and what would you hope or expect to see there?"
+  },
+  {
+    "number": 195,
+    "text": "Who do you often compare yourself to & why?"
+  },
+  {
+    "number": 196,
+    "text": "List your favorite movies."
+  },
+  {
+    "number": 197,
+    "text": "What do you believe in?"
+  },
+  {
+    "number": 198,
+    "text": "I wish I had ( blank ) because..."
+  },
+  {
+    "number": 199,
+    "text": "If an Alien asked you to sum up life on earth on only 2 pages of your journal for them to take back to their planet, what would you write?"
+  },
+  {
+    "number": 200,
+    "text": "Tell me about your most inappropriate crush."
+  },
+  {
+    "number": 201,
+    "text": "If you had to become a mythical creature like a vampire, werewolf, witch, fairy, mermaid etc which would you choose and why?"
+  },
+  {
+    "number": 202,
+    "text": "If someone handed you an envelope containing the exact date and time of your death, would you open it? Why or why not?"
+  },
+  {
+    "number": 203,
+    "text": "List your favorite foods."
+  },
+  {
+    "number": 204,
+    "text": "What do you value?"
+  },
+  {
+    "number": 205,
+    "text": "I wish I knew ( blank ) because..."
+  },
+  {
+    "number": 206,
+    "text": "Combine one prompt from each column to create a plotline for a short story."
+  },
+  {
+    "number": 207,
+    "text": "Tell me about a time when you have felt lost."
+  },
+  {
+    "number": 208,
+    "text": "List the pros and cons of becoming immortal."
+  },
+  {
+    "number": 209,
+    "text": "If you had to move to another country, what things would you miss the most about where you live now?"
+  },
+  {
+    "number": 210,
+    "text": "Tell me about a time when you won something. Hold on to the feeling for a few moments as if i t’s happening again to you right now. You are a winner! How does it make you feel?"
+  },
+  {
+    "number": 211,
+    "text": "Tell me about some of the lessons the school of life has taught you so far. Add a brief summary of the situations that taught you the life lessons."
+  },
+  {
+    "number": 212,
+    "text": "Tell me about some of your popular forms of procrastination or your most common excuses for not doing something you know you should."
+  },
+  {
+    "number": 213,
+    "text": "Think about a recent mundane journey; now give it a Hollywood action movie makeover. Write about it as an adventure: car chases, helicopters, explosions, create exciting characters for those you travel with. Is your bus driver an ex hit-man? Is the passenger in the car next to yours an undercover government agent? Is someone on your train secretly transporting alien technology in their bag?"
+  },
+  {
+    "number": 214,
+    "text": "Tell me about one of the bravest things you have ever done."
+  },
+  {
+    "number": 215,
+    "text": "Fill an entire double page spread with your favorite words. Write them in different sizes, different colors and different styles. Keep adding words to these pages when you think of or hear a word you like, fill in any white space with words."
+  },
+  {
+    "number": 216,
+    "text": "Set a timer for 10 minutes, now for the full 10 minutes do not stop writing. Whatever thoughts cross your mind write them down, do not censor yourself or worry about spelling and punctuation. Just clear all of the mental clutter out onto the paper. After the 10 minutes relax and reward yourself."
+  },
+  {
+    "number": 217,
+    "text": "List your favorite material objects (you do not have to actually own them yet)."
+  },
+  {
+    "number": 218,
+    "text": "Tell me about a time when any of your negative personality traits such as stubbornness, hesitation or lack of patience have actually helped you."
+  },
+  {
+    "number": 219,
+    "text": "Style vision pages. Spend some time collecting images that represent how you would like to present yourself to the world through your personal style. Find them online or cut from magazines. Fill a double page spread (or more) in your journal with your ‘style sheet’. Having a style sheet can make shopping and spotting hidden treasures easier as they almost jump out at you because you have an idea of what you are looking for."
+  },
+  {
+    "number": 220,
+    "text": "Create a double page mood board in your journal for your favorite magazine or blog as if you are pitching an idea for an article. Is it a review, interview, story, how-to, report, preview or a photo shoot? Add some example images and a brief summary of your article."
+  },
+  {
+    "number": 221,
+    "text": "Tell me about your first kiss. Who was it with? Where were you? Or how do you want your first kiss to go and with who (change their name if you want)?"
+  },
+  {
+    "number": 222,
+    "text": "Is there anything you wish you spent more time doing 5/10 years ago?"
+  },
+  {
+    "number": 223,
+    "text": "How do you spend most of your money? How would you like to spend it?"
+  },
+  {
+    "number": 224,
+    "text": "Tell me about 5 good things that happened yesterday."
+  },
+  {
+    "number": 225,
+    "text": "What makes you laugh?"
+  },
+  {
+    "number": 226,
+    "text": "Home vision pages. Create a double page (or more) mood board in your journal for your dream home or how you would like to decorate your current home. Include key pieces of furniture, color schemes and inspirational spaces etc. Find images online or cut from magazines."
+  },
+  {
+    "number": 227,
+    "text": "Think about something you find really beautiful and breathtaking, now in detail describe it in the most mundane, uninteresting and logical way."
+  },
+  {
+    "number": 228,
+    "text": "Tell me about one of the kindest things you have ever done."
+  },
+  {
+    "number": 229,
+    "text": "Create a list of your ‘not so useful’ talents. Such as losing keys, usually being late, best at making a mess, knowing all the words to a cheesy movie etc."
+  },
+  {
+    "number": 230,
+    "text": "What is something most people do not know about you? Is it because they do not ask or because you keep it a secret?"
+  },
+  {
+    "number": 231,
+    "text": "Tell me about how someone has recently helped you? It could be directly or through a service they created/provided."
+  },
+  {
+    "number": 232,
+    "text": "What makes you cry?"
+  },
+  {
+    "number": 233,
+    "text": "Travel vision pages. Fill a double page spread (or more) in your journal with pictures of places you want to visit. Find images online or cut out of magazines. Free travel brochures are a good source of images. Fill the pages with the sights you want to see, places you want to relax etc."
+  },
+  {
+    "number": 234,
+    "text": "Think about something really mundane and uninteresting to you, now describe in a way that makes it sound breathtakingly beautiful or fascinating."
+  },
+  {
+    "number": 235,
+    "text": "Tell me about one of the greatest moments of your life so far."
+  },
+  {
+    "number": 236,
+    "text": "If you could ask an all knowing higher being of your choice only one question and they had to answer it, what would you ask them? What do you hope the answer would be?"
+  },
+  {
+    "number": 237,
+    "text": "If you had to do your life over again, is there anything you would change?"
+  },
+  {
+    "number": 238,
+    "text": "Tell me about your favorite holiday/celebration. What do like about it?"
+  },
+  {
+    "number": 239,
+    "text": "What are some expectations and demands that you have for yourself? Are they fair or realistic?"
+  },
+  {
+    "number": 240,
+    "text": "Health & Body vision pages. Fill a double page spread (or more) in your journal of images and words that will help motivate you with your health and fitness goals. Include foods you would like to eat more of and any activities you want to do to improve your fitness. Avoid including any unrealistic body inspirations."
+  },
+  {
+    "number": 241,
+    "text": "Combine one prompt from each column to create a plotline for a short story."
+  },
+  {
+    "number": 242,
+    "text": "Tell me about your first love. Who were they? What did you love about them? How did you feel when you were together? Or tell me what you are expecting from your first love."
+  },
+  {
+    "number": 243,
+    "text": "Write down 3 things you would like to say to or ask your boss, teacher or someone with authority over you. If you knew you would not get into trouble for it. How would you want them to respond to each?"
+  },
+  {
+    "number": 244,
+    "text": "What do you need to avoid or remove in order to improve your life? How do they affect you? How would your life improve if you removed them? How could you make it happen?"
+  },
+  {
+    "number": 245,
+    "text": "I am fortunate because..."
+  },
+  {
+    "number": 246,
+    "text": "Tell me about the benefits of accepting yourself completely. All of your good and not so good bits."
+  },
+  {
+    "number": 247,
+    "text": "What would you like to explore and learn more about?"
+  },
+  {
+    "number": 248,
+    "text": "Pick up a fictional book or open an eBook you have never read, open to page 5, write the first sentence of the 2nd paragraph down and now continue the story to fill the rest of your journal page."
+  },
+  {
+    "number": 249,
+    "text": "Tell me about a time when you were afraid. What happened? How did it make you stronger and what did you learn?"
+  },
+  {
+    "number": 250,
+    "text": "My guilty pleasures are..."
+  },
+  {
+    "number": 251,
+    "text": "What do you think you would regret not doing, experiencing, being or having when looking back at the end of your life?"
+  },
+  {
+    "number": 252,
+    "text": "Tell me about a vacation or a day out you enjoyed. Where did you go? What did you do? Add a photo if possible."
+  },
+  {
+    "number": 253,
+    "text": "What are your responsibilities and duties?"
+  },
+  {
+    "number": 254,
+    "text": "What do you really want?"
+  },
+  {
+    "number": 255,
+    "text": "Think of a fairytale or story with a clear villain; now write a diary entry from their point of view. What happened that day? What do they want? How are they feeling? How did the pesky hero or heroine scupper their plans? Do they even think what they are doing is wrong?"
+  },
+  {
+    "number": 256,
+    "text": "What legacy do you want to leave to the world?"
+  },
+  {
+    "number": 257,
+    "text": "Which store would you choose for a free 10-minute trolley sweep? Where would you head to first? Write a list of all the things you would fill your trolley with."
+  },
+  {
+    "number": 258,
+    "text": "If joy and happiness became the international currency of the world, do you think you would be rich or poor? What would make you richer?"
+  },
+  {
+    "number": 259,
+    "text": "What does the expression ‘fortune favors the bold’ mean to you?"
+  },
+  {
+    "number": 260,
+    "text": "What does ‘satisfaction’ mean to you?"
+  },
+  {
+    "number": 261,
+    "text": "Tell me about what can make you retreat from pursuing your goals and dreams?"
+  },
+  {
+    "number": 262,
+    "text": "Write a 10 years later update about one of your favorite fictional characters. What has happened to them since the happily ever after?"
+  },
+  {
+    "number": 263,
+    "text": "Tell me about one of the most daring things you have ever done."
+  },
+  {
+    "number": 264,
+    "text": "Make a list of all the delicious foods you love to eat but wish they could magically be as beneficial to you as eating fruit and vegetables."
+  },
+  {
+    "number": 265,
+    "text": "Think of a situation or person that is making you feel angry, sad or frustrated. Now scream, shout or roar as loud as you can into a pillow or cushion. Get it all out. Report back to journal."
+  },
+  {
+    "number": 266,
+    "text": "Tell me about any acts of kindness you have received. How do you feel when someone does something kind for you?"
+  },
+  {
+    "number": 267,
+    "text": "Today turn envy into inspiration, by thinking about someone you feel envious of. Create a list of all the things you feel jealous about; is it their appearance, material possessions, lifestyle, personality traits, experiences, achievements etc? Now with 10 being the most important and 1 the least, go through the list and for each one rate from 1 to 10 on how important (honestly) each point would be to improving your overall happiness. When rating them go a little bit deeper, for example are you really jealous of their expensive car because you want the exact same one? Or is it because you are actually envious of the fact that they have the money to spend on an expensive car? For the points you rated highly take some time to write out some ways you too could have what they have but in your own individual way. Some examples could be: They have confidence to spare : Push your boundaries; try new things to increase your self-confidence. They have a great social life : Put yourself in a position to meet lots of new potential friends such as joining a class or a team. They always look great : Make more of an effort with your appearance, wear your best, try a new style and improve your health & fitness levels. They have achieved so much : Although it may not always seem like it, underneath it all they were paddling hard like a swan. They had a goal and worked hard towards it over time. So decide on an achievement you want to accomplish and start paddling. They were born into money : Yes they may have been lucky enough to be born into money, but that money came from somewhere. At some point in their family history someone worked hard to create the wealth. So use them as motivation to work hard and know the money you make will feel twice as valuable because you earned it."
+  },
+  {
+    "number": 268,
+    "text": "Tell me about the next big step you are going to take towards your dreams."
+  },
+  {
+    "number": 269,
+    "text": "Write a day in the life from the perspective of a park bench. What does it see? Who sits on it? What are their stories? What changes around it over time?"
+  },
+  {
+    "number": 270,
+    "text": "Create a list of significant world events that have happened in your lifetime. Add a couple of images."
+  },
+  {
+    "number": 271,
+    "text": "Which 5 famous or influential people would you like to be friends with and why? Where would you hang out?"
+  },
+  {
+    "number": 272,
+    "text": "In your journal draw something from your home or a view from a window. No judging, no erasing the lines. Just draw, sketch or doodle it. No skipping this prompt if your journal is lined, draw anyway."
+  },
+  {
+    "number": 273,
+    "text": "List all the places you are grateful for having visited. Add some images if possible."
+  },
+  {
+    "number": 274,
+    "text": "We all know our self confidence only grows when we expand our comfort zones, so tell me about a time when you pushed your boundaries and felt rewarded with a boost of self confidence afterwards. Now write down at least 5 things you could do to earn more confidence."
+  },
+  {
+    "number": 275,
+    "text": "What do you want people to know you for? What do you want your ‘thing’ to be and why?"
+  },
+  {
+    "number": 276,
+    "text": "Combine one prompt from each column to create a plotline for a short story."
+  },
+  {
+    "number": 277,
+    "text": "Tell me about an occasion/event/moment that exceeded your expectations."
+  },
+  {
+    "number": 278,
+    "text": "If you were to be magically turned into an animal, which would you choose & why?"
+  },
+  {
+    "number": 279,
+    "text": "Tell me about a time when you lost your temper. What was it about?"
+  },
+  {
+    "number": 280,
+    "text": "Tell me about a person who always makes you feel better."
+  },
+  {
+    "number": 281,
+    "text": "Tell me what does ‘home’ mean to you?"
+  },
+  {
+    "number": 282,
+    "text": "Life can be broken down into the following 10 areas: 1. Family 2. Health & wellbeing 3. Spirituality & faith 4. Career & finances 5. Love life 6. Social life 7. Creativity & self-expression 8. Personal interests 9. Self-exploration 10. Learning Thinking about your life, rate each area from 1-10 (10 being perfect). Where do you see opportunities for growth? In your journal, free write about how you could improve them. Then for each area you want to improve the most, write down at least one clear action you could take. Possible suggestions to help you grow in multiple areas at once could be: Getting an additional part time job would increase your income (finances), allow you to acquire new skills (career & learning) and make new friends (social life). Joining an art class would allow you to explore your inner artist (creativity & self expression), meet new people (social life) and discover new techniques (learning). Going to the gym or a yoga studio (health & wellbeing) with a friend once a week (social life). Note: Whenever you are offered a new opportunity which you might normally turn down because “I just don’t have the time”, “that’s just not my kind of thing” or “I wouldn’t be any good at it” take the time to ask yourself “which of the 10 life areas could it help me grow in?”"
+  },
+  {
+    "number": 283,
+    "text": "Write a day in the life from the perspective of a crystal chandelier above a private secluded seated area in an exclusive 5 star hotel lobby, popular with the rich and famous. What does it see? What secrets does it know?"
+  },
+  {
+    "number": 284,
+    "text": "Tell me about a time when everything went your way."
+  },
+  {
+    "number": 285,
+    "text": "Create your alter ego. What would their name be? Write a list of personality traits you would like them to have. What would their personal style be like? How would they carry themselves? In what situations do you think having an alter ego would be useful? Some famous examples: Norma Jean Baker - Marilyn Monroe Stefani Joanne Angelina Germanotta - Lady Gaga Tara Leigh Patrick - Carmen Electra Reginald Kenneth Dwight - Elton John Maurice Joseph Micklewhite - Michael Caine Shawn Carter - Jay Z Katheryn Elizabeth Hudson - Katy Perry Lizzie Grant - Lana Del Rey Heather Renee Sweet - Dita Von Teese Eileen Regina Edwards - Shania Twain Margaret Hyra - Meg Ryan Alicia Moore - Pink Mark Sinclair Vincent - Vin Diesel Eric Bishop - Jamie Foxx Walter Willis - Bruce Willis"
+  },
+  {
+    "number": 286,
+    "text": "What is your most treasured family memory from the past year/3 years/5 years?"
+  },
+  {
+    "number": 287,
+    "text": "What aspects of your job do you enjoy? Big and small. If you are between jobs what will you enjoy about being employed or about creating your own opportunity?"
+  },
+  {
+    "number": 288,
+    "text": "What are you in denial about?"
+  },
+  {
+    "number": 289,
+    "text": "With no limitations or inhibitions complete the following statement in as much vivid detail as you and your pen can handle: My biggest dream is to..."
+  },
+  {
+    "number": 290,
+    "text": "Write a short story about a fictional spy mission you and your team went on. What was your mission objective? Who were you working for and against? What exciting and glamorous locations were you based? What didn’t go to plan? Did you complete your objective?"
+  },
+  {
+    "number": 291,
+    "text": "Tell me as much as you can about a special person to you who has passed away. What did they enjoy doing? Where did they work? What did they teach you? How did they make you feel? Add a photo if you can."
+  },
+  {
+    "number": 292,
+    "text": "If you had the ability to influence the minds of others for 24 hours what would you do and why?"
+  },
+  {
+    "number": 293,
+    "text": "Tell me about a time your first impression or assumption about a person or situation was completely wrong."
+  },
+  {
+    "number": 294,
+    "text": "List your favorite actors & actresses with their best roles."
+  },
+  {
+    "number": 295,
+    "text": "What do you think the secrets or keys to a happy life are?"
+  },
+  {
+    "number": 296,
+    "text": "My ideal body would be..."
+  },
+  {
+    "number": 297,
+    "text": "In the middle of the night you are woken up by a loud hammering sound coming from beneath your bed. You push back the bed and notice for the first time a golden handle attached to a circular trapdoor in the floorboards. As you pull open the trapdoor your room is filled with daylight. As the trapdoor stands open you can see the top of a ladder but cannot see the bottom as it a long way down. You see a note nailed onto the inside of the door that reads... ( Continue the story )"
+  },
+  {
+    "number": 298,
+    "text": "Tell me about a time when you laughed so hard you couldn't breathe or when you could not stop laughing at a really inappropriate time."
+  },
+  {
+    "number": 299,
+    "text": "If you could choose, which era would you have liked to have been born into and why?"
+  },
+  {
+    "number": 300,
+    "text": "In detail plan a flash back party based on your childhood or teenage years. Complete with the types of party food you used to enjoy, music from the time and expected dress code from the era. Or in detail, plan a themed party based on a movie, book or TV show. Decorate according to theme and require all those attending to wear suitable attire. Note: If you throw a party (even just for yourself – lots of fun, you get to eat party food and dance without a care in the world) report back to journal complete with photos."
+  },
+  {
+    "number": 301,
+    "text": "List your favorite musicians, bands and songs."
+  },
+  {
+    "number": 302,
+    "text": "What qualities do you admire about yourself?"
+  },
+  {
+    "number": 303,
+    "text": "In detail write about how you would like people to feel after interacting with you."
+  },
+  {
+    "number": 304,
+    "text": "Write a poem about the first thing which enters your mind after you read this prompt."
+  },
+  {
+    "number": 305,
+    "text": "Tell me in detail about a time when you visited somewhere special."
+  },
+  {
+    "number": 306,
+    "text": "What would you do if you had the super hero ability to fly for 24 hours?"
+  },
+  {
+    "number": 307,
+    "text": "What do you think people’s first impressions of you are? What would you like it to be?"
+  },
+  {
+    "number": 308,
+    "text": "Tell me about some of the reasons you are grateful about the country where you live."
+  },
+  {
+    "number": 309,
+    "text": "Who do you admire and why?"
+  },
+  {
+    "number": 310,
+    "text": "From head to toe (kindly) rate the different areas of your body. Which do you like? Which areas could do with a tune up? This includes the health of your heart. Write a list of a few realistic actions (big or small) you could do to help make improvements. Some examples to help improve your health and fitness could be: Going to the gym or exercising at home at least twice a week. Making an effort to walk for at least 20 minutes a day. For every 3 biscuits you take out of the cookie jar put 1 back (that is already a 33% calorie saving). Eat more fruit & vegetables. During the commercial breaks on TV you could jog on the spot/do some squats/jumping jacks/pretend to jump rope. When you are getting ready in the morning turn up your favorite music and dance away like no one is watching. At night take the time to stretch before bed to improve your flexibility etc. Then in your journal make the following agreement with yourself: “I promise to take the small and manageable action(s) of (personal action of choice) to help improve my overall health and wellbeing because I deserve it. I am also doing this for the sake of (those you care for and care for you).” Signed................................................."
+  },
+  {
+    "number": 311,
+    "text": "Write a day in the life of someone you admire (real or fictional)."
+  },
+  {
+    "number": 312,
+    "text": "Tell me about a time when you tried something new."
+  },
+  {
+    "number": 313,
+    "text": "What would you do if you had the ability to read minds for 24 hours?"
+  },
+  {
+    "number": 314,
+    "text": "What are some of the biggest hurdles standing in your way right now?"
+  },
+  {
+    "number": 315,
+    "text": "Create a list of services different companies pr ovide that you are grateful for. Such as the internet, electricity, heating, clean water etc. Why do you feel grateful for them? How different would your life be if you did not have easy access to them for 30 days?"
+  },
+  {
+    "number": 316,
+    "text": "Tell me about the biggest decision you made today/this week/this month/this year."
+  },
+  {
+    "number": 317,
+    "text": "Imagine waking up 10 years in the future doing the same things you are doing today. Is there anything you could do now differently in the present that would make you happier and improve your quality of life in the future?"
+  },
+  {
+    "number": 318,
+    "text": "In your journal write an article for a magazine or blog about a subject you are passionate about and interested in. Sharing what you know about the article subject with the reader. Mind map or list some potential topics first. If you are struggling to think of a topic ask yourself “what advice do people come to me for?” or “what is it that I know that could benefit others?” Are you the person who gives good advice about gadgets, relationships, money, creative projects, fashion? Write your article about ‘your thing’ (everyone has at least one)."
+  },
+  {
+    "number": 319,
+    "text": "Create a list of things you enjoyed as a child. Add a photo of you as a child."
+  },
+  {
+    "number": 320,
+    "text": "What 10 fun & ridiculous laws would you pass if you were King/Queen or President?"
+  },
+  {
+    "number": 321,
+    "text": "Tell me about something you know you can do better than most people."
+  },
+  {
+    "number": 322,
+    "text": "Tell me about one of your favorite memories from the past year."
+  },
+  {
+    "number": 323,
+    "text": "What would really help you right now?"
+  },
+  {
+    "number": 324,
+    "text": "I am a great …"
+  },
+  {
+    "number": 325,
+    "text": "In as much detail write about what can you hear, smell, see and taste right now?"
+  },
+  {
+    "number": 326,
+    "text": "On a double page spread write your Mother’s (or Mother figure’s) name in the centre of the left page and your Father’s (or Father figure’s) in the center of the right page. Now mind map out from each name their qualities, values, skills, talents, nature, habits, temperaments, lessons they taught you and their style etc. Then circle the qualities you inherited and underline the ones you would like to have yourself. Add a photo of them."
+  },
+  {
+    "number": 327,
+    "text": "Invent a national holiday celebrating you. What would it be called? What food would be eaten? What sort of decorations would people put up and what would they wear? What traditions would people do on your day?"
+  },
+  {
+    "number": 328,
+    "text": "Set a timer for 15 minutes, now for the full 15 minutes do not stop writing. Whatever thoughts cross your mind write them down, do not censor yourself or worry about spelling and punctuation. Just clear all of the mental clutter out onto the paper. After the 15 minutes relax and reward yourself."
+  },
+  {
+    "number": 329,
+    "text": "Tell me about a few things that have happened over the past 30 days that you are grateful for."
+  },
+  {
+    "number": 330,
+    "text": "What moves you?"
+  },
+  {
+    "number": 331,
+    "text": "What does ‘having purpose’ mean to you?"
+  },
+  {
+    "number": 332,
+    "text": "Tell me about a time when you visited somewhere special you had never been before. Pretend you are there again and in as much detail write about what you can see, hear, smell, and taste as if you are there again. Remember through your senses."
+  },
+  {
+    "number": 333,
+    "text": "Create a list of things you enjoyed as a teenager. Add a photograph of teenage you, the more embarrassing the better."
+  },
+  {
+    "number": 334,
+    "text": "Create a list of things you enjoy doing on your own."
+  },
+  {
+    "number": 335,
+    "text": "What are you most excited about right now? Why?"
+  },
+  {
+    "number": 336,
+    "text": "What is your favorite season? Make a list of all the things you love about it. Go through all your senses, what do you like to see, feel, smell, taste and hear?"
+  },
+  {
+    "number": 337,
+    "text": "What motivates you?"
+  },
+  {
+    "number": 338,
+    "text": "What do you wish you were bold or brave enough to do?"
+  },
+  {
+    "number": 339,
+    "text": "Think a bout one of your greatest fears; now write a short story about someone over coming that fear."
+  },
+  {
+    "number": 340,
+    "text": "Tell me about a ‘wow’ or ‘oh yeah’ moment in your life. When you came to a realization and something made complete sense. What happened? Where were you? What did you realize/learn?"
+  },
+  {
+    "number": 341,
+    "text": "I am a self-confessed..."
+  },
+  {
+    "number": 342,
+    "text": "What act of kindness have you recently seen in person or in the media that has rekindled your faith in people?"
+  },
+  {
+    "number": 343,
+    "text": "I am grateful for my healthy heart because..."
+  },
+  {
+    "number": 344,
+    "text": "Tell me about one of the biggest decisions you have ever made."
+  },
+  {
+    "number": 345,
+    "text": "Imagine you were told the world was going to end in 7 days time. Tell me about how would you want to spend those 7 days? Doing what, where and with who? Action: Choose one thing and do it this week."
+  },
+  {
+    "number": 346,
+    "text": "Combine one prompt from each column to create a plotline for a short story."
+  },
+  {
+    "number": 347,
+    "text": "Tell me about an embarrassing moment in your life that is now funny looking back on it."
+  },
+  {
+    "number": 348,
+    "text": "If everyone abandoned your city or town for 24 hours how would you spend the day? The entire city is your playground for the 24 hours."
+  },
+  {
+    "number": 349,
+    "text": "Tell me about some recent memories that make you smile."
+  },
+  {
+    "number": 350,
+    "text": "List as many simple pleasures you enjoy as you can."
+  },
+  {
+    "number": 351,
+    "text": "What does ‘having momentum’ mean to you?"
+  },
+  {
+    "number": 352,
+    "text": "Tell me about a time when you failed at something multiple times before you eventually succeeded. How did you achieve your goal? How did it feel? Are there any situations in your life now that could benefit from you being as persistent?"
+  },
+  {
+    "number": 353,
+    "text": "Write about a memorable day on one side of your journal; now write about the day in opposites on the opposite page. Turn any descriptions upside down; night is day, hot is cold, rain is sunshine, male is female, up is down, happy is sad, black is white, blunt is sharp etc. Alternatively you can ‘opposite’ a page from one of your favorite books. Note: Keep as a surreal source of inspiration."
+  },
+  {
+    "number": 354,
+    "text": "Where were you this time last year/5 years ago/10 years ago?"
+  },
+  {
+    "number": 355,
+    "text": "Make up a situation where you performed an amazingly heroic act. Write out the speech you would give to the media at a press conference after."
+  },
+  {
+    "number": 356,
+    "text": "Write a list of all the things you wanted to be when you grew up. Now think about how you can make one of them come true for one day. Did you want to be a dancer? Join a dance class for a day. A footballer? Join a football training session. A vet? Volunteer at an animal sanctuary for a day. Work through your ideas in your journal and then choose one. Research and plan how you can make it happen. Report back to your journal when you have done it. Extra: Plan and host a ‘when I grow up’ party where your guests attend dressed up as what they wanted to be when they were younger. Report back to journal."
+  },
+  {
+    "number": 357,
+    "text": "If someone has read this far into your journal, what would you like them to have learned from you and why?"
+  },
+  {
+    "number": 358,
+    "text": "What advice or pep talk would you like to give yourself?"
+  },
+  {
+    "number": 359,
+    "text": "How are you feeling today?"
+  },
+  {
+    "number": 360,
+    "text": "List over 50 practical, creative and ridiculous uses for a one of the following: > A pencil > A vase > A used lightbulb > A shipping container > A piece of copier paper > A used book > A car tyre > A shed > A paper clip"
+  },
+  {
+    "number": 361,
+    "text": "Some of the ways I have benefited from journal writing are…"
+  },
+  {
+    "number": 362,
+    "text": "Write a fake acceptance speech for an award such as an Oscar, Grammy, Noble Peace Prize or for any award you would really love to win. Who would you want to thank? What does it mean to you? Would you start crying? Would the host need to drag you off the stage to stop you talking? Who would be in the crowd? What would you be wearing?"
+  },
+  {
+    "number": 363,
+    "text": "If ‘the bank of life’ appeared in your town for only one day and offered you the following: Take 10 years off of your life to become one of the most attractive people in the world. Take 10 years off of your life to become incredibly intelligent. Take 10 years off of your life to become a millionaire. Take 10 years off of your life to meet and marry the love of your life. Take 10 years off of your life in exchange for international fame. Take 10 years off of your life to be one the best at what you do for a living. Take 20 years off of your life to complete 100 items on your bucket list. Take 20 years off of your life to become a billionaire. Add 10 years to your life in exchange for 5 of your greatest memories. Add 10 years to your life in exchange for having never met someone you care about. Which ones would you cash in or be tempted by and why? Which would you refuse and why? Would you even be alive today if you had entered this bank as a teenager?"
+  },
+  {
+    "number": 364,
+    "text": "Tell me about a few things that have happened over the last 365 days that you are grateful for."
+  },
+  {
+    "number": 365,
+    "text": "What are you looking forward to about the next 365 days? Can I take this opportunity to say congratulations for we have now reached the end of our year-long journaling journey and a massive thank you for reading my first book and I really hope it has helped you in some way. The good news is all the prompts in this book can be used again and again, year after year. Plus over the course of a year we change so much and there is always so much more of you to unearth (maybe some even shinier diamonds). So why not go around again? Maybe this time with a friend or family member? Let’s do it… Create a Bucket List Bank. Set up a separate savings account and put in a percentage of your earnings or save money into an unused jar with a screw lid and dedicate the funds to paying towards completing something from your bucket list. Decorate the outside of the jar with some images of the places and experiences you want. Having the images on the outside will make it less tempting to ‘dip’ into. Also keep it away from the front door to prevent the temptation to ‘borrow’ from it when you fancy going for a coffee or want to buy a magazine etc. Keep an eye out for any offers/discounts related to the things from you list. Watch an uplifting movie or a thought-provoking documentary you have been meaning to watch this week. Report back to journal. Plant some seeds this week and stick the empty packet into your journal. Over the next few weeks and months add photos or draw sketches in your journal of their progress as they grow. Go somewhere different. Somewhere you have never been. Take your journal and note your new surroundings, the sights, the sounds, the smells and the people. Do something that helps someone else. It could be helping with chores around the house, offering help to a neighbor, donating something to a cause you believe in, volunteering, helping someone with a project etc. Report back to journal. Give a child you know a camera and let them take photographs of anything they find interesting, stick a few of your favorites into your journal. Or give them a blank sheet of paper and some pens/crayons/paints and stick their works of art into your journal. Choose one of the photography prompts & report back to your journal with your favorite photograph. Write and post a handwritten letter to someone. Report back to journal. Extra: Ask them to write back to you & stick in their letter when it arrives. This week at a magazine stand go to where your usual favorite magazine is, now take 3 big side steps to the left or right. Now buy the first magazine that stands out the most to you. Hopefully it should be about a subject or for a demographic you do not normally read about. Report back to journal about anything new you have learned. Be Royal this week by following the rule ‘never complain, never explain’. Do not speak negatively about anyone or anything (if you do quickly follow up with a positive) and do not explain your actions to anyone unnecessarily. Make a real effort with your appearance this week as if your life is of interest to the world media. Dress to impress by wearing your nicest clothes and after you get dressed do not forget to put on your invisible crown. Your invisible crown will help you walk and sit with better posture because you do not want to let it fall from your head by walking too fast, by sitting hunched over or slouching. Report back to journal. Leave a note inside a book at the library or bookshop giving the finder a compliment, an uplifting quote or a positive word of advice you have found useful. Or if you are feeling really generous (& can afford it) leave a $5 note inside. Even better leave it in a book that you love, a book that has maybe helped you or inside a book you think a person would pick up when they are looking for help or hope. Your note or gift could be enough to help someone through a tough time. Report back to journal. Choose one of the photography prompts & report back to your journal with your favorite photograph. Make an effort to make conversation with someone different this week or help make someone new feel really welcome. Extra: Say good morning to at least 3 strangers every morning. Report back to journal. Can you think of someone who would benefit from an act of kindness? What could you do for them? What would cheer them up? Do it. Report back to journal. Go on a staycation by being a tourist in your hometown. Spend a day doing ‘touristy’ things. Even go to the tourist information office to ask them for any recommendations. You might even learn something new about your hometown. Pretend everything is new to you. Keep all the maps, tickets and leaflets from the day and stick them into your journal along with any explanations about how you spent the day. Note: Stick in an envelope to keep any photos of your staycation together. Send someone a thank you note. Report back to journal. Everyday this week stand in front of a mirror and out loud say 5 things you like about yourself. After each one, hold eye contact with yourself and smile, or maybe even give yourself a cheeky wink. How did the exercise make you feel? Report back to journal. Note: From now on try to create the habit of thinking or saying out loud one thing you like about yourself anytime you look into a mirror or see your reflection. For at least one day this week (more the better) record how you spend your 24 hours. In your journal write down on the left hand side of the page the times below, one for each line. Then for each hour write down what you are doing or what you have done. 05:00 06:00 07:00 08:00 09:00 10:00 11:00 12:00 13:00 14:00 15:00 16:00 17:00 18:00 19:00 20:00 21:00 22:00 23:00 00:00 01:00 02:00 03:00 04:00 Are you happy with how you spent your 24 hours today? Did you make enough time for yourself, personal projects, family & friends? How many hours did you spend online and watching TV? What else could you be doing? I discovered this technique in college; I think to encourage us to watch less daytime TV and to study more. I have since discovered a great book called 168 Hours: You Have More Time Than You Think by Laura Vanerkam about getting more out of your 168 hours per week. Note: For extra detail, imagine you are the subject of a scientific study and record everything. What did you wear? Eat? Buy? Do? Who did you interact with? Even take a photo of whatever you are doing every 60 minutes. This week schedule in some ‘you-time’. To do something you enjoy like going to the movies, shopping, going for a walk, going to the gym, playing a sport, yoga, catching up on a book, eating ice cream while watching TV. Anything you enjoy doing but do not make the time for often enough. Report back to journal. Think of a person you admire, real or fictional. Spend the week living as they would. Ask yourself “what would (blank) do in this situation?” Report back to journal. Assess your health by booking yourself in for a check up with your Doctor this week. Report back to journal. Assess your fitness levels this week by booking yourself in for a personal training session. It could be traditional gym training, running, swimming, yoga, pilates, martial arts etc, whatever appeals to you. Remember to note in your journal anything they recommend you should work on & take advantage of any introductory discounts they offer if you feel they would help you stay motivated. If you think of fitness as something only the vain and time rich can indulge in or you don ’t like exercise because none of your previous efforts have worked, shift your mindset and think of it as something you are doing for the sake of your heart and not your waistline. Instead of running to the mirror to look at your stomach and sighing because you have not got flat defined abs like an athlete after only one 30-minute workout (who hasn’t done that?). Know that the 30 minutes has been beneficial for your heart and by focusing on improving the health of your heart often, before long without realizing it your body will soon take shape almost like an added bonus. You will feel better, look better and have more energy. Note: Please consult with your Doctor/Physician before beginning any exercise program. This week become a ‘guerilla gardener’ by secretly planting a colorful flower or seeds somewhere neglected or dull. Report back to journal. Choose one of the photography prompts & report b ack to your journal with your favorite photograph. Schedule a ‘digital detox day’. No internet, no TV, no movies, no gaming, no email, no apps & no texting. You can use your phone to make actual phone calls if necessary. After report back to journal how it felt not relying on technology for one day, did you find it frustrating or liberating? Send someone a gift without them knowing it is from you. Report back to journal. Make the time one night this week to sit under the stars with a hot drink or look out of a window with all of your lights switched off and just take the time to look at the stars and night sky until you finish your drink (or longer). Report back to journal. Take your journal to a busy hotel and sit in the lobby or bar. Write about all the people who are coming and going. Note their style, how they interact with each other, what types of drinks did they order, what are they wearing? Where do you think they are from? How do you think they know each other? If you can’t make it to a hotel go to a busy train station or coffee shop. Note: This can be good source for fictional characters. Sort out your wardrobe/closet. Resist the temptation to pull everything out at once. As this can result in a mini emotional crisis on the floor while you are knee high in t-shirts, shoes and jeans screaming “why did I even bother starting this!” Prepare with a supply of your favorite snacks, put on some music or a movie and declare your room a no go zone for anyone else until you are finished. As you work through each section divide clothing and shoes into 5 groups: > Keep me > Store me > Sell or Swap me > Donate me > Recycle me. Keep me: In your closet/wardrobe group your keep me clothes first by color, from left to right: dark to light. Then within each color from left to right start with work wear, eveningwear, smart casual, casual & chill-out clothes. Or group your clothes by function first, left to right: Work wear, eveningwear, smart casual, casual & chill out. Then within each group order by color, dark to light. When you hang your keep me clothes back up, hang the closest hanger facing the wrong way. So in 3 months time you will see which items of clothing you have not touched within 3 months. Store me: The seasonal items (beach hats, bikinis, board shorts, big wooly jumpers, scarves, gloves) can be stored away for the next time their season comes around. Sell or Swap me: Sell your unwanted clothing to a second hand clothes merchant, sell them yourself online, rent a market stall for a day to run your very own pop up vintage store, sell at a garage/car boot sale etc. Swap clothes with friends and family or look for a local ‘swishing’ event. Donate me: Send to a charity shop, find a clothes bank or arrange for a charity to collect from you. Recycle me: For clothes that have had their day, put them into a clothes recycling bank so the materials can be used to make something else. Shoes: After playing a game of find the pairs, use elastic bands to keep the pairs together. Report back to journal how the process went. Did you rediscover any forgotten favorites? Did you find any items of clothing difficult to part with based on memories? How does it feel having a tidier more organized closet/wardrobe space? Note: Carry out this exercise in your underwear and try on every piece of clothing as you go and have a quick look in the mirror. Does it still fit? Does it suit you any more? Also don’t forget to take before and after photos of your closet space. This week schedule in a daily 20-minute wish walk. On your own go for a walk without listening to any music and spend the time imagining you have all the things you want. When any other thoughts pop up simply dismiss and replace with another wish. Note: If you cannot spare 20 minutes a day you can fit this into a busy schedule by wish walking whenever you are walking anywhere alone. Report back to journal. Host a 3-course meal by candlelight. Use your best plates and cutlery, dress to impress & play some music. Plan the details in your journal. Enjoy the food and the time with your partner, family, friends or your own company. Report back to journal. Reenact a childhood photo. Find a photograph of yourself as a child and pose in the exact same position with the same facial expression wearing clothes of similar color and style. Try and take the photo in the same location or somewhere like it. Stick the photos into your journal side by side. If you have a cat or dog you could reenact a photo of you with them as a puppy or kitten. Even better, find a group photo from your childhood such as a family portrait and get them involved too. Note: If you have a young family you could do this once a year to see how much everyone changes, year to year. Call someone up for a catch up. Report back to journal. This week when meeting new people, try greeting them like you would an old friend. Warm smile, eye contact and keep your arms uncrossed. Pretend like you have known them for years. Report back to journal. De-clutter a space in your home. Put on some music, prepare some snacks and remember to do it gradually in sections. Take before and after photos. Report back to journal. Choose one of the photography prompts & report back to your journal with your favorite photograph. Live this week as your alter ego from prompt No. 285 . Do, say, wear, walk, eat, talk and work like they would. If a stranger asks your name, you could even use your alter ego ’s name. In every situation ask yourself “what would (alter ego’s name) do?” Report back to journal. Take a nature walk somewhere you can get some fresh air and clear out the mental cobwebs, such as going to a park, a beach or lake etc. Photograph or sketch any interesting views or discoveries on your adventure. Keep and eye out for things to tape into your journal such as leaves or flowers. How was it? What did you see? What thoughts came up during your walk? In an elevator this week face the opposite direction to everyone else. Hold your ground as if it is perfectly normal for the 30 second ride. How empowered and bold did this simple act make you feel? Report back to journal. Note: If you find it too challenging you can look at your phone or a magazine just remain a rebel and face the wrong way. Schedule in some rest and relaxation for yourself. You could get a massage, a facial, a manicure/pedicure, book into a hotel for a night, catch up on a book in the bath, switch off your phone and watch a movie etc. In your journal work through some ideas, choose one and make it happen. Report back to journal after. Note: If it seems too expensive to go to a spa for a massage or beauty treatments, beauty schools & colleges offer discounted treatments as a way for the students to gain experience while being fully supervised. So you are getting a professional service for a fraction of the price of a spa. Sign up for a part time or one-day class for a subject you enjoy or you have always wanted to learn more about. Report back to journal. When in conversation this week practice your listening skills. Do not simply wait for the other person to finish talking so you can start. Listen to what they are saying; repeat back keywords or phrases for them to expand on. You are developing an important skill while they are feeling noticed and actually heard. Report back to journal. Note: Avoid making conversations about you, for example try not to say “I know what you are talking about because something similar happened to me when...” because that will only take the attention away from the other person. This week schedule in a daily 20-minute gratitude walk. On your own go for a walk without listening to any music and spend the time thinking about all the things you are grateful for about your life and the rest of the world. If any other thoughts pop up just dismiss them and replace by thinking of something else you are grateful for. Note: If you cannot spare 20 minutes a day you can fit this into a busy schedule by gratitude walking whenever you are walking anywhere alone. Report back to journal. Research to find any charities that organize one of the activities from your bucket list in exchange for you raising sponsorship money. For example sponsored skydives, mountain climbing etc. Sign up. Ask friends, family, work colleagues, local shops, local newspaper, radio stations etc to sponsor you. Use your bucket list bank fund to sponsor yourself. Document your research and progress in your journal. Take a walk around your neighborhood or town. Write everything down or take photos to describe things in further detail later. Pretend you are a location scout for a movie. Then in your journal write about the location as if it is the setting in the opening chapter of a book or movie, set the scene. Plant a tree. Report back to journal with a photo. Create a self-portrait of yourself. It could be a sketch, a doodle, a cartoon, a painting, a photograph or a collage etc. Completely your choice, do not be judgmental or critical of it, just enjoy the process. Report back to journal. You and your journal are going to a busy restaurant alone together. You are going to be that mysterious and interesting person who has the confidence to dine alone to work on their important project. Take this timeout to reflect over your journal(s). Write about the food, the service, your surroundings and about the people and their interactions. With any luck you might be treated like royalty as the staff could assume you are a food critic. If anyone asks, simply say you are a writer. After dessert, over coffee or tea while still sitting in the restaurant, write about how this experience has made you feel. Empowered & brave? For a weeklong photography challenge choose a prompt word from the list below and keep your camera or camera phone with you and keep an eye out for any opportunities to take as many interesting photographs of the subject as you can. Interpretation of the prompt word is totally up to you. Then report back to your journal with your favourite 1-3 photographs. Happy snapping! Can I take this opportunity to again say a massive thank you for reading my first book and I really hope it has helped you in some way. Hopefully your journals should be a million miles away from the scary blank notebooks they once were. Hi I'm Rossi, I can often be found upside down on my yellow yoga mat, journal writing and getting creatively messy. I am a quote addict, a gadget geek and an aspiring minimalist. I also consider myself to be a cake magnet, as I can't walk past a cake without being attracted to it. You too? I studied Psychology and Visual Communications at University where I (reluctantly) discovered the benefits of journal writing. I was scared of the blank page. Some of my favorite things are sleeping, reading with my legs up the wall, opening parcels, pop-up books, action movies, iPhoneography, the smell of blown out candles and being a tourist. I am allergic to mathematics and I look like I am taking part in a flash mob dance for one whenever a wasp comes near me. I pretty much know all the words to the movie Tomb Raider and I was born on the cusp (between two star signs) so I like to read both horoscopes and choose the one I like the sound of most. If you have enjoyed this book, I would be really grateful to you if you could please leave a review, even just a line or two would really mean the world. I would be even more thankful to you than I am to Ben & Jerry for their Phish Food flavored ice cream (that is a lot of gratitude). The links below will take you directly to the relevant pages. Amazon US: http://amzn.to/Vm8JK7 Amazon UK: http://amzn.to/ZUdpYf After the next couple of pages, your Kindle will give you the opportunity to rate this book and share your thoughts through an easy automatic feed to your Facebook and Twitter accounts. If you believe your friends would get something valuable out of this book, I’d be honored if you’d post your thoughts. Thanks a million and all the best, Rossi"
+  }
+]

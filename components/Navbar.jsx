@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import { ChevronDown, Menu } from "lucide-react";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
@@ -25,16 +26,16 @@ export default function Navbar({ hideNavbar = false }) {
   const [showSearch, setShowSearch] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const langDropdownRef = useRef(null);
+  const mobileLangDropdownRef = useRef(null);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   // List of paths where the navbar should be hidden
   const navbarExcludedPaths = [
-    '/dashboard',
-    '/login',
-    '/signup',
-    '/signin',
-    '/register',
-    '/client',
-    '/coach',
+    '/dashboard','/login','/signup','/signin','/register','/client','/coach',
     '/admin',
     '/appointments',
     '/messages',
@@ -144,9 +145,9 @@ export default function Navbar({ hideNavbar = false }) {
   useEffect(() => {
     if (!showLangDropdown) return;
     function handleClickOutside(event) {
-      if (langDropdownRef.current && !langDropdownRef.current.contains(event.target)) {
-        setShowLangDropdown(false);
-      }
+      const desktop = langDropdownRef.current?.contains(event.target);
+      const mobile = mobileLangDropdownRef.current?.contains(event.target);
+      if (!desktop && !mobile) setShowLangDropdown(false);
     }
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
@@ -204,9 +205,9 @@ export default function Navbar({ hideNavbar = false }) {
 
   return (
     <>
-      <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-lg shadow-sm border-b border-gray-100">
-        {/* Top Bar - Compact & Modern */}
-        <div className="w-full text-white text-xs flex items-center justify-between px-4 lg:px-6 py-1.5 bg-gradient-to-r from-[#002147] to-[#003368]">
+      <header className="sticky top-0 z-[100] bg-white/90 backdrop-blur-lg shadow-sm border-b border-gray-100 isolate">
+        {/* Top Bar - Desktop only (hidden on mobile for simpler single-bar layout) */}
+        <div className="hidden lg:flex w-full text-white text-xs items-center justify-between px-4 lg:px-6 py-1.5 bg-gradient-to-r from-[#002147] to-[#003368]">
           <div className="flex items-center gap-4 lg:gap-6">
             {/* Language Selector Dropdown */}
             <div className="relative flex items-center select-none" ref={langDropdownRef}>
@@ -305,15 +306,15 @@ export default function Navbar({ hideNavbar = false }) {
           aria-label="Main navigation"
         >
           <div className="flex justify-between items-center max-w-7xl mx-auto">
-            <div className="flex items-center">
-              <Link href="/" aria-label="WANAC Home" className="transform hover:scale-105 transition-transform duration-200">
+            <div className="flex items-center min-w-0">
+              <Link href="/" aria-label="WANAC Home" className="transform hover:scale-105 transition-transform duration-200 flex-shrink-0">
                 <Image
                   src="/WANAC N 8 Old Glory.png"
                   alt="WANAC Logo"
                   width={160}
                   height={60}
                   priority
-                  className="object-contain"
+                  className="object-contain w-28 sm:w-36 lg:w-[160px] h-auto"
                 />
               </Link>
             </div>
@@ -386,49 +387,161 @@ export default function Navbar({ hideNavbar = false }) {
               </div>
             )}
 
-            {/* Mobile Menu Button */}
-            <button
-              className="lg:hidden p-2 hover:bg-gray-100 transition-colors duration-200"
-              onClick={() => {
-                setIsMobileMenuOpen(!isMobileMenuOpen);
-                setActiveMobileDropdown(null);
-              }}
-              aria-expanded={isMobileMenuOpen}
-              aria-label="Toggle mobile menu"
-            >
-              <Menu className={`w-6 h-6 text-gray-800 transition-transform duration-200 ${isMobileMenuOpen ? 'rotate-90' : ''}`} />
-            </button>
+            {/* Mobile: Donate, Shop, Log In + Menu (single clean bar) */}
+            <div className="lg:hidden flex items-center gap-1.5 sm:gap-2">
+              <Link
+                href="/pages/donate"
+                className="px-2.5 sm:px-3 py-1.5 text-xs font-semibold text-white bg-gradient-to-r from-orange-500 to-orange-600 hover:shadow-md transition-all duration-200 rounded"
+                aria-label="Donate"
+              >
+                Donate
+              </Link>
+              <a
+                href="/login"
+                className="px-2.5 sm:px-3 py-1.5 text-xs font-semibold text-[#002147] border border-[#002147] hover:bg-[#002147] hover:text-white transition-all duration-200 rounded"
+                aria-label="Log in"
+              >
+                Log In
+              </a>
+              <button
+                className="p-2 hover:bg-gray-100 rounded transition-colors duration-200"
+                onClick={() => {
+                  setIsMobileMenuOpen(!isMobileMenuOpen);
+                  setActiveMobileDropdown(null);
+                }}
+                aria-expanded={isMobileMenuOpen}
+                aria-label="Toggle mobile menu"
+              >
+                <Menu className={`w-6 h-6 text-gray-800 transition-transform duration-200 ${isMobileMenuOpen ? 'rotate-90' : ''}`} />
+              </button>
+            </div>
           </div>
 
-          {/* Mobile Menu - Modern Slide-in Design */}
-          {isMobileMenuOpen && (
+          {/* Mobile Menu - Rendered in portal so it always appears on top */}
+          {isMobileMenuOpen && isMounted && typeof document !== "undefined" && createPortal(
             <>
               {/* Backdrop */}
               <div 
-                className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm lg:hidden animate-fadeIn"
+                className="fixed inset-0 z-[9998] bg-black/50 backdrop-blur-sm lg:hidden animate-fadeIn"
+                style={{ top: 0, left: 0, right: 0, bottom: 0 }}
                 onClick={() => {
                   setIsMobileMenuOpen(false);
                   setActiveMobileDropdown(null);
                 }}
+                aria-hidden="true"
               />
               
-              {/* Menu Panel */}
-              <div className="fixed inset-y-0 right-0 z-50 w-full max-w-sm bg-white shadow-2xl overflow-y-auto lg:hidden animate-slideInRight">
-                {/* Header */}
-                <div className="sticky top-0 bg-gradient-to-r from-[#002147] to-[#003368] text-white px-6 py-4 flex justify-between items-center">
+              {/* Menu Panel - 3/4 screen height, full width edge to edge, 90° corners */}
+              <div className="fixed top-0 right-0 left-0 z-[9999] w-full h-[75vh] max-h-[75vh] bg-white shadow-2xl overflow-hidden flex flex-col lg:hidden animate-slideInRight">
+                {/* Header - full width, 90° edges, content scrolls underneath */}
+                <div className="flex-shrink-0 z-10 w-full bg-gradient-to-r from-[#002147] to-[#003368] text-white px-6 py-4 flex justify-between items-center">
                   <h2 className="text-lg font-bold">Menu</h2>
                   <button
                     onClick={() => {
                       setIsMobileMenuOpen(false);
                       setActiveMobileDropdown(null);
                     }}
-                    className="p-2 hover:bg-white/10 transition-colors duration-200"
+                    className="p-2 hover:bg-white/10 transition-colors duration-200 rounded"
                     aria-label="Close menu"
                   >
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                   </button>
+                </div>
+
+                {/* Scrollable content - scrolls under the header */}
+                <div className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden">
+                {/* Mobile: Preferences (Language, Search, High contrast, Support) */}
+                <div className="lg:hidden px-6 py-4 border-b border-gray-100 bg-gray-50/50 space-y-3">
+                  <div className="relative" ref={mobileLangDropdownRef}>
+                    <button
+                      type="button"
+                      className="w-full flex items-center justify-between px-4 py-3 bg-white border border-gray-200 rounded-lg text-sm font-medium text-gray-800 hover:border-orange-300 transition-colors"
+                      onClick={e => { e.stopPropagation(); setShowLangDropdown(v => !v); }}
+                      aria-haspopup="listbox"
+                      aria-expanded={showLangDropdown}
+                    >
+                      <span className="flex items-center gap-2">
+                        <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                          <circle cx="12" cy="12" r="10"/>
+                          <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                        </svg>
+                        Language: {language}
+                      </span>
+                      <svg className={`w-4 h-4 text-gray-400 transition-transform ${showLangDropdown ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+                    {showLangDropdown && (
+                      <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden z-50 animate-fadeIn" role="listbox">
+                        {languageOptions.map((lang) => (
+                          <button
+                            key={lang}
+                            type="button"
+                            className={`w-full text-left px-4 py-3 text-sm transition-colors ${lang === language ? "font-semibold bg-orange-50 text-orange-600" : "text-gray-700 hover:bg-gray-50"}`}
+                            onClick={e => { e.stopPropagation(); setLanguage(lang); setShowLangDropdown(false); }}
+                            role="option"
+                            aria-selected={lang === language}
+                          >
+                            {lang}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                  <div className="relative">
+                    <button
+                      type="button"
+                      className="w-full flex items-center gap-2 px-4 py-3 bg-white border border-gray-200 rounded-lg text-sm font-medium text-gray-800 hover:border-orange-300 transition-colors"
+                      onClick={() => setShowSearch((v) => !v)}
+                      aria-label="Search"
+                    >
+                      <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                        <circle cx="11" cy="11" r="8" />
+                        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                      </svg>
+                      Search
+                    </button>
+                    {showSearch && (
+                      <div className="absolute top-full left-0 right-0 mt-1 p-2 bg-white border border-gray-200 rounded-lg shadow-lg z-50 animate-fadeIn">
+                        <input
+                          type="text"
+                          className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent"
+                          placeholder="Search..."
+                          value={searchValue}
+                          onChange={e => setSearchValue(e.target.value)}
+                          autoFocus
+                          onKeyDown={e => { if (e.key === 'Escape') setShowSearch(false); }}
+                        />
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex items-center justify-between px-4 py-3 bg-white border border-gray-200 rounded-lg">
+                    <span className="text-sm font-medium text-gray-800">High contrast</span>
+                    <label className="relative inline-flex items-center cursor-pointer">
+                      <input
+                        type="checkbox"
+                        className="sr-only peer"
+                        checked={isDark}
+                        onChange={() => setIsDark(!isDark)}
+                      />
+                      <div className="w-10 h-6 bg-gray-200 rounded-full peer peer-checked:bg-orange-500 transition-all duration-300"></div>
+                      <div className={`absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform duration-300 ${isDark ? "translate-x-4" : ""}`}></div>
+                    </label>
+                  </div>
+                  <a
+                    href="/pages/helpcenter"
+                    className="flex items-center gap-2 px-4 py-3 bg-white border border-gray-200 rounded-lg text-sm font-medium text-gray-800 hover:border-orange-300 hover:text-orange-600 transition-colors"
+                    onClick={() => { setIsMobileMenuOpen(false); setActiveMobileDropdown(null); }}
+                  >
+                    <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                      <circle cx="12" cy="12" r="10" />
+                      <path d="M9.09 9a3 3 0 1 1 5.82 0c0 1.5-1.5 2.25-2.25 2.25S12 13.5 12 15" />
+                      <circle cx="12" cy="18" r="1" />
+                    </svg>
+                    Support / Help Center
+                  </a>
                 </div>
 
                 {/* Navigation Sections */}
@@ -503,8 +616,10 @@ export default function Navbar({ hideNavbar = false }) {
                     SHOP
                   </Link>
                 </div>
+                </div>
               </div>
-            </>
+            </>,
+            document.body
           )}
         </nav>
       </header>
