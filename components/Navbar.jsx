@@ -35,13 +35,7 @@ export default function Navbar({ hideNavbar = false }) {
 
   // List of paths where the navbar should be hidden
   const navbarExcludedPaths = [
-    '/dashboard',
-    '/login',
-    '/signup',
-    '/signin',
-    '/register',
-    '/client',
-    '/coach',
+    '/dashboard','/login','/signup','/signin','/register','/client','/coach',
     '/admin',
     '/appointments',
     '/messages',
@@ -393,11 +387,18 @@ export default function Navbar({ hideNavbar = false }) {
               </div>
             )}
 
-            {/* Mobile: Log In + Menu (single clean bar) */}
-            <div className="lg:hidden flex items-center gap-1">
+            {/* Mobile: Donate, Shop, Log In + Menu (single clean bar) */}
+            <div className="lg:hidden flex items-center gap-1.5 sm:gap-2">
+              <Link
+                href="/pages/donate"
+                className="px-2.5 sm:px-3 py-1.5 text-xs font-semibold text-white bg-gradient-to-r from-orange-500 to-orange-600 hover:shadow-md transition-all duration-200 rounded"
+                aria-label="Donate"
+              >
+                Donate
+              </Link>
               <a
                 href="/login"
-                className="px-3 py-2 text-xs font-semibold text-[#002147] border border-[#002147] hover:bg-[#002147] hover:text-white transition-all duration-200 rounded"
+                className="px-2.5 sm:px-3 py-1.5 text-xs font-semibold text-[#002147] border border-[#002147] hover:bg-[#002147] hover:text-white transition-all duration-200 rounded"
                 aria-label="Log in"
               >
                 Log In
