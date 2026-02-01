@@ -1,8 +1,10 @@
 import axios from 'axios';
 
+const OPENAI_BASE_URL = process.env.NEXT_PUBLIC_OPENAI_API_URL || 'https://api.openai.com/v1';
+
 // Create a separate client for OpenAI API calls
 const openaiClient = axios.create({
-  baseURL: 'https://api.openai.com/v1',
+  baseURL: OPENAI_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },

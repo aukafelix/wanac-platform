@@ -110,8 +110,9 @@ export default function AdminCohortManagementPage() {
   // Add cohort to API
   const addCohort = async ({ program_id, name, description, coaches, clients, start_date, end_date }) => {
     const token = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null;
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://wanac-api.kuzasports.com';
     const response = await axios.post(
-      "https://wanac-api.kuzasports.com/api/v1/programs/cohort/add",
+      `${apiUrl}/api/v1/programs/cohort/add`,
       {
         program_id,
         name,
@@ -134,8 +135,9 @@ export default function AdminCohortManagementPage() {
 
   // Add members to cohort API
   const addCohortMembers = async (cohortId, memberIds) => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://wanac-api.kuzasports.com';
     const response = await axios.post(
-      "https://wanac-api.kuzasports.com/api/v1/programs/cohort-member/add",
+      `${apiUrl}/api/v1/programs/cohort-member/add`,
       {
         cohort_id: cohortId,
         members: memberIds, // array of user IDs
