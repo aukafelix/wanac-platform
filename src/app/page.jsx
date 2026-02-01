@@ -187,15 +187,15 @@ export default function Homepage() {
   <div className="absolute top-1/4 right-0 w-64 md:w-96 h-64 md:h-96 bg-gradient-to-l from-orange-500/15 to-transparent rounded-full blur-3xl animate-pulse" style={{ zIndex: Z_INDEX.background }} />
   
   <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative" style={{ zIndex: Z_INDEX.content }}>
-    <div className="max-w-3xl mx-auto lg:mx-0">
+    <div className="max-w-3xl mx-auto lg:mx-0 text-center lg:text-left">
       <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight mb-4">
         Empowering Veterans to <span className="block sm:inline">Thrive After Service</span>{' '}
         <span className="text-orange-500 block mt-1">with Community Support</span>
       </h1>
-      <p className="text-sm sm:text-base md:text-lg text-gray-200 mb-6 max-w-xl leading-relaxed">
-        Get tailored coaching, smart tools, and a community that truly understands your journey.
+      <p className="text-sm sm:text-base md:text-lg text-gray-200 mb-6 max-w-xl leading-relaxed mx-auto lg:mx-0">
+        Tailored coaching, smart tools, and a community that understands your journey.
       </p>
-      <div className="flex flex-col xs:flex-row gap-3 sm:gap-4">
+      <div className="flex flex-col xs:flex-row gap-3 sm:gap-4 justify-center lg:justify-start items-center lg:items-start">
                 <Link
                   href="/signup"
           className="group relative px-5 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold text-center overflow-hidden hover:shadow-2xl hover:shadow-orange-500/50 transition-all duration-300 text-sm"
@@ -232,7 +232,7 @@ export default function Homepage() {
   {/* Content Container */}
   <div className="relative max-w-6xl mx-auto" style={{ zIndex: Z_INDEX.content }}>
     {/* Section Header */}
-    <div className="mb-10 md:mb-12">
+    <div className="mb-10 md:mb-12 text-center">
       <h2 id="programs-heading" className="text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold mb-3 uppercase text-white">Our Programs</h2>
       <div className="w-12 h-1 bg-white mx-auto rounded-full" aria-hidden="true"/>
       <p className="mt-3 text-gray-200 text-xs sm:text-sm md:text-base max-w-xl mx-auto">
