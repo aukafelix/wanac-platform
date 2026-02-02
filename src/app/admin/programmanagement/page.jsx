@@ -1,8 +1,8 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import AdminSidebar from '../../../../components/dashboardcomponents/adminsidebar';
-import { Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField, IconButton, Stack, Select, MenuItem, InputLabel, FormControl, Autocomplete, Chip, Box, Typography, Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
-import { FaBook, FaEdit, FaPlus, FaUsers, FaLayerGroup, FaUser } from "react-icons/fa";
+import { Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField, Select, MenuItem, InputLabel, FormControl, Autocomplete, Chip } from '@mui/material';
+import { FaEdit, FaPlus } from "react-icons/fa";
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
 import { ProgramsService } from '../../../services/api/programs.service';
@@ -147,67 +147,94 @@ export default function AdminProgramManagementPage() {
   const getCoachNames = (ids) => (Array.isArray(ids) ? ids.map(id => coaches.find(c => c.id === id)?.name).filter(Boolean) : []);
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="h-screen flex bg-gray-50 font-serif">
       <AdminSidebar />
-      <main className="flex-1 p-8 ml-16 md:ml-56">
-        <Typography variant="h4" sx={{ mb: 4, fontWeight: 700 }}>Program Management</Typography>
-        <Button
-          ref={addButtonRef}
-          variant="contained"
-          color="primary"
-          startIcon={<FaPlus />}
-          sx={{ mb: 3 }}
-          onClick={handleOpenAddProgram}
-        >
-          Add Program
-        </Button>
-        {error && <Typography color="error">{error}</Typography>}
-        {loading ? (
-          <Typography>Loading programs...</Typography>
-        ) : (
-          Array.isArray(programs) && programs.length > 0 ? (
-            <Box sx={{ bgcolor: '#fff', borderRadius: 2, p: 2, boxShadow: 1 }}>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Title</TableCell>
-                    <TableCell>Description</TableCell>
-                    <TableCell>Assigned Coaches</TableCell>
-                    <TableCell>Sessions</TableCell>
-                    <TableCell align="right">Actions</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-              {programs.map(program => (
-                    <TableRow
-                      key={program.id}
-                      hover
-                      sx={{ cursor: 'pointer' }}
-                      onClick={() => router.push(`/admin/programmanagement/programdetails?id=${program.id}`)}
-                    >
-                      <TableCell>{program.title}</TableCell>
-                      <TableCell>{program.description}</TableCell>
-                      <TableCell>{getCoachNames(program.coaches).join(', ') || <em>None</em>}</TableCell>
-                      <TableCell>
-                        {sessions.filter(s => s.programId === program.id).length === 0
-                          ? <em>None</em>
-                          : sessions.filter(s => s.programId === program.id).map(s => s.name).join(', ')
-                        }
-                      </TableCell>
-                      <TableCell align="right">
-                        <Button size="small" variant="outlined" startIcon={<FaEdit />} onClick={e => { e.stopPropagation(); handleOpenEditProgram(program); }} sx={{ mr: 1 }}>Edit</Button>
-                        <Button size="small" variant="contained" color="success" startIcon={<FaPlus />} onClick={e => { e.stopPropagation(); handleOpenAddSession(program.id); }} sx={{ mr: 1 }}>Add Session</Button>
-                        <IconButton aria-label="delete" color="error" onClick={e => { e.stopPropagation(); handleDeleteProgram(program.id); }}><DeleteIcon /></IconButton>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-                </Box>
-          ) : (
-            <Typography>No programs found.</Typography>
-          )
-        )}
+      <div className="flex-1 flex flex-col h-full transition-all duration-300">
+        <main className="flex-1 h-0 overflow-y-auto px-4 md:px-12 py-8 bg-gray-50">
+          <div className="max-w-6xl mx-auto">
+            <div className="flex items-center justify-between mb-8">
+              <h1 className="text-2xl md:text-3xl font-bold text-[#002147] tracking-tight">Program Management</h1>
+              <button
+                ref={addButtonRef}
+                type="button"
+                className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+                onClick={handleOpenAddProgram}
+              >
+                <FaPlus /> Add Program
+              </button>
+            </div>
+            {error && <div className="mb-4 text-center text-red-500">{error}</div>}
+            {loading ? (
+              <div className="text-center py-8 text-gray-500">Loading programs...</div>
+            ) : (
+              Array.isArray(programs) && programs.length > 0 ? (
+                <div className="overflow-x-auto bg-white border border-gray-200 rounded-lg shadow">
+                  <table className="min-w-full divide-y divide-gray-200">
+                    <thead className="bg-gray-50">
+                      <tr>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Assigned Coaches</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sessions</th>
+                        <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody className="bg-white divide-y divide-gray-100">
+                      {programs.map(program => (
+                        <tr
+                          key={program.id}
+                          className="hover:bg-gray-50 transition cursor-pointer"
+                          onClick={() => router.push(`/admin/programmanagement/programdetails?id=${program.id}`)}
+                        >
+                          <td className="px-6 py-4 text-sm font-medium text-gray-900">{program.title}</td>
+                          <td className="px-6 py-4 text-sm text-gray-700">{program.description}</td>
+                          <td className="px-6 py-4 text-sm text-gray-700">{getCoachNames(program.coaches).join(', ') || <em>None</em>}</td>
+                          <td className="px-6 py-4 text-sm text-gray-700">
+                            {sessions.filter(s => s.programId === program.id).length === 0
+                              ? <em>None</em>
+                              : sessions.filter(s => s.programId === program.id).map(s => s.name).join(', ')
+                            }
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm">
+                            <span className="inline-flex gap-2 justify-end">
+                            <button
+                              type="button"
+                              className="p-2 rounded hover:bg-blue-100 text-blue-600"
+                              title="Edit Program"
+                              onClick={e => { e.stopPropagation(); handleOpenEditProgram(program); }}
+                            >
+                              <FaEdit />
+                            </button>
+                            <button
+                              type="button"
+                              className="p-2 rounded hover:bg-green-100 text-green-600"
+                              title="Add Session"
+                              onClick={e => { e.stopPropagation(); handleOpenAddSession(program.id); }}
+                            >
+                              <FaPlus />
+                            </button>
+                            <button
+                              type="button"
+                              className="p-2 rounded hover:bg-red-100 text-red-600"
+                              title="Delete Program"
+                              onClick={e => { e.stopPropagation(); handleDeleteProgram(program.id); }}
+                            >
+                              <DeleteIcon sx={{ fontSize: 18 }} />
+                            </button>
+                            </span>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              ) : (
+                <div className="text-center py-8 text-gray-500">No programs found.</div>
+              )
+            )}
+          </div>
+        </main>
+      </div>
         {/* Add/Edit Program Dialog */}
         <Dialog
           open={showProgramDialog}
@@ -317,7 +344,6 @@ export default function AdminProgramManagementPage() {
             <Button onClick={handleSaveSession} variant="contained" color="primary">Save</Button>
           </DialogActions>
         </Dialog>
-      </main>
     </div>
   );
 }

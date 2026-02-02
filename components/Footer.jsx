@@ -205,7 +205,7 @@ export default function Footer({ hideFooter = false }) {
             <span className="text-slate-300">|</span>
             <span className="hover:text-[#002147]">El Segundo, CA 90245</span>
             <span className="text-slate-300">|</span>
-            <a href="/PrivacyPolicy.pdf" target="_blank" rel="noopener noreferrer" className="hover:text-[#002147] cursor-pointer underline-offset-2 hover:underline">Privacy Policy</a>
+            <a href="/pages/privacy" className="hover:text-[#002147] cursor-pointer underline-offset-2 hover:underline">Privacy Policy</a>
           </p>
         </div>
       </div>

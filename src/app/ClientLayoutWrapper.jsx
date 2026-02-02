@@ -3,10 +3,14 @@ import { usePathname } from 'next/navigation';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import ChatComponent from '../../components/ChatComponent';
+import LenisSmoothScroll from '../../components/LenisSmoothScroll';
 
 const excludedPaths = [
   '/login',
   '/signup',
+  '/client',
+  '/coach',
+  '/admin',
   '/pages/(dashboard)',
   '/pages/(dashboard)/client',
   '/pages/(dashboard)/coach',
@@ -31,7 +35,9 @@ export default function ClientLayoutWrapper({ children }) {
   return (
     <>
       {!shouldExclude && <Navbar />}
-      <main className="flex-grow">{children}</main>
+      <main className="flex-grow">
+        <LenisSmoothScroll>{children}</LenisSmoothScroll>
+      </main>
       {!shouldExclude && <Footer />}
       {!shouldExclude && <ChatComponent />}
     </>

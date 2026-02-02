@@ -5,7 +5,17 @@ const API_BASE = '/api/v1';
 // Fetch all communities
 export async function fetchCommunities() {
   const res = await apiClient.get(`${API_BASE}/communities`);
-  return res.data;
+  const raw = res.data;
+  const list = Array.isArray(raw)
+    ? raw
+    : Array.isArray(raw?.communites?.data)
+    ? raw.communites.data
+    : Array.isArray(raw?.communities?.data)
+    ? raw.communities.data
+    : Array.isArray(raw?.data)
+    ? raw.data
+    : [];
+  return list.map((c) => normalizeCommunity(c));
 }
 
 // Create a new community
@@ -56,10 +66,28 @@ export async function updateCommunityPost(postId: number, data: any) {
   return res.data;
 }
 
+// Normalize community object from API (handles nested or flat response structures)
+function normalizeCommunity(raw: any): any {
+  if (!raw) return null;
+  // Nested: { data: {...} } or { community: {...} }
+  const nested = raw.data ?? raw.community ?? raw.communities;
+  if (nested && (typeof nested === 'object') && !Array.isArray(nested)) {
+    return normalizeCommunity(nested);
+  }
+  // Direct community object - normalize name/description from common API field names
+  const name = [raw.name, raw.title, raw.community_name].find((v) => v != null && String(v).trim()) ?? '';
+  const description = [raw.description, raw.desc].find((v) => v != null && String(v).trim()) ?? '';
+  return {
+    ...raw,
+    name,
+    description,
+  };
+}
+
 // Fetch a single community by ID
 export async function fetchCommunityById(communityId: any) {
   const res = await apiClient.get(`${API_BASE}/communities/${communityId}`);
-  return res.data;
+  return normalizeCommunity(res.data);
 }
 
 // Add a new feed post
