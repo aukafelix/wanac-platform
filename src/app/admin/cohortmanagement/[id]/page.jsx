@@ -2,11 +2,10 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import AdminSidebar from "../../../../../components/dashboardcomponents/adminsidebar";
-import { Box, Typography, Button, Stack, Chip, Table, TableHead, TableBody, TableRow, TableCell, Dialog, DialogTitle, DialogContent, DialogActions, TextField, Divider } from "@mui/material";
+import { Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField, Stack, Autocomplete, Typography } from "@mui/material";
 import { cohortService } from "../../../../services/api/cohort.service";
 import { sessionsService } from "../../../../services/api/sessions.service";
 import { clientsService } from "../../../../services/api/clients.service";
-import Autocomplete from "@mui/material/Autocomplete";
 
 export default function CohortDetailsPage() {
   const params = useParams();
@@ -171,100 +170,137 @@ export default function CohortDetailsPage() {
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="h-screen flex bg-gray-50 font-serif">
       <AdminSidebar />
-      <main className="flex-1 p-8 ml-16 md:ml-56">
-        <Button variant="outlined" sx={{ mb: 2 }} onClick={() => router.push("/admin/cohortmanagement")}>Back to Cohort Management</Button>
-        {loading ? (
-          <Typography>Loading...</Typography>
-        ) : error ? (
-          <Typography color="error">{error}</Typography>
-        ) : cohort ? (
-          <Box sx={{ bgcolor: '#fff', borderRadius: 2, p: 3, boxShadow: 1 }}>
-            <Typography variant="h4" sx={{ fontWeight: 700, mb: 1 }}>{cohort.name || `Cohort ${cohort.id}`}</Typography>
-            <Typography variant="subtitle1" sx={{ mb: 2 }}>{cohort.description || 'No description'}</Typography>
-
-            <Stack direction="row" spacing={1} sx={{ mb: 3 }}>
-              <Chip label={`Members: ${(Array.isArray(cohort.clients) ? cohort.clients.length : 0) + (Array.isArray(cohort.coaches) ? cohort.coaches.length : 0)}`} />
-              <Chip label={`Start: ${cohort.start_date ? new Date(cohort.start_date).toLocaleDateString() : '—'}`} />
-              <Chip label={`End: ${cohort.end_date ? new Date(cohort.end_date).toLocaleDateString() : '—'}`} />
-            </Stack>
-
-            <Typography variant="h6" sx={{ mb: 1 }}>Members</Typography>
-            <Button variant="contained" sx={{ mb: 2 }} onClick={() => {
-              setAddMemberOpen(true);
-              setMemberError(null);
-              setMemberSuccess(null);
-            }}>Add Member</Button>
-            {memberSuccess && (
-              <Typography color="success" sx={{ color: 'green', mb: 2 }}>
-                {memberSuccess}
-              </Typography>
-            )}
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Type</TableCell>
-                  <TableCell>Name</TableCell>
-                  <TableCell>Email</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {membersWithDetails.length === 0 ? (
-                  <TableRow>
-                    <TableCell colSpan={3} align="center">No members found</TableCell>
-                  </TableRow>
-                ) : (
-                  membersWithDetails.map((member, index) => (
-                    <TableRow key={`${member.type}-${member.id}-${index}`}>
-                      <TableCell>{member.type}</TableCell>
-                      <TableCell>{member.name}</TableCell>
-                      <TableCell>{member.email}</TableCell>
-                    </TableRow>
-                  ))
-                )}
-              </TableBody>
-            </Table>
-
-            <Divider sx={{ my: 3 }} />
-
-            <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 1 }}>
-              <Typography variant="h6">Cohort Sessions</Typography>
-              <Button variant="contained" onClick={() => setSessionModalOpen(true)}>Add Session</Button>
-            </Stack>
-            {sessionsLoading ? (
-              <Typography>Loading sessions...</Typography>
-            ) : sessions.length === 0 ? (
-              <Typography color="text.secondary">No sessions for this cohort.</Typography>
+      <div className="flex-1 flex flex-col h-full transition-all duration-300">
+        <main className="flex-1 h-0 overflow-y-auto px-4 md:px-12 py-8 bg-gray-50">
+          <div className="max-w-6xl mx-auto">
+            <div className="mb-8">
+              <button
+                type="button"
+                className="flex items-center gap-2 text-gray-600 hover:text-gray-900 border border-gray-300 rounded px-4 py-2 hover:bg-gray-50 transition"
+                onClick={() => router.push("/admin/cohortmanagement")}
+              >
+                ← Back to Cohort Management
+              </button>
+            </div>
+            {loading ? (
+              <div className="text-center py-8 text-gray-500">Loading...</div>
+            ) : error ? (
+              <div className="text-center py-8 text-red-500">{error}</div>
+            ) : !cohort ? (
+              <div className="text-center py-8 text-gray-500">Cohort not found.</div>
             ) : (
-              <Table size="small">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Title</TableCell>
-                    <TableCell>Date</TableCell>
-                    <TableCell>Description</TableCell>
-                    <TableCell>Time</TableCell>
-                    <TableCell>Status</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {sessions.map((s) => (
-                    <TableRow key={s.id}>
-                      <TableCell>{s.title || '-'}</TableCell>
-                      <TableCell>{s.date || '-'}</TableCell>
-                      <TableCell>{s.description || '-'}</TableCell>
-                      <TableCell>{s.time || '-'}</TableCell>
-                      <TableCell>{s.status || '-'}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+              <>
+                <div className="flex items-center justify-between mb-6">
+                  <div>
+                    <h1 className="text-2xl md:text-3xl font-bold text-[#002147] tracking-tight">{cohort.name || `Cohort ${cohort.id}`}</h1>
+                    <p className="text-gray-600 mt-1">{cohort.description || 'No description'}</p>
+                  </div>
+                </div>
+                <div className="flex flex-wrap gap-2 mb-6">
+                  <span className="px-2 py-1 rounded text-xs font-medium bg-gray-100 text-gray-700">
+                    Members: {(Array.isArray(cohort.clients) ? cohort.clients.length : 0) + (Array.isArray(cohort.coaches) ? cohort.coaches.length : 0)}
+                  </span>
+                  <span className="px-2 py-1 rounded text-xs font-medium bg-gray-100 text-gray-700">
+                    Start: {cohort.start_date ? new Date(cohort.start_date).toLocaleDateString() : '—'}
+                  </span>
+                  <span className="px-2 py-1 rounded text-xs font-medium bg-gray-100 text-gray-700">
+                    End: {cohort.end_date ? new Date(cohort.end_date).toLocaleDateString() : '—'}
+                  </span>
+                </div>
+
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-lg font-semibold text-[#002147]">Members</h2>
+                  <button
+                    type="button"
+                    className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 transition text-sm"
+                    onClick={() => {
+                      setAddMemberOpen(true);
+                      setMemberError(null);
+                      setMemberSuccess(null);
+                    }}
+                  >
+                    Add Member
+                  </button>
+                </div>
+                {memberSuccess && (
+                  <p className="text-green-600 mb-2">{memberSuccess}</p>
+                )}
+                <div className="overflow-x-auto bg-white border border-gray-200 rounded-lg shadow mb-8">
+                  <table className="min-w-full divide-y divide-gray-200">
+                    <thead className="bg-gray-50">
+                      <tr>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                      </tr>
+                    </thead>
+                    <tbody className="bg-white divide-y divide-gray-100">
+                      {membersWithDetails.length === 0 ? (
+                        <tr>
+                          <td colSpan={3} className="px-6 py-6 text-center text-gray-500">No members found</td>
+                        </tr>
+                      ) : (
+                        membersWithDetails.map((member, index) => (
+                          <tr key={`${member.type}-${member.id}-${index}`} className="hover:bg-gray-50 transition">
+                            <td className="px-6 py-4 text-sm text-gray-700">{member.type}</td>
+                            <td className="px-6 py-4 text-sm font-medium text-gray-900">{member.name}</td>
+                            <td className="px-6 py-4 text-sm text-gray-700">{member.email}</td>
+                          </tr>
+                        ))
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+
+                <div className="border-t border-gray-200 pt-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <h2 className="text-lg font-semibold text-[#002147]">Cohort Sessions</h2>
+                    <button
+                      type="button"
+                      className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 transition text-sm"
+                      onClick={() => setSessionModalOpen(true)}
+                    >
+                      Add Session
+                    </button>
+                  </div>
+                  {sessionsLoading ? (
+                    <div className="text-center py-6 text-gray-500">Loading sessions...</div>
+                  ) : sessions.length === 0 ? (
+                    <p className="text-gray-500">No sessions for this cohort.</p>
+                  ) : (
+                    <div className="overflow-x-auto bg-white border border-gray-200 rounded-lg shadow">
+                      <table className="min-w-full divide-y divide-gray-200">
+                        <thead className="bg-gray-50">
+                          <tr>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Time</th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                          </tr>
+                        </thead>
+                        <tbody className="bg-white divide-y divide-gray-100">
+                          {sessions.map((s) => (
+                            <tr key={s.id} className="hover:bg-gray-50 transition">
+                              <td className="px-6 py-4 text-sm font-medium text-gray-900">{s.title || '-'}</td>
+                              <td className="px-6 py-4 text-sm text-gray-700">{s.date || '-'}</td>
+                              <td className="px-6 py-4 text-sm text-gray-700">{s.description || '-'}</td>
+                              <td className="px-6 py-4 text-sm text-gray-700">{s.time || '-'}</td>
+                              <td className="px-6 py-4 text-sm text-gray-700">{s.status || '-'}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+                </div>
+              </>
             )}
-          </Box>
-        ) : (
-          <Typography>Cohort not found.</Typography>
-        )}
-      </main>
+          </div>
+        </main>
+      </div>
       <Dialog open={sessionModalOpen} onClose={() => setSessionModalOpen(false)} fullWidth maxWidth="sm">
         <DialogTitle>Add Session to Cohort</DialogTitle>
         <DialogContent dividers>

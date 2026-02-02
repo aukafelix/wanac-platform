@@ -3,9 +3,11 @@
 // WANAC Coaching Platform - Home Page
 import Image from 'next/image';
 import Link from 'next/link';
-import { FaUserTie, FaQuoteLeft } from 'react-icons/fa';
+import { FaQuoteLeft } from 'react-icons/fa';
 import Script from 'next/script';
 import { useEffect, useRef } from 'react';
+import { motion, useMotionValue, useTransform } from 'framer-motion';
+import { useLenis } from 'lenis/react';
 
 // Z-Index Scale
 const Z_INDEX = {
@@ -160,33 +162,49 @@ export default function Homepage() {
   const communityRef = useScrollAnimation();
   const manageRef = useScrollAnimation();
 
+  // Scroll-driven effects (Lenis): progress 0–1, hero parallax, progress bar
+  const scrollProgress = useMotionValue(0);
+  useLenis((lenis) => {
+    scrollProgress.set(lenis.progress);
+  });
+  const heroBgY = useTransform(scrollProgress, [0, 0.25], [0, 80]);
+  const heroContentScale = useTransform(scrollProgress, [0, 0.2], [1, 0.98]);
+  const progressBarWidth = useTransform(scrollProgress, [0, 1], ['0%', '100%']);
+
   return (
     <div className="bg-background text-foreground relative overflow-x-hidden">
       <Script src="https://cdn.lordicon.com/lordicon.js" strategy="lazyOnload" />
 
+      {/* Scroll progress bar — Lenis-driven */}
+      <motion.div
+        className="fixed top-0 left-0 right-0 h-0.5 bg-orange-500 z-[100] origin-left"
+        style={{ width: progressBarWidth }}
+        aria-hidden="true"
+      />
+
       {/* Hero Section */}
-<section 
-  ref={heroRef}
-  className="min-h-[70vh] md:min-h-[75vh] lg:min-h-[80vh] bg-[#002147] text-white py-16 sm:py-20 md:py-24 lg:py-32 relative overflow-hidden"
-  aria-label="Hero section with main call to action"
->
-  {/* Background with Single Gradient */}
-  <div 
-    className="absolute inset-0 w-full h-full"
-    style={{
-      backgroundImage: `linear-gradient(135deg, rgba(0,33,71,0.95) 0%, rgba(0,33,71,0.85) 50%, rgba(255,94,26,0.35) 100%), url('/landingpage4.jpg')`,
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      backgroundRepeat: 'no-repeat',
-      zIndex: Z_INDEX.background
-    }}
-    aria-hidden="true"
-  />
-  
-  {/*  animated accent */}
-  <div className="absolute top-1/4 right-0 w-64 md:w-96 h-64 md:h-96 bg-gradient-to-l from-orange-500/15 to-transparent rounded-full blur-3xl animate-pulse" style={{ zIndex: Z_INDEX.background }} />
-  
-  <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative" style={{ zIndex: Z_INDEX.content }}>
+      <section
+        ref={heroRef}
+        className="min-h-[70vh] md:min-h-[75vh] lg:min-h-[80vh] bg-[#002147] text-white py-16 sm:py-20 md:py-24 lg:py-32 relative overflow-hidden"
+        aria-label="Hero section with main call to action"
+      >
+        {/* Background (parallax: moves slower than scroll) */}
+        <motion.div
+          className="absolute inset-0 w-full h-full"
+          style={{
+            backgroundImage: `linear-gradient(135deg, rgba(0,33,71,0.95) 0%, rgba(0,33,71,0.85) 50%, rgba(255,94,26,0.35) 100%), url('/landingpage4.jpg')`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            zIndex: Z_INDEX.background,
+            y: heroBgY,
+          }}
+          aria-hidden="true"
+        />
+
+        <div className="absolute top-1/4 right-0 w-64 md:w-96 h-64 md:h-96 bg-gradient-to-l from-orange-500/15 to-transparent rounded-full blur-3xl animate-pulse" style={{ zIndex: Z_INDEX.background }} />
+
+        <motion.div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative" style={{ zIndex: Z_INDEX.content, scale: heroContentScale }}>
     <div className="max-w-3xl mx-auto lg:mx-0 text-center lg:text-left">
       <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight mb-4">
         Empowering Veterans to <span className="block sm:inline">Thrive After Service</span>{' '}
@@ -216,8 +234,8 @@ export default function Homepage() {
                 </Link>
               </div>
             </div>
-  </div>
-</section>
+        </motion.div>
+      </section>
 
 <section 
   ref={programsRef}

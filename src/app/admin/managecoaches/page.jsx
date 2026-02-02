@@ -1,21 +1,20 @@
 "use client";
 import { useState, useEffect } from "react";
 import AdminSidebar from '../../../../components/dashboardcomponents/adminsidebar';
-import { Plus, Search, Edit, Trash2 } from "lucide-react";
+import { FaUserPlus, FaUserEdit, FaUserTimes } from "react-icons/fa";
 import { cohortService } from '../../../services/api/cohort.service';
 
 export default function ManageCoaches() {
   const [coaches, setCoaches] = useState([]);
-  const [search, setSearch] = useState("");
   const [filteredCoaches, setFilteredCoaches] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState("");
 
   // Fetch coaches from API
   useEffect(() => {
     async function fetchCoaches() {
       setLoading(true);
-      setError(null);
+      setError("");
       try {
         const response = await cohortService.getCoaches();
         // Handle nested response structure: { coaches: { data: [...] } }
@@ -32,15 +31,17 @@ export default function ManageCoaches() {
           id: coach.id || coach.user_id,
           name: coach.name || coach.user?.name || 'Unknown',
           email: coach.email || coach.user?.email || 'N/A',
-          phone: coach.phone || coach.user?.phone || 'N/A',
-          status: coach.status || coach.is_active ? 'Active' : 'Inactive'
+          role: coach.role || coach.user?.role || 'Coach',
+          status: coach.status || (coach.is_active ? 'Active' : 'Inactive')
         }));
         
         setCoaches(mappedCoaches);
+        setFilteredCoaches(mappedCoaches);
       } catch (err) {
         console.error('Error fetching coaches:', err);
-        setError('Failed to load coaches. Please try again.');
+        setError("Failed to load coaches.");
         setCoaches([]);
+        setFilteredCoaches([]);
       } finally {
         setLoading(false);
       }
@@ -48,105 +49,68 @@ export default function ManageCoaches() {
     fetchCoaches();
   }, []);
 
-  useEffect(() => {
-    setFilteredCoaches(
-      coaches.filter(
-        (coach) =>
-          coach.name.toLowerCase().includes(search.toLowerCase()) ||
-          coach.email.toLowerCase().includes(search.toLowerCase())
-      )
-    );
-  }, [search, coaches]);
-
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="h-screen flex bg-gray-50 font-serif">
       <AdminSidebar />
-      <main className="flex-1 p-8 ml-16 md:ml-56">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
-          <div>
-            <h1 className="text-2xl font-bold text-[#002147] mb-2">Manage Coaches</h1>
-            <p className="text-gray-600">View, search, and manage all WANAC coaches.</p>
-          </div>
-          <button className="flex items-center gap-2 bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg font-semibold mt-4 md:mt-0">
-            <Plus size={18} /> Add Coach
-          </button>
-        </div>
-        <div className="bg-white rounded-lg shadow p-4">
-          {error && (
-            <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700">
-              {error}
+      <div className="flex-1 flex flex-col h-full transition-all duration-300">
+        <main className="flex-1 h-0 overflow-y-auto px-4 md:px-12 py-8 bg-gray-50">
+          <div className="max-w-6xl mx-auto">
+            <div className="flex items-center justify-between mb-8">
+              <h1 className="text-2xl md:text-3xl font-bold text-[#002147] tracking-tight">Manage Coaches</h1>
+              <button className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+                <FaUserPlus /> Add Coach
+              </button>
             </div>
-          )}
-          <div className="flex items-center mb-4">
-            <div className="relative w-full md:w-1/3">
-              <input
-                type="text"
-                placeholder="Search coaches..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="w-full border border-gray-300 rounded-lg py-2 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-orange-500"
-                disabled={loading}
-              />
-              <Search className="absolute left-3 top-2.5 text-gray-400" size={18} />
-            </div>
-          </div>
-          <div className="overflow-x-auto">
             {loading ? (
-              <div className="flex justify-center items-center py-12">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600"></div>
-              </div>
+              <div className="text-center py-8 text-gray-500">Loading coaches...</div>
+            ) : error ? (
+              <div className="text-center py-8 text-red-500">{error}</div>
             ) : (
-              <table className="min-w-full text-sm">
-                <thead>
-                  <tr className="bg-gray-100 text-[#002147]">
-                    <th className="py-2 px-4 text-left">Name</th>
-                    <th className="py-2 px-4 text-left">Email</th>
-                    <th className="py-2 px-4 text-left">Phone</th>
-                    <th className="py-2 px-4 text-left">Status</th>
-                    <th className="py-2 px-4 text-left">Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredCoaches.length === 0 ? (
+              <div className="overflow-x-auto bg-white border border-gray-200 rounded-lg shadow">
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
                     <tr>
-                      <td colSpan={5} className="text-center py-6 text-gray-500">
-                        {search ? 'No coaches match your search.' : 'No coaches found.'}
-                      </td>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                      <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                     </tr>
-                  ) : (
-                    filteredCoaches.map((coach) => (
-                      <tr key={coach.id} className="border-b hover:bg-gray-50">
-                        <td className="py-2 px-4">{coach.name}</td>
-                        <td className="py-2 px-4">{coach.email}</td>
-                        <td className="py-2 px-4">{coach.phone}</td>
-                        <td className="py-2 px-4">
-                          <span
-                            className={`px-2 py-1 rounded-full text-xs font-semibold ${
-                              coach.status === "Active"
-                                ? "bg-green-100 text-green-700"
-                                : "bg-gray-200 text-gray-600"
-                            }`}
-                          >
-                            {coach.status}
-                          </span>
-                        </td>
-                        <td className="py-2 px-4 flex gap-2">
-                          <button className="p-2 rounded hover:bg-gray-200" title="Edit">
-                            <Edit size={16} className="text-blue-600" />
-                          </button>
-                          <button className="p-2 rounded hover:bg-gray-200" title="Delete">
-                            <Trash2 size={16} className="text-red-600" />
-                          </button>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-100">
+                    {filteredCoaches.length === 0 ? (
+                      <tr>
+                        <td colSpan={5} className="px-6 py-6 text-center text-gray-500">
+                          No coaches found.
                         </td>
                       </tr>
-                    ))
-                  )}
-                </tbody>
-              </table>
+                    ) : (
+                      filteredCoaches.map((coach) => (
+                        <tr key={coach.id} className="hover:bg-gray-50 transition">
+                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{coach.name}</td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{coach.email}</td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{coach.role || '-'}</td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm">
+                            <span className={`px-2 py-1 rounded text-xs font-semibold ${coach.status === 'Active' ? 'bg-green-100 text-green-700' : 'bg-gray-200 text-gray-500'}`}>{coach.status || '-'}</span>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm flex gap-2 justify-end">
+                            <button className="p-2 rounded hover:bg-blue-100 text-blue-600" title="Edit Coach">
+                              <FaUserEdit />
+                            </button>
+                            <button className="p-2 rounded hover:bg-red-100 text-red-600" title="Remove Coach">
+                              <FaUserTimes />
+                            </button>
+                          </td>
+                        </tr>
+                      ))
+                    )}
+                  </tbody>
+                </table>
+              </div>
             )}
           </div>
-        </div>
-      </main>
+        </main>
+      </div>
     </div>
   );
 }

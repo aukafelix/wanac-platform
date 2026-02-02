@@ -1,196 +1,231 @@
 "use client";
 import { useState, useEffect } from "react";
 import AdminSidebar from "../../../../components/dashboardcomponents/adminsidebar";
-import { Plus, Search, Edit, Trash2, Users, User, Calendar, X } from "lucide-react";
+import { Plus, Search, Edit, Trash2, Calendar, X, Loader2 } from "lucide-react";
 import { sessionsService } from "../../../services/api/sessions.service";
+
+function normalizeSessions(raw) {
+  const list = Array.isArray(raw) ? raw : raw?.sessions?.data ?? raw?.data ?? [];
+  if (!Array.isArray(list)) return [];
+  return list.map((session) => {
+    const at = session.scheduled_at || session.date;
+    const d = at ? new Date(at) : new Date();
+    const pad = (n) => n.toString().padStart(2, "0");
+    const date = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+    const time = `${pad(d.getHours())}:${pad(d.getMinutes())}`;
+    return {
+      ...session,
+      time,
+      date,
+      status: session.status || "Scheduled",
+    };
+  });
+}
+
+const emptyForm = { title: "", description: "", date: "", time: "" };
 
 export default function SessionManagement() {
   const [sessions, setSessions] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [fetchError, setFetchError] = useState("");
   const [search, setSearch] = useState("");
   const [filteredSessions, setFilteredSessions] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [newSession, setNewSession] = useState({
-    client: "",
-    coach: "",
-    date: "",
-    time: "",
-  });
+  const [newSession, setNewSession] = useState(emptyForm);
   const [editSessionId, setEditSessionId] = useState(null);
+  const [submitLoading, setSubmitLoading] = useState(false);
+  const [deleteLoadingId, setDeleteLoadingId] = useState(null);
 
-  // Dummy data for demonstration
   useEffect(() => {
     async function fetchSessions() {
+      setLoading(true);
+      setFetchError("");
       try {
         const response = await sessionsService.getSessions();
-        // Handle both { data: [...] } and { sessions: { data: [...] } }
-        const sessionsArray = response?.data || response?.sessions?.data || [];
-        setSessions(sessionsArray);
+        setSessions(normalizeSessions(response));
       } catch (error) {
         console.error("Failed to fetch sessions:", error);
+        setFetchError("Could not load sessions. Please try again.");
+      } finally {
+        setLoading(false);
       }
     }
     fetchSessions();
   }, []);
 
   useEffect(() => {
+    if (!Array.isArray(sessions)) {
+      setFilteredSessions([]);
+      return;
+    }
+    const q = search.toLowerCase().trim();
     setFilteredSessions(
-      Array.isArray(sessions)
+      q
         ? sessions.filter(
-            (session) =>
-              (session.title && session.title.toLowerCase().includes(search.toLowerCase())) ||
-              (session.description && session.description.toLowerCase().includes(search.toLowerCase()))
+            (s) =>
+              (s.title && s.title.toLowerCase().includes(q)) ||
+              (s.description && (s.description + "").toLowerCase().includes(q))
           )
-        : []
+        : sessions
     );
   }, [search, sessions]);
 
-  // Handle modal form input
   const handleInputChange = (e) => {
     setNewSession({ ...newSession, [e.target.name]: e.target.value });
   };
 
-  // Handle edit button click
   const handleEditClick = (session) => {
     setEditSessionId(session.id);
     setNewSession({
-      client: session.client,
-      coach: session.coach,
-      date: session.date,
-      time: session.time,
+      title: session.title || "",
+      description: session.description || "",
+      date: session.date || "",
+      time: session.time || "",
     });
     setShowModal(true);
   };
 
-  // Handle add/edit session
-  const handleAddSession = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (
-      newSession.client &&
-      newSession.coach &&
-      newSession.date &&
-      newSession.time
-    ) {
+    if (!newSession.title.trim() || !newSession.date || !newSession.time) return;
+    const scheduled_at = new Date(`${newSession.date}T${newSession.time}`).toISOString();
+    const payload = {
+      title: newSession.title.trim(),
+      description: (newSession.description || "").trim(),
+      scheduled_at,
+    };
+    setSubmitLoading(true);
+    try {
       if (editSessionId) {
-        // Edit existing session
-        setSessions(
-          sessions.map((s) =>
-            s.id === editSessionId
-              ? { ...s, ...newSession }
-              : s
-          )
+        const updated = await sessionsService.updateSession(editSessionId, payload);
+        setSessions((prev) =>
+          prev.map((s) => (s.id === editSessionId ? normalizeSessions([updated])[0] : s))
         );
       } else {
-        // Add new session
-        setSessions([
-          ...sessions,
-          {
-            id: sessions.length + 1,
-            ...newSession,
-            status: "Scheduled",
-          },
-        ]);
+        const created = await sessionsService.addSession(payload);
+        setSessions((prev) => [normalizeSessions([created])[0], ...prev]);
       }
       setShowModal(false);
-      setNewSession({ client: "", coach: "", date: "", time: "" });
+      setNewSession(emptyForm);
       setEditSessionId(null);
+    } catch (err) {
+      console.error("Failed to save session:", err);
+      alert("Failed to save session. Please try again.");
+    } finally {
+      setSubmitLoading(false);
     }
   };
 
+  const handleDelete = async (id) => {
+    if (!confirm("Are you sure you want to delete this session?")) return;
+    setDeleteLoadingId(id);
+    try {
+      await sessionsService.deleteSession(id);
+      setSessions((prev) => prev.filter((s) => s.id !== id));
+    } catch (err) {
+      console.error("Failed to delete session:", err);
+      alert("Failed to delete session. Please try again.");
+    } finally {
+      setDeleteLoadingId(null);
+    }
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    setEditSessionId(null);
+    setNewSession(emptyForm);
+  };
+
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="h-screen flex bg-gray-50 font-serif">
       <AdminSidebar />
-      <main className="flex-1 p-8 ml-16 md:ml-56">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
-          <div>
-            <h1 className="text-2xl font-bold text-[#002147] mb-2">Session Management</h1>
-            <p className="text-gray-600">View, search, and manage all sessions between clients and coaches.</p>
-          </div>
-          <button
-            className="flex items-center gap-2 bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg font-semibold mt-4 md:mt-0"
-            onClick={() => setShowModal(true)}
-          >
-            <Plus size={18} /> Add Session
-          </button>
-        </div>
+      <div className="flex-1 flex flex-col h-full transition-all duration-300">
+        <main className="flex-1 h-0 overflow-y-auto px-4 md:px-12 py-8 bg-gray-50">
+          <div className="max-w-6xl mx-auto">
+            <div className="flex items-center justify-between mb-8">
+              <h1 className="text-2xl md:text-3xl font-bold text-[#002147] tracking-tight">Session Management</h1>
+              <button
+                className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+                onClick={() => setShowModal(true)}
+              >
+                <Plus size={18} /> Add Session
+              </button>
+            </div>
 
         {/* Modal */}
         {showModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
             <div className="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative">
               <button
+                type="button"
                 className="absolute top-3 right-3 text-gray-400 hover:text-gray-700"
-                onClick={() => {
-                  setShowModal(false);
-                  setEditSessionId(null);
-                  setNewSession({ client: "", coach: "", date: "", time: "" });
-                }}
+                onClick={closeModal}
               >
                 <X size={22} />
               </button>
               <h2 className="text-xl font-bold mb-4 text-[#002147]">
                 {editSessionId ? "Edit Session" : "Add Session"}
               </h2>
-              <form onSubmit={handleAddSession} className="space-y-4">
+              <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Client</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
                   <input
                     type="text"
-                    name="client"
-                    value={newSession.client}
+                    name="title"
+                    value={newSession.title}
                     onChange={handleInputChange}
-                    className="w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                    className="w-full border border-gray-300 rounded py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Coach</label>
-                  <input
-                    type="text"
-                    name="coach"
-                    value={newSession.coach}
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                  <textarea
+                    name="description"
+                    value={newSession.description}
                     onChange={handleInputChange}
-                    className="w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-orange-500"
-                    required
+                    className="w-full border border-gray-300 rounded py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    rows={2}
                   />
                 </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Date</label>
-                  <input
-                    type="date"
-                    name="date"
-                    value={newSession.date}
-                    onChange={handleInputChange}
-                    className="w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-orange-500"
-                    required
-                  />
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Date</label>
+                    <input
+                      type="date"
+                      name="date"
+                      value={newSession.date}
+                      onChange={handleInputChange}
+                      className="w-full border border-gray-300 rounded py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Time</label>
+                    <input
+                      type="time"
+                      name="time"
+                      value={newSession.time}
+                      onChange={handleInputChange}
+                      className="w-full border border-gray-300 rounded py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      required
+                    />
+                  </div>
                 </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Time</label>
-                  <input
-                    type="time"
-                    name="time"
-                    value={newSession.time}
-                    onChange={handleInputChange}
-                    className="w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-orange-500"
-                    required
-                  />
-                </div>
-                <div className="flex justify-end gap-2">
+                <div className="flex justify-end gap-2 pt-2">
                   <button
                     type="button"
                     className="px-4 py-2 rounded bg-gray-200 text-gray-700 hover:bg-gray-300"
-                    onClick={() => {
-                      setShowModal(false);
-                      setEditSessionId(null);
-                      setNewSession({ client: "", coach: "", date: "", time: "" });
-                    }}
+                    onClick={closeModal}
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="px-4 py-2 rounded bg-orange-600 text-white font-semibold hover:bg-orange-700"
+                    disabled={submitLoading}
+                    className="px-4 py-2 rounded bg-blue-600 text-white font-semibold hover:bg-blue-700 disabled:opacity-60 flex items-center gap-2"
                   >
+                    {submitLoading && <Loader2 size={16} className="animate-spin" />}
                     {editSessionId ? "Save" : "Add"}
                   </button>
                 </div>
@@ -199,78 +234,97 @@ export default function SessionManagement() {
           </div>
         )}
 
-        <div className="bg-white rounded-lg shadow p-4">
-          <div className="flex items-center mb-4">
-            <div className="relative w-full md:w-1/3">
-              <input
-                type="text"
-                placeholder="Search by client or coach..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="w-full border border-gray-300 rounded-lg py-2 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-orange-500"
-              />
-              <Search className="absolute left-3 top-2.5 text-gray-400" size={18} />
-            </div>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="min-w-full text-sm">
-              <thead>
-                <tr className="bg-gray-100 text-[#002147]">
-                  <th className="py-2 px-4 text-left">Title</th>
-                  <th className="py-2 px-4 text-left"><Calendar size={14} className="inline mr-1" />Date</th>
-                  <th className="py-2 px-4 text-left">Description</th>
-                  <th className="py-2 px-4 text-left">Time</th>
-                  <th className="py-2 px-4 text-left">Status</th>
-                  <th className="py-2 px-4 text-left">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredSessions.length === 0 ? (
-                  <tr>
-                    <td colSpan={6} className="text-center py-6 text-gray-500">
-                      No sessions found.
-                    </td>
-                  </tr>
-                ) : (
-                  filteredSessions.map((session) => (
-                    <tr key={session.id} className="border-b hover:bg-gray-50">
-                      <td className="py-2 px-4">{session.title}</td>
-                      <td className="py-2 px-4">{session.date}</td>
-                      <td className="py-2 px-4">{session.description}</td>
-                      <td className="py-2 px-4">{session.time || '-'}</td>
-                      <td className="py-2 px-4">
-                        <span
-                          className={`px-2 py-1 rounded-full text-xs font-semibold ${
-                            session.status === "Scheduled"
-                              ? "bg-blue-100 text-blue-700"
-                              : session.status === "Completed"
-                              ? "bg-green-100 text-green-700"
-                              : "bg-gray-200 text-gray-600"
-                          }`}
-                        >
-                          {session.status || '-'}
-                        </span>
-                      </td>
-                      <td className="py-2 px-4 flex gap-2">
-                        <button
-                          className="p-2 rounded hover:bg-gray-200"
-                          title="Edit"
-                          onClick={() => handleEditClick(session)}
-                        >
-                          <Edit size={16} className="text-blue-600" />
-                        </button>
-                        <button className="p-2 rounded hover:bg-gray-200" title="Delete">
-                          <Trash2 size={16} className="text-red-600" />
-                        </button>
-                      </td>
+            {loading ? (
+              <div className="text-center py-8 text-gray-500">Loading sessions…</div>
+            ) : fetchError ? (
+              <div className="text-center py-8 text-red-500">{fetchError}</div>
+            ) : (
+              <div className="overflow-x-auto bg-white border border-gray-200 rounded-lg shadow">
+                <div className="flex items-center gap-4 p-4 border-b border-gray-200">
+                  <div className="relative w-full md:max-w-sm">
+                    <input
+                      type="text"
+                      placeholder="Search by title or description..."
+                      value={search}
+                      onChange={(e) => setSearch(e.target.value)}
+                      className="w-full border border-gray-300 rounded py-2 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                    <Search className="absolute left-3 top-2.5 text-gray-400" size={18} />
+                  </div>
+                </div>
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <Calendar size={14} className="inline mr-1" /> Date
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Time</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                      <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                     </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-100">
+                    {filteredSessions.length === 0 ? (
+                      <tr>
+                        <td colSpan={6} className="px-6 py-6 text-center text-gray-500">
+                          No sessions found.
+                        </td>
+                      </tr>
+                    ) : (
+                      filteredSessions.map((session) => (
+                        <tr key={session.id} className="hover:bg-gray-50 transition">
+                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{session.title || "—"}</td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{session.date}</td>
+                          <td className="px-6 py-4 text-sm text-gray-700 max-w-xs truncate">{session.description || "—"}</td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{session.time || "—"}</td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm">
+                            <span
+                              className={`px-2 py-1 rounded text-xs font-semibold ${
+                                session.status === "Scheduled"
+                                  ? "bg-blue-100 text-blue-700"
+                                  : session.status === "Completed"
+                                    ? "bg-green-100 text-green-700"
+                                    : "bg-gray-200 text-gray-500"
+                              }`}
+                            >
+                              {session.status || "—"}
+                            </span>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm flex gap-2 justify-end">
+                            <button
+                              type="button"
+                              className="p-2 rounded hover:bg-blue-100 text-blue-600"
+                              title="Edit"
+                              onClick={() => handleEditClick(session)}
+                            >
+                              <Edit size={16} />
+                            </button>
+                            <button
+                              type="button"
+                              className="p-2 rounded hover:bg-red-100 text-red-600 disabled:opacity-50"
+                              title="Delete"
+                              onClick={() => handleDelete(session.id)}
+                              disabled={deleteLoadingId === session.id}
+                            >
+                              {deleteLoadingId === session.id ? (
+                                <Loader2 size={16} className="animate-spin" />
+                              ) : (
+                                <Trash2 size={16} />
+                              )}
+                            </button>
+                          </td>
+                        </tr>
+                      ))
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </div>
-        </div>
-      </main>
+        </main>
+      </div>
     </div>
   );
 }

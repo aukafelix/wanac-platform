@@ -281,9 +281,9 @@ export default function Signup() {
         <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-[#002147] to-[#003875] p-8 flex-col justify-center relative overflow-hidden">
           <div className="relative z-10">
             <img 
-              src="/WANAC N 8 Old Glory.png" 
+              src="/WANAC-logo-white-orange.svg" 
               alt="WANAC Logo" 
-              className="h-12 mb-8"
+              className="h-12 mb-8 w-auto"
             />
             <h1 className="text-3xl font-bold text-white mb-4 leading-tight">
               Start your journey with WANAC
