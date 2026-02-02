@@ -377,7 +377,7 @@ export default function HowWeHelp() {
                 </ul>
 
                 <a
-                  href="/pages/wanaplca"
+                  href="/pages/wanacplca"
                   className="inline-flex items-center justify-center gap-2 w-full px-3 py-2 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold shadow-lg hover:shadow-orange-500/50 transform hover:-translate-y-0.5 transition-all duration-300 text-xs mt-auto"
                 >
                   Discover PLCA

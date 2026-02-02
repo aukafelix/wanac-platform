@@ -27,9 +27,10 @@ export default function CommunityPage() {
   const [createSuccess, setCreateSuccess] = useState("");
   const [selectedCommunityId, setSelectedCommunityId] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [currentCommunity, setCurrentCommunity] = useState(null);
   const router = useRouter();
 
-  // Load user data from localStorage
+  // Load user data and last-viewed community from storage
   useEffect(() => {
     const userData = localStorage.getItem("wanacUser");
     if (userData) {
@@ -131,7 +132,7 @@ export default function CommunityPage() {
       {/* Main Area */}
       <div className="flex-1 flex flex-col h-full transition-all duration-300">
         {/* Top Bar */}
-        <ClientTopbar user={user} />
+        <ClientTopbar user={user} currentCommunity={currentCommunity?.name} />
         {/* Main Content */}
         <main className="flex-1 h-0 overflow-y-auto px-4 md:px-6 py-3 bg-gray-50">
           <div className="max-w-7xl mx-auto">
@@ -178,6 +179,30 @@ export default function CommunityPage() {
                     <span>⚠</span>
                     {communityError}
                   </div>
+                )}
+
+                {/* Current community card - when user has a last-viewed community */}
+                {currentCommunity && (
+                  <section className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100 rounded-xl p-3 shadow-sm">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <div className="p-2 bg-white/80 rounded-lg">
+                          <FaUsers className="text-[#002147]" size={14} />
+                        </div>
+                        <div>
+                          <p className="text-[10px] font-medium text-gray-500 uppercase tracking-wide">Your current community</p>
+                          <p className="text-sm font-bold text-[#002147]">{currentCommunity.name}</p>
+                        </div>
+                      </div>
+                      <button
+                        className="flex items-center gap-1.5 bg-gradient-to-r from-[#002147] to-[#003875] hover:from-[#003875] hover:to-[#002147] text-white font-semibold py-1.5 px-3 rounded-lg transition-all text-[11px]"
+                        onClick={() => router.push(`/client/community/communities/${currentCommunity.id}`)}
+                      >
+                        <FaComments size={10} />
+                        View Community
+                      </button>
+                    </div>
+                  </section>
                 )}
 
                 {/* Search Bar */}
