@@ -15,7 +15,7 @@ export async function fetchCommunities() {
     : Array.isArray(raw?.data)
     ? raw.data
     : [];
-  return list.map((c) => normalizeCommunity(c));
+  return list.map((c: unknown) => normalizeCommunity(c));
 }
 
 // Create a new community
