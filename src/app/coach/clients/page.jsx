@@ -37,7 +37,7 @@ export default function CoachClientsPage() {
   }, []);
 
   return (
-    <div className="h-screen flex bg-gray-50 font-serif">
+    <div className="min-h-screen h-screen flex bg-gray-50 font-serif overflow-x-hidden">
       {/* Sidebar */}
       <CoachSidebar />
       {/* Main Area */}
@@ -45,16 +45,31 @@ export default function CoachClientsPage() {
         {/* Top Bar */}
         <ClientTopbar user={user || { name: "Coach" }} />
         {/* Main Content */}
-        <main className="flex-1 h-0 overflow-y-auto px-4 md:px-12 py-8 bg-gray-50">
+        <main className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-3 sm:px-4 md:px-12 py-4 md:py-8 bg-gray-50">
           <div className="max-w-6xl mx-auto">
-            <div className="flex flex-col gap-8">
-              <section className="bg-white border border-gray-200 rounded-lg p-6 shadow-none">
+            <div className="flex flex-col gap-6 md:gap-8">
+              <section className="bg-white border border-gray-200 rounded-lg p-4 md:p-6 shadow-none">
                 <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-2xl font-bold text-primary flex items-center gap-2">
+                  <h2 className="text-xl md:text-2xl font-bold text-primary flex items-center gap-2">
                     <FaUserFriends className="text-primary" /> My Clients
                   </h2>
                 </div>
-                <div className="overflow-x-auto">
+                {/* Mobile card layout */}
+                <div className="md:hidden space-y-3">
+                  {clients.length === 0 ? (
+                    <p className="text-center py-6 text-gray-500 text-sm">No clients found.</p>
+                  ) : (
+                    clients.map((client) => (
+                      <div key={client.id} className="border border-gray-200 rounded-lg p-4 space-y-2">
+                        <p className="font-semibold text-gray-900">{client.name}</p>
+                        <p className="text-sm text-gray-600 break-all">{client.email}</p>
+                        <p className="text-sm text-gray-600">{client.phone}</p>
+                      </div>
+                    ))
+                  )}
+                </div>
+                {/* Desktop table */}
+                <div className="hidden md:block overflow-x-auto">
                   <table className="min-w-full text-sm">
                     <thead>
                       <tr className="bg-gray-100 text-[#002147]">

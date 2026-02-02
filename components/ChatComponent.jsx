@@ -85,33 +85,37 @@ export default function ChatComponent({ user }) {
   }, [messages]);
 
   return (
-    <div className="fixed bottom-6 right-6 z-50">
+    <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50">
       <button 
         onClick={toggleChat}
-        className="bg-orange-500 hover:bg-orange-600 text-white rounded-full p-3 shadow-lg"
+        className="bg-orange-500 hover:bg-orange-600 active:bg-orange-700 text-white rounded-full p-3 sm:p-3 shadow-lg min-w-[48px] min-h-[48px] flex items-center justify-center touch-manipulation"
         aria-label={isOpen ? "Close chat" : "Open chat"}
       >
         {isOpen ? <X size={24} /> : <MessageSquare size={24} />}
       </button>
       
       {isOpen && (
-        <div className="absolute bottom-16 right-0 w-80 sm:w-96 bg-white rounded-lg shadow-xl flex flex-col overflow-hidden border border-gray-200">
-          <div className="bg-[#002147] text-white p-3 flex justify-between items-center">
-            <h3 className="font-medium">Chat with us</h3>
-            <button onClick={toggleChat} className="text-white hover:text-gray-200">
-              <X size={18} />
+        <div className="fixed inset-0 sm:inset-auto sm:absolute sm:bottom-16 sm:right-0 sm:w-96 sm:max-h-[85vh] sm:rounded-lg sm:shadow-xl flex flex-col overflow-hidden border-0 sm:border border-gray-200 bg-white z-40">
+          <div className="bg-[#002147] text-white p-4 sm:p-3 flex justify-between items-center shrink-0">
+            <h3 className="font-semibold text-lg sm:text-base">Chat with us</h3>
+            <button 
+              onClick={toggleChat} 
+              className="text-white hover:text-gray-200 p-2 -m-2 min-w-[44px] min-h-[44px] flex items-center justify-center touch-manipulation rounded-lg active:bg-white/10"
+              aria-label="Close chat"
+            >
+              <X size={22} />
             </button>
           </div>
           
-          <div ref={chatContainerRef} className="flex-1 p-3 overflow-y-auto max-h-80 space-y-3">
+          <div ref={chatContainerRef} className="flex-1 p-4 sm:p-3 overflow-y-auto min-h-0 max-h-[calc(100vh-180px)] sm:max-h-80 space-y-3 overscroll-contain">
             {messages.map((msg, idx) => (
               <div
                 key={idx}
-                className={`flex items-end ${msg.sender === "user" ? "justify-end" : "justify-start"}`}
+                className={`flex items-end gap-2 ${msg.sender === "user" ? "justify-end" : "justify-start"}`}
               >
                 {msg.sender === "ai" && AI_AVATAR}
                 <div
-                  className={`max-w-[75%] px-4 py-2 rounded-2xl shadow-sm text-base break-words ${
+                  className={`max-w-[85%] sm:max-w-[75%] px-4 py-3 sm:py-2 rounded-2xl shadow-sm text-base sm:text-sm break-words ${
                     msg.sender === "user"
                       ? "bg-blue-500 text-white rounded-br-none"
                       : "bg-gray-100 text-gray-800 rounded-bl-none"
@@ -125,7 +129,7 @@ export default function ChatComponent({ user }) {
             {loading && (
               <div className="flex items-end justify-start">
                 {AI_AVATAR}
-                <div className="bg-gray-100 text-gray-400 px-4 py-2 rounded-2xl shadow-sm text-base">
+                <div className="bg-gray-100 text-gray-400 px-4 py-3 sm:py-2 rounded-2xl shadow-sm text-base sm:text-sm">
                   <LoadingDots />
                 </div>
               </div>
@@ -133,22 +137,23 @@ export default function ChatComponent({ user }) {
             <div ref={messagesEndRef} />
           </div>
           
-          <form onSubmit={(e) => { e.preventDefault(); sendMessage(); }} className="border-t border-gray-200 p-3 flex">
+          <form onSubmit={(e) => { e.preventDefault(); sendMessage(); }} className="border-t border-gray-200 p-3 sm:p-3 flex gap-2 shrink-0 pb-[env(safe-area-inset-bottom,0px)]">
             <input
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && !loading && sendMessage()}
               placeholder="Type your message..."
-              className="flex-1 border border-gray-300 rounded-l-lg px-3 py-2 focus:outline-none focus:ring-1 focus:ring-orange-500"
+              className="flex-1 border-2 border-gray-300 rounded-xl sm:rounded-l-lg px-4 py-3 sm:px-3 sm:py-2 text-base min-h-[44px] focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
               disabled={loading}
             />
             <button 
               type="submit"
-              className="bg-orange-500 text-white px-4 rounded-r-lg hover:bg-orange-600 flex items-center justify-center"
+              className="bg-orange-500 text-white px-5 sm:px-4 rounded-xl sm:rounded-r-lg hover:bg-orange-600 active:bg-orange-700 flex items-center justify-center min-w-[48px] min-h-[44px] touch-manipulation"
               disabled={!input.trim() || loading}
+              aria-label="Send message"
             >
-              <Send size={18} />
+              <Send size={20} />
             </button>
           </form>
         </div>
