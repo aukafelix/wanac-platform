@@ -21,7 +21,7 @@ import { cohortService } from "../../src/services/api/cohort.service";
 import { fireteamService } from "../../src/services/api/fireteam.service";
 import { generateJitsiMeetingLink } from "../../src/lib/jitsi.utils";
 
-export default function FireteamManagement({ sidebar: SidebarComponent }) {
+export default function FireteamManagement({ sidebar: SidebarComponent, basePath = "/admin/fireteammanagement" }) {
   const router = useRouter();
   const [showAddEdit, setShowAddEdit] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
@@ -204,104 +204,164 @@ export default function FireteamManagement({ sidebar: SidebarComponent }) {
   });
 
   return (
-    <div className="h-screen flex bg-gray-50 font-serif">
+    <div className="h-screen flex bg-gray-50 font-serif overflow-x-hidden">
       {SidebarComponent && <SidebarComponent />}
-      <div className="flex-1 flex flex-col h-full transition-all duration-300">
-        <main className="flex-1 h-0 overflow-y-auto px-4 md:px-12 py-8 bg-gray-50">
+      <div className="flex-1 flex flex-col min-w-0 h-full transition-all duration-300">
+        <main className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-3 sm:px-4 md:px-12 py-4 md:py-8 bg-gray-50">
           <div className="max-w-6xl mx-auto">
-            <div className="flex items-center justify-between mb-8">
-              <h1 className="text-2xl md:text-3xl font-bold text-[#002147] tracking-tight">Fireteam Management</h1>
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mb-6 md:mb-8">
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#002147] tracking-tight">Fireteam Management</h1>
               <button
                 type="button"
-                className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+                className="flex items-center justify-center gap-2 bg-blue-600 text-white px-4 py-2.5 rounded-lg hover:bg-blue-700 transition min-h-[44px] shrink-0"
                 onClick={handleAdd}
               >
                 <FaPlus /> Add Fireteam
               </button>
             </div>
-            <div className="flex items-center mb-4">
+            <div className="mb-4">
               <input
                 type="text"
                 placeholder="Search Fireteams"
                 value={search}
                 onChange={e => setSearch(e.target.value)}
-                className="w-full md:w-1/3 border border-gray-300 rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full md:max-w-xs border border-gray-300 rounded-lg py-2 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                aria-label="Search fireteams"
               />
             </div>
             {loading ? (
-              <div className="text-center py-8 text-gray-500">Loading...</div>
+              <div className="text-center py-8 text-gray-500 text-sm">Loading...</div>
             ) : error && typeof error === "string" && error.includes("Authentication required") ? (
               <div className="text-center py-8">
                 <p className="text-red-500 mb-4">{error}</p>
                 <button
                   type="button"
-                  className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                  className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 min-h-[44px]"
                   onClick={() => window.location.href = '/login'}
                 >
                   Go to Login
                 </button>
               </div>
             ) : (
-              <div className="overflow-x-auto bg-white border border-gray-200 rounded-lg shadow">
-                <table className="min-w-full divide-y divide-gray-200">
-                  <thead className="bg-gray-50">
-                    <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cohort</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Time</th>
-                      <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody className="bg-white divide-y divide-gray-100">
-                    {filteredFireteams.length === 0 ? (
+              <>
+                {/* Mobile card layout */}
+                <div className="md:hidden space-y-3">
+                  {filteredFireteams.length === 0 ? (
+                    <div className="bg-white border border-gray-200 rounded-lg p-6 text-center text-gray-500 text-sm">
+                      No fireteams found.
+                    </div>
+                  ) : (
+                    filteredFireteams.map((f) => {
+                      const cohort = cohorts.find(c => c.id === f.cohort_id);
+                      const cohortName = cohort ? (cohort.name || cohort.title || `Cohort ${cohort.id}`) : String(f.cohort_id ?? '');
+                      return (
+                        <div
+                          key={f.id}
+                          className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm active:bg-gray-50 transition-colors"
+                          onClick={() => router.push(`${basePath}/${f.id}`)}
+                          role="button"
+                          tabIndex={0}
+                          onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); router.push(`${basePath}/${f.id}`); } }}
+                        >
+                          <div className="flex justify-between items-start gap-2 mb-2">
+                            <h3 className="font-semibold text-gray-900 text-sm">{f.title || f.name}</h3>
+                            <span className="text-xs text-gray-500 shrink-0">{f.date} · {f.time}</span>
+                          </div>
+                          <p className="text-xs text-gray-600 line-clamp-2 mb-2">{f.description}</p>
+                          <p className="text-xs text-gray-500 mb-3">Cohort: {cohortName}</p>
+                          <div className="flex gap-2">
+                            <button
+                              type="button"
+                              className="min-h-[44px] min-w-[44px] flex items-center justify-center p-2 rounded-lg bg-blue-100 text-blue-600"
+                              title="Edit Fireteam"
+                              onClick={(e) => { e.stopPropagation(); handleEdit(f); }}
+                              aria-label="Edit fireteam"
+                            >
+                              <FaEdit />
+                            </button>
+                            <button
+                              type="button"
+                              className="min-h-[44px] px-3 flex items-center justify-center rounded-lg bg-red-100 text-red-600 text-sm font-medium"
+                              title="Delete Fireteam"
+                              onClick={(e) => { e.stopPropagation(); handleDelete(f); }}
+                            >
+                              Delete
+                            </button>
+                            <button
+                              type="button"
+                              className="ml-auto min-h-[44px] px-3 text-sm font-medium text-[#002147] border border-[#002147] rounded-lg hover:bg-[#002147] hover:text-white transition-colors"
+                              onClick={(e) => { e.stopPropagation(); router.push(`${basePath}/${f.id}`); }}
+                            >
+                              View
+                            </button>
+                          </div>
+                        </div>
+                      );
+                    })
+                  )}
+                </div>
+                {/* Desktop table */}
+                <div className="hidden md:block overflow-x-auto bg-white border border-gray-200 rounded-lg shadow">
+                  <table className="min-w-full divide-y divide-gray-200">
+                    <thead className="bg-gray-50">
                       <tr>
-                        <td colSpan={6} className="px-6 py-6 text-center text-gray-500">
-                          No fireteams found.
-                        </td>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cohort</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Time</th>
+                        <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                       </tr>
-                    ) : (
-                      filteredFireteams.map((f) => {
-                        const cohort = cohorts.find(c => c.id === f.cohort_id);
-                        return (
-                          <tr
-                            key={f.id}
-                            className="hover:bg-gray-50 transition cursor-pointer"
-                            onClick={() => router.push(`/admin/fireteammanagement/${f.id}`)}
-                          >
-                            <td className="px-6 py-4 text-sm font-medium text-gray-900">{f.title || f.name}</td>
-                            <td className="px-6 py-4 text-sm text-gray-700">{f.description}</td>
-                            <td className="px-6 py-4 text-sm text-gray-700">{cohort ? (cohort.name || cohort.title || `Cohort ${cohort.id}`) : f.cohort_id}</td>
-                            <td className="px-6 py-4 text-sm text-gray-700">{f.date}</td>
-                            <td className="px-6 py-4 text-sm text-gray-700">{f.time}</td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm">
-                              <span className="inline-flex gap-2 justify-end">
-                                <button
-                                  type="button"
-                                  className="p-2 rounded hover:bg-blue-100 text-blue-600"
-                                  title="Edit Fireteam"
-                                  onClick={(e) => { e.stopPropagation(); handleEdit(f); }}
-                                >
-                                  <FaEdit />
-                                </button>
-                                <button
-                                  type="button"
-                                  className="p-2 rounded hover:bg-red-100 text-red-600"
-                                  title="Delete Fireteam"
-                                  onClick={(e) => { e.stopPropagation(); handleDelete(f); }}
-                                >
-                                  Delete
-                                </button>
-                              </span>
-                            </td>
-                          </tr>
-                        );
-                      })
-                    )}
-                  </tbody>
-                </table>
-              </div>
+                    </thead>
+                    <tbody className="bg-white divide-y divide-gray-100">
+                      {filteredFireteams.length === 0 ? (
+                        <tr>
+                          <td colSpan={6} className="px-6 py-6 text-center text-gray-500">
+                            No fireteams found.
+                          </td>
+                        </tr>
+                      ) : (
+                        filteredFireteams.map((f) => {
+                          const cohort = cohorts.find(c => c.id === f.cohort_id);
+                          return (
+                            <tr
+                              key={f.id}
+                              className="hover:bg-gray-50 transition cursor-pointer"
+                              onClick={() => router.push(`${basePath}/${f.id}`)}
+                            >
+                              <td className="px-6 py-4 text-sm font-medium text-gray-900">{f.title || f.name}</td>
+                              <td className="px-6 py-4 text-sm text-gray-700">{f.description}</td>
+                              <td className="px-6 py-4 text-sm text-gray-700">{cohort ? (cohort.name || cohort.title || `Cohort ${cohort.id}`) : f.cohort_id}</td>
+                              <td className="px-6 py-4 text-sm text-gray-700">{f.date}</td>
+                              <td className="px-6 py-4 text-sm text-gray-700">{f.time}</td>
+                              <td className="px-6 py-4 whitespace-nowrap text-right text-sm">
+                                <span className="inline-flex gap-2 justify-end">
+                                  <button
+                                    type="button"
+                                    className="p-2 rounded hover:bg-blue-100 text-blue-600 min-w-[44px] min-h-[44px] md:min-w-0 md:min-h-0"
+                                    title="Edit Fireteam"
+                                    onClick={(e) => { e.stopPropagation(); handleEdit(f); }}
+                                  >
+                                    <FaEdit />
+                                  </button>
+                                  <button
+                                    type="button"
+                                    className="p-2 rounded hover:bg-red-100 text-red-600"
+                                    title="Delete Fireteam"
+                                    onClick={(e) => { e.stopPropagation(); handleDelete(f); }}
+                                  >
+                                    Delete
+                                  </button>
+                                </span>
+                              </td>
+                            </tr>
+                          );
+                        })
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </>
             )}
             {/* Add/Edit Dialog */}
         <Dialog open={showAddEdit} onClose={handleClose} fullWidth maxWidth="xs">

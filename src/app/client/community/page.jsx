@@ -252,9 +252,9 @@ export default function CommunityPage() {
                     </div>
                   ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                      {filteredCommunities.map((comm) => (
+                      {filteredCommunities.map((comm, index) => (
                         <div
-                          key={comm.id}
+                          key={comm.id ?? `community-${index}`}
                           className={`rounded-lg border-2 p-3 flex flex-col bg-white hover:shadow-lg transition-all group cursor-pointer ${
                             selectedCommunityId === comm.id
                               ? "ring-2 ring-blue-500 border-blue-500 shadow-md"

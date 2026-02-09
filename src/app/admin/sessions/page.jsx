@@ -3,24 +3,7 @@ import { useState, useEffect } from "react";
 import AdminSidebar from "../../../../components/dashboardcomponents/adminsidebar";
 import { Plus, Search, Edit, Trash2, Calendar, X, Loader2 } from "lucide-react";
 import { sessionsService } from "../../../services/api/sessions.service";
-
-function normalizeSessions(raw) {
-  const list = Array.isArray(raw) ? raw : raw?.sessions?.data ?? raw?.data ?? [];
-  if (!Array.isArray(list)) return [];
-  return list.map((session) => {
-    const at = session.scheduled_at || session.date;
-    const d = at ? new Date(at) : new Date();
-    const pad = (n) => n.toString().padStart(2, "0");
-    const date = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
-    const time = `${pad(d.getHours())}:${pad(d.getMinutes())}`;
-    return {
-      ...session,
-      time,
-      date,
-      status: session.status || "Scheduled",
-    };
-  });
-}
+import { normalizeSessions } from "../../../lib/sessions";
 
 const emptyForm = { title: "", description: "", date: "", time: "" };
 

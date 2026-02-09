@@ -90,7 +90,7 @@ export default function CommunityContent() {
         {/* Top Bar */}
         <ClientTopbar user={user} />
         {/* Main Content */}
-        <main className="flex-1 h-0 overflow-y-auto px-4 md:px-12 py-8 bg-gray-50">
+        <main className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-3 sm:px-4 md:px-12 py-4 md:py-8 bg-gray-50">
           <div className="max-w-6xl mx-auto">
             <div className="flex flex-col lg:flex-row gap-8">
               {/* Main Content */}

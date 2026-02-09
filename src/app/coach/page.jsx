@@ -3,11 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import {
-  FaUserFriends,
-  FaCalendarAlt,
-  FaClipboardList,
-  FaLightbulb,
-  FaChartBar,
+  FaUserFriends, FaCalendarAlt, FaClipboardList, FaLightbulb, FaChartBar,
   FaBook,
   FaUsersCog,
   FaComments,
@@ -23,6 +19,7 @@ import CoachSidebar from '../../../components/dashboardcomponents/CoachSidebar';
 import ClientTopbar from '../../../components/dashboardcomponents/clienttopbar';
 import ScheduleSessionModal from '../../../components/dashboardcomponents/ScheduleSessionModal';
 import { sessionsService } from '../../services/api/sessions.service';
+import { clientsService } from '../../services/api/clients.service';
 
 // Simple Modal Component
 function Modal({ open, onClose, title, children }) {
@@ -46,15 +43,7 @@ function Modal({ open, onClose, title, children }) {
 // Chat Modal Component
 function ChatModal({ isOpen, onClose, client }) {
   const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState([
-    {
-      id: 1,
-      sender: "System",
-      text: "Chat session started. You can now communicate with your client.",
-      time: "10:30 AM",
-      isCoach: true
-    }
-  ]);
+  const [messages, setMessages] = useState([]);
 
   if (!isOpen) return null;
 
@@ -98,7 +87,9 @@ function ChatModal({ isOpen, onClose, client }) {
 
         {/* Messages Area */}
         <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50">
-          {messages.map((msg) => (
+          {messages.length === 0 ? (
+            <p className="text-center text-gray-500 text-sm py-8">No messages yet. Start the conversation below.</p>
+          ) : messages.map((msg) => (
             <div
               key={msg.id}
               className={`flex ${msg.isCoach ? 'justify-end' : 'justify-start'}`}
@@ -179,16 +170,27 @@ function QuickActionCard({ icon: Icon, title, description, onClick, color }) {
 }
 
 export default function CoachDashboard() {
-  // Mock coach user for the topbar
-  const coachUser = { name: 'Coach' };
-  // Modal state
+  const [coachUser, setCoachUser] = useState(null);
   const [openModal, setOpenModal] = useState(null); // 'notes' | 'content' | null
   const [showScheduleModal, setShowScheduleModal] = useState(false);
   const [upcomingSessions, setUpcomingSessions] = useState([]);
+  const [totalClients, setTotalClients] = useState(0);
+  const [completedSessionsCount, setCompletedSessionsCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [chatModalOpen, setChatModalOpen] = useState(false);
   const [selectedClient, setSelectedClient] = useState(null);
+
+  useEffect(() => {
+    const userData = localStorage.getItem('wanacUser');
+    if (userData) {
+      try {
+        setCoachUser(JSON.parse(userData));
+      } catch (e) {
+        setCoachUser(null);
+      }
+    }
+  }, []);
 
   useEffect(() => {
     const fetchSessions = async () => {
@@ -197,10 +199,15 @@ export default function CoachDashboard() {
         setError("");
         const response = await sessionsService.getSessions();
         const sessions = response.data || response.sessions?.data || [];
+        const allSessions = Array.isArray(sessions) ? sessions : [];
+        const completed = allSessions.filter(
+          s => (s.status || '').toLowerCase() === 'completed' || (s.status || '').toLowerCase() === 'done'
+        ).length;
+        setCompletedSessionsCount(completed);
         setUpcomingSessions(
-          sessions
+          allSessions
             .filter(session => session.status === 'Scheduled' || session.status === 'Upcoming' || session.status === 'Pending')
-            .sort((a, b) => new Date(a.date) - new Date(b.date))
+            .sort((a, b) => new Date(a.date || 0) - new Date(b.date || 0))
             .slice(0, 5)
         );
       } catch (error) {
@@ -213,12 +220,24 @@ export default function CoachDashboard() {
     fetchSessions();
   }, []);
 
-  // Enhanced stats
+  useEffect(() => {
+    const fetchClientCount = async () => {
+      try {
+        const data = await clientsService.getClients();
+        const clients = Array.isArray(data) ? data : (data?.clients || data?.data || []);
+        setTotalClients(clients.length);
+      } catch (e) {
+        setTotalClients(0);
+      }
+    };
+    fetchClientCount();
+  }, []);
+
   const stats = {
-    totalClients: 12,
+    totalClients,
     upcomingSessions: upcomingSessions.length,
-    completedSessions: 45,
-    pendingMessages: 5
+    completedSessions: completedSessionsCount,
+    pendingMessages: 0
   };
 
   return (
@@ -335,7 +354,7 @@ export default function CoachDashboard() {
                     icon={FaBook}
                     title="Manage Fireteams"
                     description="Manage resources"
-                    onClick={() => window.location.href = '/admin/fireteammanagement?role=coach'}
+                    onClick={() => window.location.href = '/coach/fireteammanagement'}
                     color="accent"
                   />
                   <QuickActionCard
@@ -557,7 +576,7 @@ export default function CoachDashboard() {
                 <div className="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-shadow p-4">
                   <h3 className="text-sm font-semibold text-[#002147] mb-3">Quick Links</h3>
                   <div className="space-y-2 text-[11px]">
-                    <a href="/admin/fireteammanagement?role=coach" className="flex items-center gap-2 p-2 hover:bg-gray-50 rounded transition-colors text-gray-700 hover:text-[#002147]">
+                    <a href="/coach/fireteammanagement" className="flex items-center gap-2 p-2 hover:bg-gray-50 rounded transition-colors text-gray-700 hover:text-[#002147]">
                       <FaFire className="text-orange-500" />
                       <span>Fireteam Management</span>
                     </a>

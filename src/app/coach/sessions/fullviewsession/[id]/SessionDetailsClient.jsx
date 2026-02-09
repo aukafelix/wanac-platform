@@ -17,9 +17,10 @@ import { sessionsService } from "../../../../../services/api/sessions.service";
 import { clientsService } from '../../../../../services/api/clients.service';
 import CoachSidebar from "../../../../../../components/dashboardcomponents/CoachSidebar";
 import ClientTopbar from "../../../../../../components/dashboardcomponents/clienttopbar";
+import Sidebar from "../../../../../../components/dashboardcomponents/sidebar";
 import { useRouter } from "next/navigation";
 
-export default function SessionDetailsClient({ sessionId }) {
+export default function SessionDetailsClient({ sessionId, readOnly = false, useClientLayout = false }) {
   const router = useRouter();
   const [session, setSession] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -67,7 +68,7 @@ export default function SessionDetailsClient({ sessionId }) {
     const fetchSession = async () => {
       try {
         const data = await sessionsService.getSession(sessionId);
-        setSession(data.session)
+        setSession(data.session ?? data);
       } catch (err) {
         console.error("Failed to fetch session", err);
       } finally {
@@ -93,16 +94,19 @@ export default function SessionDetailsClient({ sessionId }) {
     minute: "2-digit",
   });
 
+  const backHref = useClientLayout ? "/client/session" : "/coach/sessions";
+  const SidebarComponent = useClientLayout ? Sidebar : CoachSidebar;
+
   return (
     <div className="flex min-h-screen bg-white font-body">
-      <CoachSidebar />
+      <SidebarComponent className={useClientLayout ? "w-56 bg-white border-r border-gray-200" : undefined} />
       <div className="flex-1 flex flex-col min-h-screen">
-        <ClientTopbar user={{ name: "Coach" }} />
-        <main className="flex-1 px-3 md:px-4 py-3 bg-gray-50">
+        <ClientTopbar user={{ name: useClientLayout ? "Client" : "Coach" }} />
+        <main className="flex-1 min-h-0 overflow-x-hidden px-3 md:px-4 py-3 bg-gray-50">
           <div className="max-w-4xl mx-auto space-y-3">
             {/* Back Button */}
             <button
-              onClick={() => router.push('/coach/sessions')}
+              onClick={() => router.push(backHref)}
               className="flex items-center gap-2 text-[#002147] hover:text-orange-500 transition-colors text-xs font-medium group"
             >
               <FaArrowLeft className="text-xs group-hover:-translate-x-1 transition-transform duration-200" />
@@ -147,7 +151,7 @@ export default function SessionDetailsClient({ sessionId }) {
                 <div className="text-sm font-bold text-[#002147] mt-1.5">
                   {dateStr || "N/A"}
                 </div>
-                <div className="text-[10px] text-gray-600">{timeStr} • 90 minutes</div>
+                <div className="text-[10px] text-gray-600">{timeStr}{session.duration_minutes ? ` • ${session.duration_minutes} min` : ""}</div>
               </div>
               <div className="rounded-lg border border-green-100 bg-gradient-to-br from-green-50 to-white p-2.5 shadow-sm hover:shadow-md transition-shadow">
                 <div className="text-green-600 flex items-center gap-1.5 font-semibold text-xs">
@@ -183,12 +187,14 @@ export default function SessionDetailsClient({ sessionId }) {
                       <span className="text-[10px] text-gray-500 font-normal">({session.session_members.length})</span>
                     )}
                 </h2>
+                  {!readOnly && (
                   <button 
                     className="text-[10px] px-2 py-1 bg-green-500 text-white rounded hover:bg-green-600 flex items-center gap-1 transition-colors font-medium" 
                     onClick={() => setShowAddParticipant(true)}
                   >
                     <FaPlus className="text-[10px]" /> Add
                 </button>
+                  )}
               </div>
                 <div className="space-y-1.5 max-h-32 overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
                 {session.session_members?.map((member, i) => (
@@ -225,15 +231,19 @@ export default function SessionDetailsClient({ sessionId }) {
                       <span className="text-[10px] text-gray-500 font-normal">({session.session_resources.length})</span>
                     )}
                 </h2>
+                  {!readOnly && (
                   <button 
                     className="text-[10px] px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 flex items-center gap-1 transition-colors font-medium" 
                     onClick={() => setShowAddResource(true)}
                   >
                     <FaPlus className="text-[10px]" /> Add
                 </button>
+                  )}
               </div>
                 <div className="space-y-1.5 max-h-32 overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
-                {session.session_resources?.map((res, i) => (
+                {session.session_resources?.map((res, i) => {
+                  const resourceUrl = res.link || res.url;
+                  return (
                   <div
                     key={i}
                       className="bg-gradient-to-r from-purple-50 to-white border border-purple-100 rounded px-2 py-1.5 flex justify-between items-center hover:from-purple-100 hover:to-purple-50 transition-colors"
@@ -242,11 +252,15 @@ export default function SessionDetailsClient({ sessionId }) {
                         <div className="font-semibold text-gray-900 text-xs truncate">{res.name}</div>
                         <div className="text-[10px] text-gray-600 truncate">{res.description}</div>
                     </div>
-                      <button className="text-blue-600 hover:text-blue-800 flex items-center gap-1 text-[10px] font-medium transition-colors ml-2 whitespace-nowrap">
-                        <FaFileDownload className="text-[10px]" />
-                    </button>
+                      {resourceUrl ? (
+                        <a href={resourceUrl} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 flex items-center gap-1 text-[10px] font-medium transition-colors ml-2 whitespace-nowrap">
+                          <FaFileDownload className="text-[10px]" /> Open
+                        </a>
+                      ) : (
+                        <span className="text-gray-400 text-[10px] ml-2">—</span>
+                      )}
                   </div>
-                ))}
+                );})}
                 {session.session_resources?.length === 0 && (
                     <p className="text-xs text-gray-500 text-center py-2">No resources yet.</p>
                 )}
@@ -260,6 +274,8 @@ export default function SessionDetailsClient({ sessionId }) {
                 <FaStickyNote className="text-orange-500 text-xs" />
                 Session Notes
               </h2>
+              {!readOnly && (
+              <>
               <textarea
                 placeholder="Enter session observations, feedback, or action items..."
                 className="w-full border-2 border-gray-300 rounded p-2 mb-2 resize-none focus:outline-none focus:border-[#002147] focus:ring-2 focus:ring-[#002147]/20 text-xs transition-all"
@@ -280,10 +296,8 @@ export default function SessionDetailsClient({ sessionId }) {
                   try {
                     await sessionsService.addNote({ session_id: sessionId, content: noteText });
                     setNoteText("");
-                    // Refresh session data
-                    setLoading(true);
                     const data = await sessionsService.getSession(sessionId);
-                    setSession(data.session);
+                    setSession(data.session ?? data);
                   } catch (err) {
                     setAddNoteError("Failed to add note. Please try again.");
                   } finally {
@@ -294,6 +308,8 @@ export default function SessionDetailsClient({ sessionId }) {
               >
                 {addNoteLoading ? "Adding..." : "+ Add Note"}
               </button>
+              </>
+              )}
               {addNoteError && (
                 <div className="text-red-600 text-xs mb-2 bg-red-50 border border-red-200 rounded p-2">{addNoteError}</div>
               )}
@@ -320,15 +336,12 @@ export default function SessionDetailsClient({ sessionId }) {
                 AI Summary
               </h2>
               <div className="bg-gradient-to-br from-purple-50 via-blue-50 to-white border border-purple-200 rounded p-2.5 shadow-sm">
-                <div className="text-gray-800 text-xs space-y-1.5">
-                  {/* Mock AI summary data */}
-                  <p><strong className="text-purple-700">Key Points:</strong> Goal setting, progress review, and action items for the upcoming week.</p>
-                  <p><strong className="text-blue-700">Sentiment:</strong> Positive and engaged participation.</p>
-                  <p><strong className="text-green-700">Action Items:</strong> Submit weekly progress update and review resources.</p>
-                </div>
-                <div className="text-[10px] text-gray-600 mt-2 flex items-center gap-1 font-medium">
+                <p className="text-gray-600 text-xs">
+                  AI summary will appear here once available for this session.
+                </p>
+                <div className="text-[10px] text-gray-500 mt-2 flex items-center gap-1">
                   <FaRobot className="text-[10px] text-purple-500" />
-                  <span>Generated by AI</span>
+                  <span>Coming soon</span>
                 </div>
               </div>
             </section>
@@ -373,10 +386,8 @@ export default function SessionDetailsClient({ sessionId }) {
                 setShowAddParticipant(false);
                 setClientSearch("");
                 setSelectedClient(null);
-                // Refresh session data
-                setLoading(true);
                 const data = await sessionsService.getSession(sessionId);
-                setSession(data.session);
+                setSession(data.session ?? data);
               } catch (err) {
                 setAddParticipantError("Failed to add participant. Please try again.");
               } finally {
@@ -503,10 +514,8 @@ export default function SessionDetailsClient({ sessionId }) {
                 setResourceDescription("");
                 setResourceFile(null);
                 setResourceLink("");
-                // Refresh session data
-                setLoading(true);
                 const data = await sessionsService.getSession(sessionId);
-                setSession(data.session);
+                setSession(data.session ?? data);
               } catch (err) {
                 setAddResourceError("Failed to add resource. Please try again.");
               } finally {

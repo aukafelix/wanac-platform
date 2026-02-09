@@ -5,6 +5,20 @@ export const clientsService = {
     const response = await apiClient.get('/api/v1/clients');
     return response.data;
   },
+
+  /**
+   * Fetch progress data for a specific client (whole life, daily habits, insights).
+   * Backend may expose GET /api/v1/clients/:id/progress or similar.
+   */
+  async getClientProgress(clientId: string | number) {
+    try {
+      const response = await apiClient.get(`/api/v1/clients/${clientId}/progress`);
+      return response.data;
+    } catch {
+      return null;
+    }
+  },
+
   async searchClients(query: string) {
     const all = await this.getClients();
     if (!Array.isArray(all)) return [];

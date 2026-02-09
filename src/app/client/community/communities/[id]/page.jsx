@@ -785,13 +785,17 @@ function CommunityDetailPageInner() {
                   await loadCommunityEvents();
                 } catch (err) {
                   console.error('Error creating event:', err);
-                  console.error('Error response:', err.response?.data);
-                  
-                  // Show specific error message if available
-                  const errorMessage = err.response?.data?.error || 
-                                      err.response?.data?.message || 
-                                      err.message || 
-                                      "Failed to schedule event. Please try again.";
+                  if (err.response?.data != null) {
+                    console.error('Error response:', err.response.data);
+                  }
+
+                  // Show specific error message (axios: response.data may be string or object)
+                  const data = err.response?.data;
+                  const errorMessage =
+                    (typeof data === 'string' ? data : null) ||
+                    (data && (data.error || data.message)) ||
+                    err.message ||
+                    "Failed to schedule event. Please try again.";
                   setEventError(errorMessage);
                 } finally {
                   setEventLoading(false);

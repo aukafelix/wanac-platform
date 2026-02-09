@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { openaiService } from '../../../../../services/api/openai.service';
+import { huggingfaceService } from '../../../../../services/api/huggingface.service';
 import { meetingService } from '../../../../../services/api/meeting.service';
 
 /**
@@ -156,7 +156,7 @@ export function useRecording(jitsiApiRef, jitsiReady) {
       console.log('🤖 Generating AI summaries...');
 
       // Step 2: Generate all 3 summaries in parallel
-      const summaries = await openaiService.generateMeetingSummaries(transcript, meetingData);
+      const summaries = await huggingfaceService.generateMeetingSummaries(transcript, meetingData);
 
       console.log('✅ AI summaries generated');
       console.log('📤 Uploading to backend...');
@@ -189,7 +189,7 @@ export function useRecording(jitsiApiRef, jitsiReady) {
       // Return both summaries and recording ID
       return {
         summaries,
-        recordingId: tempRecordingId || currentRecordingId
+        recordingId: currentRecordingId
       };
     } catch (error) {
       console.error('❌ Failed to process recording:', error);

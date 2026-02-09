@@ -5,28 +5,7 @@ import CoachSidebar from '../../../../components/dashboardcomponents/CoachSideba
 import ClientTopbar from '../../../../components/dashboardcomponents/clienttopbar';
 import { FaCalendar, FaVideo, FaRobot, FaBookOpen, FaSpinner } from 'react-icons/fa';
 import { sessionsService } from '../../../services/api/sessions.service';
-
-// Normalize API response to sessions array and parse scheduled_at to date/time
-function normalizeSessions(raw) {
-  const list = Array.isArray(raw) ? raw : raw?.sessions?.data ?? raw?.data ?? [];
-  if (!Array.isArray(list)) return [];
-  return list.map((session) => {
-    const at = session.scheduled_at || session.date;
-    const d = at ? new Date(at) : new Date();
-    const pad = (n) => n.toString().padStart(2, "0");
-    const date = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
-    const time = `${pad(d.getHours())}:${pad(d.getMinutes())}`;
-    return {
-      ...session,
-      time,
-      date,
-      link: session.session_link || session.meeting_link || "",
-      resources: session.resources || "",
-      notes: session.description || "",
-      status: session.status || "Scheduled",
-    };
-  });
-}
+import { normalizeSessions } from '../../../lib/sessions';
 
 export default function CoachSessionsPage() {
   const [upcomingSessions, setUpcomingSessions] = useState([]);
@@ -117,7 +96,7 @@ export default function CoachSessionsPage() {
         {/* Top Bar */}
         <ClientTopbar user={user || { name: "Coach" }} />
         {/* Main Content */}
-        <main className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-3 md:px-4 py-2 bg-gray-50">
+        <main className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-3 sm:px-4 md:px-4 py-3 sm:py-4 bg-gray-50">
           <div className="max-w-7xl mx-auto">
             <div className="flex flex-col lg:flex-row gap-2">
               <div className="flex-1 space-y-2">
@@ -294,7 +273,7 @@ export default function CoachSessionsPage() {
                       Start a live video session
                     </p>
                     <button
-                      onClick={() => router.push("/coach/sessions")}
+                      onClick={() => router.push("/coach/sessions/live-session")}
                       className="px-4 py-1.5 bg-blue-600 text-white rounded text-xs font-medium hover:bg-blue-700 transition-colors w-full"
                     >
                       Start Meeting

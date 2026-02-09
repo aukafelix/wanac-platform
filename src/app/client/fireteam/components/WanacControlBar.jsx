@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaChalkboard, FaVideo, FaCircle, FaStop, FaSignOutAlt, FaRobot, FaSpinner } from 'react-icons/fa';
+import { FaChalkboard, FaVideo, FaSignOutAlt } from 'react-icons/fa';
 
 /**
  * Inline control bar for top navigation
