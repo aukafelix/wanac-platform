@@ -4,7 +4,7 @@
  * Remove or restrict in production.
  */
 
-import { huggingfaceService } from '../../../../services/api/huggingface.service';
+import { huggingfaceService } from '../../../services/api/huggingface.service';
 
 export async function POST(req) {
   try {
