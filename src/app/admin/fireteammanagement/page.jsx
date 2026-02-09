@@ -3,6 +3,6 @@ import FireteamManagement from "../../../../components/dashboardcomponents/Firet
 import AdminSidebar from "../../../../components/dashboardcomponents/adminsidebar";
 
 export default function FireteamAdminManagementPage() {
-  return <FireteamManagement sidebar={AdminSidebar} />;
+  return <FireteamManagement sidebar={AdminSidebar} basePath="/admin/fireteammanagement" />;
 }
 

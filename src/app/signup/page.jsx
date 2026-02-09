@@ -8,9 +8,10 @@ import { useRouter } from "next/navigation";
 import { authService } from "@/services/api/auth.service";
 import { toast } from "react-hot-toast";
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
-import { googleAuthService } from '@/services/api/google-auth.service';
 import { handleValidationErrors } from "@/lib/error";
 import { jwtDecode } from "jwt-decode";
+
+const AUTH_API_BASE = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_API_BASE_URL || "https://api.wanac.org";
 
 export default function Signup() {
   const router = useRouter();
@@ -144,35 +145,53 @@ export default function Signup() {
   };
 
   const handleGoogleSuccess = async (credentialResponse) => {
+    setSocialLoading(prev => ({ ...prev, google: true }));
     try {
-      setSocialLoading(prev => ({ ...prev, google: true }));
       const googleUser = jwtDecode(credentialResponse.credential);
       const response = await fetch(
-        "https://api.wanac.org/api/v1/auth/register",
+        `${AUTH_API_BASE}/api/v1/auth/register`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            name: googleUser.name,
+            name: googleUser.name ?? googleUser.email?.split("@")[0],
             email: googleUser.email,
-            role: userType,
+            role: userType.toLowerCase(),
             social: true,
             provider: "google",
             provider_id: googleUser.sub
           }),
         }
       );
-      
-      if (response.token) {
-        localStorage.setItem('auth_token', response.token);
-        toast.success('Successfully signed in with Google!');
-        router.push(userType === "client" ? "/client" : "/coach");
+      const data = await response.json();
+
+      if (!response.ok) {
+        if (data?.errors) {
+          handleValidationErrors(data.errors);
+        } else if (data?.error) {
+          toast.error(data.error);
+        } else {
+          toast.error("Google sign up failed.");
+        }
+        return;
       }
+
+      const role = data.user?.role ?? userType;
+      localStorage.setItem("wanacUser", JSON.stringify({ ...data.user, userType: role }));
+      localStorage.setItem("auth_token", data.token);
+      toast.success(data.message ?? "Successfully signed up with Google!");
+      const dashboardPaths = {
+        client: "/client/dashboard",
+        coach: "/coach",
+        admin: "/admin",
+      };
+      const dashboardPath = dashboardPaths[role] || "/";
+      router.push(dashboardPath);
     } catch (error) {
-      console.error('Google login error:', error);
-      toast.error('Failed to sign in with Google. Please try again.');
+      console.error("Google sign up error:", error);
+      toast.error("Failed to sign up with Google. Please try again.");
     } finally {
       setSocialLoading(prev => ({ ...prev, google: false }));
     }
@@ -274,8 +293,10 @@ export default function Signup() {
     }
   };
 
-  return (
-    <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}>
+  const googleClientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID?.trim() || "";
+  const hasGoogleAuth = !!googleClientId;
+
+  const content = (
       <div className="min-h-screen h-screen flex overflow-hidden">
         {/* Left Side - Brand Section */}
         <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-[#002147] to-[#003875] p-8 flex-col justify-center relative overflow-hidden">
@@ -754,18 +775,29 @@ export default function Signup() {
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-2">
-                <div className={socialLoading.google ? 'opacity-50' : ''}>
-                  <GoogleLogin
-                    onSuccess={handleGoogleSuccess}
-                    onError={handleGoogleError}
-                    useOneTap={false}
-                    theme="outline"
-                    shape="rectangular"
-                    locale="en"
-                    text="signup_with"
-                    disabled={socialLoading.google}
-                    size="medium"
-                  />
+                <div className={socialLoading.google ? "opacity-50" : ""}>
+                  {hasGoogleAuth ? (
+                    <GoogleLogin
+                      onSuccess={handleGoogleSuccess}
+                      onError={handleGoogleError}
+                      useOneTap={false}
+                      theme="outline"
+                      shape="rectangular"
+                      locale="en"
+                      text="signup_with"
+                      disabled={socialLoading.google}
+                      size="medium"
+                    />
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => toast.error("Add NEXT_PUBLIC_GOOGLE_CLIENT_ID to your .env to enable Google sign-up.")}
+                      className="flex items-center justify-center w-full px-2 py-1.5 border border-gray-300 rounded-md shadow-sm text-xs font-medium text-gray-700 bg-white hover:bg-gray-50"
+                    >
+                      <FcGoogle className="h-4 w-4 mr-1" />
+                      Sign up with Google
+                    </button>
+                  )}
                 </div>
                 <button
                   type="button"
@@ -801,6 +833,13 @@ export default function Signup() {
           </div>
         </div>
       </div>
+  );
+
+  return hasGoogleAuth ? (
+    <GoogleOAuthProvider clientId={googleClientId}>
+      {content}
     </GoogleOAuthProvider>
+  ) : (
+    content
   );
 }

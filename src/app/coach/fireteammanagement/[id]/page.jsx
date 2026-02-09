@@ -1,10 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
-import AdminSidebar from "../../../../../components/dashboardcomponents/adminsidebar";
+import CoachSidebar from "../../../../../components/dashboardcomponents/CoachSidebar";
 import {
-  Box,
-  Typography,
   Button,
   Stack,
   Dialog,
@@ -20,8 +18,6 @@ import {
   Alert,
 } from "@mui/material";
 import {
-  Edit,
-  Delete,
   Add,
   PersonAdd,
   PersonRemove,
@@ -34,11 +30,13 @@ import { generateFireteamMeetingLink } from "../../../../lib/jitsi.utils";
 import ExperienceVideoModal from "../../../../../components/ExperienceVideoModal";
 import EditExperienceModal from "../../../../../components/EditExperienceModal";
 
-export default function FireteamDetailPage() {
+const LIST_PATH = "/coach/fireteammanagement";
+
+export default function CoachFireteamDetailPage() {
   const params = useParams();
   const router = useRouter();
   const { id } = params;
-  
+
   const [fireteam, setFireteam] = useState(null);
   const [cohort, setCohort] = useState(null);
   const [members, setMembers] = useState([]);
@@ -90,7 +88,6 @@ export default function FireteamDetailPage() {
     try {
       const fireteamData = await fireteamService.getFireteam(id);
       const fireTeam = fireteamData.fireTeam;
-      console.log("Fireteam data:", fireteamData.fireTeam);
       setFireteam(fireTeam);
       setMembers(Array.isArray(fireTeam.members) ? fireTeam.members : []);
       setExperiences(Array.isArray(fireTeam.experiences) ? fireTeam.experiences : []);
@@ -103,14 +100,11 @@ export default function FireteamDetailPage() {
         cohort_id: fireTeam.cohort_id || "",
       });
 
-      
-
-      // Fetch clients for the add member dropdown
       try {
         const clientsResponse = await clientsService.getClients();
         const clientsArray = Array.isArray(clientsResponse?.clients) ? clientsResponse.clients : [];
         const mappedClients = clientsArray.map(client => ({
-          id: client.id, // Use the top-level client.id
+          id: client.id,
           name: client.user?.name || 'Unknown',
           email: client.user?.email || ''
         }));
@@ -119,8 +113,6 @@ export default function FireteamDetailPage() {
         console.error("Error fetching clients:", err);
         setClients([]);
       }
-
-      
     } catch (err) {
       console.error("Error fetching fireteam:", err);
       setError("Failed to load fireteam details");
@@ -129,16 +121,14 @@ export default function FireteamDetailPage() {
     }
   };
 
-  const handleEdit = () => {
-    setShowEdit(true);
-  };
+  const handleEdit = () => setShowEdit(true);
 
   const handleSaveEdit = async () => {
     try {
       await fireteamService.updateFireteam(id, editData);
       setSuccess("Fireteam updated successfully!");
       setShowEdit(false);
-      fetchFireteamDetails(); // Refresh data
+      fetchFireteamDetails();
     } catch (err) {
       setError("Failed to update fireteam");
     }
@@ -149,7 +139,7 @@ export default function FireteamDetailPage() {
       try {
         await fireteamService.deleteFireteam(id);
         setSuccess("Fireteam deleted successfully!");
-        router.push("/admin/fireteammanagement");
+        router.push(LIST_PATH);
       } catch (err) {
         setError("Failed to delete fireteam");
       }
@@ -159,22 +149,16 @@ export default function FireteamDetailPage() {
   const handleAddMember = async () => {
     if (!selectedClient) return;
     try {
-      console.log("Adding member with data:", {
+      await fireteamService.addFireteamMember({
         client_id: selectedClient,
         fire_team_id: id,
       });
-      const result = await fireteamService.addFireteamMember({
-        client_id: selectedClient,
-        fire_team_id: id,
-      });
-      console.log("Add member result:", result);
       setSuccess("Member added successfully!");
       setShowAddMember(false);
       setSelectedClient("");
-      fetchFireteamDetails(); // Refresh data
+      fetchFireteamDetails();
     } catch (err) {
       console.error("Error adding member:", err);
-      console.error("Error details:", err.response?.data);
       setError("Failed to add member");
     }
   };
@@ -184,7 +168,7 @@ export default function FireteamDetailPage() {
       try {
         await fireteamService.deleteFireteamMember(memberId);
         setSuccess("Member removed successfully!");
-        fetchFireteamDetails(); // Refresh data
+        fetchFireteamDetails();
       } catch (err) {
         setError("Failed to remove member");
       }
@@ -198,17 +182,14 @@ export default function FireteamDetailPage() {
       setSuccess("Member removed successfully!");
       setShowRemoveMember(false);
       setSelectedMemberToRemove("");
-      fetchFireteamDetails(); // Refresh data
+      fetchFireteamDetails();
     } catch (err) {
       setError("Failed to remove member");
     }
   };
 
   const handleAddExperience = () => {
-    setExperienceData({
-      title: "",
-      experience: "",
-    });
+    setExperienceData({ title: "", experience: "" });
     setShowAddExperience(true);
   };
 
@@ -234,34 +215,28 @@ export default function FireteamDetailPage() {
     }
   };
 
-  const handleDeleteExperience = async (id) => {
+  const handleDeleteExperience = async (expId) => {
     if (window.confirm("Are you sure you want to delete this experience?")) {
       try {
-        await experienceService.deleteExperience(id);
+        await experienceService.deleteExperience(expId);
         setSuccess("Experience deleted successfully!");
-        fetchFireteamDetails(); // Refresh data
+        fetchFireteamDetails();
       } catch (err) {
         setError("Failed to delete experience");
       }
     }
   };
 
-  const handleStartExperience = async (id) => {
+  const handleStartExperience = async (expId) => {
     try {
-      // Find the experience
-      const experience = experiences.find(exp => exp.id === id);
+      const experience = experiences.find(exp => exp.id === expId);
       if (!experience) {
         setError("Experience not found");
         return;
       }
-
-      // Start the experience on the server
-      await experienceService.startExperience(id);
-      
-      // Set the selected experience and open video meeting
+      await experienceService.startExperience(expId);
       setSelectedExperience(experience);
       setShowVideoMeeting(true);
-      
       setSuccess("Experience started successfully!");
     } catch (err) {
       setError("Failed to start experience");
@@ -270,50 +245,36 @@ export default function FireteamDetailPage() {
 
   const handleCloseVideoMeeting = () => {
     setShowVideoMeeting(false);
-    setSelectedExperience(null);
-    // Optionally end the experience on the server
     if (selectedExperience) {
       experienceService.endExperience(selectedExperience.id).catch(console.error);
     }
+    setSelectedExperience(null);
   };
 
-// Add handler for adding an agenda step
-const handleAddAgendaStep = async ({ title, duration }) => {
-  if (!selectedExperienceToEdit) return;
-  try {
-    const requestData = {
-      fire_team_experience_id: selectedExperienceToEdit.id,
-      title: typeof title === 'string' ? title : '',
-      duration: typeof duration === 'string' ? duration : '',
-    };
-    console.log("Adding agenda step with data:", requestData);
+  const handleAddAgendaStep = async ({ title, duration }) => {
+    if (!selectedExperienceToEdit) return;
+    try {
+      const newStep = await experienceService.addAgendaStep({
+        fire_team_experience_id: selectedExperienceToEdit.id,
+        title: typeof title === 'string' ? title : '',
+        duration: typeof duration === 'string' ? duration : '',
+      });
+      const safeStep = {
+        ...newStep,
+        title: typeof newStep.title === 'string' ? newStep.title : '',
+        duration: typeof newStep.duration === 'string' ? newStep.duration : '',
+      };
+      setEditExperienceData((prev) => ({
+        ...prev,
+        agenda: [...prev.agenda, safeStep],
+      }));
+      return newStep;
+    } catch (err) {
+      console.error("Error adding agenda step:", err);
+      setError("Failed to add agenda step");
+    }
+  };
 
-    const newStep = await experienceService.addAgendaStep(requestData);
-
-    // Ensure newStep has title/duration as strings
-    const safeStep = {
-      ...newStep,
-      title: typeof newStep.title === 'string' ? newStep.title : '',
-      duration: typeof newStep.duration === 'string' ? newStep.duration : '',
-    };
-    setEditExperienceData((prev) => ({
-      ...prev,
-      agenda: [
-        ...prev.agenda,
-        safeStep,
-      ],
-    }));
-
-    return newStep;
-  } catch (err) {
-    console.error("Error adding agenda step:", err);
-    console.error("Error response:", err.response?.data);
-    setError("Failed to add agenda step");
-  }
-};
-
-
-  // Exhibit handlers
   const handleAddExhibit = async () => {
     if (!selectedExperienceToEdit) return;
     try {
@@ -332,13 +293,10 @@ const handleAddAgendaStep = async ({ title, duration }) => {
     }
   };
 
-
   const handleDeleteExhibit = async (exhibitId, idx) => {
     if (!selectedExperienceToEdit) return;
     try {
-      if (exhibitId) {
-        await experienceService.deleteExhibit(exhibitId);
-      }
+      if (exhibitId) await experienceService.deleteExhibit(exhibitId);
       setEditExperienceData(prev => ({
         ...prev,
         exhibits: prev.exhibits.filter((_, i) => i !== idx),
@@ -357,16 +315,14 @@ const handleAddAgendaStep = async ({ title, duration }) => {
         title: editExperienceData.title,
         experience: editExperienceData.experience,
       });
-
       const currentExhibitIds = selectedExperienceToEdit.exhibits?.map(ex => ex.id).filter(Boolean) || [];
-      const newExhibits = editExperienceData.exhibits.filter(ex => !ex.id);
       const existingExhibits = editExperienceData.exhibits.filter(ex => ex.id);
       for (const exhibitId of currentExhibitIds) {
         if (!existingExhibits.find(ex => ex.id === exhibitId)) {
           await experienceService.deleteExhibit(exhibitId);
         }
       }
-      for (const exhibit of newExhibits) {
+      for (const exhibit of editExperienceData.exhibits.filter(ex => !ex.id)) {
         if (exhibit.name?.trim()) {
           await experienceService.addExhibit({
             fire_team_experience_id: selectedExperienceToEdit.id,
@@ -376,7 +332,6 @@ const handleAddAgendaStep = async ({ title, duration }) => {
           });
         }
       }
-
       const allExperiences = await experienceService.getExperiences(fireteam.id);
       const updatedExperience = allExperiences.find(exp => exp.id === selectedExperienceToEdit.id);
       setExperiences(prev => prev.map(e => (e.id === selectedExperienceToEdit.id ? updatedExperience : e)));
@@ -392,9 +347,9 @@ const handleAddAgendaStep = async ({ title, duration }) => {
   if (loading) {
     return (
       <div className="h-screen flex bg-gray-50 font-serif">
-        <AdminSidebar />
+        <CoachSidebar />
         <div className="flex-1 flex flex-col h-full transition-all duration-300">
-          <main className="flex-1 h-0 overflow-y-auto px-4 md:px-12 py-8 bg-gray-50">
+          <main className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-3 sm:px-4 md:px-12 py-4 md:py-8 bg-gray-50">
             <div className="max-w-6xl mx-auto">
               <div className="text-center py-12 text-gray-500">Loading fireteam details...</div>
             </div>
@@ -407,7 +362,7 @@ const handleAddAgendaStep = async ({ title, duration }) => {
   if (!fireteam) {
     return (
       <div className="h-screen flex bg-gray-50 font-serif">
-        <AdminSidebar />
+        <CoachSidebar />
         <div className="flex-1 flex flex-col h-full transition-all duration-300">
           <main className="flex-1 h-0 overflow-y-auto px-4 md:px-12 py-8 bg-gray-50">
             <div className="max-w-6xl mx-auto">
@@ -421,22 +376,19 @@ const handleAddAgendaStep = async ({ title, duration }) => {
 
   return (
     <div className="h-screen flex bg-gray-50 font-serif overflow-hidden">
-      <AdminSidebar />
+      <CoachSidebar />
       <div className="flex-1 flex flex-col min-w-0 h-full transition-all duration-300">
-        <main className="flex-1 min-h-0 overflow-y-auto px-4 md:px-6 lg:px-8 py-4 md:py-6 bg-gray-50">
+        <main className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-3 sm:px-4 md:px-6 lg:px-8 py-4 md:py-6 bg-gray-50">
           <div className="max-w-[1600px] mx-auto space-y-4">
-            {/* Back button - top */}
             <button
               type="button"
               className="flex items-center gap-2 text-gray-600 hover:text-gray-900 border border-gray-300 rounded-lg px-3 py-1.5 hover:bg-gray-50 transition text-sm shrink-0"
-              onClick={() => router.push("/admin/fireteammanagement")}
+              onClick={() => router.push(LIST_PATH)}
             >
               ← Back to Fireteam Management
             </button>
 
-            {/* Quick Actions + Fireteam Information - below back button */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* Quick Actions card */}
               <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-4">
                 <h3 className="text-sm font-semibold text-gray-700 mb-3">Quick Actions</h3>
                 <div className="flex flex-col gap-2">
@@ -466,7 +418,6 @@ const handleAddAgendaStep = async ({ title, duration }) => {
                   </div>
                 </div>
               </div>
-              {/* Fireteam Information card */}
               <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-4 overflow-hidden flex flex-col">
                 <h2 className="text-base font-semibold text-[#002147] mb-3">Fireteam Information</h2>
                 <dl className="space-y-2 text-sm flex-1 min-h-0">
@@ -494,12 +445,7 @@ const handleAddAgendaStep = async ({ title, duration }) => {
               </div>
             </div>
 
-           
-
-            {/* Main grid: Members + Experiences */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-
-              {/* Members List - compact card */}
               <div className="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden flex flex-col">
                 <div className="p-4 border-b border-gray-100 flex items-center justify-between shrink-0">
                   <h2 className="text-base font-semibold text-[#002147]">Fireteam Members</h2>
@@ -532,7 +478,6 @@ const handleAddAgendaStep = async ({ title, duration }) => {
                 </div>
               </div>
 
-              {/* Experiences List - compact card */}
               <div className="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden flex flex-col">
                 <div className="p-4 border-b border-gray-100 flex items-center justify-between shrink-0">
                   <h2 className="text-base font-semibold text-[#002147]">Fireteam Experiences</h2>
@@ -615,193 +560,109 @@ const handleAddAgendaStep = async ({ title, duration }) => {
           </div>
         </main>
       </div>
-      {/* Edit Dialog - outside scrollable area */}
-        <Dialog open={showEdit} onClose={() => setShowEdit(false)} fullWidth maxWidth="sm">
-          <DialogTitle>Edit Fireteam</DialogTitle>
-          <DialogContent>
-            <Stack spacing={2} sx={{ mt: 1 }}>
-              <TextField
-                label="Title"
-                value={editData.title}
-                onChange={(e) => setEditData({...editData, title: e.target.value})}
-                fullWidth
-              />
-              <TextField
-                label="Description"
-                value={editData.description}
-                onChange={(e) => setEditData({...editData, description: e.target.value})}
-                fullWidth
-                multiline
-                rows={3}
-              />
-              <TextField
-                label="Date"
-                type="date"
-                value={editData.date}
-                onChange={(e) => setEditData({...editData, date: e.target.value})}
-                InputLabelProps={{ shrink: true }}
-                fullWidth
-              />
-              <TextField
-                label="Time"
-                type="time"
-                value={editData.time}
-                onChange={(e) => setEditData({...editData, time: e.target.value})}
-                InputLabelProps={{ shrink: true }}
-                fullWidth
-              />
-            </Stack>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={() => setShowEdit(false)}>Cancel</Button>
-            <Button variant="contained" onClick={handleSaveEdit}>Save</Button>
-          </DialogActions>
-        </Dialog>
 
-        {/* Add Member Dialog */}
-        <Dialog open={showAddMember} onClose={() => setShowAddMember(false)} fullWidth maxWidth="sm">
-          <DialogTitle>Add Member to Fireteam</DialogTitle>
-          <DialogContent>
-            <Stack spacing={2} sx={{ mt: 1 }}>
-              <FormControl fullWidth>
-                <InputLabel>Select Client</InputLabel>
-                <Select
-                  value={selectedClient}
-                  onChange={(e) => setSelectedClient(e.target.value)}
-                  label="Select Client"
-                >
-                  {clients.map((client) => (
-                    <MenuItem key={client.id} value={client.id}>
-                      {client.name} ({client.email})
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Stack>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={() => setShowAddMember(false)}>Cancel</Button>
-            <Button variant="contained" onClick={handleAddMember}>Add Member</Button>
-          </DialogActions>
-        </Dialog>
+      <Dialog open={showEdit} onClose={() => setShowEdit(false)} fullWidth maxWidth="sm">
+        <DialogTitle>Edit Fireteam</DialogTitle>
+        <DialogContent>
+          <Stack spacing={2} sx={{ mt: 1 }}>
+            <TextField label="Title" value={editData.title} onChange={(e) => setEditData({...editData, title: e.target.value})} fullWidth />
+            <TextField label="Description" value={editData.description} onChange={(e) => setEditData({...editData, description: e.target.value})} fullWidth multiline rows={3} />
+            <TextField label="Date" type="date" value={editData.date} onChange={(e) => setEditData({...editData, date: e.target.value})} InputLabelProps={{ shrink: true }} fullWidth />
+            <TextField label="Time" type="time" value={editData.time} onChange={(e) => setEditData({...editData, time: e.target.value})} InputLabelProps={{ shrink: true }} fullWidth />
+          </Stack>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setShowEdit(false)}>Cancel</Button>
+          <Button variant="contained" onClick={handleSaveEdit}>Save</Button>
+        </DialogActions>
+      </Dialog>
 
-        {/* Remove Member Dialog */}
-        <Dialog open={showRemoveMember} onClose={() => setShowRemoveMember(false)} fullWidth maxWidth="sm">
-          <DialogTitle>Remove Member from Fireteam</DialogTitle>
-          <DialogContent>
-            <Stack spacing={2} sx={{ mt: 1 }}>
-              <FormControl fullWidth>
-                <InputLabel>Select Member to Remove</InputLabel>
-                <Select
-                  value={selectedMemberToRemove}
-                  onChange={(e) => setSelectedMemberToRemove(e.target.value)}
-                  label="Select Member to Remove"
-                >
-                  {members.map((member) => (
-                    <MenuItem key={member.id} value={member.id}>
-                      {member.client?.user?.name ?? member.name ?? 'Unknown'} ({member.client?.user?.email ?? member.email ?? '—'})
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Stack>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={() => setShowRemoveMember(false)}>Cancel</Button>
-            <Button 
-              variant="contained" 
-              color="error" 
-              onClick={handleRemoveMemberFromDialog}
-              disabled={!selectedMemberToRemove}
-            >
-              Remove Member
-            </Button>
-          </DialogActions>
-        </Dialog>
+      <Dialog open={showAddMember} onClose={() => setShowAddMember(false)} fullWidth maxWidth="sm">
+        <DialogTitle>Add Member to Fireteam</DialogTitle>
+        <DialogContent>
+          <Stack spacing={2} sx={{ mt: 1 }}>
+            <FormControl fullWidth>
+              <InputLabel>Select Client</InputLabel>
+              <Select value={selectedClient} onChange={(e) => setSelectedClient(e.target.value)} label="Select Client">
+                {clients.map((client) => (
+                  <MenuItem key={client.id} value={client.id}>{client.name} ({client.email})</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Stack>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setShowAddMember(false)}>Cancel</Button>
+          <Button variant="contained" onClick={handleAddMember}>Add Member</Button>
+        </DialogActions>
+      </Dialog>
 
-        {/* Add Experience Dialog */}
-        <Dialog open={showAddExperience} onClose={() => setShowAddExperience(false)} fullWidth maxWidth="sm">
-          <DialogTitle>Add New Experience</DialogTitle>
-          <DialogContent>
-            <Stack spacing={3} sx={{ mt: 1 }}>
-              <TextField
-                label="Experience Title"
-                value={experienceData.title}
-                onChange={(e) => setExperienceData({...experienceData, title: e.target.value})}
-                fullWidth
-                required
-                placeholder="e.g., Leadership in Crisis Management"
-                helperText="Enter a descriptive title for this experience"
-              />
-              <TextField
-                label="Experience Content"
-                value={experienceData.experience}
-                onChange={(e) => setExperienceData({...experienceData, experience: e.target.value})}
-                fullWidth
-                multiline
-                rows={4}
-                required
-                placeholder="Describe the experience content, learning objectives, and what participants will gain..."
-                helperText="Provide the detailed content and description of the experience"
-              />
-            </Stack>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={() => setShowAddExperience(false)}>Cancel</Button>
-            <Button 
-              variant="contained" 
-              onClick={handleSaveExperience}
-              disabled={!experienceData.title.trim() || !experienceData.experience.trim()}
-            >
-              Create Experience
-            </Button>
-          </DialogActions>
-        </Dialog>
+      <Dialog open={showRemoveMember} onClose={() => setShowRemoveMember(false)} fullWidth maxWidth="sm">
+        <DialogTitle>Remove Member from Fireteam</DialogTitle>
+        <DialogContent>
+          <Stack spacing={2} sx={{ mt: 1 }}>
+            <FormControl fullWidth>
+              <InputLabel>Select Member to Remove</InputLabel>
+              <Select value={selectedMemberToRemove} onChange={(e) => setSelectedMemberToRemove(e.target.value)} label="Select Member to Remove">
+                {members.map((member) => (
+                  <MenuItem key={member.id} value={member.id}>
+                    {member.client?.user?.name ?? member.name ?? 'Unknown'} ({member.client?.user?.email ?? member.email ?? '—'})
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Stack>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setShowRemoveMember(false)}>Cancel</Button>
+          <Button variant="contained" color="error" onClick={handleRemoveMemberFromDialog} disabled={!selectedMemberToRemove}>Remove Member</Button>
+        </DialogActions>
+      </Dialog>
 
-        {/* Edit Experience Modal (shadcn) */}
-        <EditExperienceModal
-          open={showEditExperience}
-          onClose={() => {
-            setShowEditExperience(false);
-            setSelectedExperienceToEdit(null);
-          }}
-          editExperienceData={editExperienceData}
-          setEditExperienceData={setEditExperienceData}
-          validationErrors={validationErrors}
-          clearValidationErrors={clearValidationErrors}
-          handleAddAgendaStep={handleAddAgendaStep}
-          handleAddExhibit={handleAddExhibit}
-          handleSave={handleSaveEditExperience}
-          setError={setError}
-          error={error}
-          members={members}
-          selectedExperienceToEdit={selectedExperienceToEdit}
-          generateFireteamMeetingLink={generateFireteamMeetingLink}
-          id={id}
-          fireteam={fireteam}
-          experienceService={experienceService}
-        />
+      <Dialog open={showAddExperience} onClose={() => setShowAddExperience(false)} fullWidth maxWidth="sm">
+        <DialogTitle>Add New Experience</DialogTitle>
+        <DialogContent>
+          <Stack spacing={3} sx={{ mt: 1 }}>
+            <TextField label="Experience Title" value={experienceData.title} onChange={(e) => setExperienceData({...experienceData, title: e.target.value})} fullWidth required placeholder="e.g., Leadership in Crisis Management" helperText="Enter a descriptive title for this experience" />
+            <TextField label="Experience Content" value={experienceData.experience} onChange={(e) => setExperienceData({...experienceData, experience: e.target.value})} fullWidth multiline rows={4} required placeholder="Describe the experience content..." helperText="Provide the detailed content of the experience" />
+          </Stack>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setShowAddExperience(false)}>Cancel</Button>
+          <Button variant="contained" onClick={handleSaveExperience} disabled={!experienceData.title.trim() || !experienceData.experience.trim()}>Create Experience</Button>
+        </DialogActions>
+      </Dialog>
 
-        {/* Video Meeting Modal */}
-        {showVideoMeeting && selectedExperience && (
-          <ExperienceVideoModal
-            onClose={handleCloseVideoMeeting}
-            experience={selectedExperience}
-            fireteam={fireteam}
-          />
-        )}
+      <EditExperienceModal
+        open={showEditExperience}
+        onClose={() => { setShowEditExperience(false); setSelectedExperienceToEdit(null); }}
+        editExperienceData={editExperienceData}
+        setEditExperienceData={setEditExperienceData}
+        validationErrors={validationErrors}
+        clearValidationErrors={clearValidationErrors}
+        handleAddAgendaStep={handleAddAgendaStep}
+        handleAddExhibit={handleAddExhibit}
+        handleSave={handleSaveEditExperience}
+        setError={setError}
+        error={error}
+        members={members}
+        selectedExperienceToEdit={selectedExperienceToEdit}
+        generateFireteamMeetingLink={generateFireteamMeetingLink}
+        id={id}
+        fireteam={fireteam}
+        experienceService={experienceService}
+      />
 
-        {/* Success/Error Snackbars */}
-        <Snackbar open={!!success} autoHideDuration={3000} onClose={() => setSuccess("")}>
-          <Alert onClose={() => setSuccess("")} severity="success" sx={{ width: '100%' }}>
-            {success}
-          </Alert>
-        </Snackbar>
-        <Snackbar open={!!error} autoHideDuration={3000} onClose={() => setError("")}>
-          <Alert onClose={() => setError("")} severity="error" sx={{ width: '100%' }}>
-            {error}
-          </Alert>
-        </Snackbar>
+      {showVideoMeeting && selectedExperience && (
+        <ExperienceVideoModal onClose={handleCloseVideoMeeting} experience={selectedExperience} fireteam={fireteam} />
+      )}
+
+      <Snackbar open={!!success} autoHideDuration={3000} onClose={() => setSuccess("")}>
+        <Alert onClose={() => setSuccess("")} severity="success" sx={{ width: '100%' }}>{success}</Alert>
+      </Snackbar>
+      <Snackbar open={!!error} autoHideDuration={3000} onClose={() => setError("")}>
+        <Alert onClose={() => setError("")} severity="error" sx={{ width: '100%' }}>{error}</Alert>
+      </Snackbar>
     </div>
   );
 }

@@ -21,8 +21,23 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import LinkIcon from '@mui/icons-material/Link';
 import { ProgramsService } from '../../../services/api/programs.service';
 import { cohortService } from '../../../services/api/cohort.service';
+import { clientsService } from '../../../services/api/clients.service';
+import { MARKETING_PROGRAMS } from '../../../data/marketingPrograms';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 
-// Data comes from API services (Programs, Cohorts)
+// Map marketing programs to same shape as API (id, title, description); used when API returns no programs
+const getPreFillPrograms = () =>
+  MARKETING_PROGRAMS.map((p, i) => ({
+    id: `prefill-${i}`,
+    title: p.title,
+    name: p.title,
+    description: p.desc || p.description || '',
+  }));
+
+// Data comes from API services (Programs, Cohorts); pre-fills from marketing when API is empty
 
 export default function CourseManagementPage() {
   const [user, setUser] = useState({ name: "Coach" });
@@ -38,27 +53,35 @@ export default function CourseManagementPage() {
   const [newResource, setNewResource] = useState({ type: 'link', title: '', url: '', file: null });
   const [unitForm, setUnitForm] = useState({ name: '', resources: [] });
   const [newUnitResource, setNewUnitResource] = useState({ type: 'link', title: '', url: '', file: null });
-  const [classRoster, setClassRoster] = useState([]);
-  const [showStudentDialog, setShowStudentDialog] = useState(false);
-  const [studentForm, setStudentForm] = useState({ name: '', email: '', idx: null });
+  const [showAddCohortDialog, setShowAddCohortDialog] = useState(false);
+  const [cohortForm, setCohortForm] = useState({ name: '', description: '', start_date: '', end_date: '' });
   const [showCohortDialog, setShowCohortDialog] = useState(false);
   const [selectedCohort, setSelectedCohort] = useState(null);
+  const [clients, setClients] = useState([]);
+  const [showAddClientDialog, setShowAddClientDialog] = useState(false);
+  const [selectedClientIdToAdd, setSelectedClientIdToAdd] = useState('');
+  const [editingProgramId, setEditingProgramId] = useState(null); // null = add, id = edit
 
-  // Fetch programs and cohorts
+  // Fetch programs and cohorts; pre-fill with marketing programs when API returns none
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       setError(null);
       try {
         const data = await ProgramsService.getAll();
-        const programsArray = Array.isArray(data) ? data : (Array.isArray(data.data) ? data.data : (Array.isArray(data.programs) ? data.programs : []));
+        let programsArray = Array.isArray(data) ? data : (Array.isArray(data.data) ? data.data : (Array.isArray(data.programs) ? data.programs : []));
+        if (!programsArray || programsArray.length === 0) {
+          programsArray = getPreFillPrograms();
+        }
         setPrograms(programsArray);
-        if (programsArray.length > 0) {
+        if (programsArray.length > 0 && !selectedProgram) {
           setSelectedProgram(programsArray[0]);
         }
       } catch (e) {
         setError('Failed to fetch programs');
-        setPrograms([]);
+        const prefill = getPreFillPrograms();
+        setPrograms(prefill);
+        setSelectedProgram(prefill[0] || null);
       } finally {
         setLoading(false);
       }
@@ -76,10 +99,15 @@ export default function CourseManagementPage() {
     fetchCohorts();
   }, []);
 
-  // Fetch units when selected program changes
+  // Fetch units when selected program changes (skip API for prefill programs)
   useEffect(() => {
     const fetchUnits = async () => {
       if (!selectedProgram) {
+        setProgramUnits([]);
+        return;
+      }
+      const isPreFill = String(selectedProgram.id).startsWith('prefill-');
+      if (isPreFill) {
         setProgramUnits([]);
         return;
       }
@@ -95,7 +123,18 @@ export default function CourseManagementPage() {
 
   // Handler functions must be defined before return
   const handleOpenAddCourse = () => {
+    setEditingProgramId(null);
     setCourseForm({ name: '', syllabus: '', resources: [] });
+    setNewResource({ type: 'link', title: '', url: '', file: null });
+    setShowAddEditCourse(true);
+  };
+  const handleOpenEditCourse = (program) => {
+    setEditingProgramId(program.id);
+    setCourseForm({
+      name: program.title || program.name || '',
+      syllabus: program.description || '',
+      resources: Array.isArray(program.resources) ? program.resources : [],
+    });
     setNewResource({ type: 'link', title: '', url: '', file: null });
     setShowAddEditCourse(true);
   };
@@ -134,9 +173,66 @@ export default function CourseManagementPage() {
       resources: courseForm.resources.filter((_, i) => i !== idx),
     });
   };
-  const handleSaveCourse = () => {
-    // Here you would add logic to save the course (API call or update state)
-    setShowAddEditCourse(false);
+  const handleSaveCourse = async () => {
+    const title = (courseForm.name || '').trim();
+    if (!title) return;
+    try {
+      if (editingProgramId) {
+        const isPreFill = String(editingProgramId).startsWith('prefill-');
+        if (isPreFill) {
+          setPrograms((prev) =>
+            prev.map((p) =>
+              p.id === editingProgramId
+                ? { ...p, title, name: title, description: courseForm.syllabus || '' }
+                : p
+            )
+          );
+        } else {
+          await ProgramsService.update(editingProgramId, {
+            title,
+            description: courseForm.syllabus || '',
+          });
+          const data = await ProgramsService.getAll();
+          const programsArray = Array.isArray(data) ? data : (Array.isArray(data.data) ? data.data : (Array.isArray(data.programs) ? data.programs : []));
+          setPrograms(programsArray.length > 0 ? programsArray : getPreFillPrograms());
+        }
+      } else {
+        await ProgramsService.create({
+          title,
+          description: courseForm.syllabus || '',
+        });
+        const data = await ProgramsService.getAll();
+        const programsArray = Array.isArray(data) ? data : (Array.isArray(data.data) ? data.data : (Array.isArray(data.programs) ? data.programs : []));
+        setPrograms(programsArray.length > 0 ? programsArray : getPreFillPrograms());
+      }
+      setShowAddEditCourse(false);
+      setEditingProgramId(null);
+    } catch (e) {
+      setError('Failed to save program');
+    }
+  };
+
+  const handleRemoveProgram = async (program, e) => {
+    e?.stopPropagation();
+    const isPreFill = String(program.id).startsWith('prefill-');
+    if (isPreFill) {
+      setPrograms((prev) => {
+        const next = prev.filter((p) => p.id !== program.id);
+        if (selectedProgram?.id === program.id) setSelectedProgram(next[0] || null);
+        return next;
+      });
+      return;
+    }
+    try {
+      await ProgramsService.delete(program.id);
+      setPrograms((prev) => {
+        const next = prev.filter((p) => p.id !== program.id);
+        if (selectedProgram?.id === program.id) setSelectedProgram(next[0] || null);
+        return next.length > 0 ? next : getPreFillPrograms();
+      });
+    } catch (err) {
+      setError('Failed to delete program');
+    }
   };
 
   const handleOpenAddUnit = () => {
@@ -184,28 +280,117 @@ export default function CourseManagementPage() {
     setShowAddEditUnit(false);
   };
 
-  const handleOpenAddStudent = () => {
-    setStudentForm({ name: '', email: '', idx: null });
-    setShowStudentDialog(true);
+  // ——— Cohorts: Add cohort first, then add clients to it ———
+  const handleOpenAddCohort = () => {
+    setCohortForm({ name: '', description: '', start_date: '', end_date: '' });
+    setShowAddCohortDialog(true);
   };
-  const handleOpenEditStudent = (student, idx) => {
-    setStudentForm({ name: student.name, email: student.email, idx });
-    setShowStudentDialog(true);
+  const handleCohortFormChange = (e) => {
+    setCohortForm({ ...cohortForm, [e.target.name]: e.target.value });
   };
-  const handleStudentFormChange = (e) => {
-    setStudentForm({ ...studentForm, [e.target.name]: e.target.value });
-  };
-  const handleSaveStudent = () => {
-    if (studentForm.idx === null) {
-      setClassRoster([...classRoster, { name: studentForm.name, email: studentForm.email }]);
-    } else {
-      setClassRoster(classRoster.map((s, i) => i === studentForm.idx ? { name: studentForm.name, email: studentForm.email } : s));
+  const handleSaveCohort = async () => {
+    const name = (cohortForm.name || '').trim();
+    if (!name || !selectedProgram) return;
+    const isPreFill = String(selectedProgram.id).startsWith('prefill-');
+    let programId = selectedProgram.id;
+    const programTitle = selectedProgram.title || selectedProgram.name || '';
+    try {
+      if (isPreFill) {
+        await ProgramsService.create({
+          title: programTitle,
+          description: selectedProgram.description || '',
+        });
+        const data = await ProgramsService.getAll();
+        const programsArray = Array.isArray(data) ? data : (Array.isArray(data.data) ? data.data : (Array.isArray(data.programs) ? data.programs : []));
+        const createdProgram = programsArray.find(
+          (p) => (p.title || p.name || '').trim() === programTitle.trim()
+        );
+        programId = createdProgram?.id ?? data?.id;
+        if (programId == null) {
+          setError('Program was created but could not find its id. Please refresh and try adding the cohort again.');
+          return;
+        }
+        setPrograms(programsArray.length > 0 ? programsArray : getPreFillPrograms());
+        setSelectedProgram(createdProgram ?? { id: programId, title: programTitle, name: programTitle, description: selectedProgram.description });
+      }
+      await cohortService.createCohort({
+        program_id: programId,
+        name,
+        description: cohortForm.description || '',
+        start_date: cohortForm.start_date || undefined,
+        end_date: cohortForm.end_date || undefined,
+      });
+      const data = await cohortService.getCohorts();
+      const cohortArray = Array.isArray(data) ? data : (Array.isArray(data.cohorts) ? data.cohorts : []);
+      setCohorts(cohortArray);
+      setShowAddCohortDialog(false);
+      setError(null);
+    } catch (e) {
+      setError(isPreFill ? 'Failed to create program or cohort' : 'Failed to create cohort');
     }
-    setShowStudentDialog(false);
   };
-  const handleRemoveStudent = (idx) => {
-    setClassRoster(classRoster.filter((_, i) => i !== idx));
+
+  const handleOpenCohortDetails = (cohort) => {
+    setSelectedCohort(cohort);
+    setShowCohortDialog(true);
   };
+  const fetchClients = async () => {
+    try {
+      const data = await clientsService.getClients();
+      const list = data?.clients ?? (Array.isArray(data) ? data : []);
+      setClients(Array.isArray(list) ? list : []);
+    } catch {
+      setClients([]);
+    }
+  };
+  const handleOpenAddClient = () => {
+    setSelectedClientIdToAdd('');
+    fetchClients();
+    setShowAddClientDialog(true);
+  };
+  const handleSaveAddClient = async () => {
+    if (!selectedCohort || !selectedClientIdToAdd) return;
+    const clientId = Number(selectedClientIdToAdd);
+    try {
+      await cohortService.addCohortMember({
+        cohort_id: selectedCohort.id,
+        member_id: clientId,
+        role: 'client',
+      });
+      const addedClient = clients.find(
+        (c) => Number(c.id ?? c.user_id ?? c.user?.id) === clientId
+      );
+      const data = await cohortService.getCohorts();
+      const cohortArray = Array.isArray(data) ? data : (Array.isArray(data.cohorts) ? data.cohorts : []);
+      const cohortId = selectedCohort.id;
+      if (addedClient) {
+        const existingClients = Array.isArray(selectedCohort.clients) ? selectedCohort.clients : [];
+        const mergedClients = [...existingClients, addedClient];
+        const mergedCohort = { ...selectedCohort, clients: mergedClients };
+        setCohorts(
+          cohortArray.map((c) =>
+            c.id === cohortId ? { ...c, clients: mergedClients } : c
+          )
+        );
+        setSelectedCohort(mergedCohort);
+      } else {
+        setCohorts(cohortArray);
+        const updatedFromApi = cohortArray.find((c) => c.id === cohortId);
+        if (updatedFromApi) setSelectedCohort(updatedFromApi);
+      }
+      setShowAddClientDialog(false);
+    } catch (e) {
+      setError('Failed to add client to cohort');
+    }
+  };
+
+  const cohortClientIds = Array.isArray(selectedCohort?.clients)
+    ? selectedCohort.clients.map((c) => (typeof c === 'object' ? c.id ?? c.user_id : c))
+    : [];
+  const clientsNotInCohort = clients.filter(
+    (c) => !cohortClientIds.includes(c.id ?? c.user_id ?? c.user?.id)
+  );
+  const clientOptions = clientsNotInCohort.length > 0 ? clientsNotInCohort : clients;
 
   // Filter cohorts by selected program
   const filteredCohorts = Array.isArray(cohorts) && selectedProgram
@@ -221,7 +406,7 @@ export default function CourseManagementPage() {
         {/* Top Bar */}
         <ClientTopbar user={user} />
         {/* Main Content */}
-        <main className="flex-1 h-0 overflow-y-auto px-2 md:px-8 py-6 bg-muted">
+        <main className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-3 sm:px-4 md:px-8 py-4 md:py-6 bg-muted">
           <div className="max-w-5xl mx-auto space-y-10">
             {/* Courses Overview */}
             <section className="mb-8">
@@ -242,9 +427,14 @@ export default function CourseManagementPage() {
                     >
                       <div className="flex items-center gap-2">
                         <span className="font-semibold text-lg">{program.title || program.name}</span>
-                        <button className="ml-auto text-blue-500 hover:text-blue-700" onClick={e => { e.stopPropagation(); handleOpenAddCourse(); }} title="Edit Program">
-                          <FaEdit />
-                        </button>
+                        <div className="ml-auto flex items-center gap-1">
+                          <button className="text-blue-500 hover:text-blue-700 p-1" onClick={e => { e.stopPropagation(); handleOpenEditCourse(program); }} title="Edit Program">
+                            <FaEdit />
+                          </button>
+                          <button className="text-red-500 hover:text-red-700 p-1" onClick={e => handleRemoveProgram(program, e)} title="Remove Program">
+                            <DeleteIcon fontSize="small" />
+                          </button>
+                        </div>
                       </div>
                       <div className="text-sm text-gray-600">{program.description || '—'}</div>
                       <div className="flex gap-4 text-xs text-gray-500">
@@ -291,29 +481,43 @@ export default function CourseManagementPage() {
               </div>
             </section>
 
-            {/* Class/Intake Management */}
+            {/* Cohorts: Add cohort first, then add clients to it */}
             <section>
               <div className="flex items-center gap-3 mb-2">
                 <FaUsers className="text-purple-600" />
                 <h2 className="text-xl font-bold text-heading">Cohorts</h2>
-                <button className="ml-auto bg-purple-500 text-white px-3 py-1 rounded flex items-center gap-1 hover:bg-purple-600" onClick={handleOpenAddStudent}>
-                  <FaPlus /> Add Student
+                <button
+                  className="ml-auto bg-purple-500 text-white px-3 py-1 rounded flex items-center gap-1 hover:bg-purple-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                  onClick={handleOpenAddCohort}
+                  disabled={!selectedProgram}
+                  title={!selectedProgram ? 'Select a program first' : 'Add a new cohort'}
+                >
+                  <FaPlus /> Add Cohort
                 </button>
               </div>
               <div className="bg-white border border-gray-100 rounded-xl p-4 shadow">
                 <div className="mb-2 font-semibold text-gray-700">{selectedProgram ? `Cohorts for ${selectedProgram.title || selectedProgram.name}` : 'Select a program to view cohorts'}</div>
-                {(!selectedProgram || filteredCohorts.length === 0) ? (
-                  <div className="text-gray-500">No cohorts found.</div>
+                {!selectedProgram ? (
+                  <div className="text-gray-500">Select a program above to create and manage cohorts.</div>
+                ) : filteredCohorts.length === 0 ? (
+                  <div className="text-gray-500">No cohorts yet. Click &quot;Add Cohort&quot; to create one, then add clients to it.</div>
                 ) : (
-                  <ul className="mb-4">
+                  <ul className="mb-0">
                     {filteredCohorts.map((cohort) => (
-                      <li key={cohort.id} className="flex items-center gap-2 text-sm py-1 border-b last:border-b-0 cursor-pointer" onClick={() => { setSelectedCohort(cohort); setShowCohortDialog(true); }}>
-                        <FaUser className="text-gray-400" />
-                        <span>{cohort.name}</span>
-                        <span className="ml-2 text-xs text-gray-500">{cohort.description || '—'}</span>
-                        <span className="ml-auto text-xs text-gray-500">
+                      <li
+                        key={cohort.id}
+                        className="flex items-center gap-2 text-sm py-2 border-b last:border-b-0 cursor-pointer hover:bg-gray-50 rounded px-1 -mx-1"
+                        onClick={() => handleOpenCohortDetails(cohort)}
+                      >
+                        <FaUser className="text-gray-400 flex-shrink-0" />
+                        <span className="font-medium">{cohort.name}</span>
+                        <span className="ml-2 text-xs text-gray-500 truncate">{cohort.description || '—'}</span>
+                        <span className="ml-auto text-xs text-gray-500 flex-shrink-0">
+                          {Array.isArray(cohort.clients) ? cohort.clients.length : 0} client(s)
+                        </span>
+                        <span className="text-xs text-gray-400 flex-shrink-0">
                           {cohort.start_date ? new Date(cohort.start_date).toLocaleDateString() : '—'}
-                          {cohort.end_date ? ` - ${new Date(cohort.end_date).toLocaleDateString()}` : ''}
+                          {cohort.end_date ? ` – ${new Date(cohort.end_date).toLocaleDateString()}` : ''}
                         </span>
                       </li>
                     ))}
@@ -321,61 +525,153 @@ export default function CourseManagementPage() {
                 )}
               </div>
             </section>
-            {/* Cohort Details Modal */}
-            <Dialog open={showCohortDialog} onClose={() => setShowCohortDialog(false)}>
+            {/* Cohort Details Modal — view cohort and add clients */}
+            <Dialog open={showCohortDialog} onClose={() => setShowCohortDialog(false)} maxWidth="sm" fullWidth>
               <DialogTitle>{selectedCohort?.name || 'Cohort Details'}</DialogTitle>
               <DialogContent>
-                <div className="space-y-2">
+                <div className="space-y-3">
                   <div><span className="font-semibold">Description:</span> {selectedCohort?.description || '—'}</div>
                   <div><span className="font-semibold">Program:</span> {selectedProgram?.title || selectedProgram?.name || '—'}</div>
                   <div>
-                    <span className="font-semibold">Dates:</span> {selectedCohort?.start_date ? new Date(selectedCohort.start_date).toLocaleDateString() : '—'}
-                    {selectedCohort?.end_date ? ` - ${new Date(selectedCohort.end_date).toLocaleDateString()}` : ''}
+                    <span className="font-semibold">Dates:</span>{' '}
+                    {selectedCohort?.start_date ? new Date(selectedCohort.start_date).toLocaleDateString() : '—'}
+                    {selectedCohort?.end_date ? ` – ${new Date(selectedCohort.end_date).toLocaleDateString()}` : ''}
                   </div>
                   <div><span className="font-semibold">Coaches:</span> {Array.isArray(selectedCohort?.coaches) ? selectedCohort.coaches.length : 0}</div>
-                  <div><span className="font-semibold">Clients:</span> {Array.isArray(selectedCohort?.clients) ? selectedCohort.clients.length : 0}</div>
+                  <div>
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="font-semibold">
+                        Clients ({Array.isArray(selectedCohort?.clients) ? selectedCohort.clients.length : 0})
+                      </span>
+                      <Button size="small" variant="outlined" color="primary" startIcon={<FaPlus />} onClick={handleOpenAddClient}>
+                        Add Client
+                      </Button>
+                    </div>
+                    {(!selectedCohort?.clients || selectedCohort.clients.length === 0) ? (
+                      <p className="text-sm text-gray-500">No clients yet. Click &quot;Add Client&quot; to add clients to this cohort.</p>
+                    ) : (
+                      <ul className="list-disc list-inside text-sm space-y-1 mt-1">
+                        {selectedCohort.clients.map((client) => {
+                          const name = client?.user?.name ?? client?.name ?? client?.email ?? 'Unknown';
+                          const email = client?.user?.email ?? client?.email ?? '';
+                          return (
+                            <li key={client?.id ?? client?.user_id ?? name} className="text-gray-800">
+                              {name}{email ? ` — ${email}` : ''}
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    )}
+                  </div>
                 </div>
               </DialogContent>
               <DialogActions>
                 <Button onClick={() => setShowCohortDialog(false)} color="secondary">Close</Button>
               </DialogActions>
             </Dialog>
-            {/* Add/Edit Student Modal */}
-            <Dialog open={showStudentDialog} onClose={() => setShowStudentDialog(false)}>
-              <DialogTitle>{studentForm.idx === null ? 'Add Student' : 'Edit Student'}</DialogTitle>
+
+            {/* Add Cohort Modal */}
+            <Dialog open={showAddCohortDialog} onClose={() => setShowAddCohortDialog(false)} maxWidth="sm" fullWidth>
+              <DialogTitle>Add Cohort</DialogTitle>
               <DialogContent>
+                <p className="text-sm text-gray-600 mb-2">
+                  Program: <strong>{selectedProgram?.title || selectedProgram?.name || '—'}</strong>
+                </p>
                 <TextField
                   autoFocus
                   margin="dense"
                   name="name"
-                  label="Name"
+                  label="Cohort Name"
                   type="text"
                   fullWidth
                   variant="outlined"
-                  value={studentForm.name}
-                  onChange={handleStudentFormChange}
+                  value={cohortForm.name}
+                  onChange={handleCohortFormChange}
+                  required
                   sx={{ mb: 2 }}
                 />
                 <TextField
                   margin="dense"
-                  name="email"
-                  label="Email"
-                  type="email"
+                  name="description"
+                  label="Description"
+                  type="text"
                   fullWidth
                   variant="outlined"
-                  value={studentForm.email}
-                  onChange={handleStudentFormChange}
+                  multiline
+                  rows={2}
+                  value={cohortForm.description}
+                  onChange={handleCohortFormChange}
+                  sx={{ mb: 2 }}
+                />
+                <TextField
+                  margin="dense"
+                  name="start_date"
+                  label="Start Date"
+                  type="date"
+                  fullWidth
+                  variant="outlined"
+                  value={cohortForm.start_date}
+                  onChange={handleCohortFormChange}
+                  InputLabelProps={{ shrink: true }}
+                  sx={{ mb: 2 }}
+                />
+                <TextField
+                  margin="dense"
+                  name="end_date"
+                  label="End Date"
+                  type="date"
+                  fullWidth
+                  variant="outlined"
+                  value={cohortForm.end_date}
+                  onChange={handleCohortFormChange}
+                  InputLabelProps={{ shrink: true }}
                 />
               </DialogContent>
               <DialogActions>
-                <Button onClick={() => setShowStudentDialog(false)} color="secondary">Cancel</Button>
-                <Button onClick={handleSaveStudent} variant="contained" color="primary">Save</Button>
+                <Button onClick={() => setShowAddCohortDialog(false)} color="secondary">Cancel</Button>
+                <Button onClick={handleSaveCohort} variant="contained" color="primary" disabled={!cohortForm.name?.trim()}>Create Cohort</Button>
+              </DialogActions>
+            </Dialog>
+
+            {/* Add Client to Cohort Modal */}
+            <Dialog open={showAddClientDialog} onClose={() => setShowAddClientDialog(false)} maxWidth="sm" fullWidth>
+              <DialogTitle>Add Client to {selectedCohort?.name}</DialogTitle>
+              <DialogContent>
+                <FormControl fullWidth variant="outlined" sx={{ mt: 1, minWidth: 200 }}>
+                  <InputLabel id="add-client-label">Client</InputLabel>
+                  <Select
+                    labelId="add-client-label"
+                    value={selectedClientIdToAdd}
+                    onChange={(e) => setSelectedClientIdToAdd(e.target.value)}
+                    label="Client"
+                  >
+                    <MenuItem value="">Select a client</MenuItem>
+                    {clientOptions.map((client) => {
+                      const id = client.id ?? client.user_id ?? client.user?.id;
+                      const name = client.user?.name ?? client.name ?? client.email ?? `Client ${id}`;
+                      const email = client.user?.email ?? client.email ?? '';
+                      return (
+                        <MenuItem key={id} value={id}>{name}{email ? ` (${email})` : ''}</MenuItem>
+                      );
+                    })}
+                  </Select>
+                </FormControl>
+                {clientOptions.length === 0 && clients.length > 0 && (
+                  <p className="text-sm text-amber-600 mt-2">All clients are already in this cohort.</p>
+                )}
+                {clients.length === 0 && (
+                  <p className="text-sm text-gray-500 mt-2">No clients available. Add clients in the platform first.</p>
+                )}
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={() => setShowAddClientDialog(false)} color="secondary">Cancel</Button>
+                <Button onClick={handleSaveAddClient} variant="contained" color="primary" disabled={!selectedClientIdToAdd}>Add to Cohort</Button>
               </DialogActions>
             </Dialog>
 
             {/* Add/Edit Course Modal (Material UI) */}
-            <Dialog open={showAddEditCourse} onClose={() => setShowAddEditCourse(false)}>
-              <DialogTitle>Add/Edit Course</DialogTitle>
+            <Dialog open={showAddEditCourse} onClose={() => { setShowAddEditCourse(false); setEditingProgramId(null); }}>
+              <DialogTitle>{editingProgramId ? 'Edit Course' : 'Add Course'}</DialogTitle>
               <DialogContent>
                 <TextField
                   autoFocus

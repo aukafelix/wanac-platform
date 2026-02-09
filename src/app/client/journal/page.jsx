@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import Sidebar from "../../../../components/dashboardcomponents/sidebar";
 import ClientTopbar from "../../../../components/dashboardcomponents/clienttopbar";
 import {
@@ -18,6 +18,7 @@ import {
   FaEye,
   FaLock,
   FaClock,
+  FaCamera,
 } from "react-icons/fa";
 import { journalService } from "../../../services/api/journal.service";
 import journalPrompts from "../../../data/journalPrompts.json";
@@ -55,15 +56,13 @@ function formatDaysRemaining(days) {
 }
 
 const tabs = [
-  { key: "morning", label: "Morning Mindset" },
-  { key: "evening", label: "Evening Review" },
-  { key: "growth", label: "Growth Prompts" },
-  { key: "weekly", label: "Weekly Review" },
-  { key: "monthly", label: "Monthly Review" },
+  { key: "growth", label: "365 Growth Journal" },
+  { key: "weekly", label: "Weekly Actions" },
+  { key: "selfie", label: "100 Day Selfie Journal" },
 ];
 
 export default function JournalUI() {
-  const [selectedTab, setSelectedTab] = useState("morning");
+  const [selectedTab, setSelectedTab] = useState("growth");
   const [entry, setEntry] = useState("");
   const [search, setSearch] = useState("");
   const [collapsed, setCollapsed] = useState(false);
@@ -81,9 +80,20 @@ export default function JournalUI() {
   const [viewingEntry, setViewingEntry] = useState(null); // For viewing full entry details
   const [canWriteToday, setCanWriteToday] = useState(true); // Check if 24 hours have passed (growth)
   const [timeUntilNext, setTimeUntilNext] = useState(null); // Time remaining until next prompt (growth)
+  const [showGrowthCooldownProminent, setShowGrowthCooldownProminent] = useState(true); // Full toast for 5s, then small text
+  const growthCooldownToastCollapsedRef = useRef(false); // So toast shows only once per cooldown
   const [canWriteWeekly, setCanWriteWeekly] = useState(true); // Check if 7 days have passed (weekly)
   const [timeUntilNextWeek, setTimeUntilNextWeek] = useState(null); // Time remaining until next weekly
   const [currentUserWeek, setCurrentUserWeek] = useState(1); // Track user's current week for weekly review
+  const [showWeeklyCooldownProminent, setShowWeeklyCooldownProminent] = useState(true);
+  const weeklyCooldownToastCollapsedRef = useRef(false);
+  // 100 Day Selfie Journal
+  const [currentUserSelfieDay, setCurrentUserSelfieDay] = useState(1);
+  const [canWriteSelfieToday, setCanWriteSelfieToday] = useState(true);
+  const [timeUntilNextSelfie, setTimeUntilNextSelfie] = useState(null);
+  const [showSelfieCooldownProminent, setShowSelfieCooldownProminent] = useState(true);
+  const selfieCooldownToastCollapsedRef = useRef(false);
+  const [selfieImage, setSelfieImage] = useState(null); // data URL for current form
 
   // 365 prompts: today's prompt or override; weekly action for this week
   const dayOfYear = getDayOfYear();
@@ -160,6 +170,23 @@ export default function JournalUI() {
     }
   }, [selectedTab, canWriteToday, timeUntilNext]);
 
+  // Growth cooldown: show full "toast" for 5s once per cooldown, then collapse to small text
+  useEffect(() => {
+    if (canWriteToday) {
+      growthCooldownToastCollapsedRef.current = false;
+      setShowGrowthCooldownProminent(true);
+      return;
+    }
+    if (selectedTab === "growth" && !canWriteToday && timeUntilNext !== null && !growthCooldownToastCollapsedRef.current) {
+      setShowGrowthCooldownProminent(true);
+      const t = setTimeout(() => {
+        setShowGrowthCooldownProminent(false);
+        growthCooldownToastCollapsedRef.current = true;
+      }, 5000);
+      return () => clearTimeout(t);
+    }
+  }, [selectedTab, canWriteToday, timeUntilNext]);
+
   // ===== WEEKLY REVIEW TRACKING =====
   
   // Calculate week numbers for weekly entries based on created_at order (frontend workaround)
@@ -230,6 +257,100 @@ export default function JournalUI() {
     }
   }, [selectedTab, canWriteWeekly, timeUntilNextWeek]);
 
+  // Weekly cooldown: show full toast for 5s once per cooldown, then small text
+  useEffect(() => {
+    if (canWriteWeekly) {
+      weeklyCooldownToastCollapsedRef.current = false;
+      setShowWeeklyCooldownProminent(true);
+      return;
+    }
+    if (selectedTab === "weekly" && !canWriteWeekly && timeUntilNextWeek !== null && !weeklyCooldownToastCollapsedRef.current) {
+      setShowWeeklyCooldownProminent(true);
+      const t = setTimeout(() => {
+        setShowWeeklyCooldownProminent(false);
+        weeklyCooldownToastCollapsedRef.current = true;
+      }, 5000);
+      return () => clearTimeout(t);
+    }
+  }, [selectedTab, canWriteWeekly, timeUntilNextWeek]);
+
+  // ===== 100 DAY SELFIE JOURNAL TRACKING =====
+  const selfieEntriesWithDayNumbers = useMemo(() => {
+    if (selectedTab !== "selfie") return entries;
+    const sortedByDate = [...entries].sort((a, b) =>
+      new Date(a.created_at) - new Date(b.created_at)
+    );
+    return sortedByDate.map((entry, index) => ({
+      ...entry,
+      day_number: index + 1,
+    }));
+  }, [entries, selectedTab]);
+
+  useEffect(() => {
+    if (selectedTab === "selfie") {
+      setCurrentUserSelfieDay(entries.length + 1);
+    }
+  }, [selectedTab, entries]);
+
+  useEffect(() => {
+    if (selectedTab === "selfie" && entries.length > 0) {
+      const sortedEntries = [...entries].sort((a, b) =>
+        new Date(b.created_at) - new Date(a.created_at)
+      );
+      const lastEntry = sortedEntries[0];
+      const lastEntryTime = new Date(lastEntry.created_at);
+      const now = new Date();
+      const hoursSinceLastEntry = (now - lastEntryTime) / (1000 * 60 * 60);
+      if (hoursSinceLastEntry < 24) {
+        setCanWriteSelfieToday(false);
+        setTimeUntilNextSelfie(24 - hoursSinceLastEntry);
+      } else {
+        setCanWriteSelfieToday(true);
+        setTimeUntilNextSelfie(null);
+      }
+    } else if (selectedTab === "selfie") {
+      setCanWriteSelfieToday(true);
+      setTimeUntilNextSelfie(null);
+    }
+  }, [selectedTab, entries]);
+
+  useEffect(() => {
+    if (selectedTab === "selfie" && !canWriteSelfieToday && timeUntilNextSelfie !== null) {
+      const timer = setInterval(() => {
+        setTimeUntilNextSelfie((prev) => {
+          if (prev <= 0) {
+            setCanWriteSelfieToday(true);
+            return null;
+          }
+          return prev - 1 / 60;
+        });
+      }, 60000);
+      return () => clearInterval(timer);
+    }
+  }, [selectedTab, canWriteSelfieToday, timeUntilNextSelfie]);
+
+  // Selfie cooldown: show full toast for 5s once per cooldown, then small text
+  useEffect(() => {
+    if (canWriteSelfieToday) {
+      selfieCooldownToastCollapsedRef.current = false;
+      setShowSelfieCooldownProminent(true);
+      return;
+    }
+    if (selectedTab === "selfie" && !canWriteSelfieToday && timeUntilNextSelfie !== null && !selfieCooldownToastCollapsedRef.current) {
+      setShowSelfieCooldownProminent(true);
+      const t = setTimeout(() => {
+        setShowSelfieCooldownProminent(false);
+        selfieCooldownToastCollapsedRef.current = true;
+      }, 5000);
+      return () => clearTimeout(t);
+    }
+  }, [selectedTab, canWriteSelfieToday, timeUntilNextSelfie]);
+
+  // Reset selfie image when switching away from selfie tab
+  useEffect(() => {
+    if (selectedTab !== "selfie") setSelfieImage(null);
+  }, [selectedTab]);
+
   const todayPrompt = useMemo(() => {
     if (growthPromptOverride) return growthPromptOverride;
     const idx = (currentUserDay - 1) % journalPrompts.length;
@@ -279,8 +400,12 @@ export default function JournalUI() {
     setError("");
     try {
       const data = await journalService.getJournals();
-        const tabLabel = tabs.find((t) => t.key === selectedTab)?.label;
-      const filtered = data.filter((j) => j.title === tabLabel);
+      const tabLabel = tabs.find((t) => t.key === selectedTab)?.label;
+      const filtered = data.filter((j) => {
+        if (selectedTab === "weekly") return j.title === "Weekly Actions" || j.title === "Weekly Review";
+        if (selectedTab === "growth") return j.title === "365 Growth Journal" || j.title === "Growth Prompts";
+        return j.title === tabLabel;
+      });
       setEntries(filtered);
     } catch {
       setError("Failed to load journal entries.");
@@ -296,32 +421,42 @@ export default function JournalUI() {
   // Submit handler
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (selectedTab === "selfie" && !selfieImage && !entry.trim()) return;
     setLoading(true);
     setError("");
     setSuccess("");
     try {
       const tabLabel = tabs.find((t) => t.key === selectedTab)?.label;
-      
-      // For growth prompts, include prompt metadata
-      let journalData = { title: tabLabel, content: entry };
+
+      let content = entry;
+      let day_number;
       if (selectedTab === "growth" && todayPrompt) {
-        journalData.prompt_number = todayPrompt.number;
-        journalData.day_number = todayPrompt.dayNumber;
+        day_number = todayPrompt.dayNumber;
       }
-      
+      if (selectedTab === "selfie") {
+        content = JSON.stringify({ note: entry.trim() || "", selfie: selfieImage || "" });
+        day_number = currentUserSelfieDay;
+      }
+
+      const journalData = {
+        title: tabLabel,
+        content,
+        ...(day_number != null && { day_number }),
+        ...(selectedTab === "growth" && todayPrompt && { prompt_number: todayPrompt.number }),
+      };
+
       if (editingEntry) {
-        // Update existing entry
         await journalService.updateJournal(editingEntry.id, journalData);
         setSuccess("Entry updated successfully!");
         setEditingEntry(null);
       } else {
-        // Create new entry
         await journalService.addJournal(journalData);
         setSuccess("Entry saved successfully!");
       }
       setEntry("");
       setWordCount(0);
       setGrowthPromptOverride(null);
+      setSelfieImage(null);
       await fetchEntries();
       setTimeout(() => setSuccess(""), 3000);
     } catch {
@@ -333,9 +468,23 @@ export default function JournalUI() {
 
   // Edit entry
   const handleEdit = (entryToEdit) => {
-    setEntry(entryToEdit.content);
+    if (selectedTab === "selfie") {
+      try {
+        const parsed = typeof entryToEdit.content === "string" && entryToEdit.content.startsWith("{")
+          ? JSON.parse(entryToEdit.content)
+          : { note: entryToEdit.content || "", selfie: "" };
+        setEntry(parsed.note || "");
+        setSelfieImage(parsed.selfie || null);
+      } catch {
+        setEntry(entryToEdit.content || "");
+        setSelfieImage(null);
+      }
+    } else {
+      setEntry(entryToEdit.content);
+      setSelfieImage(null);
+    }
     setEditingEntry(entryToEdit);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   // Cancel edit
@@ -343,6 +492,7 @@ export default function JournalUI() {
     setEntry("");
     setEditingEntry(null);
     setWordCount(0);
+    if (selectedTab === "selfie") setSelfieImage(null);
   };
 
   // Delete entry
@@ -375,12 +525,14 @@ export default function JournalUI() {
     linkElement.click();
   };
 
-  // Group entries by date (use calculated numbers for growth and weekly tabs)
-  const entriesToDisplay = selectedTab === "growth" 
-    ? entriesWithDayNumbers 
-    : selectedTab === "weekly" 
-      ? weeklyEntriesWithWeekNumbers 
-      : entries;
+  // Group entries by date (use calculated numbers for growth, weekly, selfie tabs)
+  const entriesToDisplay = selectedTab === "growth"
+    ? entriesWithDayNumbers
+    : selectedTab === "weekly"
+      ? weeklyEntriesWithWeekNumbers
+      : selectedTab === "selfie"
+        ? selfieEntriesWithDayNumbers
+        : entries;
   
   const groupedEntries = entriesToDisplay.reduce((acc, entry) => {
     const date = new Date(entry.created_at).toLocaleDateString();
@@ -391,9 +543,18 @@ export default function JournalUI() {
 
   // Filter entries by search
   const filteredGroupedEntries = Object.entries(groupedEntries).reduce((acc, [date, dateEntries]) => {
-    const filtered = dateEntries.filter(j =>
-      search.trim() ? j.content?.toLowerCase().includes(search.toLowerCase()) : true
-    );
+    const filtered = dateEntries.filter((j) => {
+      if (!search.trim()) return true;
+      if (selectedTab === "selfie") {
+        try {
+          const parsed = typeof j.content === "string" && j.content.startsWith("{") ? JSON.parse(j.content) : { note: j.content || "" };
+          return (parsed.note || "").toLowerCase().includes(search.toLowerCase());
+        } catch {
+          return (j.content || "").toLowerCase().includes(search.toLowerCase());
+        }
+      }
+      return (j.content || "").toLowerCase().includes(search.toLowerCase());
+    });
     if (filtered.length > 0) acc[date] = filtered;
     return acc;
   }, {});
@@ -507,42 +668,50 @@ export default function JournalUI() {
 
                     {/* Locked State - Waiting for 24 hours */}
                     {!canWriteToday && timeUntilNext !== null ? (
-                      <section className="bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-300 rounded-xl p-6 shadow-sm text-center">
-                        <div className="flex flex-col items-center gap-3">
-                          <div className="p-3 rounded-full bg-blue-100">
-                            <FaLock className="text-blue-600" size={24} />
-                          </div>
-                          <div>
-                            <h3 className="text-lg font-bold text-[#002147] mb-1">
-                              Great Work on Day {currentUserDay - 1}! 🎉
-                            </h3>
-                            <p className="text-sm text-gray-700 mb-3">
-                              You&apos;ve completed today&apos;s prompt. Come back tomorrow to continue your journey.
-                            </p>
-                            <div className="flex items-center justify-center gap-2 mb-2">
-                              <FaClock className="text-orange-500" size={16} />
-                              <p className="text-lg font-bold text-orange-600">
-                                Next prompt available in: {formatTimeRemaining(timeUntilNext)}
+                      showGrowthCooldownProminent ? (
+                        <section className="bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-300 rounded-xl p-6 shadow-sm text-center">
+                          <div className="flex flex-col items-center gap-3">
+                            <div className="p-3 rounded-full bg-blue-100">
+                              <FaLock className="text-blue-600" size={24} />
+                            </div>
+                            <div>
+                              <h3 className="text-lg font-bold text-[#002147] mb-1">
+                                Great Work on Day {currentUserDay - 1}! 🎉
+                              </h3>
+                              <p className="text-sm text-gray-700 mb-3">
+                                You&apos;ve completed today&apos;s prompt. Come back tomorrow to continue your journey.
+                              </p>
+                              <div className="flex items-center justify-center gap-2 mb-2">
+                                <FaClock className="text-orange-500" size={16} />
+                                <p className="text-lg font-bold text-orange-600">
+                                  Next prompt available in: {formatTimeRemaining(timeUntilNext)}
+                                </p>
+                              </div>
+                              <p className="text-xs text-gray-500">
+                                Journaling daily builds consistency and helps you reflect on your growth.
                               </p>
                             </div>
-                            <p className="text-xs text-gray-500">
-                              Journaling daily builds consistency and helps you reflect on your growth.
-                            </p>
+                            <button
+                              onClick={() => {
+                                const pastEntriesSection = document.querySelector('[data-section="past-entries"]');
+                                if (pastEntriesSection) {
+                                  pastEntriesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                }
+                              }}
+                              className="mt-2 flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition-colors text-sm font-semibold shadow-sm"
+                            >
+                              <FaBook size={12} />
+                              View Your Past Entries
+                            </button>
                           </div>
-                          <button
-                            onClick={() => {
-                              const pastEntriesSection = document.querySelector('[data-section="past-entries"]');
-                              if (pastEntriesSection) {
-                                pastEntriesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                              }
-                            }}
-                            className="mt-2 flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition-colors text-sm font-semibold shadow-sm"
-                          >
-                            <FaBook size={12} />
-                            View Your Past Entries
-                          </button>
-                        </div>
-                      </section>
+                        </section>
+                      ) : (
+                        <section className="bg-blue-50/80 border border-blue-200 rounded-lg px-3 py-2">
+                          <p className="text-xs text-gray-600">
+                            The next prompt will appear here after the 24-hour cooldown.
+                          </p>
+                        </section>
+                      )
                     ) : todayPrompt ? (
                       /* Unlocked State - Ready to write */
                       <section className="bg-gradient-to-r from-amber-50 to-orange-50 border border-orange-200 rounded-xl p-3 shadow-sm">
@@ -553,7 +722,7 @@ export default function JournalUI() {
                             </div>
                             <div>
                               <p className="text-[10px] font-semibold text-orange-800 uppercase tracking-wide mb-0.5">
-                                Day {todayPrompt.dayNumber} · of 365 Days of Journalingare 
+                                Day {todayPrompt.dayNumber} · 365 Days of Journaling 
                               </p>
                               <p className="text-[11px] font-semibold text-[#002147] mb-1">
                                 Prompt #{todayPrompt.number}
@@ -599,42 +768,50 @@ export default function JournalUI() {
 
                     {/* Locked State - Waiting for 7 days */}
                     {!canWriteWeekly && timeUntilNextWeek !== null ? (
-                      <section className="bg-gradient-to-r from-purple-50 to-violet-50 border-2 border-purple-300 rounded-xl p-6 shadow-sm text-center">
-                        <div className="flex flex-col items-center gap-3">
-                          <div className="p-3 rounded-full bg-purple-100">
-                            <FaLock className="text-purple-600" size={24} />
-                          </div>
-                          <div>
-                            <h3 className="text-lg font-bold text-[#002147] mb-1">
-                              Great Work on Week {currentUserWeek - 1}! 🎉
-                            </h3>
-                            <p className="text-sm text-gray-700 mb-3">
-                              You&apos;ve completed this week&apos;s action. Come back next week to continue your journey.
-                            </p>
-                            <div className="flex items-center justify-center gap-2 mb-2">
-                              <FaClock className="text-blue-500" size={16} />
-                              <p className="text-lg font-bold text-blue-600">
-                                Next action available in: {formatDaysRemaining(timeUntilNextWeek)}
+                      showWeeklyCooldownProminent ? (
+                        <section className="bg-gradient-to-r from-purple-50 to-violet-50 border-2 border-purple-300 rounded-xl p-6 shadow-sm text-center">
+                          <div className="flex flex-col items-center gap-3">
+                            <div className="p-3 rounded-full bg-purple-100">
+                              <FaLock className="text-purple-600" size={24} />
+                            </div>
+                            <div>
+                              <h3 className="text-lg font-bold text-[#002147] mb-1">
+                                Great Work on Week {currentUserWeek - 1}! 🎉
+                              </h3>
+                              <p className="text-sm text-gray-700 mb-3">
+                                You&apos;ve completed this week&apos;s action. Come back next week to continue your journey.
+                              </p>
+                              <div className="flex items-center justify-center gap-2 mb-2">
+                                <FaClock className="text-blue-500" size={16} />
+                                <p className="text-lg font-bold text-blue-600">
+                                  Next action available in: {formatDaysRemaining(timeUntilNextWeek)}
+                                </p>
+                              </div>
+                              <p className="text-xs text-gray-500">
+                                Weekly reflection builds long-term habits and helps you track your growth over time.
                               </p>
                             </div>
-                            <p className="text-xs text-gray-500">
-                              Weekly reflection builds long-term habits and helps you track your growth over time.
-                            </p>
+                            <button
+                              onClick={() => {
+                                const pastEntriesSection = document.querySelector('[data-section="past-entries"]');
+                                if (pastEntriesSection) {
+                                  pastEntriesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                }
+                              }}
+                              className="mt-2 flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500 text-white hover:bg-purple-600 transition-colors text-sm font-semibold shadow-sm"
+                            >
+                              <FaBook size={12} />
+                              View Your Past Entries
+                            </button>
                           </div>
-                          <button
-                            onClick={() => {
-                              const pastEntriesSection = document.querySelector('[data-section="past-entries"]');
-                              if (pastEntriesSection) {
-                                pastEntriesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                              }
-                            }}
-                            className="mt-2 flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500 text-white hover:bg-purple-600 transition-colors text-sm font-semibold shadow-sm"
-                          >
-                            <FaBook size={12} />
-                            View Your Past Entries
-                          </button>
-                        </div>
-                      </section>
+                        </section>
+                      ) : (
+                        <section className="bg-purple-50/80 border border-purple-200 rounded-lg px-3 py-2">
+                          <p className="text-xs text-gray-600">
+                            The next action will appear here after the 7-day cooldown.
+                          </p>
+                        </section>
+                      )
                     ) : thisWeekAction ? (
                       /* Unlocked State - Ready to write weekly action */
                       <section className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-3 shadow-sm">
@@ -659,8 +836,100 @@ export default function JournalUI() {
                   </>
                 )}
 
+                {/* 100 Day Selfie Journal */}
+                {selectedTab === "selfie" && (
+                  <>
+                    {entries.length > 0 && (
+                      <section className="bg-gradient-to-r from-rose-50 to-pink-50 border border-rose-200 rounded-xl p-3 shadow-sm">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <div className="p-1.5 rounded-lg bg-rose-100">
+                              <FaCamera className="text-rose-600" size={14} />
+                            </div>
+                            <div>
+                              <p className="text-[10px] font-semibold text-rose-800 uppercase tracking-wide">
+                                Your Progress
+                              </p>
+                              <p className="text-sm font-bold text-[#002147]">
+                                {entries.length} of 100 days
+                              </p>
+                            </div>
+                          </div>
+                          <div className="text-right">
+                            <p className="text-[10px] text-gray-600">Next up</p>
+                            <p className="text-sm font-bold text-rose-600">Day {currentUserSelfieDay}</p>
+                          </div>
+                        </div>
+                      </section>
+                    )}
+
+                    {!canWriteSelfieToday && timeUntilNextSelfie !== null ? (
+                      showSelfieCooldownProminent ? (
+                        <section className="bg-gradient-to-r from-rose-50 to-pink-50 border-2 border-rose-300 rounded-xl p-6 shadow-sm text-center">
+                          <div className="flex flex-col items-center gap-3">
+                            <div className="p-3 rounded-full bg-rose-100">
+                              <FaLock className="text-rose-600" size={24} />
+                            </div>
+                            <div>
+                              <h3 className="text-lg font-bold text-[#002147] mb-1">
+                                Great selfie on Day {currentUserSelfieDay - 1}! 🎉
+                              </h3>
+                              <p className="text-sm text-gray-700 mb-3">
+                                Come back in 24 hours for your next day.
+                              </p>
+                              <div className="flex items-center justify-center gap-2 mb-2">
+                                <FaClock className="text-rose-500" size={16} />
+                                <p className="text-lg font-bold text-rose-600">
+                                  Next selfie in: {formatTimeRemaining(timeUntilNextSelfie)}
+                                </p>
+                              </div>
+                            </div>
+                            <button
+                              onClick={() => {
+                                const pastEntriesSection = document.querySelector('[data-section="past-entries"]');
+                                if (pastEntriesSection) pastEntriesSection.scrollIntoView({ behavior: "smooth", block: "start" });
+                              }}
+                              className="mt-2 flex items-center gap-2 px-4 py-2 rounded-lg bg-rose-500 text-white hover:bg-rose-600 transition-colors text-sm font-semibold shadow-sm"
+                            >
+                              <FaBook size={12} />
+                              View Your Past Selfies
+                            </button>
+                          </div>
+                        </section>
+                      ) : (
+                        <section className="bg-rose-50/80 border border-rose-200 rounded-lg px-3 py-2">
+                          <p className="text-xs text-gray-600">
+                            The next selfie day will appear here after the 24-hour cooldown.
+                          </p>
+                        </section>
+                      )
+                    ) : currentUserSelfieDay <= 100 ? (
+                      <section className="bg-gradient-to-r from-rose-50 to-pink-50 border border-rose-200 rounded-xl p-3 shadow-sm">
+                        <div className="flex items-start gap-2">
+                          <div className="p-1.5 rounded-lg bg-rose-100 shrink-0">
+                            <FaCamera className="text-rose-600" size={14} />
+                          </div>
+                          <div>
+                            <p className="text-[10px] font-semibold text-rose-800 uppercase tracking-wide mb-0.5">
+                              Day {currentUserSelfieDay} of 100 · 100 Day Selfie Journal
+                            </p>
+                            <p className="text-gray-800 text-sm leading-relaxed">
+                              Add a selfie and an optional note to track your journey.
+                            </p>
+                          </div>
+                        </div>
+                      </section>
+                    ) : (
+                      <section className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-xl p-4 shadow-sm text-center">
+                        <h3 className="text-lg font-bold text-[#002147] mb-1">🎉 You completed 100 days!</h3>
+                        <p className="text-sm text-gray-700">View your past selfies below.</p>
+                      </section>
+                    )}
+                  </>
+                )}
+
                 {/* Entry Form Section */}
-                {((selectedTab !== "growth" || canWriteToday) && (selectedTab !== "weekly" || canWriteWeekly)) && (
+                {((selectedTab !== "growth" || canWriteToday) && (selectedTab !== "weekly" || canWriteWeekly) && (selectedTab !== "selfie" || (canWriteSelfieToday && currentUserSelfieDay <= 100))) && (
                   <section className="bg-white border border-gray-200 rounded-xl p-3 shadow-sm hover:shadow-md transition-shadow">
                   {editingEntry && (
                     <div className="mb-2 p-2 bg-blue-50 border border-blue-200 rounded-lg text-blue-700 flex items-center justify-between">
@@ -677,6 +946,43 @@ export default function JournalUI() {
                     </div>
                   )}
                   <form onSubmit={handleSubmit}>
+                    {selectedTab === "selfie" && (
+                      <div className="mb-3">
+                        <label className="block text-[10px] font-semibold text-gray-700 mb-1.5 uppercase tracking-wide">Selfie (optional note below)</label>
+                        <div className="flex flex-col sm:flex-row gap-2 items-start">
+                          <label className="cursor-pointer flex items-center gap-2 px-3 py-2 rounded-lg border-2 border-gray-300 hover:border-rose-400 bg-white text-gray-700 text-[11px] font-semibold transition-colors">
+                            <FaCamera className="text-rose-500" size={14} />
+                            {selfieImage ? "Change photo" : "Choose photo"}
+                            <input
+                              type="file"
+                              accept="image/*"
+                              capture="user"
+                              className="hidden"
+                              onChange={(e) => {
+                                const file = e.target.files?.[0];
+                                if (file) {
+                                  const reader = new FileReader();
+                                  reader.onload = () => setSelfieImage(reader.result);
+                                  reader.readAsDataURL(file);
+                                }
+                              }}
+                            />
+                          </label>
+                          {selfieImage && (
+                            <div className="relative">
+                              <img src={selfieImage} alt="Selfie preview" className="h-20 w-20 object-cover rounded-lg border-2 border-rose-200" />
+                              <button
+                                type="button"
+                                onClick={() => setSelfieImage(null)}
+                                className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-red-500 text-white text-xs flex items-center justify-center hover:bg-red-600"
+                              >
+                                ×
+                              </button>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )}
                     <div className="relative">
                     <textarea
                       value={entry}
@@ -686,21 +992,30 @@ export default function JournalUI() {
                             ? `Reflect on today's prompt above...`
                             : selectedTab === "weekly" && thisWeekAction
                             ? `Reflect on this week's action above...`
+                            : selectedTab === "selfie"
+                            ? `Add an optional note for today's selfie...`
                             : `What's on your mind for ${tabs.find(t => t.key === selectedTab)?.label}?`
                         }
                         className="w-full p-3 min-h-[100px] resize-none border-2 border-gray-300 focus:border-[#002147] focus:ring-2 focus:ring-[#002147]/20 focus:outline-none rounded-lg text-gray-900 leading-relaxed text-sm"
                     ></textarea>
-                      <div className="absolute bottom-2 right-2 text-[10px] text-gray-400 bg-white px-1.5 py-0.5 rounded">
-                        {wordCount} {wordCount === 1 ? 'word' : 'words'}
-                      </div>
+                      {selectedTab !== "selfie" && (
+                        <div className="absolute bottom-2 right-2 text-[10px] text-gray-400 bg-white px-1.5 py-0.5 rounded">
+                          {wordCount} {wordCount === 1 ? "word" : "words"}
+                        </div>
+                      )}
+                      {selectedTab === "selfie" && (
+                        <div className="absolute bottom-2 right-2 text-[10px] text-gray-400 bg-white px-1.5 py-0.5 rounded">
+                          {wordCount} words
+                        </div>
+                      )}
                     </div>
-                    
+
                     {/* Action Bar */}
                     <div className="flex items-center justify-between mt-2">
                       <div className="text-[10px] text-gray-600 flex items-center gap-1.5">
                         <FaCalendarAlt className="text-orange-500" size={10} />
-                        <span>{new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
-                    </div>
+                        <span>{new Date().toLocaleDateString("en-US", { month: "short", day: "numeric" })}</span>
+                      </div>
                       <div className="flex gap-2">
                         {editingEntry && (
                           <button
@@ -711,18 +1026,18 @@ export default function JournalUI() {
                             Cancel
                           </button>
                         )}
-                      <button
-                        type="submit"
-                        disabled={!entry.trim() || loading}
+                        <button
+                          type="submit"
+                          disabled={(selectedTab === "selfie" ? !selfieImage && !entry.trim() : !entry.trim()) || loading}
                           className={`flex items-center gap-1.5 px-3 py-1.5 text-[11px] rounded-lg transition-all font-semibold shadow-sm
-                          ${entry.trim() && !loading
-                              ? "bg-orange-500 text-white hover:bg-orange-600 hover:shadow-md"
-                              : "bg-gray-300 text-gray-500 cursor-not-allowed"}
-                        `}
-                      >
+                            ${(selectedTab === "selfie" ? (selfieImage || entry.trim()) : entry.trim()) && !loading
+                                ? "bg-orange-500 text-white hover:bg-orange-600 hover:shadow-md"
+                                : "bg-gray-300 text-gray-500 cursor-not-allowed"}
+                          `}
+                        >
                           <FaSave size={10} />
                           {loading ? "Saving..." : editingEntry ? "Update" : "Save"}
-                      </button>
+                        </button>
                       </div>
                     </div>
                   </form>
@@ -799,9 +1114,41 @@ export default function JournalUI() {
                                           </span>
                                         </div>
                                       )}
-                                      <div className="text-gray-900 text-[11px] whitespace-pre-line leading-relaxed mb-1.5">
-                                        {j.content?.length > 150 ? j.content.substring(0, 150) + '...' : j.content}
-                                      </div>
+                                      {/* Show day + thumbnail for selfie entries */}
+                                      {selectedTab === "selfie" && j.day_number && (() => {
+                                        let parsed = { note: "", selfie: "" };
+                                        try {
+                                          if (typeof j.content === "string" && j.content.startsWith("{")) parsed = JSON.parse(j.content);
+                                          else parsed = { note: j.content || "", selfie: "" };
+                                        } catch {}
+                                        return (
+                                          <div className="mb-1.5 flex items-center gap-2 flex-wrap">
+                                            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-bold bg-rose-100 text-rose-700">
+                                              Day {j.day_number}
+                                            </span>
+                                            {parsed.selfie && (
+                                              <img src={parsed.selfie} alt={`Day ${j.day_number}`} className="h-10 w-10 object-cover rounded border border-rose-200" />
+                                            )}
+                                          </div>
+                                        );
+                                      })()}
+                                      {selectedTab !== "selfie" && (
+                                        <div className="text-gray-900 text-[11px] whitespace-pre-line leading-relaxed mb-1.5">
+                                          {j.content?.length > 150 ? j.content.substring(0, 150) + "..." : j.content}
+                                        </div>
+                                      )}
+                                      {selectedTab === "selfie" && (() => {
+                                        let parsed = { note: "" };
+                                        try {
+                                          if (typeof j.content === "string" && j.content.startsWith("{")) parsed = JSON.parse(j.content);
+                                          else parsed = { note: j.content || "" };
+                                        } catch {}
+                                        return parsed.note ? (
+                                          <div className="text-gray-900 text-[11px] whitespace-pre-line leading-relaxed mb-1.5">
+                                            {parsed.note.length > 150 ? parsed.note.substring(0, 150) + "..." : parsed.note}
+                                          </div>
+                                        ) : null;
+                                      })()}
                                       <div className="text-[9px] text-gray-500 font-medium">
                                         {j.created_at ? new Date(j.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : ""}
                                       </div>
@@ -861,8 +1208,26 @@ export default function JournalUI() {
                                           </span>
                                         </div>
                                       )}
+                                      {/* Show day + thumbnail for selfie (card) */}
+                                      {selectedTab === "selfie" && j.day_number && (() => {
+                                        let parsed = { note: "", selfie: "" };
+                                        try {
+                                          if (typeof j.content === "string" && j.content.startsWith("{")) parsed = JSON.parse(j.content);
+                                          else parsed = { note: j.content || "", selfie: "" };
+                                        } catch {}
+                                        return (
+                                          <div className="mb-1.5 flex items-center gap-2">
+                                            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-bold bg-rose-100 text-rose-700">
+                                              Day {j.day_number}
+                                            </span>
+                                            {parsed.selfie && (
+                                              <img src={parsed.selfie} alt={`Day ${j.day_number}`} className="h-8 w-8 object-cover rounded border border-rose-200" />
+                                            )}
+                                          </div>
+                                        );
+                                      })()}
                                       <div className="text-[9px] text-gray-500 font-medium">
-                                        {j.created_at ? new Date(j.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : ""}
+                                        {j.created_at ? new Date(j.created_at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) : ""}
                                       </div>
                                     </div>
                                     <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -889,11 +1254,20 @@ export default function JournalUI() {
                                       </button>
                                     </div>
                                   </div>
-                                  <div 
+                                  <div
                                     className="text-gray-900 text-[11px] whitespace-pre-line leading-relaxed cursor-pointer"
                                     onClick={() => setViewingEntry(j)}
                                   >
-                                    {j.content?.length > 100 ? j.content.substring(0, 100) + '...' : j.content}
+                                    {selectedTab === "selfie"
+                                      ? (() => {
+                                          let parsed = { note: "" };
+                                          try {
+                                            if (typeof j.content === "string" && j.content.startsWith("{")) parsed = JSON.parse(j.content);
+                                            else parsed = { note: j.content || "" };
+                                          } catch {}
+                                          return parsed.note ? (parsed.note.length > 100 ? parsed.note.substring(0, 100) + "..." : parsed.note) : "Selfie";
+                                        })()
+                                      : (j.content?.length > 100 ? j.content.substring(0, 100) + "..." : j.content)}
                                   </div>
                                 </div>
                               ))}
@@ -983,7 +1357,7 @@ export default function JournalUI() {
             </div>
 
             {/* Show prompt for growth entries */}
-            {viewingEntry.title === "Growth Prompts" && viewingEntry.day_number && (
+            {(viewingEntry.title === "Growth Prompts" || viewingEntry.title === "365 Growth Journal") && viewingEntry.day_number && (
               <div className="mb-4 bg-gradient-to-r from-amber-50 to-orange-50 border border-orange-200 rounded-xl p-3">
                 <div className="flex items-start gap-2">
                   <div className="p-1.5 rounded-lg bg-orange-100 shrink-0">
@@ -1007,7 +1381,7 @@ export default function JournalUI() {
             )}
 
             {/* Show action for weekly entries */}
-            {viewingEntry.title === "Weekly Review" && viewingEntry.week_number && (
+            {(viewingEntry.title === "Weekly Actions" || viewingEntry.title === "Weekly Review") && viewingEntry.week_number && (
               <div className="mb-4 bg-gradient-to-r from-purple-50 to-violet-50 border border-purple-200 rounded-xl p-3">
                 <div className="flex items-start gap-2">
                   <div className="p-1.5 rounded-lg bg-purple-100 shrink-0">
@@ -1030,13 +1404,41 @@ export default function JournalUI() {
               </div>
             )}
 
-            {/* Entry content */}
-            <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
-              <h3 className="text-xs font-semibold text-gray-700 mb-2 uppercase tracking-wide">Your Response</h3>
-              <div className="text-gray-900 text-sm whitespace-pre-line leading-relaxed">
-                {viewingEntry.content}
+            {/* 100 Day Selfie Journal entry */}
+            {viewingEntry.title === "100 Day Selfie Journal" && viewingEntry.day_number && (() => {
+              let parsed = { note: "", selfie: "" };
+              try {
+                if (typeof viewingEntry.content === "string" && viewingEntry.content.startsWith("{")) parsed = JSON.parse(viewingEntry.content);
+                else parsed = { note: viewingEntry.content || "", selfie: "" };
+              } catch {}
+              return (
+                <div className="mb-4 bg-gradient-to-r from-rose-50 to-pink-50 border border-rose-200 rounded-xl p-3">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-bold bg-rose-100 text-rose-700">
+                      Day {viewingEntry.day_number}
+                    </span>
+                  </div>
+                  {parsed.selfie && (
+                    <div className="mb-3">
+                      <img src={parsed.selfie} alt={`Day ${viewingEntry.day_number} selfie`} className="max-w-full max-h-80 object-contain rounded-lg border-2 border-rose-200" />
+                    </div>
+                  )}
+                  {parsed.note && (
+                    <div className="text-gray-800 text-sm leading-relaxed">{parsed.note}</div>
+                  )}
+                </div>
+              );
+            })()}
+
+            {/* Entry content (for growth and weekly; selfie uses block above) */}
+            {viewingEntry.title !== "100 Day Selfie Journal" && (
+              <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                <h3 className="text-xs font-semibold text-gray-700 mb-2 uppercase tracking-wide">Your Response</h3>
+                <div className="text-gray-900 text-sm whitespace-pre-line leading-relaxed">
+                  {viewingEntry.content}
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Actions */}
             <div className="flex justify-end gap-2 mt-4">

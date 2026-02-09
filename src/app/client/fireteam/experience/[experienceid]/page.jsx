@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState, useMemo, useCallback, useRef } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 
 // Custom Hooks
 import { useJitsiMeeting } from "../hooks/useJitsiMeeting";
@@ -31,6 +31,7 @@ export default function FireteamExperienceMeeting() {
   // ============================================================================
 
   const searchParams = useSearchParams();
+  const router = useRouter();
   const isAdmin = searchParams?.get("admin") === "true";
 
   // UI State
@@ -223,24 +224,6 @@ export default function FireteamExperienceMeeting() {
     }
   }, [toggleRecording, isRecording, toast]);
 
-  // Helper to transcribe audio using Whisper API
-  async function transcribeAudioBlob(audioBlob) {
-    const formData = new FormData();
-    formData.append('file', audioBlob, 'meeting_recording.webm');
-    try {
-      const response = await fetch('', {
-        method: 'POST',
-        body: formData,
-      });
-      if (!response.ok) throw new Error('Transcription failed');
-      const transcript = await response.json();
-      return transcript; // API returns a string transcript
-    } catch (err) {
-      console.error('Transcription error:', err);
-      return null;
-    }
-  }
-
   const handleProcessRecording = useCallback(async () => {
     try {
       const userId = localStorage.getItem("user_id") || "unknown";
@@ -268,31 +251,7 @@ export default function FireteamExperienceMeeting() {
 
       toast.info("Processing recording... This may take a minute.");
 
-      // Transcribe audio if available
-      let transcript = null;
-      if (recordingBlob) {
-        transcript = await transcribeAudioBlob(recordingBlob);
-        if (transcript) {
-          meetingData.transcript = transcript;
-        }
-      }
-
       const result = await processRecording(meetingData, searchParams);
-
-      // If transcript exists, add it to meetingSummaries for modal display
-      if (transcript) {
-        setMeetingSummaries((prev) => {
-          if (Array.isArray(prev)) {
-            return [
-              ...prev,
-              { type: 'transcript', title: 'Meeting Transcript', content: transcript }
-            ];
-          }
-          return [
-            { type: 'transcript', title: 'Meeting Transcript', content: transcript }
-          ];
-        });
-      }
 
       setShowSummaryModal(true);
       toast.success("AI summary generated successfully!");
@@ -300,7 +259,7 @@ export default function FireteamExperienceMeeting() {
     } catch (err) {
       toast.error(err.message || "Failed to process recording");
     }
-  }, [experience, agenda, participants, calculateTotalTime, attendanceLog, meetingStartTime, processRecording, searchParams, toast, recordingBlob, setMeetingSummaries]);
+  }, [experience, agenda, participants, calculateTotalTime, attendanceLog, meetingStartTime, processRecording, searchParams, toast]);
 
   const handleLeaveMeeting = useCallback(async () => {
     // Stop recording if active
@@ -325,12 +284,9 @@ export default function FireteamExperienceMeeting() {
       return;
     }
 
-    // Leave meeting
     leaveMeeting();
-
-    // Redirect to fireteam page
-    window.location.href = "/client/fireteam";
-  }, [isRecording, recordingBlob, processingRecording, wasRecording, handleToggleRecording, leaveMeeting]);
+    router.push("/client/fireteam");
+  }, [isRecording, recordingBlob, processingRecording, wasRecording, handleToggleRecording, leaveMeeting, router]);
 
   const handleConfirmProcessRecording = useCallback(async () => {
     setShowConfirmDialog(false);
@@ -346,14 +302,12 @@ export default function FireteamExperienceMeeting() {
   const handleCancelProcessRecording = useCallback(() => {
     setShowConfirmDialog(false);
     leaveMeeting();
-    
     const expId = searchParams?.get('id');
     const ftId = searchParams?.get('fireteamId');
-    window.location.href = `/client/fireteam/experience/${expId}/evaluation?fireteamId=${ftId}&hasAI=false`;
-  }, [leaveMeeting, searchParams]);
+    router.push(`/client/fireteam/experience/${expId}/evaluation?fireteamId=${ftId}&hasAI=false`);
+  }, [leaveMeeting, searchParams, router]);
 
   const handleTimerComplete = useCallback(() => {
-    console.log("⏰ Timer completed for step:", currentStep);
     toast.info(`Step "${agenda[currentStep]?.title}" time is up!`);
   }, [currentStep, agenda, toast]);
 
@@ -495,12 +449,8 @@ export default function FireteamExperienceMeeting() {
         <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
       )}
 
-      {/* Main Content - Adjust margin based on sidebar collapsed state */}
-      <div
-        className={`flex-1 flex flex-col h-full transition-all duration-300 ${
-          collapsed ? "md:ml-16" : "md:ml-56"
-        }`}
-      >
+      {/* Main Content - Flush against sidebar (sidebar is static, no margin needed) */}
+      <div className="flex-1 flex flex-col h-full transition-all duration-300 min-w-0">
         {/* Top Bar */}
         <MeetingTopBar
           isAdmin={isAdmin}
@@ -515,12 +465,7 @@ export default function FireteamExperienceMeeting() {
             <WanacControlBar
               showSlide={showSlide}
               onToggleView={() => setShowSlide(!showSlide)}
-              isRecording={isRecording}
-              onToggleRecording={handleToggleRecording}
               onLeaveMeeting={handleLeaveMeeting}
-              recordingBlob={recordingBlob}
-              processingRecording={processingRecording}
-              onProcessRecording={handleProcessRecording}
             />
           }
         />

@@ -19,32 +19,6 @@ import { habitsService } from '../../../services/api/habits.service';
 import { fireteamService } from '../../../services/api/fireteam.service';
 import { experienceService } from '../../../services/api/experience.service';
 
-// Simple Notifications Widget
-function NotificationsWidget() {
-  // Mock notifications
-  const notifications = [
-    { id: 1, text: 'Your session with Coach Smith is tomorrow at 10:00 AM.' },
-    { id: 2, text: 'New message from Coach Smith.' },
-    { id: 3, text: 'Community event: Virtual coffee meetup this Friday.' },
-  ];
-  return (
-    <div className="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-shadow p-5">
-      <h3 className="text-lg font-semibold text-[#002147] mb-4 flex items-center gap-2">
-        <span className="inline-block w-2 h-2 bg-red-500 rounded-full animate-pulse" /> 
-        Notifications
-      </h3>
-      <ul className="space-y-3">
-        {notifications.map((n) => (
-          <li key={n.id} className="text-sm text-gray-700 border-b border-gray-100 pb-3 last:border-0 last:pb-0 hover:text-gray-900 transition-colors">
-            {n.text}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
-
 export default function ClientDashboard() {
   const [collapsed, setCollapsed] = useState(false);
   const [upcomingSessions, setUpcomingSessions] = useState([]);

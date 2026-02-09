@@ -9,38 +9,16 @@ export const experienceService = {
   async getExperiences(fireteamId: string | number) {
     try {
       const res = await apiClient.get(`/api/v1/fireteams/experiences/${fireteamId}`);
-      console.log("Raw API response for getExperiences:", res.data);
       const data = unwrapItem(res.data);
-      
-      // Handle different response formats
-      if (Array.isArray(data)) {
-        console.log("Data is array, returning directly:", data);
-        return data;
-      }
-      
-      // Check for fireTeamExperiences key (from the console logs)
-      if (data.fireTeamExperiences && Array.isArray(data.fireTeamExperiences)) {
-        console.log("Found fireTeamExperiences array:", data.fireTeamExperiences);
-        return data.fireTeamExperiences;
-      }
-      
-      // Check for fireteamExperiences key (alternative naming)
-      if (data.fireteamExperiences && Array.isArray(data.fireteamExperiences)) {
-        console.log("Found fireteamExperiences array:", data.fireteamExperiences);
-        return data.fireteamExperiences;
-      }
-      
-      // Check for experiences key
-      if (data.experiences && Array.isArray(data.experiences)) {
-        console.log("Found experiences array:", data.experiences);
-        return data.experiences;
-      }
-      
-      console.log("No valid array found in response, returning empty array");
+
+      if (Array.isArray(data)) return data;
+      if (data?.fireTeamExperiences && Array.isArray(data.fireTeamExperiences)) return data.fireTeamExperiences;
+      if (data?.fireteamExperiences && Array.isArray(data.fireteamExperiences)) return data.fireteamExperiences;
+      if (data?.experiences && Array.isArray(data.experiences)) return data.experiences;
+
       return [];
     } catch (error: any) {
-      console.error("Error fetching experiences:", error);
-      console.error("Error response:", error.response?.data);
+      console.error("Error fetching experiences:", error.response?.data ?? error.message);
       return [];
     }
   },
@@ -71,50 +49,30 @@ export const experienceService = {
   },
 
   async updateExperience(experienceId: string | number, data: {
-    title?: string;           // Experience title
-    experience?: string;      // Experience description/content
-    link?: string;            // Meeting link for the experience
-    status?: string;          // Experience status (e.g., 'pending', 'completed')
-    report?: string;          // Experience report
-    summary?: string;         // Experience summary
-    admin?: string | number;  // Meeting facilitator ID (as per API spec)
-    // Note: All fields are optional as per API spec
-    agenda?: Array<{
-      id?: string | number;
-      title: string;
-      duration?: string;
-    }>;
-    exhibits?: Array<{
-      id?: string | number;
-      name: string;
-      type: string;
-      link?: string;
-    }>;
+    title?: string;
+    experience?: string;
+    link?: string;
+    status?: string;
+    report?: string;
+    summary?: string;
+    admin?: string | number;
+    agenda?: Array<{ id?: string | number; title: string; duration?: string }>;
+    exhibits?: Array<{ id?: string | number; name: string; type: string; link?: string }>;
   }) {
     try {
-      console.log('📤 [EXPERIENCE SERVICE] Sending PUT request to update experience:', experienceId);
-      console.log('📤 [EXPERIENCE SERVICE] Request data:', data);
       const res = await apiClient.put(`/api/v1/fireteams/experience/update/${experienceId}`, data);
-      console.log('📥 [EXPERIENCE SERVICE] Backend response:', res.data);
       return unwrapItem(res.data);
     } catch (error: any) {
-      console.error("❌ [EXPERIENCE SERVICE] Error updating experience:", error);
-      console.error("❌ [EXPERIENCE SERVICE] Error response:", error.response?.data);
+      console.error("Error updating experience:", error.response?.data ?? error.message);
       throw error;
     }
   },
 
   async startExperience(experienceId: string | number) {
-    // This might need to be implemented based on your backend
-    // For now, just return success
-    console.log("Starting experience:", experienceId);
     return { success: true };
   },
 
   async endExperience(experienceId: string | number) {
-    // This might need to be implemented based on your backend
-    // For now, just return success
-    console.log("Ending experience:", experienceId);
     return { success: true };
   },
 
@@ -126,15 +84,10 @@ export const experienceService = {
     order?: number;
   }) {
     try {
-      console.log('📤 [EXPERIENCE SERVICE] Sending POST request to add agenda step:', data);
       const res = await apiClient.post('/api/v1/fireteams/experience/agenda-step/add', data);
-      console.log('📥 [EXPERIENCE SERVICE] Backend response:', res.data);
-      const unwrapped = unwrapItem(res.data);
-      console.log('✅ [EXPERIENCE SERVICE] Agenda step successfully saved to backend with ID:', unwrapped.id);
-      return unwrapped;
+      return unwrapItem(res.data);
     } catch (error: any) {
-      console.error('❌ [EXPERIENCE SERVICE] Error adding agenda step:', error);
-      console.error('❌ [EXPERIENCE SERVICE] Error response:', error.response?.data);
+      console.error('Error adding agenda step:', error.response?.data ?? error.message);
       throw error;
     }
   },
@@ -146,26 +99,20 @@ export const experienceService = {
     order?: number;
   }) {
     try {
-      console.log('📤 [EXPERIENCE SERVICE] Sending PUT request to update agenda step:', agendaStepId, data);
       const res = await apiClient.put(`/api/v1/fireteams/experience/agenda-step/update/${agendaStepId}`, data);
-      console.log('✅ [EXPERIENCE SERVICE] Agenda step successfully updated in backend');
       return unwrapItem(res.data);
     } catch (error: any) {
-      console.error('❌ [EXPERIENCE SERVICE] Error updating agenda step:', error);
-      console.error('❌ [EXPERIENCE SERVICE] Error response:', error.response?.data);
+      console.error('Error updating agenda step:', error.response?.data ?? error.message);
       throw error;
     }
   },
 
   async deleteAgendaStep(agendaStepId: string | number) {
     try {
-      console.log('📤 [EXPERIENCE SERVICE] Sending DELETE request for agenda step:', agendaStepId);
       const res = await apiClient.delete(`/api/v1/fireteams/experience/agenda-step/delete/${agendaStepId}`);
-      console.log('✅ [EXPERIENCE SERVICE] Agenda step successfully deleted from backend');
       return res.data;
     } catch (error: any) {
-      console.error('❌ [EXPERIENCE SERVICE] Error deleting agenda step:', error);
-      console.error('❌ [EXPERIENCE SERVICE] Error response:', error.response?.data);
+      console.error('Error deleting agenda step:', error.response?.data ?? error.message);
       throw error;
     }
   },

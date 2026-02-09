@@ -125,10 +125,11 @@ export default function SessionPage() {
                         key={session.id}
                         className="border-l-4 border-[#002147] pl-4 py-3 bg-blue-50/50 rounded hover:bg-blue-50 transition-colors cursor-pointer"
                         onClick={() => {
-                          const url =
-                            `/coach/sessions/fullviewsession/${session.id}` +
-                            (isCoach ? "" : "?readonly=true");
-                          router.push(url);
+                          if (isCoach) {
+                            router.push(`/coach/sessions/fullviewsession/${session.id}`);
+                          } else {
+                            router.push(`/client/session/${session.id}`);
+                          }
                         }}
                       >
                         <div className="flex justify-between items-start gap-4">

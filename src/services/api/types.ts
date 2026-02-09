@@ -49,28 +49,61 @@ export interface Profile {
   // Add other profile fields as needed
 }
 
-// Session Types
+// Session Types (aligned with API)
+export interface SessionMember {
+  id?: string | number;
+  client?: { user?: { name?: string; email?: string } };
+}
+
+export interface SessionResourceApi {
+  id?: string | number;
+  name?: string;
+  description?: string;
+  link?: string;
+  url?: string;
+}
+
+export interface SessionNoteApi {
+  id?: string | number;
+  content?: string;
+  note?: string;
+  created_at?: string;
+}
+
 export interface Session {
   id: string;
   title: string;
-  description: string;
-  date: string;
-  // Add other session fields as needed
+  description?: string;
+  date?: string;
+  scheduled_at?: string;
+  session_link?: string;
+  meeting_link?: string;
+  status?: string;
+  session_members?: SessionMember[];
+  session_resources?: SessionResourceApi[];
+  session_notes?: SessionNoteApi[];
+  duration_minutes?: number;
+}
+
+export interface GetSessionResponse {
+  session: Session;
 }
 
 export interface SessionNote {
   id: string;
   content: string;
   session_id: string;
-  // Add other note fields as needed
+  created_at?: string;
 }
 
 export interface SessionResource {
   id: string;
-  title: string;
-  url: string;
+  name?: string;
+  title?: string;
+  description?: string;
+  url?: string;
+  link?: string;
   session_id: string;
-  // Add other resource fields as needed
 }
 
 // Eisenhower Matrix Priority Type

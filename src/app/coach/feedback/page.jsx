@@ -37,7 +37,7 @@ export default function FeedbackPage() {
 				{/* Top Bar */}
 				<ClientTopbar user={coachUser} />
 				{/* Main Content */}
-				<main className="flex-1 h-0 overflow-y-auto px-2 md:px-8 py-6 bg-muted">
+				<main className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-3 sm:px-4 md:px-8 py-4 md:py-6 bg-muted">
 					<div className="max-w-2xl mx-auto">
 						<section className="bg-white border border-gray-100 rounded-2xl p-6 shadow-md animate-fadeIn">
 							<Typography variant="h4" gutterBottom>

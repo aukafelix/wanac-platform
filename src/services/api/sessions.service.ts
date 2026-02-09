@@ -1,5 +1,5 @@
 import { apiClient } from './config';
-import { Session, SessionNote, SessionResource } from './types';
+import { Session, SessionNote, SessionResource, GetSessionResponse } from './types';
 
 export const sessionsService = {
   async getSessions(): Promise<Session[]> {
@@ -21,9 +21,12 @@ export const sessionsService = {
     await apiClient.delete(`/api/v1/sessions/delete/${id}`);
   },
 
-  async getSession(id: string): Promise<Session> {
-    const response = await apiClient.get<Session>(`/api/v1/sessions/${id}`);
-    return response.data;
+  async getSession(id: string): Promise<GetSessionResponse> {
+    const response = await apiClient.get<GetSessionResponse | Session>(`/api/v1/sessions/${id}`);
+    const data = response.data;
+    return (data && typeof data === 'object' && 'session' in data)
+      ? (data as GetSessionResponse)
+      : { session: data as Session };
   },
 
   // Session Notes
@@ -66,18 +69,19 @@ export const sessionsService = {
 
   // Add Session Resource with file upload support
   async addSessionResource({ session_id, name, description, file, link }: { session_id: string | number, name: string, description?: string, file?: File | null, link?: string }): Promise<any> {
-    let formData;
-    let headers = {};
+    let body: FormData | object;
+    let headers: Record<string, string> = {};
     if (file) {
-      formData = new FormData();
+      const formData = new FormData();
       formData.append('session_id', String(session_id));
       formData.append('name', name);
       if (description) formData.append('description', description);
       if (link) formData.append('link', link);
       formData.append('file', file);
-      headers = { 'Content-Type': 'multipart/form-data' };
+      body = formData;
+      // Do not set Content-Type for FormData so browser sets boundary
     } else {
-      formData = {
+      body = {
         session_id,
         name,
         ...(description ? { description } : {}),
@@ -85,7 +89,7 @@ export const sessionsService = {
       };
       headers = { 'Content-Type': 'application/json' };
     }
-    const response = await apiClient.post('/api/v1/sessions/resources/add', formData, { headers });
+    const response = await apiClient.post('/api/v1/sessions/resources/add', body, headers ? { headers } : undefined);
     return response.data;
   },
 }; 

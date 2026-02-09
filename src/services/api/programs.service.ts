@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'https://wanac-api.kuzasports.com/api/v1/programs';
+const API_URL = 'https://api.wanac.org/api/v1/programs';
 
 function getAuthHeaders() {
   const token = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null;

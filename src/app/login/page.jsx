@@ -9,8 +9,9 @@ import Link from "next/link";
 import toast from "react-hot-toast";
 import { handleValidationErrors } from "@/lib/error";
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
-import { googleAuthService } from '@/services/api/google-auth.service';
 import { jwtDecode } from "jwt-decode";
+
+const AUTH_API_BASE = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_API_BASE_URL || "https://api.wanac.org";
 
 export default function Login() {
   const router = useRouter();
@@ -66,7 +67,7 @@ export default function Login() {
 
       try {
         const response = await fetch(
-          "https://api.wanac.org/api/v1/auth/login",
+          `${AUTH_API_BASE}/api/v1/auth/login`,
           {
             method: "POST",
             headers: {
@@ -141,7 +142,7 @@ export default function Login() {
     try {
       const googleUser = jwtDecode(credentialResponse.credential);
       const response = await fetch(
-        "https://wanac-api.kuzasports.com/api/v1/auth/login",
+        `${AUTH_API_BASE}/api/v1/auth/login`,
         {
           method: "POST",
           headers: {
@@ -169,7 +170,8 @@ export default function Login() {
         return;
       }
 
-      localStorage.setItem('wanacUser', JSON.stringify({ ...data.user, userType: response.user.role }));
+      const role = data.user?.role ?? userType;
+      localStorage.setItem('wanacUser', JSON.stringify({ ...data.user, userType: role }));
       localStorage.setItem('auth_token', data.token);
       toast.success('Successfully signed in with Google!');
       const dashboardPaths = {
@@ -177,7 +179,7 @@ export default function Login() {
         coach: '/coach',
         admin: '/admin',
       };
-      const dashboardPath = dashboardPaths[response.user.role] || '/';
+      const dashboardPath = dashboardPaths[role] || '/';
       router.push(dashboardPath);
     } catch (error) {
       console.error('Google login error:', error);
@@ -192,8 +194,10 @@ export default function Login() {
     setSocialLoading({ google: false });
   };
 
-  return (
-    <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}>
+  const googleClientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID?.trim() || "";
+  const hasGoogleAuth = !!googleClientId;
+
+  const content = (
       <div className="min-h-screen h-screen flex overflow-hidden">
         {/* Left Side - Brand Section */}
         <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-[#002147] to-[#003875] p-8 flex-col justify-center relative overflow-hidden">
@@ -447,17 +451,28 @@ export default function Login() {
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-3">
-                <div className={socialLoading.google ? 'opacity-50' : ''}>
-                  <GoogleLogin
-                    onSuccess={handleGoogleSuccess}
-                    onError={handleGoogleError}
-                    useOneTap
-                    theme="outline"
-                    shape="rectangular"
-                    locale="en"
-                    text="signin_with"
-                    disabled={socialLoading.google}
-                  />
+                <div className={socialLoading.google ? "opacity-50" : ""}>
+                  {hasGoogleAuth ? (
+                    <GoogleLogin
+                      onSuccess={handleGoogleSuccess}
+                      onError={handleGoogleError}
+                      useOneTap
+                      theme="outline"
+                      shape="rectangular"
+                      locale="en"
+                      text="signin_with"
+                      disabled={socialLoading.google}
+                    />
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => toast.error("Add NEXT_PUBLIC_GOOGLE_CLIENT_ID to your .env to enable Google sign-in.")}
+                      className="flex items-center justify-center w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+                    >
+                      <FcGoogle className="h-5 w-5 mr-2" />
+                      Sign in with Google
+                    </button>
+                  )}
                 </div>
                 <button
                   type="button"
@@ -479,6 +494,13 @@ export default function Login() {
           </div>
         </div>
       </div>
+  );
+
+  return hasGoogleAuth ? (
+    <GoogleOAuthProvider clientId={googleClientId}>
+      {content}
     </GoogleOAuthProvider>
+  ) : (
+    content
   );
 }

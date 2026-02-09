@@ -1,7 +1,10 @@
 import axios, { AxiosError, InternalAxiosRequestConfig, AxiosResponse } from 'axios';
 
-// Update base URL to match the documentation
-export const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+// Base URL for the WANAC backend API. Prefer NEXT_PUBLIC_API_BASE_URL; fall back to NEXT_PUBLIC_API_URL or production.
+export const BASE_URL =
+  process.env.NEXT_PUBLIC_API_BASE_URL ||
+  process.env.NEXT_PUBLIC_API_URL ||
+  'https://api.wanac.org';
 
 export const apiClient = axios.create({
   baseURL: BASE_URL,

@@ -55,7 +55,7 @@ export default function CoachResourcesPage() {
         {/* Top Bar */}
         <ClientTopbar user={user} />
         {/* Main Content */}
-        <main className="flex-1 h-0 overflow-y-auto px-2 md:px-8 py-6 bg-muted">
+        <main className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-3 sm:px-4 md:px-8 py-4 md:py-6 bg-muted">
           <div className="max-w-4xl mx-auto">
             <section className="mb-8">
               <div className="flex items-center gap-3 mb-2">

@@ -27,7 +27,7 @@ export default function CoachMessagesPage() {
         {/* Top Bar */}
         <ClientTopbar user={user || { name: 'Coach' }} />
         {/* Main Content */}
-        <main className="flex-1 h-0 overflow-y-auto px-2 md:px-8 py-6 bg-muted flex flex-col items-center justify-center">
+        <main className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-3 sm:px-4 md:px-8 py-4 md:py-6 bg-muted flex flex-col items-center justify-center">
           <h1 className="text-2xl font-bold mb-6 text-center">Messages</h1>
           <div className="w-full max-w-2xl">
             <ChatComponentV2 user={user || { name: 'Coach', role: 'coach' }} />
