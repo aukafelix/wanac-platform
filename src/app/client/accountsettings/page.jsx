@@ -36,7 +36,11 @@ export default function AccountSettingsPage() {
     // Fetch profile from API
     profileService.getProfile()
       .then((data) => {
-        setProfile(data);
+        setProfile({
+          name: data?.name ?? '',
+          email: data?.email ?? '',
+          role: data?.role ?? '',
+        });
         setLoading(false);
       })
       .catch(() => {
@@ -44,6 +48,36 @@ export default function AccountSettingsPage() {
         setLoading(false);
       });
   }, []);
+
+  // Auto-dismiss profile success/error messages
+  useEffect(() => {
+    if (!success && !error) return;
+    const t = setTimeout(() => {
+      setSuccess(false);
+      setError("");
+    }, 4000);
+    return () => clearTimeout(t);
+  }, [success, error]);
+
+  // Auto-dismiss subscription success/error messages
+  useEffect(() => {
+    if (!subSuccess && !subError) return;
+    const t = setTimeout(() => {
+      setSubSuccess(false);
+      setSubError("");
+    }, 4000);
+    return () => clearTimeout(t);
+  }, [subSuccess, subError]);
+
+  // Auto-dismiss notification success/error messages
+  useEffect(() => {
+    if (!notifSuccess && !notifError) return;
+    const t = setTimeout(() => {
+      setNotifSuccess(false);
+      setNotifError("");
+    }, 4000);
+    return () => clearTimeout(t);
+  }, [notifSuccess, notifError]);
 
   const handleChange = (e) => {
     setProfile({ ...profile, [e.target.name]: e.target.value });
@@ -144,9 +178,9 @@ export default function AccountSettingsPage() {
                         name="role"
                         value={profile.role}
                         onChange={handleChange}
-                        className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
-                        required
+                        className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary bg-gray-100"
                         disabled
+                        aria-label="Role (read-only)"
                       />
                     </div>
                     {error && <div className="text-red-500 text-sm">{error}</div>}

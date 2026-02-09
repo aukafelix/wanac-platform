@@ -19,14 +19,14 @@ export default function LiveSessionPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center font-sans">
-      <div className="bg-white rounded-xl shadow-2xl w-full max-w-6xl p-8 flex flex-col gap-6">
+    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center font-sans p-3 sm:p-4">
+      <div className="bg-white rounded-xl shadow-2xl w-full max-w-6xl p-4 sm:p-6 md:p-8 flex flex-col gap-4 sm:gap-6">
         {/* Top header with meeting name */}
-        <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-medium text-gray-800">Meeting ready</h2>
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <h2 className="text-xl sm:text-2xl font-medium text-gray-800">Meeting ready</h2>
           <button
             onClick={handleCopyLink}
-            className="flex items-center gap-2 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+            className="flex items-center justify-center gap-2 px-4 py-2.5 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors min-h-[44px] shrink-0"
           >
             <FaCopy className="text-gray-600" />
             Copy joining info
@@ -66,7 +66,7 @@ export default function LiveSessionPage() {
         </div>
 
         {/* Video iframe preview */}
-        <div className="rounded-xl overflow-hidden border border-gray-200 h-[500px] w-full relative">
+        <div className="rounded-xl overflow-hidden border border-gray-200 min-h-[280px] sm:min-h-[400px] h-[50vh] sm:h-[500px] w-full relative">
           <iframe
             id="jitsi-iframe"
             title="Video Call"
@@ -88,7 +88,7 @@ export default function LiveSessionPage() {
                 iframe.msRequestFullscreen();
               }
             }}
-            className="absolute top-4 right-4 px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition-colors z-10"
+            className="absolute top-2 right-2 sm:top-4 sm:right-4 px-3 py-2 text-sm sm:text-base bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition-colors z-10 min-h-[44px]"
           >
             View Full Screen
           </button>

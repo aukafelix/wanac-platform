@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='utf-8'?>
+<ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1" xml:lang="eng">
+  <head>
+    <meta content="e42aafec-0871-4a82-966c-4f738149389d" name="dtb:uid"/>
+    <meta content="2" name="dtb:depth"/>
+    <meta content="calibre (1.2.0)" name="dtb:generator"/>
+    <meta content="0" name="dtb:totalPageCount"/>
+    <meta content="0" name="dtb:maxPageNumber"/>
+  </head>
+  <docTitle>
+    <text>365 Journal Writing Ideas: A year of daily journal writing prompts, questions &amp; actions to fill your journal with memories, self-reflection, creativity &amp; direction.</text>
+  </docTitle>
+  <navMap>
+    <navPoint class="chapter" id="num_1" playOrder="1">
+      <navLabel>
+        <text>365 Journal Writing Ideas</text>
+      </navLabel>
+      <content src="text/part0000_split_000.html"/>
+    </navPoint>
+    <navPoint class="chapter" id="num_2" playOrder="1">
+      <navLabel>
+        <text>Copyright</text>
+      </navLabel>
+      <content src="text/part0000_split_000.html"/>
+    </navPoint>
+    <navPoint class="chapter" id="num_3" playOrder="1">
+      <navLabel>
+        <text>Dedication</text>
+      </navLabel>
+      <content src="text/part0000_split_000.html"/>
+    </navPoint>
+    <navPoint class="chapter" id="num_4" playOrder="2">
+      <navLabel>
+        <text>Introduction</text>
+      </navLabel>
+      <content src="text/part0000_split_000.html#Start"/>
+    </navPoint>
+    <navPoint class="chapter" id="num_5" playOrder="3">
+      <navLabel>
+        <text>How To Use This Book</text>
+      </navLabel>
+      <content src="text/part0000_split_000.html#_How_To_Use_1"/>
+    </navPoint>
+    <navPoint class="chapter" id="num_6" playOrder="4">
+      <navLabel>
+        <text>The Tips &amp; Tricks</text>
+      </navLabel>
+      <content src="text/part0000_split_000.html#_The_Tips___1"/>
+    </navPoint>
+    <navPoint class="chapter" id="num_7" playOrder="5">
+      <navLabel>
+        <text>Hello There Blank Page</text>
+      </navLabel>
+      <content src="text/part0000_split_000.html#_Toc220590695"/>
+    </navPoint>
+    <navPoint class="chapter" id="num_8" playOrder="6">
+      <navLabel>
+        <text>The Prompts</text>
+      </navLabel>
+      <content src="text/part0000_split_000.html#_The_Prompts"/>
+    </navPoint>
+    <navPoint class="chapter" id="num_9" playOrder="7">
+      <navLabel>
+        <text>The Weekly Actions</text>
+      </navLabel>
+      <content src="text/part0000_split_003.html#_The_Weekly_Actions_1"/>
+    </navPoint>
+    <navPoint class="chapter" id="num_10" playOrder="8">
+      <navLabel>
+        <text>The Photography Prompts</text>
+      </navLabel>
+      <content src="text/part0000_split_003.html#_The_Photography_Prompts_1"/>
+    </navPoint>
+    <navPoint class="chapter" id="num_11" playOrder="9">
+      <navLabel>
+        <text>The Quotes</text>
+      </navLabel>
+      <content src="text/part0000_split_003.html#_The_Quotes_1"/>
+    </navPoint>
+    <navPoint class="chapter" id="num_12" playOrder="10">
+      <navLabel>
+        <text>Thank You &amp; About Me</text>
+      </navLabel>
+      <content src="text/part0000_split_003.html#_Thank_You___3"/>
+    </navPoint>
+  </navMap>
+</ncx>

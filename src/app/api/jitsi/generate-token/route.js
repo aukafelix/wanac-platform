@@ -1,77 +1,138 @@
 /**
  * Jitsi JWT Token Generation API
- * 
+ *
  * POST /api/jitsi/generate-token
- * 
+ *
  * Generates JWT tokens for authenticated users to join Jitsi meetings.
- * 
- * Supports two options:
- * 1. JaaS (Jitsi as a Service) - Managed by 8x8, uses RS256
- * 2. Self-Hosted Jitsi - Your own server, uses HS256
- * 
- * Set JITSI_AUTH_TYPE environment variable to 'jaas' or 'self-hosted'
+ * Uses JITSI_API_KEY (or JAAS_APP_ID) as the JaaS App ID when using JaaS.
+ *
+ * Env: JITSI_API_KEY or JAAS_APP_ID, and for JaaS: JAAS_PRIVATE_KEY, JAAS_KID.
+ * Optional: JITSI_AUTH_TYPE=jaas | self-hosted (default: jaas if JAAS_* set, else self-hosted if secret set).
  */
 
 import { NextResponse } from 'next/server';
 
-// NOTE: These imports will fail until you install jsonwebtoken
-// Run: npm install jsonwebtoken
-// Uncomment when you're ready to use JWT authentication
-// const jaasService = require('../../../../services/jitsi-jaas.service');
-// const selfHostedService = require('../../../../services/jitsi-jwt.service');
+function getJwtSigner() {
+  try {
+    return require('jsonwebtoken');
+  } catch (e) {
+    return null;
+  }
+}
+
+/**
+ * Build JaaS (8x8) JWT payload per https://developer.8x8.com/jaas/docs/api-keys-jwt
+ */
+function buildJaaSPayload({ roomName, userId, userName, userEmail, userAvatar, moderator, expiresIn }) {
+  const now = Math.floor(Date.now() / 1000);
+  return {
+    aud: 'jitsi',
+    iss: 'chat',
+    sub: process.env.JAAS_APP_ID || process.env.JITSI_API_KEY,
+    room: roomName || '*',
+    exp: now + (expiresIn || 7200),
+    nbf: now,
+    context: {
+      user: {
+        id: userId,
+        name: userName,
+        email: userEmail || '',
+        avatar: userAvatar || '',
+        moderator: moderator ? 'true' : 'false',
+      },
+      features: {
+        livestreaming: false,
+        outbound-call: false,
+        transcription: false,
+        recording: false,
+      },
+      room: { regex: false },
+    },
+  };
+}
+
+/**
+ * Build self-hosted Jitsi JWT payload (HS256)
+ */
+function buildSelfHostedPayload({ roomName, userId, userName, userEmail, moderator, expiresIn }) {
+  const now = Math.floor(Date.now() / 1000);
+  return {
+    aud: 'jitsi',
+    iss: process.env.JITSI_APP_ID || process.env.JITSI_API_KEY,
+    sub: process.env.JITSI_APP_ID || process.env.JITSI_API_KEY,
+    room: roomName || '*',
+    exp: now + (expiresIn || 7200),
+    nbf: now,
+    context: {
+      user: {
+        id: userId,
+        name: userName,
+        email: userEmail || '',
+        moderator: moderator ? 'true' : 'false',
+      },
+    },
+  };
+}
 
 export async function POST(request) {
   try {
     const body = await request.json();
-    const { 
-      roomName, 
-      userId, 
-      userName, 
+    const {
+      roomName,
+      userId,
+      userName,
       userEmail = '',
       userAvatar = '',
       moderator = false,
-      expiresIn = 7200, // 2 hours
+      expiresIn = 7200,
     } = body;
 
-    // Validate required fields
     if (!roomName || !userId || !userName) {
       return NextResponse.json(
-        { 
-          error: 'Missing required fields',
-          required: ['roomName', 'userId', 'userName'],
-        },
+        { error: 'Missing required fields', required: ['roomName', 'userId', 'userName'] },
         { status: 400 }
       );
     }
 
-    // TODO: Add authentication middleware
-    // You should verify that the request is coming from an authenticated user
-    // Example:
-    // const session = await getServerSession(authOptions);
-    // if (!session) {
-    //   return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    // }
+    const jwt = getJwtSigner();
+    if (!jwt) {
+      return NextResponse.json(
+        {
+          error: 'JWT signing not available',
+          message: 'Install jsonwebtoken: npm install jsonwebtoken',
+        },
+        { status: 503 }
+      );
+    }
 
-    // TODO: Add authorization check
-    // Verify the user has permission to access this specific room
-    // Example:
-    // const hasAccess = await checkUserAccess(session.user.id, roomName);
-    // if (!hasAccess) {
-    //   return NextResponse.json({ error: 'Access denied' }, { status: 403 });
-    // }
+    const appId = process.env.JAAS_APP_ID || process.env.JITSI_API_KEY;
+    const jaasPrivateKey = process.env.JAAS_PRIVATE_KEY;
+    const jaasKid = process.env.JAAS_KID;
+    const selfHostedSecret = process.env.JITSI_APP_SECRET || process.env.JITSI_API_KEY;
+    const authType = process.env.JITSI_AUTH_TYPE || (jaasPrivateKey && jaasKid ? 'jaas' : selfHostedSecret ? 'self-hosted' : 'none');
 
-    // Determine authentication type from environment
-    const authType = process.env.JITSI_AUTH_TYPE || 'none';
-
-    // TODO: Uncomment when ready to use JWT
-    /*
     let token;
-    let service;
 
     if (authType === 'jaas') {
-      // Use JaaS (Jitsi as a Service)
-      service = jaasService;
-      token = service.generateToken({
+      if (!appId) {
+        return NextResponse.json(
+          {
+            error: 'JaaS not configured',
+            message: 'Set JITSI_API_KEY or JAAS_APP_ID (your Jitsi/8x8 App ID).',
+          },
+          { status: 503 }
+        );
+      }
+      if (!jaasPrivateKey || !jaasKid) {
+        return NextResponse.json(
+          {
+            error: 'JaaS signing not configured',
+            message: 'Set JAAS_PRIVATE_KEY (PEM) and JAAS_KID (key id from 8x8 dashboard).',
+          },
+          { status: 503 }
+        );
+      }
+      const payload = buildJaaSPayload({
         roomName,
         userId,
         userName,
@@ -80,104 +141,81 @@ export async function POST(request) {
         moderator,
         expiresIn,
       });
+      token = jwt.sign(
+        payload,
+        jaasPrivateKey.replace(/\\n/g, '\n'),
+        { algorithm: 'RS256', header: { kid: jaasKid } }
+      );
     } else if (authType === 'self-hosted') {
-      // Use self-hosted Jitsi
-      service = selfHostedService;
-      token = service.generateToken({
+      if (!selfHostedSecret) {
+        return NextResponse.json(
+          {
+            error: 'Self-hosted Jitsi not configured',
+            message: 'Set JITSI_APP_SECRET or JITSI_API_KEY.',
+          },
+          { status: 503 }
+        );
+      }
+      const payload = buildSelfHostedPayload({
         roomName,
         userId,
         userName,
         userEmail,
-        userAvatar,
         moderator,
         expiresIn,
       });
+      token = jwt.sign(payload, selfHostedSecret, { algorithm: 'HS256' });
     } else {
-      return NextResponse.json({
-        error: 'JWT authentication not configured',
-        message: 'Set JITSI_AUTH_TYPE to either "jaas" or "self-hosted"',
-      }, { status: 500 });
+      return NextResponse.json(
+        {
+          error: 'JWT authentication not configured',
+          message: 'Set JITSI_API_KEY (App ID or secret). For JaaS also set JAAS_PRIVATE_KEY and JAAS_KID. Optionally set JITSI_AUTH_TYPE to "jaas" or "self-hosted".',
+        },
+        { status: 503 }
+      );
     }
 
     return NextResponse.json({
       token,
-      expiresAt: new Date(Date.now() + expiresIn * 1000).toISOString(),
+      expiresAt: new Date(Date.now() + (expiresIn || 7200) * 1000).toISOString(),
       authType,
     });
-    */
-
-    // Temporary response for development
-    return NextResponse.json({
-      message: 'JWT generation not enabled yet',
-      currentAuthType: authType,
-      instructions: {
-        option1: {
-          name: 'JaaS (Jitsi as a Service) - RECOMMENDED',
-          steps: [
-            '1. Sign up at https://jaas.8x8.vc/',
-            '2. Get your AppID, Private Key, and kid',
-            '3. Install jsonwebtoken: npm install jsonwebtoken',
-            '4. Set environment variables: JITSI_AUTH_TYPE=jaas, JAAS_APP_ID, JAAS_PRIVATE_KEY, JAAS_KID',
-            '5. Uncomment JWT code in this file',
-            '6. See JITSI_ALL_OPTIONS.md',
-          ],
-          cost: '~$0.09 per participant-minute',
-          pros: 'Managed, secure, no server maintenance',
-        },
-        option2: {
-          name: 'Self-Hosted Jitsi',
-          steps: [
-            '1. Set up your own Jitsi server',
-            '2. Configure JWT authentication',
-            '3. Install jsonwebtoken: npm install jsonwebtoken',
-            '4. Set environment variables: JITSI_AUTH_TYPE=self-hosted, JITSI_APP_ID, JITSI_APP_SECRET',
-            '5. Uncomment JWT code in this file',
-            '6. See JITSI_JWT_GUIDE.md',
-          ],
-          cost: '$20-100/month for server',
-          pros: 'Full control, own your data',
-        },
-      },
-    });
-
   } catch (error) {
-    console.error('Error in JWT generation endpoint:', error);
-    
+    console.error('Error in Jitsi JWT generation:', error);
     return NextResponse.json(
-      { 
-        error: 'Failed to generate JWT token',
-        message: error.message,
-      },
+      { error: 'Failed to generate JWT token', message: error.message },
       { status: 500 }
     );
   }
 }
 
-// Handle GET requests with helpful information
 export async function GET() {
+  const appId = process.env.JAAS_APP_ID || process.env.JITSI_API_KEY;
+  const hasJaaS = appId && process.env.JAAS_PRIVATE_KEY && process.env.JAAS_KID;
+  const hasSelfHosted = (process.env.JITSI_APP_SECRET || process.env.JITSI_API_KEY) && (process.env.JITSI_APP_ID || process.env.JITSI_API_KEY);
+
   return NextResponse.json({
     endpoint: '/api/jitsi/generate-token',
     method: 'POST',
     description: 'Generate JWT tokens for Jitsi Meet authentication',
-    documentation: 'See JITSI_JWT_GUIDE.md',
-    status: 'Not configured - requires self-hosted Jitsi server',
+    configured: hasJaaS || hasSelfHosted,
+    authType: process.env.JITSI_AUTH_TYPE || (hasJaaS ? 'jaas' : hasSelfHosted ? 'self-hosted' : 'none'),
     requiredBody: {
-      roomName: 'string (required) - Meeting room name',
-      userId: 'string (required) - User ID',
-      userName: 'string (required) - User display name',
-      userEmail: 'string (optional) - User email',
-      userAvatar: 'string (optional) - User avatar URL',
-      moderator: 'boolean (optional) - Whether user is moderator',
-      expiresIn: 'number (optional) - Token expiration in seconds (default: 7200)',
+      roomName: 'string (required)',
+      userId: 'string (required)',
+      userName: 'string (required)',
+      userEmail: 'string (optional)',
+      userAvatar: 'string (optional)',
+      moderator: 'boolean (optional)',
+      expiresIn: 'number (optional, default 7200)',
     },
     example: {
-      roomName: 'fireteam-exp-123',
+      roomName: 'wanac-session-123',
       userId: 'user-456',
-      userName: 'John Doe',
-      userEmail: 'john@example.com',
-      moderator: true,
+      userName: 'Jane Doe',
+      userEmail: 'jane@example.com',
+      moderator: false,
       expiresIn: 3600,
     },
   });
 }
-

@@ -7,11 +7,6 @@ import {
   Typography,
   Button,
   Stack,
-  Card,
-  CardContent,
-  Grid,
-  Chip,
-  IconButton,
   Dialog,
   DialogTitle,
   DialogContent,
@@ -23,15 +18,8 @@ import {
   FormControl,
   Snackbar,
   Alert,
-  Table,
-  TableHead,
-  TableBody,
-  TableRow,
-  TableCell,
-  Divider,
 } from "@mui/material";
 import {
-  ArrowBack,
   Edit,
   Delete,
   Add,
@@ -43,7 +31,8 @@ import { fireteamService } from "../../../../services/api/fireteam.service";
 import { experienceService } from "../../../../services/api/experience.service";
 import { clientsService } from "../../../../services/api/clients.service";
 import { generateFireteamMeetingLink } from "../../../../lib/jitsi.utils";
-
+import ExperienceVideoModal from "../../../../../components/ExperienceVideoModal";
+import EditExperienceModal from "../../../../../components/EditExperienceModal";
 
 export default function FireteamDetailPage() {
   const params = useParams();
@@ -86,7 +75,9 @@ export default function FireteamDetailPage() {
     exhibits: [{ name: '', type: 'link', link: '', file: null }],
     videoAdminId: '',
     meetingLink: '',
+    link: '',
   });
+  const [validationErrors, setValidationErrors] = useState({});
 
   useEffect(() => {
     if (id) {
@@ -223,13 +214,21 @@ export default function FireteamDetailPage() {
 
   const handleSaveExperience = async () => {
     try {
-      await experienceService.addExperience({
+      const created = await experienceService.addExperience({
         fire_team_id: id,
         ...experienceData,
       });
+      const newExperience = {
+        id: created?.id ?? created?.fire_team_experience_id,
+        title: created?.title ?? experienceData.title,
+        experience: created?.experience ?? experienceData.experience,
+        agenda: created?.agenda ?? [],
+        exhibits: created?.exhibits ?? [],
+      };
+      setExperiences((prev) => [...prev, newExperience]);
       setSuccess("Experience added successfully!");
       setShowAddExperience(false);
-      fetchFireteamDetails(); // Refresh data
+      setExperienceData({ title: "", experience: "" });
     } catch (err) {
       setError("Failed to add experience");
     }
@@ -305,9 +304,7 @@ const handleAddAgendaStep = async ({ title, duration }) => {
       ],
     }));
 
-    return newStep; // return so caller can replace placeholder step
-  // Always return safeStep
-  return safeStep;
+    return newStep;
   } catch (err) {
     console.error("Error adding agenda step:", err);
     console.error("Error response:", err.response?.data);
@@ -351,326 +348,274 @@ const handleAddAgendaStep = async ({ title, duration }) => {
     }
   };
 
+  const clearValidationErrors = () => setValidationErrors({});
+
+  const handleSaveEditExperience = async () => {
+    if (!selectedExperienceToEdit) return;
+    try {
+      await experienceService.updateExperience(selectedExperienceToEdit.id, {
+        title: editExperienceData.title,
+        experience: editExperienceData.experience,
+      });
+
+      const currentExhibitIds = selectedExperienceToEdit.exhibits?.map(ex => ex.id).filter(Boolean) || [];
+      const newExhibits = editExperienceData.exhibits.filter(ex => !ex.id);
+      const existingExhibits = editExperienceData.exhibits.filter(ex => ex.id);
+      for (const exhibitId of currentExhibitIds) {
+        if (!existingExhibits.find(ex => ex.id === exhibitId)) {
+          await experienceService.deleteExhibit(exhibitId);
+        }
+      }
+      for (const exhibit of newExhibits) {
+        if (exhibit.name?.trim()) {
+          await experienceService.addExhibit({
+            fire_team_experience_id: selectedExperienceToEdit.id,
+            name: exhibit.name,
+            type: exhibit.type,
+            link: exhibit.type === 'link' ? exhibit.link : undefined,
+          });
+        }
+      }
+
+      const allExperiences = await experienceService.getExperiences(fireteam.id);
+      const updatedExperience = allExperiences.find(exp => exp.id === selectedExperienceToEdit.id);
+      setExperiences(prev => prev.map(e => (e.id === selectedExperienceToEdit.id ? updatedExperience : e)));
+      setShowEditExperience(false);
+      setSelectedExperienceToEdit(null);
+      setSuccess('Experience updated successfully!');
+    } catch (err) {
+      console.error('Error updating experience:', err);
+      setError('Failed to update experience');
+    }
+  };
 
   if (loading) {
     return (
-      <div className="flex min-h-screen bg-gray-50">
+      <div className="h-screen flex bg-gray-50 font-serif">
         <AdminSidebar />
-        <main className="flex-1 p-8 ml-16 md:ml-56">
-          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '50vh' }}>
-            <Typography>Loading fireteam details...</Typography>
-          </Box>
-        </main>
+        <div className="flex-1 flex flex-col h-full transition-all duration-300">
+          <main className="flex-1 h-0 overflow-y-auto px-4 md:px-12 py-8 bg-gray-50">
+            <div className="max-w-6xl mx-auto">
+              <div className="text-center py-12 text-gray-500">Loading fireteam details...</div>
+            </div>
+          </main>
+        </div>
       </div>
     );
   }
 
   if (!fireteam) {
     return (
-      <div className="flex min-h-screen bg-gray-50">
+      <div className="h-screen flex bg-gray-50 font-serif">
         <AdminSidebar />
-        <main className="flex-1 p-8 ml-16 md:ml-56">
-          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '50vh' }}>
-            <Typography color="error">Fireteam not found</Typography>
-          </Box>
-        </main>
+        <div className="flex-1 flex flex-col h-full transition-all duration-300">
+          <main className="flex-1 h-0 overflow-y-auto px-4 md:px-12 py-8 bg-gray-50">
+            <div className="max-w-6xl mx-auto">
+              <div className="text-center py-12 text-red-500">Fireteam not found</div>
+            </div>
+          </main>
+        </div>
       </div>
     );
   }
 
   return (
-    <div
-      style={{
-        width: '100vw',
-        height: '100vh',
-        overflow: 'hidden',
-        display: 'flex',
-        background: '#f8fafc', // fallback for bg-gray-50
-      }}
-    >
+    <div className="h-screen flex bg-gray-50 font-serif overflow-hidden">
       <AdminSidebar />
-      <main
-        className="flex-1 p-8 ml-16 md:ml-56"
-        style={{
-          height: '100vh',
-          overflow: 'hidden', // prevent main from scrolling
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-      >
-        {/* Header */}
-        <Box sx={{ mb: 3 }}>
-          <Stack direction="row" alignItems="center" spacing={2} sx={{ mb: 2 }}>
-            <IconButton onClick={() => router.back()}>
-              <ArrowBack />
-            </IconButton>
-            <Typography variant="h4" sx={{ fontWeight: 700 }}>
-              {fireteam.title }
-            </Typography>
-          </Stack>
-          <Stack direction="row" spacing={2}>
-            <Button
-              variant="contained"
-              startIcon={<Edit />}
-              onClick={handleEdit}
+      <div className="flex-1 flex flex-col min-w-0 h-full transition-all duration-300">
+        <main className="flex-1 min-h-0 overflow-y-auto px-4 md:px-6 lg:px-8 py-4 md:py-6 bg-gray-50">
+          <div className="max-w-[1600px] mx-auto space-y-4">
+            {/* Back button - top */}
+            <button
+              type="button"
+              className="flex items-center gap-2 text-gray-600 hover:text-gray-900 border border-gray-300 rounded-lg px-3 py-1.5 hover:bg-gray-50 transition text-sm shrink-0"
+              onClick={() => router.push("/admin/fireteammanagement")}
             >
-              Edit Fireteam
-            </Button>
-            <Button
-              variant="outlined"
-              color="error"
-              startIcon={<Delete />}
-              onClick={handleDelete}
-            >
-              Delete Fireteam
-            </Button>
-          </Stack>
-        </Box>
-        {/* Content area: make it take all remaining space and scroll only inside tables */}
-        <Box sx={{ flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-          <Grid container spacing={3} sx={{ flex: 1, minHeight: 0 }}>
-          {/* Fireteam Details */}
-            <Grid item xs={12} md={8} sx={{ minHeight: 0 }}>
-              <Card sx={{ height: '100%' }}>
-              <CardContent>
-                <Typography variant="h6" sx={{ mb: 2 }}>
-                  Fireteam Information
-                </Typography>
-                <Stack spacing={2}>
-                  <Box>
-                    <Typography variant="subtitle2" color="text.secondary">
-                      Title
-                    </Typography>
-                    <Typography variant="body1">
-                      {fireteam.title}
-                    </Typography>
-                  </Box>
-                  <Box>
-                    <Typography variant="subtitle2" color="text.secondary">
-                      Description
-                    </Typography>
-                    <Typography variant="body1">
-                      {fireteam.description}
-                    </Typography>
-                  </Box>
-                  <Box>
-                    <Typography variant="subtitle2" color="text.secondary">
-                      Cohort
-                    </Typography>
-                    <Typography variant="body1">
-                      {cohort ? (cohort.name || cohort.title || `Cohort ${cohort.id}`) : `Cohort ${fireteam.cohort_id}`}
-                    </Typography>
-                  </Box>
-                  <Box>
-                    <Typography variant="subtitle2" color="text.secondary">
-                      Date & Time
-                    </Typography>
-                    <Typography variant="body1">
-                      {fireteam.date} {fireteam.time && `at ${fireteam.time}`}
-                    </Typography>
-                  </Box>
-                  <Box>
-                    <Typography variant="subtitle2" color="text.secondary">
-                      Created
-                    </Typography>
-                    <Typography variant="body1">
-                      {fireteam.created_at ? new Date(fireteam.created_at).toLocaleDateString() : 'N/A'}
-                    </Typography>
-                  </Box>
-                </Stack>
-              </CardContent>
-            </Card>
-          </Grid>
+              ← Back to Fireteam Management
+            </button>
 
-          {/* Quick Actions */}
-            <Grid item xs={12} md={4} sx={{ minHeight: 0 }}>
-              <Card sx={{ height: '100%' }}>
-              <CardContent>
-                <Typography variant="h6" sx={{ mb: 2 }}>
-                  Quick Actions
-                </Typography>
-                <Stack spacing={2}>
-                  <Button
-                    variant="outlined"
-                    startIcon={<PersonAdd />}
+            {/* Quick Actions + Fireteam Information - below back button */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Quick Actions card */}
+              <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-4">
+                <h3 className="text-sm font-semibold text-gray-700 mb-3">Quick Actions</h3>
+                <div className="flex flex-col gap-2">
+                  <button
+                    type="button"
+                    className="w-full px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition flex items-center justify-center gap-2 text-sm"
                     onClick={() => setShowAddMember(true)}
-                    fullWidth
                   >
-                    Add Member
-                  </Button>
-                  <Button
-                    variant="outlined"
-                    startIcon={<PersonRemove />}
+                    <PersonAdd sx={{ fontSize: 18 }} /> Add Member
+                  </button>
+                  <button
+                    type="button"
+                    className="w-full px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 transition flex items-center justify-center gap-2 text-sm"
                     onClick={() => setShowRemoveMember(true)}
-                    fullWidth
                   >
-                    Remove Member
-                  </Button>
-                </Stack>
-              </CardContent>
-            </Card>
-          </Grid>
+                    <PersonRemove sx={{ fontSize: 18 }} /> Remove Member
+                  </button>
+                </div>
+                <div className="grid grid-cols-2 gap-2 mt-4 pt-4 border-t border-gray-100">
+                  <div className="bg-amber-50 rounded-lg p-3 text-center">
+                    <p className="text-2xl font-bold text-amber-700">{members.length}</p>
+                    <p className="text-xs text-amber-800/80">Members</p>
+                  </div>
+                  <div className="bg-blue-50 rounded-lg p-3 text-center">
+                    <p className="text-2xl font-bold text-blue-700">{experiences.length}</p>
+                    <p className="text-xs text-blue-800/80">Experiences</p>
+                  </div>
+                </div>
+              </div>
+              {/* Fireteam Information card */}
+              <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-4 overflow-hidden flex flex-col">
+                <h2 className="text-base font-semibold text-[#002147] mb-3">Fireteam Information</h2>
+                <dl className="space-y-2 text-sm flex-1 min-h-0">
+                  <div>
+                    <dt className="text-gray-500 font-medium">Title</dt>
+                    <dd className="text-gray-900 mt-0.5">{fireteam.title}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-gray-500 font-medium">Description</dt>
+                    <dd className="text-gray-900 mt-0.5 line-clamp-3">{fireteam.description || '—'}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-gray-500 font-medium">Cohort</dt>
+                    <dd className="text-gray-900 mt-0.5">{cohort ? (cohort.name || cohort.title || `Cohort ${cohort.id}`) : `Cohort ${fireteam.cohort_id}`}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-gray-500 font-medium">Date & Time</dt>
+                    <dd className="text-gray-900 mt-0.5">{fireteam.date} {fireteam.time && `at ${fireteam.time}`}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-gray-500 font-medium">Created</dt>
+                    <dd className="text-gray-900 mt-0.5">{fireteam.created_at ? new Date(fireteam.created_at).toLocaleDateString() : 'N/A'}</dd>
+                  </div>
+                </dl>
+              </div>
+            </div>
 
-          {/* Members List */}
-            <Grid item xs={12} sx={{ minHeight: 0 }}>
-              <Card sx={{ height: 300, display: 'flex', flexDirection: 'column' }}>
-                <CardContent sx={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column' }}>
-                <Typography variant="h6" sx={{ mb: 2 }}>
-                  Fireteam Members
-                </Typography>
-                  <Box sx={{ flex: 1, minHeight: 0, overflow: 'auto' }}>
-                <Table>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>Name</TableCell>
-                      <TableCell>Email</TableCell>
-                      <TableCell>Actions</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {members.length === 0 ? (
-                      <TableRow>
-                        <TableCell colSpan={4} align="center">
-                          No members found
-                        </TableCell>
-                      </TableRow>
-                    ) : (
-                      members.map((member) => (
-                        <TableRow key={member.id}>
-                          <TableCell>{member.client.user.name}</TableCell>
-                          <TableCell>{member.client.user.email}</TableCell>
-                          <TableCell>
-                            <Chip label={member.role || 'Member'} size="small" />
-                          </TableCell>
-                          <TableCell>
-                            <IconButton 
-                              size="small" 
-                              color="error"
-                              onClick={() => handleRemoveMember(member.id)}
-                            >
-                              <PersonRemove />
-                            </IconButton>
-                          </TableCell>
-                        </TableRow>
-                      ))
-                    )}
-                  </TableBody>
-                </Table>
-                  </Box>
-              </CardContent>
-            </Card>
-          </Grid>
+           
 
-          {/* Experiences List */}
-            <Grid item xs={12} sx={{ minHeight: 0 }}>
-              <Card sx={{ height: 300, display: 'flex', flexDirection: 'column' }}>
-                <CardContent sx={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column' }}>
-                <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 2 }}>
-                  <Typography variant="h6">
-                    Fireteam Experiences
-                  </Typography>
-                  <Button
-                    variant="contained"
-                    startIcon={<Add />}
+            {/* Main grid: Members + Experiences */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+
+              {/* Members List - compact card */}
+              <div className="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden flex flex-col">
+                <div className="p-4 border-b border-gray-100 flex items-center justify-between shrink-0">
+                  <h2 className="text-base font-semibold text-[#002147]">Fireteam Members</h2>
+                  <span className="text-sm text-gray-500">{members.length} total</span>
+                </div>
+                <div className="flex-1 min-h-0 overflow-y-auto max-h-[280px]">
+                  {members.length === 0 ? (
+                    <div className="p-6 text-center text-gray-500 text-sm">No members yet</div>
+                  ) : (
+                    <div className="divide-y divide-gray-100">
+                      {members.map((member) => (
+                        <div key={member.id} className="flex items-center justify-between gap-2 px-4 py-3 hover:bg-gray-50 transition">
+                          <div className="min-w-0 flex-1">
+                            <p className="text-sm font-medium text-gray-900 truncate">{member.client?.user?.name ?? member.name ?? '—'}</p>
+                            <p className="text-xs text-gray-500 truncate">{member.client?.user?.email ?? member.email ?? '—'}</p>
+                          </div>
+                          <span className="px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-700 shrink-0">{member.role || 'Member'}</span>
+                          <button
+                            type="button"
+                            className="p-1.5 rounded hover:bg-red-100 text-red-600 shrink-0"
+                            title="Remove Member"
+                            onClick={() => handleRemoveMember(member.id)}
+                          >
+                            <PersonRemove sx={{ fontSize: 18 }} />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Experiences List - compact card */}
+              <div className="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden flex flex-col">
+                <div className="p-4 border-b border-gray-100 flex items-center justify-between shrink-0">
+                  <h2 className="text-base font-semibold text-[#002147]">Fireteam Experiences</h2>
+                  <button
+                    type="button"
+                    className="px-3 py-1.5 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition text-xs flex items-center gap-1"
                     onClick={handleAddExperience}
-                    size="small"
                   >
-                    Add Experience
-                  </Button>
-                </Stack>
-                <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                  Create learning experiences and discussion sessions for your fireteam members.
-                </Typography>
-                  <Box sx={{ flex: 1, minHeight: 0, overflow: 'auto' }}>
-                {experiences.length === 0 ? (
-                  <Box sx={{ textAlign: 'center', py: 4 }}>
-                    <Typography color="text.secondary" sx={{ mb: 2 }}>
-                      No experiences created yet
-                    </Typography>
-                    <Button
-                      variant="outlined"
-                      startIcon={<Add />}
-                      onClick={handleAddExperience}
-                    >
-                      Create First Experience
-                    </Button>
-                  </Box>
-                ) : (
-                  <Table>
-                    <TableHead>
-                      <TableRow>
-                        <TableCell>Title</TableCell>
-                        <TableCell>Description</TableCell>
-                        <TableCell>Actions</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
+                    <Add sx={{ fontSize: 14 }} /> Add
+                  </button>
+                </div>
+                <div className="flex-1 min-h-0 overflow-y-auto max-h-[280px]">
+                  {experiences.length === 0 ? (
+                    <div className="p-6 text-center">
+                      <p className="text-gray-500 text-sm mb-3">No experiences yet</p>
+                      <button
+                        type="button"
+                        className="px-3 py-2 rounded-lg border border-blue-600 text-blue-600 hover:bg-blue-50 transition text-sm flex items-center gap-2 mx-auto"
+                        onClick={handleAddExperience}
+                      >
+                        <Add sx={{ fontSize: 16 }} /> Create First Experience
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="divide-y divide-gray-100">
                       {experiences.map((experience) => (
-                            <TableRow
-                              key={experience.id}
-                              hover
-                              style={{ cursor: 'pointer' }}
-                              onClick={e => {
-                                // Prevent opening modal if clicking on action buttons
-                                if (e.target.closest('.experience-action-btn')) return;
-                                setSelectedExperienceToEdit(experience);
-                                setEditExperienceData({
-                                  title: experience.title || '',
-                                  experience: experience.experience || '',
-                                  agenda: experience.agenda && Array.isArray(experience.agenda) && experience.agenda.length > 0
-                                    ? experience.agenda.map(step => ({
-                                        ...step,
-                                        title: typeof step.title === 'string' ? step.title : '',
-                                        duration: typeof step.duration === 'string' ? step.duration : '',
-                                      }))
-                                    : [{ title: '', duration: '' }],
-                                  exhibits: experience.exhibits && Array.isArray(experience.exhibits) && experience.exhibits.length > 0
-                                    ? experience.exhibits.map(ex => ({ ...ex, file: null }))
-                                    : [{ name: '', type: 'link', link: '', file: null }],
-                                  videoAdminId: experience.videoAdminId || '',
-                                  meetingLink: experience.meetingLink || '',
-                                });
-                                setShowEditExperience(true);
-                              }}
-                            >
-                          <TableCell>{experience.title}</TableCell>
-                          <TableCell>{experience.experience}</TableCell>
-                          <TableCell>
-                            <Stack direction="row" spacing={1}>
-                              <Button
-                                size="small"
-                                variant="contained"
-                                startIcon={<VideoCall />}
-                                onClick={() => handleStartExperience(experience.id)}
-                                    sx={{ background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)', '&:hover': { background: 'linear-gradient(45deg, #1976D2 30%, #1CB5E0 90%)' } }}
-                                    className="experience-action-btn"
+                        <div
+                          key={experience.id}
+                          className="flex flex-col gap-2 px-4 py-3 hover:bg-gray-50 transition cursor-pointer group"
+                          onClick={e => {
+                            if (e.target.closest('.experience-action-btn')) return;
+                            setSelectedExperienceToEdit(experience);
+                            setEditExperienceData({
+                              title: experience.title || '',
+                              experience: experience.experience || '',
+                              agenda: experience.agenda && Array.isArray(experience.agenda) && experience.agenda.length > 0
+                                ? experience.agenda.map(step => ({
+                                    ...step,
+                                    title: typeof step.title === 'string' ? step.title : '',
+                                    duration: typeof step.duration === 'string' ? step.duration : '',
+                                  }))
+                                : [{ title: '', duration: '' }],
+                              exhibits: experience.exhibits && Array.isArray(experience.exhibits) && experience.exhibits.length > 0
+                                ? experience.exhibits.map(ex => ({ ...ex, file: null }))
+                                : [{ name: '', type: 'link', link: '', file: null }],
+                              videoAdminId: experience.videoAdminId || '',
+                              meetingLink: experience.meetingLink || '',
+                              link: experience.meetingLink || experience.link || '',
+                            });
+                            setShowEditExperience(true);
+                          }}
+                        >
+                          <div className="flex items-start justify-between gap-2">
+                            <p className="text-sm font-medium text-gray-900 line-clamp-1 flex-1">{experience.title}</p>
+                            <span className="inline-flex gap-1 experience-action-btn shrink-0">
+                              <button
+                                type="button"
+                                className="p-1.5 rounded bg-blue-600 text-white hover:bg-blue-700 text-xs flex items-center gap-1"
+                                onClick={e => { e.stopPropagation(); handleStartExperience(experience.id); }}
                               >
-                                Join Meeting
-                              </Button>
-                              <Button
-                                size="small"
-                                variant="outlined"
-                                color="error"
-                                onClick={() => handleDeleteExperience(experience.id)}
-                                    className="experience-action-btn"
+                                <VideoCall sx={{ fontSize: 14 }} /> Join
+                              </button>
+                              <button
+                                type="button"
+                                className="p-1.5 rounded hover:bg-red-100 text-red-600"
+                                onClick={e => { e.stopPropagation(); handleDeleteExperience(experience.id); }}
                               >
                                 Delete
-                              </Button>
-                            </Stack>
-                          </TableCell>
-                        </TableRow>
+                              </button>
+                            </span>
+                          </div>
+                          <p className="text-xs text-gray-500 line-clamp-2">{experience.experience}</p>
+                        </div>
                       ))}
-                    </TableBody>
-                  </Table>
-                )}
-                  </Box>
-              </CardContent>
-            </Card>
-          </Grid>
-        </Grid>
-        </Box>
-
-        {/* Edit Dialog */}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+      {/* Edit Dialog - outside scrollable area */}
         <Dialog open={showEdit} onClose={() => setShowEdit(false)} fullWidth maxWidth="sm">
           <DialogTitle>Edit Fireteam</DialogTitle>
           <DialogContent>
@@ -754,7 +699,7 @@ const handleAddAgendaStep = async ({ title, duration }) => {
                 >
                   {members.map((member) => (
                     <MenuItem key={member.id} value={member.id}>
-                      {member.name} ({member.email})
+                      {member.client?.user?.name ?? member.name ?? 'Unknown'} ({member.client?.user?.email ?? member.email ?? '—'})
                     </MenuItem>
                   ))}
                 </Select>
@@ -813,283 +758,29 @@ const handleAddAgendaStep = async ({ title, duration }) => {
           </DialogActions>
         </Dialog>
 
-        {/* Edit Experience Dialog */}
-        <Dialog open={showEditExperience} onClose={() => setShowEditExperience(false)} fullWidth maxWidth="sm">
-          <DialogTitle>Edit Experience</DialogTitle>
-          <DialogContent>
-            <Stack spacing={3} sx={{ mt: 1 }}>
-              <TextField
-                label="Experience Title"
-                value={editExperienceData.title}
-                onChange={e => setEditExperienceData({ ...editExperienceData, title: e.target.value })}
-                fullWidth
-                required
-              />
-              <TextField
-                label="Experience Content"
-                value={editExperienceData.experience}
-                onChange={e => setEditExperienceData({ ...editExperienceData, experience: e.target.value })}
-                fullWidth
-                multiline
-                rows={4}
-                required
-              />
-{/* Agenda Steps */}
-<Box>
-  <Typography variant="subtitle1">Agenda Steps</Typography>
-  {editExperienceData.agenda && editExperienceData.agenda.length > 0 ? (
-    <Stack spacing={1} sx={{ mb: 2 }}>
-      {editExperienceData.agenda.map((step, idx) => (
-        <Box key={step.id || idx} sx={{ p: 1, border: '1px solid #eee', borderRadius: 1, background: '#fafafa' }}>
-          <Typography variant="body1" sx={{ fontWeight: 500 }}>
-            {step.title || 'Untitled Step'}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Duration: {step.duration || 'N/A'}
-          </Typography>
-        </Box>
-      ))}
-    </Stack>
-  ) : (
-    <Typography variant="body2" color="text.secondary">No agenda steps added yet.</Typography>
-  )}
-</Box>
-
-
-              {/* Exhibits */}
-              <Box>
-                <Typography variant="subtitle1">Exhibits</Typography>
-                {editExperienceData.exhibits.map((exhibit, idx) => (
-                  <Stack direction="row" spacing={1} alignItems="center" key={idx} sx={{ mb: 1, flexWrap: 'wrap' }}>
-                    <TextField
-                      label="Exhibit Name"
-                      value={exhibit.name}
-                      onChange={e => {
-                        const exhibits = [...editExperienceData.exhibits];
-                        exhibits[idx].name = e.target.value;
-                        setEditExperienceData({ ...editExperienceData, exhibits });
-                      }}
-                      required
-                      sx={{ flex: 2, minWidth: 120 }}
-                    />
-                    <FormControl sx={{ minWidth: 120 }}>
-                      <InputLabel>Type</InputLabel>
-                      <Select
-                        value={exhibit.type}
-                        label="Type"
-                        onChange={e => {
-                          const exhibits = [...editExperienceData.exhibits];
-                          exhibits[idx].type = e.target.value;
-                          // Reset file/link when type changes
-                          if (e.target.value === 'link') {
-                            exhibits[idx].file = null;
-                            exhibits[idx].link = '';
-                          } else {
-                            exhibits[idx].file = null;
-                            exhibits[idx].link = '';
-                          }
-                          setEditExperienceData({ ...editExperienceData, exhibits });
-                        }}
-                      >
-                        <MenuItem value="link">Link</MenuItem>
-                        <MenuItem value="document">Document</MenuItem>
-                        <MenuItem value="image">Image</MenuItem>
-                        <MenuItem value="video">Video</MenuItem>
-                      </Select>
-                    </FormControl>
-                    {exhibit.type === 'link' ? (
-                      <TextField
-                        label="Link"
-                        value={exhibit.link}
-                        onChange={e => {
-                          const exhibits = [...editExperienceData.exhibits];
-                          exhibits[idx].link = e.target.value;
-                          setEditExperienceData({ ...editExperienceData, exhibits });
-                        }}
-                        sx={{ flex: 2, minWidth: 120 }}
-                      />
-                    ) : (
-                      <>
-                        <Button
-                          variant="outlined"
-                          component="label"
-                          sx={{ minWidth: 120 }}
-                        >
-                          {exhibit.file ? exhibit.file.name : `Upload ${exhibit.type}`}
-                          <input
-                            type="file"
-                            accept={
-                              exhibit.type === 'image' ? 'image/*' :
-                              exhibit.type === 'video' ? 'video/*' :
-                              exhibit.type === 'document' ? '.pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.txt' : '*/*'
-                            }
-                            hidden
-                            onChange={e => {
-                              const file = e.target.files[0];
-                              const exhibits = [...editExperienceData.exhibits];
-                              exhibits[idx].file = file;
-                              setEditExperienceData({ ...editExperienceData, exhibits });
-                            }}
-                          />
-                        </Button>
-                        {exhibit.file && (
-                          <Typography variant="caption" sx={{ ml: 1 }}>{exhibit.file.name}</Typography>
-                        )}
-                      </>
-                    )}
-                    <Button
-                      onClick={() => handleDeleteExhibit(exhibit.id, idx)}
-                      color="error"
-                      size="small"
-                      disabled={editExperienceData.exhibits.length === 1}
-                    >Remove</Button>
-                  </Stack>
-                ))}
-                <Button
-                  onClick={handleAddExhibit}
-                  size="small"
-                  variant="outlined"
-                >+ Add Exhibit</Button>
-              </Box>
-              {/* Experience Video Admin */}
-              <FormControl fullWidth>
-                <InputLabel>Experience Video Admin</InputLabel>
-                <Select
-                  value={editExperienceData.videoAdminId}
-                  label="Experience Video Admin"
-                  onChange={e => {
-                    const adminId = e.target.value;
-                    const admin = members.find(member => member.id === adminId);
-                    const adminName = admin?.client?.user?.name || admin?.name || 'Admin';
-                    
-                    // Auto-generate Jitsi meeting link when admin is selected
-                    const meetingLink = generateFireteamMeetingLink(
-                      id, // fireteamId
-                      selectedExperienceToEdit?.id || 'new', // id
-                      adminId,
-                      adminName
-                    );
-                    
-                    setEditExperienceData({ 
-                      ...editExperienceData, 
-                      videoAdminId: adminId,
-                      meetingLink: meetingLink
-                    });
-                  }}
-                >
-                  {members.map(member => (
-                    <MenuItem key={member.id} value={member.id}>
-                      {member.client?.user?.name || member.name || member.id}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-              {/* Meeting Link */}
-              <Stack direction="row" spacing={1} alignItems="flex-start">
-                <TextField
-                  label="Meeting Link"
-                  value={editExperienceData.meetingLink}
-                  onChange={e => setEditExperienceData({ ...editExperienceData, meetingLink: e.target.value })}
-                  fullWidth
-                  helperText="Meeting link is auto-generated when you select a video admin. You can manually edit if needed."
-                  InputProps={{
-                    readOnly: editExperienceData.videoAdminId ? true : false,
-                  }}
-                />
-                {editExperienceData.videoAdminId && (
-                  <Button
-                    variant="outlined"
-                    size="small"
-                    onClick={() => {
-                      const admin = members.find(member => member.id === editExperienceData.videoAdminId);
-                      const adminName = admin?.client?.user?.name || admin?.name || 'Admin';
-                      
-                      const newMeetingLink = generateFireteamMeetingLink(
-                        id,
-                        selectedExperienceToEdit?.id || 'new',
-                        editExperienceData.videoAdminId,
-                        adminName
-                      );
-                      
-                      setEditExperienceData({ 
-                        ...editExperienceData, 
-                        meetingLink: newMeetingLink
-                      });
-                    }}
-                    sx={{ mt: 1, minWidth: 'auto' }}
-                  >
-                    Regenerate
-                  </Button>
-                )}
-              </Stack>
-            </Stack>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={() => setShowEditExperience(false)}>Cancel</Button>
-            <Button
-              variant="contained"
-              onClick={async () => {
-                if (!selectedExperienceToEdit) return;
-                try {
-                  // Update the main experience
-                  await experienceService.updateExperience(selectedExperienceToEdit.id, {
-                    title: editExperienceData.title,
-                    experience: editExperienceData.experience,
-                  });
-
-                  // Handle exhibits - save new ones and delete removed ones
-                  const currentExhibitIds = selectedExperienceToEdit.exhibits?.map(ex => ex.id).filter(Boolean) || [];
-                  const newExhibits = editExperienceData.exhibits.filter(ex => !ex.id);
-                  const existingExhibits = editExperienceData.exhibits.filter(ex => ex.id);
-                  // Delete exhibits that were removed
-                  for (const exhibitId of currentExhibitIds) {
-                    if (!existingExhibits.find(ex => ex.id === exhibitId)) {
-                      await experienceService.deleteExhibit(exhibitId);
-                    }
-                  }
-                  // Add new exhibits
-                  for (const exhibit of newExhibits) {
-                    if (exhibit.name.trim()) {
-                      await experienceService.addExhibit({
-                        fire_team_experience_id: selectedExperienceToEdit.id,
-                        name: exhibit.name,
-                        type: exhibit.type,
-                        link: exhibit.type === 'link' ? exhibit.link : undefined,
-                      });
-                    }
-                  }
-
-                  // Refetch all experiences and get the updated one
-                  const allExperiences = await experienceService.getExperiences(fireteam.id);
-                  const updatedExperience = allExperiences.find(exp => exp.id === selectedExperienceToEdit.id);
-                  setShowEditExperience(false);
-                  setSelectedExperienceToEdit(null);
-                  setSuccess('Experience updated successfully!');
-                  fetchFireteamDetails();
-                  // Optionally update editExperienceData with latest agenda for next open
-                  if (updatedExperience) {
-                    setEditExperienceData(prev => ({
-                      ...prev,
-                      agenda: updatedExperience.agenda && Array.isArray(updatedExperience.agenda) && updatedExperience.agenda.length > 0
-                        ? updatedExperience.agenda.map(step => ({
-                            ...step,
-                            title: typeof step.title === 'string' ? step.title : '',
-                            duration: typeof step.duration === 'string' ? step.duration : '',
-                          }))
-                        : [{ title: '', duration: '' }],
-                    }));
-                  }
-                } catch (err) {
-                  console.error('Error updating experience:', err);
-                  setError('Failed to update experience');
-                }
-              }}
-              disabled={!editExperienceData.title.trim() || !editExperienceData.experience.trim()}
-            >
-              Save
-            </Button>
-          </DialogActions>
-        </Dialog>
+        {/* Edit Experience Modal (shadcn) */}
+        <EditExperienceModal
+          open={showEditExperience}
+          onClose={() => {
+            setShowEditExperience(false);
+            setSelectedExperienceToEdit(null);
+          }}
+          editExperienceData={editExperienceData}
+          setEditExperienceData={setEditExperienceData}
+          validationErrors={validationErrors}
+          clearValidationErrors={clearValidationErrors}
+          handleAddAgendaStep={handleAddAgendaStep}
+          handleAddExhibit={handleAddExhibit}
+          handleSave={handleSaveEditExperience}
+          setError={setError}
+          error={error}
+          members={members}
+          selectedExperienceToEdit={selectedExperienceToEdit}
+          generateFireteamMeetingLink={generateFireteamMeetingLink}
+          id={id}
+          fireteam={fireteam}
+          experienceService={experienceService}
+        />
 
         {/* Video Meeting Modal */}
         {showVideoMeeting && selectedExperience && (
@@ -1111,7 +802,6 @@ const handleAddAgendaStep = async ({ title, duration }) => {
             {error}
           </Alert>
         </Snackbar>
-      </main>
     </div>
   );
 }

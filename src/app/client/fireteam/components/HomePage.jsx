@@ -1,8 +1,6 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { experienceService } from "../../../../services/api/experience.service";
-import { fireteamService } from "../../../../services/api/fireteam.service";
 import { FaComments, FaTimes, FaPaperPlane } from "react-icons/fa";
 
 // Chat Modal Component
@@ -171,123 +169,12 @@ function ChatModal({ isOpen, onClose, experience }) {
   );
 }
 
-export default function HomePage() {
+export default function HomePage({ assignments = [], loading = false, error = "", onRetry }) {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("All Assignments");
-  const [assignments, setAssignments] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
   const [chatModalOpen, setChatModalOpen] = useState(false);
   const [selectedExperience, setSelectedExperience] = useState(null);
   const router = useRouter();
-
-  useEffect(() => {
-    fetchFireteamExperiences();
-  }, []);
-
-  const fetchFireteamExperiences = async () => {
-    try {
-      setLoading(true);
-      setError("");
-      
-      // Get user's fireteams first
-      const fireteams = await fireteamService.getFireteams();
-      console.log("Fireteams fetched:", fireteams);
-      const allExperiences = [];
-      
-      // If no fireteams found, try to get experiences directly
-      if (!fireteams || fireteams.length === 0) {
-        console.log("No fireteams found, trying to get experiences directly");
-        // Try to get experiences for a default fireteam or all experiences
-        try {
-          const experiences = await experienceService.getExperiences(1); // Try fireteam ID 1
-          console.log("Direct experiences fetch:", experiences);
-          
-          const transformedExperiences = experiences.map(exp => ({
-            id: exp.id,
-            course: "Fireteam Experience",
-            instructor: "Coach",
-            experience: {
-              title: exp.title,
-              subtitle: exp.experience || "Interactive Learning Session",
-            },
-            dueDate: exp.due_date ? new Date(exp.due_date).toLocaleDateString('en-GB', { 
-              day: '2-digit', 
-              month: 'short', 
-              year: 'numeric' 
-            }) : "TBD",
-            dueTime: exp.due_time || "5:00 PM PDT",
-            sessionDate: exp.session_date ? new Date(exp.session_date).toLocaleDateString('en-GB', { 
-              day: '2-digit', 
-              month: 'short', 
-              year: 'numeric' 
-            }) : "TBD",
-            sessionTime: exp.session_time || "12:00 PM PDT",
-              chat: exp.has_chat !== undefined ? exp.has_chat : true, // Enable chat by default
-            action: exp.status === 'completed' ? "View Results" : "View",
-            status: exp.status === 'completed' ? "Completed" : "Upcoming",
-            fireteamId: exp.fire_team_id || 1,
-            experienceId: exp.id,
-            meetingLink: exp.link || null
-          }));
-          
-          allExperiences.push(...transformedExperiences);
-        } catch (error) {
-          console.error("Error fetching experiences directly:", error);
-        }
-      } else {
-        // Fetch experiences for each fireteam
-        for (const fireteam of fireteams) {
-          try {
-            const experiences = await experienceService.getExperiences(fireteam.id);
-            console.log(`Experiences for fireteam ${fireteam.id}:`, experiences);
-            
-            // Transform experiences to match the UI format
-            const transformedExperiences = experiences.map(exp => ({
-              id: exp.id,
-              course: fireteam.title || "Fireteam Experience",
-              instructor: fireteam.coach_name || fireteam.instructor || "Coach",
-              experience: {
-                title: exp.title,
-                subtitle: exp.experience || "Interactive Learning Session",
-              },
-              dueDate: exp.due_date ? new Date(exp.due_date).toLocaleDateString('en-GB', { 
-                day: '2-digit', 
-                month: 'short', 
-                year: 'numeric' 
-              }) : "TBD",
-              dueTime: exp.due_time || "5:00 PM PDT",
-              sessionDate: exp.session_date ? new Date(exp.session_date).toLocaleDateString('en-GB', { 
-                day: '2-digit', 
-                month: 'short', 
-                year: 'numeric' 
-              }) : "TBD",
-              sessionTime: exp.session_time || "12:00 PM PDT",
-              chat: exp.has_chat !== undefined ? exp.has_chat : true, // Enable chat by default
-              action: exp.status === 'completed' ? "View Results" : "View",
-              status: exp.status === 'completed' ? "Completed" : "Upcoming",
-              fireteamId: fireteam.id,
-              experienceId: exp.id,
-              meetingLink: exp.link || null
-            }));
-            
-            console.log(`Transformed experiences for fireteam ${fireteam.id}:`, transformedExperiences);
-            allExperiences.push(...transformedExperiences);
-          } catch (error) {
-            console.error(`Error fetching experiences for fireteam ${fireteam.id}:`, error);
-          }
-        }
-      }
-      
-      console.log("All experiences after transformation:", allExperiences);
-      setAssignments(allExperiences);
-    } catch (error) {
-      console.error('Error fetching fireteam experiences:', error);
-      setError("Failed to load experiences. Please try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
 
   // Filter assignments based on search and filter
   const filteredAssignments = assignments.filter(assignment => {
@@ -312,8 +199,8 @@ export default function HomePage() {
             {error}
           </span>
             <button 
-              onClick={fetchFireteamExperiences}
-            className="text-red-600 hover:text-red-800 underline font-semibold"
+              onClick={onRetry}
+              className="text-red-600 hover:text-red-800 underline font-semibold"
             >
               Retry
             </button>

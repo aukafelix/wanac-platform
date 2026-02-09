@@ -3,9 +3,11 @@
 // WANAC Coaching Platform - Home Page
 import Image from 'next/image';
 import Link from 'next/link';
-import { FaUserTie, FaQuoteLeft } from 'react-icons/fa';
+import { FaQuoteLeft } from 'react-icons/fa';
 import Script from 'next/script';
 import { useEffect, useRef } from 'react';
+import { motion, useMotionValue, useTransform } from 'framer-motion';
+import { useLenis } from 'lenis/react';
 
 // Z-Index Scale
 const Z_INDEX = {
@@ -33,41 +35,7 @@ const TESTIMONIALS = [
   }
 ];
 
-// Programs Data
-const PROGRAMS = [
-  {
-    title: 'Promise Land Education Pathway (PLEP)',
-    desc: 'Navigate your educational journey with structured academic transition support.',
-    image: '/promiselandtransition.jpg',
-    alt: 'Education Pathway Program',
-    highlights: ['Academic Support', 'Mentoring'],
-    link: '/pages/wanacplep'
-  },
-  {
-    title: 'Promise Land Career Accelerator (PLCA)',
-    desc: 'Accelerate your professional success with comprehensive career management.',
-    image: '/transitioncoaching11.jpg',
-    alt: 'Career Accelerator Program',
-    highlights: ['Career Growth', 'Strategy'],
-    link: '/pages/wanaplca'
-  },
-  {
-    title: 'Peak Performance Coaching (PPC)',
-    desc: 'Master excellence through our structured 12-session coaching model.',
-    image: '/transitionguide.jpg',
-    alt: 'Peak Performance Coaching',
-    highlights: ['12-Sessions', 'Development'],
-    link: '/pages/wanappc'
-  },
-  {
-    title: 'Vetrepreneurship Academy (VETA)',
-    desc: 'Build your entrepreneurial legacy with business planning and mentorship.',
-    image: '/Performancecoaching.png',
-    alt: 'Vetrepreneurship Academy',
-    highlights: ['Business', 'Mentorship'],
-    link: '/pages/vetaacademy'
-  }
-];
+import { MARKETING_PROGRAMS as PROGRAMS } from '../data/marketingPrograms';
 
 // Features Data
 const FEATURES = [
@@ -160,42 +128,58 @@ export default function Homepage() {
   const communityRef = useScrollAnimation();
   const manageRef = useScrollAnimation();
 
+  // Scroll-driven effects (Lenis): progress 0–1, hero parallax, progress bar
+  const scrollProgress = useMotionValue(0);
+  useLenis((lenis) => {
+    scrollProgress.set(lenis.progress);
+  });
+  const heroBgY = useTransform(scrollProgress, [0, 0.25], [0, 80]);
+  const heroContentScale = useTransform(scrollProgress, [0, 0.2], [1, 0.98]);
+  const progressBarWidth = useTransform(scrollProgress, [0, 1], ['0%', '100%']);
+
   return (
     <div className="bg-background text-foreground relative overflow-x-hidden">
       <Script src="https://cdn.lordicon.com/lordicon.js" strategy="lazyOnload" />
 
+      {/* Scroll progress bar — Lenis-driven */}
+      <motion.div
+        className="fixed top-0 left-0 right-0 h-0.5 bg-orange-500 z-[100] origin-left"
+        style={{ width: progressBarWidth }}
+        aria-hidden="true"
+      />
+
       {/* Hero Section */}
-<section 
-  ref={heroRef}
-  className="min-h-[70vh] md:min-h-[75vh] lg:min-h-[80vh] bg-[#002147] text-white py-16 sm:py-20 md:py-24 lg:py-32 relative overflow-hidden"
-  aria-label="Hero section with main call to action"
->
-  {/* Background with Single Gradient */}
-  <div 
-    className="absolute inset-0 w-full h-full"
-    style={{
-      backgroundImage: `linear-gradient(135deg, rgba(0,33,71,0.95) 0%, rgba(0,33,71,0.85) 50%, rgba(255,94,26,0.35) 100%), url('/landingpage4.jpg')`,
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      backgroundRepeat: 'no-repeat',
-      zIndex: Z_INDEX.background
-    }}
-    aria-hidden="true"
-  />
-  
-  {/*  animated accent */}
-  <div className="absolute top-1/4 right-0 w-64 md:w-96 h-64 md:h-96 bg-gradient-to-l from-orange-500/15 to-transparent rounded-full blur-3xl animate-pulse" style={{ zIndex: Z_INDEX.background }} />
-  
-  <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative" style={{ zIndex: Z_INDEX.content }}>
-    <div className="max-w-3xl mx-auto lg:mx-0">
+      <section
+        ref={heroRef}
+        className="min-h-[70vh] md:min-h-[75vh] lg:min-h-[80vh] bg-[#002147] text-white py-16 sm:py-20 md:py-24 lg:py-32 relative overflow-hidden"
+        aria-label="Hero section with main call to action"
+      >
+        {/* Background (parallax: moves slower than scroll) */}
+        <motion.div
+          className="absolute inset-0 w-full h-full"
+          style={{
+            backgroundImage: `linear-gradient(135deg, rgba(0,33,71,0.95) 0%, rgba(0,33,71,0.85) 50%, rgba(255,94,26,0.35) 100%), url('/landingpage4.jpg')`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            zIndex: Z_INDEX.background,
+            y: heroBgY,
+          }}
+          aria-hidden="true"
+        />
+
+        <div className="absolute top-1/4 right-0 w-64 md:w-96 h-64 md:h-96 bg-gradient-to-l from-orange-500/15 to-transparent rounded-full blur-3xl animate-pulse" style={{ zIndex: Z_INDEX.background }} />
+
+        <motion.div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative" style={{ zIndex: Z_INDEX.content, scale: heroContentScale }}>
+    <div className="max-w-3xl mx-auto lg:mx-0 text-center lg:text-left">
       <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight mb-4">
         Empowering Veterans to <span className="block sm:inline">Thrive After Service</span>{' '}
         <span className="text-orange-500 block mt-1">with Community Support</span>
       </h1>
-      <p className="text-sm sm:text-base md:text-lg text-gray-200 mb-6 max-w-xl leading-relaxed">
-        Get tailored coaching, smart tools, and a community that truly understands your journey.
+      <p className="text-sm sm:text-base md:text-lg text-gray-200 mb-6 max-w-xl leading-relaxed mx-auto lg:mx-0">
+        Tailored coaching, smart tools, and a community that understands your journey.
       </p>
-      <div className="flex flex-col xs:flex-row gap-3 sm:gap-4">
+      <div className="flex flex-col xs:flex-row gap-3 sm:gap-4 justify-center lg:justify-start items-center lg:items-start">
                 <Link
                   href="/signup"
           className="group relative px-5 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold text-center overflow-hidden hover:shadow-2xl hover:shadow-orange-500/50 transition-all duration-300 text-sm"
@@ -216,8 +200,8 @@ export default function Homepage() {
                 </Link>
               </div>
             </div>
-  </div>
-</section>
+        </motion.div>
+      </section>
 
 <section 
   ref={programsRef}
@@ -232,7 +216,7 @@ export default function Homepage() {
   {/* Content Container */}
   <div className="relative max-w-6xl mx-auto" style={{ zIndex: Z_INDEX.content }}>
     {/* Section Header */}
-    <div className="mb-10 md:mb-12">
+    <div className="mb-10 md:mb-12 text-center">
       <h2 id="programs-heading" className="text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold mb-3 uppercase text-white">Our Programs</h2>
       <div className="w-12 h-1 bg-white mx-auto rounded-full" aria-hidden="true"/>
       <p className="mt-3 text-gray-200 text-xs sm:text-sm md:text-base max-w-xl mx-auto">

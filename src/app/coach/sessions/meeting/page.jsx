@@ -53,9 +53,9 @@ const gridUsers = [
 
 export default function Page() {
   return (
-    <div className="flex h-screen bg-gray-900 text-white">
-      {/* Sidebar */}
-      <aside className="w-64 bg-gray-800 flex flex-col justify-between" aria-label="Sidebar">
+    <div className="flex flex-col md:flex-row h-screen bg-gray-900 text-white overflow-hidden">
+      {/* Sidebar - hidden on mobile */}
+      <aside className="hidden md:flex w-64 bg-gray-800 flex-col justify-between shrink-0" aria-label="Sidebar">
         <div>
           <div className="p-4 border-b border-gray-700 text-green-400 font-bold">Virtual Huddle</div>
           <div className="p-4 text-sm text-gray-400">Web Conferencing</div>
@@ -101,16 +101,16 @@ export default function Page() {
       </aside>
 
       {/* Main area */}
-      <main className="flex-1 flex flex-col">
-        <div className="p-4 border-b border-gray-700 flex justify-between items-center">
-          <h1 className="text-lg font-semibold">Navigating the path to success.</h1>
+      <main className="flex-1 flex flex-col min-w-0 min-h-0">
+        <div className="p-3 sm:p-4 border-b border-gray-700 flex flex-col gap-2 sm:flex-row sm:justify-between sm:items-center">
+          <h1 className="text-base sm:text-lg font-semibold truncate">Navigating the path to success.</h1>
           <div className="flex items-center space-x-4">
-            <span className="text-red-400">● Recording</span>
-            <div className="w-8 h-8 rounded-full bg-pink-400"></div>
+            <span className="text-red-400 text-sm">● Recording</span>
+            <div className="w-8 h-8 rounded-full bg-pink-400 shrink-0" aria-hidden />
           </div>
         </div>
 
-        <div className="flex-1 grid grid-cols-2 grid-rows-2 gap-4 p-6">
+        <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 p-3 sm:p-6 min-h-0 overflow-auto">
           {gridUsers.map((user, idx) => (
             user.type === "emoji" ? (
               <div className="bg-gray-700 rounded-lg flex flex-col items-center justify-center" key={user.name}>
@@ -127,11 +127,11 @@ export default function Page() {
         </div>
 
         {/* Footer */}
-        <div className="p-4 flex justify-center space-x-4 border-t border-gray-700">
-          <button className="bg-gray-700 p-2 rounded-full" aria-label="Toggle microphone" aria-pressed="false">🎤</button>
-          <button className="bg-gray-700 p-2 rounded-full" aria-label="Toggle camera" aria-pressed="false">🎥</button>
-          <button className="bg-gray-700 p-2 rounded-full" aria-label="Open chat" aria-pressed="false">💬</button>
-          <button className="bg-red-600 p-2 rounded-full" aria-label="Leave call">📞</button>
+        <div className="p-3 sm:p-4 flex justify-center gap-2 sm:space-x-4 border-t border-gray-700 shrink-0">
+          <button className="min-w-[44px] min-h-[44px] flex items-center justify-center bg-gray-700 p-2 rounded-full" aria-label="Toggle microphone" aria-pressed="false">🎤</button>
+          <button className="min-w-[44px] min-h-[44px] flex items-center justify-center bg-gray-700 p-2 rounded-full" aria-label="Toggle camera" aria-pressed="false">🎥</button>
+          <button className="min-w-[44px] min-h-[44px] flex items-center justify-center bg-gray-700 p-2 rounded-full" aria-label="Open chat" aria-pressed="false">💬</button>
+          <button className="min-w-[44px] min-h-[44px] flex items-center justify-center bg-red-600 p-2 rounded-full" aria-label="Leave call">📞</button>
         </div>
       </main>
     </div>

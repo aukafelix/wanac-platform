@@ -3,11 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import {
-  FaUserFriends,
-  FaCalendarAlt,
-  FaClipboardList,
-  FaLightbulb,
-  FaChartBar,
+  FaUserFriends, FaCalendarAlt, FaClipboardList, FaLightbulb, FaChartBar,
   FaBook,
   FaUsersCog,
   FaComments,
@@ -23,13 +19,14 @@ import CoachSidebar from '../../../components/dashboardcomponents/CoachSidebar';
 import ClientTopbar from '../../../components/dashboardcomponents/clienttopbar';
 import ScheduleSessionModal from '../../../components/dashboardcomponents/ScheduleSessionModal';
 import { sessionsService } from '../../services/api/sessions.service';
+import { clientsService } from '../../services/api/clients.service';
 
 // Simple Modal Component
 function Modal({ open, onClose, title, children }) {
   if (!open) return null;
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
-      <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md relative">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/40 p-0 sm:p-4">
+      <div className="bg-white rounded-t-xl sm:rounded-lg shadow-lg p-4 sm:p-6 w-full max-w-md max-h-[90vh] overflow-y-auto relative">
         <button
           className="absolute top-2 right-2 text-gray-500 hover:text-red-500"
           onClick={onClose}
@@ -46,15 +43,7 @@ function Modal({ open, onClose, title, children }) {
 // Chat Modal Component
 function ChatModal({ isOpen, onClose, client }) {
   const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState([
-    {
-      id: 1,
-      sender: "System",
-      text: "Chat session started. You can now communicate with your client.",
-      time: "10:30 AM",
-      isCoach: true
-    }
-  ]);
+  const [messages, setMessages] = useState([]);
 
   if (!isOpen) return null;
 
@@ -74,8 +63,8 @@ function ChatModal({ isOpen, onClose, client }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-      <div className="bg-white rounded-xl w-full max-w-2xl max-h-[600px] shadow-2xl flex flex-col">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/50 backdrop-blur-sm p-0 sm:p-4">
+      <div className="bg-white rounded-t-xl sm:rounded-xl w-full max-w-2xl max-h-[85vh] sm:max-h-[600px] shadow-2xl flex flex-col">
         {/* Header */}
         <div className="bg-gradient-to-r from-[#002147] to-[#003875] p-4 rounded-t-xl flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -98,7 +87,9 @@ function ChatModal({ isOpen, onClose, client }) {
 
         {/* Messages Area */}
         <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50">
-          {messages.map((msg) => (
+          {messages.length === 0 ? (
+            <p className="text-center text-gray-500 text-sm py-8">No messages yet. Start the conversation below.</p>
+          ) : messages.map((msg) => (
             <div
               key={msg.id}
               className={`flex ${msg.isCoach ? 'justify-end' : 'justify-start'}`}
@@ -168,7 +159,7 @@ function QuickActionCard({ icon: Icon, title, description, onClick, color }) {
     <button
       type="button"
       onClick={onClick}
-      className={`flex-1 min-w-[160px] p-4 rounded-xl border transition-all duration-200 shadow-sm hover:shadow-md transform hover:scale-[1.02] flex flex-col items-start gap-2 ${colorClasses[color]}`}
+      className={`flex-1 min-w-0 p-3 sm:p-4 rounded-xl border transition-all duration-200 shadow-sm hover:shadow-md active:scale-[0.98] md:hover:scale-[1.02] flex flex-col items-start gap-2 ${colorClasses[color]}`}
       style={{ fontFamily: 'var(--font-body)' }}
     >
       <Icon className="text-2xl mb-1" />
@@ -179,16 +170,27 @@ function QuickActionCard({ icon: Icon, title, description, onClick, color }) {
 }
 
 export default function CoachDashboard() {
-  // Mock coach user for the topbar
-  const coachUser = { name: 'Coach' };
-  // Modal state
+  const [coachUser, setCoachUser] = useState(null);
   const [openModal, setOpenModal] = useState(null); // 'notes' | 'content' | null
   const [showScheduleModal, setShowScheduleModal] = useState(false);
   const [upcomingSessions, setUpcomingSessions] = useState([]);
+  const [totalClients, setTotalClients] = useState(0);
+  const [completedSessionsCount, setCompletedSessionsCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [chatModalOpen, setChatModalOpen] = useState(false);
   const [selectedClient, setSelectedClient] = useState(null);
+
+  useEffect(() => {
+    const userData = localStorage.getItem('wanacUser');
+    if (userData) {
+      try {
+        setCoachUser(JSON.parse(userData));
+      } catch (e) {
+        setCoachUser(null);
+      }
+    }
+  }, []);
 
   useEffect(() => {
     const fetchSessions = async () => {
@@ -197,10 +199,15 @@ export default function CoachDashboard() {
         setError("");
         const response = await sessionsService.getSessions();
         const sessions = response.data || response.sessions?.data || [];
+        const allSessions = Array.isArray(sessions) ? sessions : [];
+        const completed = allSessions.filter(
+          s => (s.status || '').toLowerCase() === 'completed' || (s.status || '').toLowerCase() === 'done'
+        ).length;
+        setCompletedSessionsCount(completed);
         setUpcomingSessions(
-          sessions
+          allSessions
             .filter(session => session.status === 'Scheduled' || session.status === 'Upcoming' || session.status === 'Pending')
-            .sort((a, b) => new Date(a.date) - new Date(b.date))
+            .sort((a, b) => new Date(a.date || 0) - new Date(b.date || 0))
             .slice(0, 5)
         );
       } catch (error) {
@@ -213,16 +220,28 @@ export default function CoachDashboard() {
     fetchSessions();
   }, []);
 
-  // Enhanced stats
+  useEffect(() => {
+    const fetchClientCount = async () => {
+      try {
+        const data = await clientsService.getClients();
+        const clients = Array.isArray(data) ? data : (data?.clients || data?.data || []);
+        setTotalClients(clients.length);
+      } catch (e) {
+        setTotalClients(0);
+      }
+    };
+    fetchClientCount();
+  }, []);
+
   const stats = {
-    totalClients: 12,
+    totalClients,
     upcomingSessions: upcomingSessions.length,
-    completedSessions: 45,
-    pendingMessages: 5
+    completedSessions: completedSessionsCount,
+    pendingMessages: 0
   };
 
   return (
-    <div className="h-screen flex bg-white font-body text-foreground" style={{ fontFamily: 'var(--font-body)' }}>
+    <div className="min-h-screen h-screen flex bg-white font-body text-foreground overflow-x-hidden" style={{ fontFamily: 'var(--font-body)' }}>
       {/* Sidebar */}
       <CoachSidebar />
       {/* Main Area */}
@@ -230,7 +249,7 @@ export default function CoachDashboard() {
         {/* Top Bar */}
         <ClientTopbar user={coachUser} />
         {/* Main Content */}
-        <main className="flex-1 h-0 overflow-y-auto px-4 md:px-6 py-3 bg-gray-50">
+        <main className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-3 sm:px-4 md:px-6 py-3 bg-gray-50">
           <div className="max-w-7xl mx-auto">
             <div className="flex flex-col lg:flex-row gap-4">
               {/* Main Content */}
@@ -335,7 +354,7 @@ export default function CoachDashboard() {
                     icon={FaBook}
                     title="Manage Fireteams"
                     description="Manage resources"
-                    onClick={() => window.location.href = '/admin/fireteammanagement?role=coach'}
+                    onClick={() => window.location.href = '/coach/fireteammanagement'}
                     color="accent"
                   />
                   <QuickActionCard
@@ -353,7 +372,7 @@ export default function CoachDashboard() {
                     <p className="text-gray-600 text-xs">Loading sessions...</p>
                   </section>
                 ) : (
-                  <section className="bg-white border border-gray-200 rounded-xl p-3 shadow-sm hover:shadow-md transition-shadow overflow-x-auto">
+                  <section className="bg-white border border-gray-200 rounded-xl p-3 shadow-sm hover:shadow-md transition-shadow overflow-hidden">
                     <div className="mb-2">
                       <h3 className="text-sm font-semibold text-[#002147] flex items-center gap-2">
                         <FaCalendarAlt className="text-blue-500" />
@@ -363,8 +382,53 @@ export default function CoachDashboard() {
                         {upcomingSessions.length} {upcomingSessions.length === 1 ? 'session' : 'sessions'} scheduled
                       </p>
                     </div>
-                    <div className="overflow-x-auto">
-                      <table className="w-full text-left">
+                    {/* Mobile card layout */}
+                    <div className="md:hidden space-y-2">
+                      {upcomingSessions.length === 0 ? (
+                        <div className="flex flex-col items-center justify-center py-8 text-center">
+                          <FaCalendarAlt className="h-10 w-10 text-gray-300 mb-2" />
+                          <p className="text-gray-500 font-semibold text-sm mb-1">No Upcoming Sessions</p>
+                          <p className="text-gray-400 text-xs">Schedule a new session to get started.</p>
+                        </div>
+                      ) : upcomingSessions.map(session => (
+                        <div
+                          key={session.id}
+                          className="border border-gray-200 rounded-lg p-3 space-y-2"
+                        >
+                          <div className="flex justify-between items-start">
+                            <div>
+                              <p className="font-semibold text-gray-900 text-sm">{session.title || 'Session'}</p>
+                              <p className="text-xs text-gray-500">ID: {session.id}</p>
+                            </div>
+                            <span className="px-2 py-0.5 rounded-full text-xs font-bold bg-blue-100 text-blue-700 shrink-0">
+                              {session.status}
+                            </span>
+                          </div>
+                          <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs text-gray-600">
+                            <span>{new Date(session.date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}</span>
+                            <span>{new Date(session.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                            <span>{session.mode || 'Virtual'}</span>
+                          </div>
+                          <div className="flex gap-2 pt-1">
+                            <button
+                              onClick={() => { setSelectedClient({ name: session.title }); setChatModalOpen(true); }}
+                              className="flex-1 flex items-center justify-center gap-1.5 py-1.5 bg-blue-500 hover:bg-blue-600 rounded text-white text-xs"
+                            >
+                              <FaComments className="text-xs" /> Chat
+                            </button>
+                            <button
+                              onClick={() => alert('View session details')}
+                              className="flex-1 py-1.5 text-[#002147] font-semibold text-xs border border-[#002147] rounded hover:bg-[#002147] hover:text-white transition-colors"
+                            >
+                              View
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    {/* Desktop table */}
+                    <div className="hidden md:block overflow-x-auto -mx-1 px-1">
+                      <table className="w-full min-w-[600px] text-left">
                         <thead>
                           <tr className="text-[10px] text-gray-600 border-b-2 border-gray-200 bg-gray-50">
                             <th className="py-2 px-3 font-semibold">Client/Title</th>
@@ -512,7 +576,7 @@ export default function CoachDashboard() {
                 <div className="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-shadow p-4">
                   <h3 className="text-sm font-semibold text-[#002147] mb-3">Quick Links</h3>
                   <div className="space-y-2 text-[11px]">
-                    <a href="/admin/fireteammanagement?role=coach" className="flex items-center gap-2 p-2 hover:bg-gray-50 rounded transition-colors text-gray-700 hover:text-[#002147]">
+                    <a href="/coach/fireteammanagement" className="flex items-center gap-2 p-2 hover:bg-gray-50 rounded transition-colors text-gray-700 hover:text-[#002147]">
                       <FaFire className="text-orange-500" />
                       <span>Fireteam Management</span>
                     </a>

@@ -4,5 +4,5 @@ import FireteamManagement from "../../../../components/dashboardcomponents/Firet
 import CoachSidebar from "../../../../components/dashboardcomponents/CoachSidebar";
 
 export default function FireteamCoachPage() {
-  return <FireteamManagement sidebar={CoachSidebar} />;
+  return <FireteamManagement sidebar={CoachSidebar} basePath="/coach/fireteammanagement" />;
 }

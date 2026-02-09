@@ -92,6 +92,11 @@ function CommunityDetailPageInner() {
       .then((data) => {
         setCommunity(data);
         setError("");
+        if (data?.name && communityId) {
+          try {
+            sessionStorage.setItem("wanacCurrentCommunity", JSON.stringify({ id: communityId, name: data.name }));
+          } catch (e) {}
+        }
       })
       .catch(() => {
         setError("Failed to load community.");
@@ -126,7 +131,7 @@ function CommunityDetailPageInner() {
       <div className="h-screen flex bg-white font-body">
         <Sidebar className="w-56 bg-white border-r border-gray-200" collapsed={collapsed} setCollapsed={setCollapsed} />
         <div className="flex-1 flex flex-col h-full">
-          <ClientTopbar user={user} />
+          <ClientTopbar user={user} currentCommunity={community?.name} />
           <main className="flex-1 flex items-center justify-center">
             <div className="text-center">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#002147] mx-auto mb-4"></div>
@@ -143,7 +148,7 @@ function CommunityDetailPageInner() {
       <div className="h-screen flex bg-white font-body">
         <Sidebar className="w-56 bg-white border-r border-gray-200" collapsed={collapsed} setCollapsed={setCollapsed} />
         <div className="flex-1 flex flex-col h-full">
-          <ClientTopbar user={user} />
+          <ClientTopbar user={user} currentCommunity={community?.name} />
           <main className="flex-1 flex items-center justify-center">
             <div className="text-center">
               <p className="text-red-500 text-sm">{error}</p>
@@ -159,7 +164,7 @@ function CommunityDetailPageInner() {
       <div className="h-screen flex bg-white font-body">
         <Sidebar className="w-56 bg-white border-r border-gray-200" collapsed={collapsed} setCollapsed={setCollapsed} />
         <div className="flex-1 flex flex-col h-full">
-          <ClientTopbar user={user} />
+          <ClientTopbar user={user} currentCommunity={community?.name} />
           <main className="flex-1 flex items-center justify-center">
             <div className="text-center">
               <p className="text-gray-500 text-sm">Community not found.</p>
@@ -182,22 +187,23 @@ function CommunityDetailPageInner() {
       {/* Main Area */}
       <div className="flex-1 flex flex-col h-full transition-all duration-300">
         {/* Top Bar */}
-        <ClientTopbar user={user} />
+        <ClientTopbar user={user} currentCommunity={community?.name} />
         
         {/* Main Content */}
-        <main className="flex-1 h-0 overflow-y-auto px-4 md:px-6 py-3 bg-gray-50">
+        <main className="flex-1 h-0 overflow-y-auto px-3 sm:px-4 md:px-6 py-3 pb-6 sm:pb-3 bg-gray-50">
           <div className="max-w-7xl mx-auto">
-            {/* Back Button */}
+            {/* Back Button - larger tap target on mobile */}
         <button
-              className="flex items-center gap-1.5 text-[#002147] hover:text-orange-500 font-semibold text-[11px] mb-3 transition-colors"
+              className="flex items-center gap-1.5 text-[#002147] hover:text-orange-500 font-semibold text-[11px] mb-3 transition-colors py-2 -my-2 px-2 -mx-2 rounded-lg active:bg-gray-100 min-h-[44px] items-center md:min-h-0 md:py-0 md:px-0"
               onClick={() => router.push('/client/community')}
         >
-              <FaArrowLeft size={10} />
-          Back to Communities
+              <FaArrowLeft size={12} className="shrink-0" />
+          <span className="hidden sm:inline">Back to Communities</span>
+          <span className="sm:hidden">Back</span>
         </button>
 
-            {/* Header Section */}
-            <section className="bg-gradient-to-br from-[#002147] to-[#003875] rounded-xl p-4 shadow-lg relative overflow-hidden mb-3">
+            {/* Header Section - stacks on mobile for better readability */}
+            <section className="bg-gradient-to-br from-[#002147] to-[#003875] rounded-xl p-3 sm:p-4 shadow-lg relative overflow-hidden mb-3">
               <div className="absolute inset-0 opacity-10">
                 <img 
                   src="/veterancommunity.png" 
@@ -205,18 +211,18 @@ function CommunityDetailPageInner() {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="relative z-10 flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="p-2 bg-white/20 rounded-full">
-                    <FaUsers className="text-white text-xl" />
+              <div className="relative z-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                <div className="flex items-start gap-3 min-w-0">
+                  <div className="p-2 bg-white/20 rounded-full shrink-0">
+                    <FaUsers className="text-white text-lg sm:text-xl" />
                   </div>
-                  <div>
-                    <h1 className="text-xl font-bold text-white mb-1">{community.name || 'Community'}</h1>
-                    <p className="text-white/90 text-xs">{community.description || 'Welcome to the community'}</p>
+                  <div className="min-w-0 flex-1">
+                    <h1 className="text-lg sm:text-xl font-bold text-white mb-0.5 truncate">{community.name || 'Community'}</h1>
+                    <p className="text-white/90 text-xs line-clamp-2 sm:line-clamp-none">{community.description || 'Welcome to the community'}</p>
                   </div>
                 </div>
                 <button
-                  className="flex items-center gap-1.5 bg-orange-500 hover:bg-orange-600 text-white px-3 py-1.5 rounded-lg transition-all font-semibold text-[11px] shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex items-center justify-center gap-1.5 bg-orange-500 hover:bg-orange-600 active:bg-orange-700 text-white px-4 py-3 sm:py-1.5 rounded-lg transition-all font-semibold text-[11px] shadow-sm disabled:opacity-50 disabled:cursor-not-allowed min-h-[44px] shrink-0 w-full sm:w-auto"
                   onClick={() => {
                     if (!user || !user.id) {
                       alert("Please log in to schedule an event.");
@@ -246,29 +252,29 @@ function CommunityDetailPageInner() {
       </div>
             )}
 
-            {/* Tabs */}
-            <div className="flex gap-2 mb-3">
+            {/* Tabs - scrollable on mobile, full tap targets */}
+            <div className="flex gap-2 mb-3 overflow-x-auto overflow-y-hidden pb-1 -mx-1 px-1">
         {['Feed', 'Chat', 'Meetups'].map(tab => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab.toLowerCase())}
-                  className={`px-3 py-1.5 rounded-lg border-2 transition-all font-semibold text-[11px] flex items-center gap-1.5
+                  className={`px-4 py-3 sm:py-1.5 rounded-lg border-2 transition-all font-semibold text-[11px] flex items-center gap-1.5 shrink-0 min-h-[44px] justify-center
                     ${activeTab === tab.toLowerCase()
                       ? "bg-[#002147] text-white border-[#002147] shadow-sm"
-                      : "bg-white text-gray-700 border-gray-300 hover:border-orange-500"}
+                      : "bg-white text-gray-700 border-gray-300 hover:border-orange-500 active:bg-gray-50"}
                   `}
           >
-                  {tab === 'Feed' && <FaComments size={10} />}
-                  {tab === 'Chat' && <FaPaperPlane size={10} />}
-                  {tab === 'Meetups' && <FaCalendarAlt size={10} />}
+                  {tab === 'Feed' && <FaComments size={12} />}
+                  {tab === 'Chat' && <FaPaperPlane size={12} />}
+                  {tab === 'Meetups' && <FaCalendarAlt size={12} />}
             {tab}
           </button>
         ))}
       </div>
 
-            {/* Tab Content */}
-            <div className="flex flex-col lg:flex-row gap-4">
-              <div className="flex-1">
+            {/* Tab Content - main content first on mobile for better scroll flow */}
+            <div className="flex flex-col lg:flex-row gap-4 lg:gap-4">
+              <div className="flex-1 min-w-0">
                 {activeTab === "meetups" && (
                   <section className="bg-white border border-gray-200 rounded-xl p-3 shadow-sm hover:shadow-md transition-shadow">
                     <div className="flex items-center justify-between mb-3">
@@ -313,8 +319,8 @@ function CommunityDetailPageInner() {
                     ) : (
                       <div className="space-y-3">
                         {events.map(event => (
-                          <div key={event.id} className="border-l-3 border-[#002147] pl-3 py-2 bg-blue-50/50 rounded-lg hover:bg-blue-50 transition-all">
-                            <div className="flex justify-between items-start gap-3">
+                          <div key={event.id} className="border-l-4 border-[#002147] pl-3 py-3 sm:py-2 bg-blue-50/50 rounded-lg hover:bg-blue-50 active:bg-blue-50 transition-all">
+                            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 sm:gap-3">
                               <div className="flex-1">
                                 <div className="flex items-center gap-2 mb-1">
                                   <FaClock className="text-orange-500" size={10} />
@@ -344,13 +350,13 @@ function CommunityDetailPageInner() {
                                   )}
                                 </div>
                     </div>
-                              <div className="flex flex-col items-end gap-1.5">
+                              <div className="flex flex-row sm:flex-col items-center sm:items-end justify-between sm:justify-start gap-2 sm:gap-1.5">
                                 <span className="text-[10px] text-gray-500">{event.rsvpCount || 0} RSVPs</span>
                       <button
-                                  className={`px-3 py-1 rounded-lg font-semibold text-[10px] transition-all ${
+                                  className={`px-4 py-2.5 sm:py-1 rounded-lg font-semibold text-[10px] transition-all min-h-[44px] sm:min-h-0 ${
                                     rsvps[event.id]
                                       ? 'bg-green-100 text-green-700 cursor-default'
-                                      : 'bg-orange-500 text-white hover:bg-orange-600'
+                                      : 'bg-orange-500 text-white hover:bg-orange-600 active:bg-orange-700'
                                   }`}
                         disabled={rsvps[event.id]}
                         onClick={() => setRsvps(prev => ({ ...prev, [event.id]: true }))}
@@ -366,13 +372,13 @@ function CommunityDetailPageInner() {
                   </section>
           )}
           {activeTab === "feed" && (
-                  <section className="bg-white border border-gray-200 rounded-xl p-3 shadow-sm hover:shadow-md transition-shadow">
+                  <section className="bg-white border border-gray-200 rounded-xl p-3 sm:p-4 shadow-sm hover:shadow-md transition-shadow">
                     <h2 className="text-sm font-semibold text-[#002147] mb-3 flex items-center gap-1.5">
                       <FaComments className="text-orange-500" size={12} />
                       Community Feed
                     </h2>
                     
-                    {/* Post Form */}
+                    {/* Post Form - full-width Post button on mobile */}
               <form
                       className="mb-4"
                 onSubmit={async e => {
@@ -403,10 +409,10 @@ function CommunityDetailPageInner() {
               >
                       <div className="relative mb-2">
                 <textarea
-                          className="w-full border-2 border-gray-300 rounded-lg px-3 py-2 text-[11px] focus:border-[#002147] focus:ring-2 focus:ring-[#002147]/20 focus:outline-none min-h-[80px] resize-none"
-                  placeholder="Share something with the community..."
-                  value={newFeedContent}
-                  onChange={e => setNewFeedContent(e.target.value)}
+                          className="w-full border-2 border-gray-300 rounded-lg px-3 py-3 sm:py-2 text-[11px] sm:text-[11px] focus:border-[#002147] focus:ring-2 focus:ring-[#002147]/20 focus:outline-none min-h-[88px] sm:min-h-[80px] resize-none"
+                          placeholder="Share something with the community..."
+                          value={newFeedContent}
+                          onChange={e => setNewFeedContent(e.target.value)}
                 />
                       </div>
                       {feedError && (
@@ -417,10 +423,10 @@ function CommunityDetailPageInner() {
                       <div className="flex justify-end">
                 <button
                   type="submit"
-                          className="flex items-center gap-1.5 bg-orange-500 hover:bg-orange-600 text-white px-3 py-1.5 rounded-lg transition-all font-semibold text-[11px] shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                          className="flex items-center justify-center gap-1.5 bg-orange-500 hover:bg-orange-600 active:bg-orange-700 text-white px-4 py-3 sm:py-1.5 rounded-lg transition-all font-semibold text-[11px] shadow-sm disabled:opacity-50 disabled:cursor-not-allowed min-h-[44px] w-full sm:w-auto"
                   disabled={!newFeedContent.trim() || feedLoading}
                 >
-                          <FaPaperPlane size={9} />
+                          <FaPaperPlane size={10} />
                   {feedLoading ? "Posting..." : "Post"}
                 </button>
                       </div>
@@ -442,19 +448,19 @@ function CommunityDetailPageInner() {
                     ) : (
                       <div className="space-y-3">
                   {feedPosts.map((post, idx) => (
-                          <div key={idx} className="border border-gray-200 rounded-lg p-3 bg-gray-50/50 hover:bg-gray-50 transition-all">
-                            <div className="flex items-start gap-2 mb-2">
-                              <div className="w-7 h-7 rounded-full bg-[#002147] flex items-center justify-center text-white font-bold text-[10px]">
+                          <div key={idx} className="border border-gray-200 rounded-lg p-3 sm:p-3 bg-gray-50/50 hover:bg-gray-50 active:bg-gray-100 transition-all">
+                            <div className="flex items-start gap-2.5 mb-2">
+                              <div className="w-8 h-8 sm:w-7 sm:h-7 rounded-full bg-[#002147] flex items-center justify-center text-white font-bold text-[11px] sm:text-[10px] shrink-0">
                                 {post.userName?.[0] || "U"}
                               </div>
-                              <div className="flex-1">
-                                <div className="font-semibold text-[11px] text-gray-800">{post.userName || "Unknown"}</div>
+                              <div className="flex-1 min-w-0">
+                                <div className="font-semibold text-[11px] text-gray-800 truncate">{post.userName || "Unknown"}</div>
                                 <div className="text-[9px] text-gray-500">{post.createdAt?.toLocaleString ? post.createdAt.toLocaleString() : 'Just now'}</div>
                               </div>
                             </div>
-                            <p className="text-[11px] text-gray-700 mb-3 whitespace-pre-line">{post.content}</p>
+                            <p className="text-[11px] sm:text-[11px] text-gray-700 mb-3 whitespace-pre-line break-words">{post.content}</p>
                             
-                            {/* Comments Section */}
+                            {/* Comments Section - larger touch targets on mobile */}
                             <div className="pl-3 border-l-2 border-gray-200">
                               <div className="text-[10px] font-semibold text-gray-600 mb-2">
                                 💬 Comments ({Array.isArray(comments[post.id]) ? comments[post.id].length : 0})
@@ -462,14 +468,14 @@ function CommunityDetailPageInner() {
                         {Array.isArray(comments[post.id]) && comments[post.id].length > 0 ? (
                                 <div className="space-y-2 mb-2">
                             {comments[post.id].map((comment, cidx) => (
-                                    <div key={cidx} className="bg-white rounded-lg px-2 py-1.5 shadow-sm">
-                                      <div className="flex items-start gap-1.5">
-                                        <div className="w-5 h-5 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 font-bold text-[8px] flex-shrink-0">
+                                    <div key={cidx} className="bg-white rounded-lg px-2.5 py-2 sm:py-1.5 shadow-sm">
+                                      <div className="flex items-start gap-2">
+                                        <div className="w-6 h-6 sm:w-5 sm:h-5 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 font-bold text-[9px] sm:text-[8px] flex-shrink-0">
                                           {comment.userName?.[0] || "U"}
                                         </div>
                                         <div className="flex-1 min-w-0">
                                           <span className="font-semibold text-[10px] text-gray-800">{comment.userName || "Unknown"}:</span>
-                                          <span className="text-[10px] text-gray-600 ml-1">{comment.content}</span>
+                                          <span className="text-[10px] text-gray-600 ml-1 break-words">{comment.content}</span>
                                           <div className="text-[8px] text-gray-400 mt-0.5">{comment.createdAt?.toLocaleTimeString ? comment.createdAt.toLocaleTimeString() : ''}</div>
                                         </div>
                                       </div>
@@ -480,7 +486,7 @@ function CommunityDetailPageInner() {
                                 <div className="text-[10px] text-gray-400 italic mb-2">No comments yet.</div>
                         )}
                         <form
-                                className="flex gap-1.5"
+                                className="flex gap-2"
                           onSubmit={e => {
                             e.preventDefault();
                             if (!newComment[post.id]?.trim() || !user) return;
@@ -495,7 +501,7 @@ function CommunityDetailPageInner() {
                           }}
                         >
                           <input
-                                  className="flex-1 border border-gray-300 rounded-lg px-2 py-1 text-[10px] focus:border-[#002147] focus:ring-1 focus:ring-[#002147]/20 focus:outline-none"
+                                  className="flex-1 border-2 border-gray-300 rounded-lg px-3 py-2 sm:py-1 text-[10px] sm:text-[10px] focus:border-[#002147] focus:ring-1 focus:ring-[#002147]/20 focus:outline-none min-h-[44px] sm:min-h-0"
                             type="text"
                             placeholder="Add a comment..."
                             value={newComment[post.id] || ""}
@@ -503,7 +509,7 @@ function CommunityDetailPageInner() {
                           />
                           <button
                             type="submit"
-                                  className="bg-[#002147] text-white px-2 py-1 rounded-lg hover:bg-[#003875] disabled:opacity-50 text-[10px] font-semibold transition-all"
+                                  className="bg-[#002147] text-white px-4 py-2 sm:py-1 rounded-lg hover:bg-[#003875] active:bg-[#001a33] disabled:opacity-50 text-[10px] font-semibold transition-all min-h-[44px] sm:min-h-0 shrink-0"
                             disabled={!newComment[post.id]?.trim()}
                           >
                                   Send
@@ -517,7 +523,7 @@ function CommunityDetailPageInner() {
                   </section>
                 )}
                 {activeTab === "chat" && (
-                  <section className="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-shadow overflow-hidden flex flex-col" style={{ height: '500px' }}>
+                  <section className="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-shadow overflow-hidden flex flex-col h-[min(400px,55vh)] sm:h-[450px] lg:h-[500px]">
                     {/* Chat Header */}
                     <div className="flex items-center justify-between px-3 py-2.5 bg-gradient-to-r from-[#002147] to-[#003875] text-white border-b border-gray-200">
                       <div className="flex items-center gap-2">
@@ -583,9 +589,9 @@ function CommunityDetailPageInner() {
                 )}
               </div>
 
-                    {/* Input Area */}
+                    {/* Input Area - larger touch targets on mobile */}
               <form
-                      className="flex gap-2 px-3 py-2.5 bg-white border-t border-gray-200"
+                      className="flex gap-2 px-3 py-2.5 sm:py-2 bg-white border-t border-gray-200"
                 onSubmit={e => {
                   e.preventDefault();
                   if (!chatInput.trim() || !user) return;
@@ -597,7 +603,7 @@ function CommunityDetailPageInner() {
                 }}
               >
                 <input
-                        className="flex-1 rounded-lg border-2 border-gray-300 px-3 py-2 focus:outline-none focus:border-[#002147] focus:ring-2 focus:ring-[#002147]/20 transition text-[11px] bg-white shadow-sm"
+                        className="flex-1 rounded-lg border-2 border-gray-300 px-3 py-3 sm:py-2 focus:outline-none focus:border-[#002147] focus:ring-2 focus:ring-[#002147]/20 transition text-[11px] bg-white shadow-sm min-h-[44px] sm:min-h-0"
                   type="text"
                   placeholder="Type a message..."
                   value={chatInput}
@@ -606,10 +612,10 @@ function CommunityDetailPageInner() {
                 />
                 <button
                   type="submit"
-                        className="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-4 py-2 rounded-lg shadow-sm transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1.5 text-[11px]"
+                        className="bg-orange-500 hover:bg-orange-600 active:bg-orange-700 text-white font-semibold px-4 py-3 sm:py-2 rounded-lg shadow-sm transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-1.5 text-[11px] min-h-[44px] sm:min-h-0 shrink-0"
                         disabled={!chatInput.trim() || !user}
                 >
-                        <FaPaperPlane size={10} />
+                        <FaPaperPlane size={12} />
                   Send
                 </button>
               </form>
@@ -617,56 +623,56 @@ function CommunityDetailPageInner() {
                 )}
               </div>
 
-              {/* Right Sidebar */}
-              <aside className="lg:w-64 space-y-3">
-                {/* Community Info Card */}
+              {/* Right Sidebar - compact on mobile, horizontal scroll for quick actions */}
+              <aside className="lg:w-64 space-y-3 shrink-0">
+                {/* Community Info Card - compact on mobile */}
                 <div className="bg-gradient-to-br from-[#002147] to-[#003875] rounded-xl shadow-sm p-3 text-white">
                   <h3 className="text-sm font-semibold mb-2 flex items-center gap-1.5">
-                    <FaUsers />
+                    <FaUsers className="shrink-0" />
                     About This Community
                   </h3>
-                  <p className="text-[10px] text-white/90 mb-3">
+                  <p className="text-[10px] text-white/90 mb-3 line-clamp-2 sm:line-clamp-none">
                     {community.description || 'Connect and engage with fellow community members.'}
                   </p>
-                  <div className="space-y-1.5">
-                    <div className="flex items-center justify-between text-[10px]">
+                  <div className="flex flex-wrap gap-x-4 gap-y-1 sm:flex-col sm:gap-1.5">
+                    <div className="flex items-center justify-between text-[10px] gap-2">
                       <span className="text-white/80">Members:</span>
                       <span className="font-bold">{community.memberCount || 0}</span>
                     </div>
-                    <div className="flex items-center justify-between text-[10px]">
+                    <div className="flex items-center justify-between text-[10px] gap-2">
                       <span className="text-white/80">Posts:</span>
                       <span className="font-bold">{feedPosts.length}</span>
                     </div>
-                    <div className="flex items-center justify-between text-[10px]">
+                    <div className="flex items-center justify-between text-[10px] gap-2">
                       <span className="text-white/80">Events:</span>
                       <span className="font-bold">{events.length}</span>
                     </div>
                   </div>
                 </div>
 
-                {/* Quick Actions Card */}
+                {/* Quick Actions Card - horizontal scroll on mobile for easier tapping */}
                 <div className="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-shadow p-3">
-                  <h3 className="text-sm font-semibold text-[#002147] mb-3">Quick Actions</h3>
-                  <div className="space-y-2">
+                  <h3 className="text-sm font-semibold text-[#002147] mb-2 sm:mb-3">Quick Actions</h3>
+                  <div className="grid grid-cols-2 lg:grid-cols-1 gap-2">
                     <button
                       onClick={() => setActiveTab('feed')}
-                      className="w-full p-2 bg-blue-50 hover:bg-blue-100 rounded text-[10px] text-left font-medium text-gray-700 transition-colors flex items-center gap-2"
+                      className="w-full p-3 sm:p-2 bg-blue-50 hover:bg-blue-100 active:bg-blue-200 rounded-lg text-[10px] text-left font-medium text-gray-700 transition-colors flex items-center gap-2 min-h-[44px]"
                     >
-                      <FaComments className="text-blue-600" />
+                      <FaComments className="text-blue-600 shrink-0" size={14} />
                       View Feed
                     </button>
                     <button
                       onClick={() => setActiveTab('chat')}
-                      className="w-full p-2 bg-green-50 hover:bg-green-100 rounded text-[10px] text-left font-medium text-gray-700 transition-colors flex items-center gap-2"
+                      className="w-full p-3 sm:p-2 bg-green-50 hover:bg-green-100 active:bg-green-200 rounded-lg text-[10px] text-left font-medium text-gray-700 transition-colors flex items-center gap-2 min-h-[44px]"
                     >
-                      <FaPaperPlane className="text-green-600" />
+                      <FaPaperPlane className="text-green-600 shrink-0" size={14} />
                       Open Chat
                     </button>
                     <button
                       onClick={() => setActiveTab('meetups')}
-                      className="w-full p-2 bg-yellow-50 hover:bg-yellow-100 rounded text-[10px] text-left font-medium text-gray-700 transition-colors flex items-center gap-2"
+                      className="w-full p-3 sm:p-2 bg-yellow-50 hover:bg-yellow-100 active:bg-yellow-200 rounded-lg text-[10px] text-left font-medium text-gray-700 transition-colors flex items-center gap-2 min-h-[44px]"
                     >
-                      <FaCalendarAlt className="text-yellow-600" />
+                      <FaCalendarAlt className="text-yellow-600 shrink-0" size={14} />
                       View Events
                     </button>
                     <button
@@ -678,10 +684,10 @@ function CommunityDetailPageInner() {
                         setShowScheduleModal(true);
                       }}
                       disabled={!user || !user.id}
-                      className="w-full p-2 bg-orange-50 hover:bg-orange-100 rounded text-[10px] text-left font-medium text-gray-700 transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="w-full p-3 sm:p-2 bg-orange-50 hover:bg-orange-100 active:bg-orange-200 rounded-lg text-[10px] text-left font-medium text-gray-700 transition-colors flex items-center gap-2 min-h-[44px] disabled:opacity-50 disabled:cursor-not-allowed col-span-2 lg:col-span-1"
                       title={!user || !user.id ? "Please log in to schedule an event" : "Schedule a new event"}
                     >
-                      <FaPlus className="text-orange-600" />
+                      <FaPlus className="text-orange-600 shrink-0" size={14} />
                       Schedule Event
                     </button>
                   </div>
@@ -779,13 +785,17 @@ function CommunityDetailPageInner() {
                   await loadCommunityEvents();
                 } catch (err) {
                   console.error('Error creating event:', err);
-                  console.error('Error response:', err.response?.data);
-                  
-                  // Show specific error message if available
-                  const errorMessage = err.response?.data?.error || 
-                                      err.response?.data?.message || 
-                                      err.message || 
-                                      "Failed to schedule event. Please try again.";
+                  if (err.response?.data != null) {
+                    console.error('Error response:', err.response.data);
+                  }
+
+                  // Show specific error message (axios: response.data may be string or object)
+                  const data = err.response?.data;
+                  const errorMessage =
+                    (typeof data === 'string' ? data : null) ||
+                    (data && (data.error || data.message)) ||
+                    err.message ||
+                    "Failed to schedule event. Please try again.";
                   setEventError(errorMessage);
                 } finally {
                   setEventLoading(false);

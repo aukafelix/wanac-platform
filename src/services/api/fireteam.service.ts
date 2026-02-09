@@ -27,90 +27,37 @@ function unwrapItem(payload: any): any {
 export const fireteamService = {
   async getFireteams() {
     try {
-      // Check authentication status
-      const token = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null;
-      console.log("Auth token present:", !!token);
-      console.log("Auth token value:", token ? `${token.substring(0, 20)}...` : 'null');
-      
       const res = await apiClient.get('/api/v1/fireteams');
-      console.log("Raw API response for getFireteams:", res.data);
-      console.log("Response type:", typeof res.data);
-      console.log("Is array:", Array.isArray(res.data));
-      console.log("Response status:", res.status);
-      console.log("Response headers:", res.headers);
-      
-      // Try different approaches to get the data
       let fireteamsData = res.data;
-      
-      // If it's already an array, return it
-      if (Array.isArray(fireteamsData)) {
-        console.log("Data is already an array, returning as-is");
-        return fireteamsData;
-      }
-      
-      // Try to extract from common response patterns
+
+      if (Array.isArray(fireteamsData)) return fireteamsData;
+
       if (fireteamsData && typeof fireteamsData === 'object') {
-        if (Array.isArray(fireteamsData.data)) {
-          console.log("Found data in response.data");
-          return fireteamsData.data;
-        }
-        if (Array.isArray(fireteamsData.fireteams)) {
-          console.log("Found data in response.fireteams");
-          return fireteamsData.fireteams;
-        }
-        if (Array.isArray(fireteamsData.fireTeams)) {
-          console.log("Found data in response.fireTeams");
-          return fireteamsData.fireTeams;
-        }
-        if (Array.isArray(fireteamsData.fireTeams?.data)) {
-          console.log("Found data in response.fireTeams.data");
-          return fireteamsData.fireTeams.data;
-        }
-        if (Array.isArray(fireteamsData.results)) {
-          console.log("Found data in response.results");
-          return fireteamsData.results;
-        }
+        if (Array.isArray(fireteamsData.data)) return fireteamsData.data;
+        if (Array.isArray(fireteamsData.fireteams)) return fireteamsData.fireteams;
+        if (Array.isArray(fireteamsData.fireTeams)) return fireteamsData.fireTeams;
+        if (Array.isArray(fireteamsData.fireTeams?.data)) return fireteamsData.fireTeams.data;
+        if (Array.isArray(fireteamsData.results)) return fireteamsData.results;
       }
-      
-      console.log("No valid array found, returning empty array");
+
       return [];
     } catch (error: any) {
-      console.error("Error fetching fireteams:", error);
-      console.error("Error response:", error.response?.data);
-      console.error("Error status:", error.response?.status);
-      
-      // If it's a 401 error, the user needs to log in
       if (error.response?.status === 401) {
-        console.error("Authentication required. Please log in first.");
-        // Don't throw the error, just return empty array to prevent crashes
         return [];
       }
-      
+      console.error("Error fetching fireteams:", error.response?.data ?? error.message);
       throw error;
     }
   },
   async getFireteam(id: string | number) {
     try {
-      // Check authentication status
-      const token = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null;
-      console.log("Auth token present for getFireteam:", !!token);
-      
       const res = await apiClient.get(`/api/v1/fireteams/${id}`);
-      console.log("Raw API response for getFireteam:", res.data);
-      console.log("Response status:", res.status);
-      
       return unwrapItem(res.data);
     } catch (error: any) {
-      console.error("Error fetching fireteam:", error);
-      console.error("Error response:", error.response?.data);
-      console.error("Error status:", error.response?.status);
-      
-      // If it's a 401 error, the user needs to log in
       if (error.response?.status === 401) {
-        console.error("Authentication required. Please log in first.");
         throw error;
       }
-      
+      console.error("Error fetching fireteam:", error.response?.data ?? error.message);
       throw error;
     }
   },
@@ -123,21 +70,11 @@ export const fireteamService = {
     link: string;
   }) {
     try {
-      // Keep cohort_id as string as per API documentation
-      const payload = {
-        ...data,
-        cohort_id: String(data.cohort_id)
-      };
-      
-      console.log("Sending fireteam data to API:", payload);
+      const payload = { ...data, cohort_id: String(data.cohort_id) };
       const res = await apiClient.post('/api/v1/fireteams/add', payload);
-      console.log("API response:", res.data);
       return unwrapItem(res.data);
     } catch (error: any) {
-      console.error("Error adding fireteam:", error);
-      console.error("Error response:", error.response?.data);
-      console.error("Error status:", error.response?.status);
-      console.error("Error headers:", error.response?.headers);
+      console.error("Error adding fireteam:", error.response?.data ?? error.message);
       throw error;
     }
   },
@@ -174,14 +111,10 @@ export const fireteamService = {
     added_by?: string | number;
   }) {
     try {
-      console.log('📤 [SERVICE] Adding objective with data:', data);
       const res = await apiClient.post('/api/v1/fireteams/objectives/add', data);
-      console.log('✅ [SERVICE] Objective added successfully:', res.data);
       return unwrapItem(res.data);
     } catch (error: any) {
-      console.error('❌ [SERVICE] Error adding objective:', error);
-      console.error('❌ [SERVICE] Error response:', error.response?.data);
-      console.error('❌ [SERVICE] Error status:', error.response?.status);
+      console.error('Error adding objective:', error.response?.data ?? error.message);
       throw error;
     }
   },

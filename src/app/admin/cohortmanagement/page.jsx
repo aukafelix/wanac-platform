@@ -2,8 +2,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import AdminSidebar from '../../../../components/dashboardcomponents/adminsidebar';
-import { Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField, Stack, Typography, Box, IconButton, Autocomplete, Chip, Select, MenuItem, InputLabel, FormControl, Table, TableHead, TableBody, TableRow, TableCell } from '@mui/material';
-import { FaUsers, FaEdit, FaPlus, FaUserTie } from "react-icons/fa";
+import { Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField, Autocomplete, Chip, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
+import { FaEdit, FaPlus } from "react-icons/fa";
 import { ProgramsService } from '../../../services/api/programs.service';
 import { clientsService } from '../../../services/api/clients.service';
 import { cohortService } from '../../../services/api/cohort.service';
@@ -178,47 +178,72 @@ export default function AdminCohortManagementPage() {
   const getClientNames = (ids = []) => Array.isArray(ids) ? ids.map(id => clients.find(c => c.id === id)?.name).filter(Boolean) : [];
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="h-screen flex bg-gray-50 font-serif">
       <AdminSidebar />
-      <main className="flex-1 p-8 ml-16 md:ml-56">
-        <Typography variant="h4" sx={{ mb: 4, fontWeight: 700 }}>Cohort Management</Typography>
-        <Button variant="contained" color="primary" startIcon={<FaPlus />} sx={{ mb: 3 }} onClick={handleOpenAddCohort}>
-          Add Cohort
-        </Button>
-        <Box sx={{ bgcolor: '#fff', borderRadius: 2, p: 2, boxShadow: 1 }}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Name</TableCell>
-                <TableCell>Description</TableCell>
-                <TableCell>Members</TableCell>
-                <TableCell>Start Date</TableCell>
-                <TableCell>End Date</TableCell>
-                <TableCell align="right">Actions</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {cohorts.map((cohort) => {
-                const membersCount = (Array.isArray(cohort.clients) ? cohort.clients.length : 0) + (Array.isArray(cohort.coaches) ? cohort.coaches.length : 0);
-                const startDate = cohort.start_date ? new Date(cohort.start_date).toLocaleDateString() : '—';
-                const endDate = cohort.end_date ? new Date(cohort.end_date).toLocaleDateString() : '—';
-                return (
-                  <TableRow key={cohort.id} hover sx={{ cursor: 'pointer' }} onClick={() => router.push(`/admin/cohortmanagement/${cohort.id}`)}>
-                    <TableCell>{cohort.name}</TableCell>
-                    <TableCell>{cohort.description || '—'}</TableCell>
-                    <TableCell>{membersCount}</TableCell>
-                    <TableCell>{startDate}</TableCell>
-                    <TableCell>{endDate}</TableCell>
-                    <TableCell align="right">
-                      <Button size="small" variant="outlined" startIcon={<FaEdit />} onClick={(e) => { e.stopPropagation(); handleOpenEditCohort(cohort); }}>Edit</Button>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-        </Box>
-        {/* Add/Edit Cohort Dialog */}
+      <div className="flex-1 flex flex-col h-full transition-all duration-300">
+        <main className="flex-1 h-0 overflow-y-auto px-4 md:px-12 py-8 bg-gray-50">
+          <div className="max-w-6xl mx-auto">
+            <div className="flex items-center justify-between mb-8">
+              <h1 className="text-2xl md:text-3xl font-bold text-[#002147] tracking-tight">Cohort Management</h1>
+              <button
+                type="button"
+                className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+                onClick={handleOpenAddCohort}
+              >
+                <FaPlus /> Add Cohort
+              </button>
+            </div>
+            <div className="overflow-x-auto bg-white border border-gray-200 rounded-lg shadow">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Members</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Start Date</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">End Date</th>
+                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-100">
+                  {cohorts.length === 0 ? (
+                    <tr>
+                      <td colSpan={6} className="px-6 py-6 text-center text-gray-500">No cohorts found.</td>
+                    </tr>
+                  ) : (
+                    cohorts.map((cohort) => {
+                      const membersCount = (Array.isArray(cohort.clients) ? cohort.clients.length : 0) + (Array.isArray(cohort.coaches) ? cohort.coaches.length : 0);
+                      const startDate = cohort.start_date ? new Date(cohort.start_date).toLocaleDateString() : '—';
+                      const endDate = cohort.end_date ? new Date(cohort.end_date).toLocaleDateString() : '—';
+                      return (
+                        <tr
+                          key={cohort.id}
+                          className="hover:bg-gray-50 transition cursor-pointer"
+                          onClick={() => router.push(`/admin/cohortmanagement/${cohort.id}`)}
+                        >
+                          <td className="px-6 py-4 text-sm font-medium text-gray-900">{cohort.name}</td>
+                          <td className="px-6 py-4 text-sm text-gray-700">{cohort.description || '—'}</td>
+                          <td className="px-6 py-4 text-sm text-gray-700">{membersCount}</td>
+                          <td className="px-6 py-4 text-sm text-gray-700">{startDate}</td>
+                          <td className="px-6 py-4 text-sm text-gray-700">{endDate}</td>
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm">
+                            <button
+                              type="button"
+                              className="p-2 rounded hover:bg-blue-100 text-blue-600"
+                              title="Edit Cohort"
+                              onClick={(e) => { e.stopPropagation(); handleOpenEditCohort(cohort); }}
+                            >
+                              <FaEdit />
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })
+                  )}
+                </tbody>
+              </table>
+            </div>
+            {/* Add/Edit Cohort Dialog */}
         <Dialog open={showCohortDialog} onClose={() => setShowCohortDialog(false)}>
           <DialogTitle>{selectedCohort ? 'Edit Cohort' : 'Add Cohort'}</DialogTitle>
           <DialogContent>
@@ -321,7 +346,9 @@ export default function AdminCohortManagementPage() {
             <Button onClick={handleSaveCohort} variant="contained" color="primary">Save</Button>
           </DialogActions>
         </Dialog>
-      </main>
+          </div>
+        </main>
+      </div>
     </div>
   );
 }

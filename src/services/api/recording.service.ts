@@ -1,5 +1,5 @@
 import { apiClient } from './config';
-import { openaiService, MeetingSummary } from './openai.service';
+import { huggingfaceService, MeetingSummary } from './huggingface.service';
 
 export interface RecordingMetadata {
   experienceId: string | number;
@@ -116,15 +116,15 @@ export const recordingService = {
     try {
       console.log('🎙️ Starting transcription...');
       
-      // Step 1: Transcribe audio using OpenAI Whisper
-      const transcriptionResult = await openaiService.transcribeAudio(audioFile);
+      // Step 1: Transcribe audio using Hugging Face Whisper
+      const transcriptionResult = await huggingfaceService.transcribeAudio(audioFile);
       const transcript = transcriptionResult.text;
       
       console.log('✅ Transcription complete, length:', transcript.length);
       console.log('🤖 Generating AI summaries...');
 
       // Step 2: Generate summaries for all roles
-      const summaries = await openaiService.generateMeetingSummaries(transcript, meetingData);
+      const summaries = await huggingfaceService.generateMeetingSummaries(transcript, meetingData);
       
       console.log('✅ Summaries generated');
 
