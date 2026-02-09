@@ -141,7 +141,7 @@ export default function Login() {
     try {
       const googleUser = jwtDecode(credentialResponse.credential);
       const response = await fetch(
-        "https://wanac-api.kuzasports.com/api/v1/auth/login",
+        "https://api.wanac.org/api/v1/auth/login",
         {
           method: "POST",
           headers: {

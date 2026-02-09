@@ -29,7 +29,11 @@ jobs:
           npm run build
         env: 
           NEXT_PUBLIC_API_BASE_URL: ${{ secrets.NEXT_PUBLIC_API_BASE_URL }}
-          
+          NEXT_PUBLIC_JITSI_DOMAIN: ${{ secrets.NEXT_PUBLIC_JITSI_DOMAIN }}         
+          NEXT_PUBLIC_GOOGLE_CLIENT_ID: ${{ secrets.NEXT_PUBLIC_GOOGLE_CLIENT_ID }}
+          NEXT_PUBLIC_OPENAI_URL: ${{ secrets.NEXT_PUBLIC_OPENAI_URL }}
+
+
 
       - name: Create deployment package
         run: |
