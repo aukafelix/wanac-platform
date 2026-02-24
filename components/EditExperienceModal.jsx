@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Trash2, Plus, Upload, RefreshCw, CheckCircle2, Loader2, AlertCircle, X } from 'lucide-react';
+import { Trash2, Plus, Upload, RefreshCw, CheckCircle2, Loader2, AlertCircle, X, Save } from 'lucide-react';
 
 // Constants
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
@@ -31,13 +31,11 @@ function isValidUrl(string) {
 function useDebounce(callback, delay) {
   const timeoutRef = useRef(null);
   const callbackRef = useRef(callback);
-  
-  // Update callback ref when callback changes
+
   useEffect(() => {
     callbackRef.current = callback;
   }, [callback]);
-  
-  // Cleanup on unmount
+
   useEffect(() => {
     return () => {
       if (timeoutRef.current) {
@@ -45,7 +43,7 @@ function useDebounce(callback, delay) {
       }
     };
   }, []);
-  
+
   return useCallback((...args) => {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
@@ -57,19 +55,24 @@ function useDebounce(callback, delay) {
 }
 
 // Sub-component for Agenda Step
-const AgendaStepItem = memo(function AgendaStepItem({ 
-  step, 
-  idx, 
-  onUpdate, 
-  onDelete, 
+const AgendaStepItem = memo(function AgendaStepItem({
+  step,
+  idx,
+  onUpdate,
+  onDelete,
+  onSubmit,
   canDelete,
   experienceService,
-  setError 
+  setError
 }) {
   const [isSaving, setIsSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const isPersisted = !!step.id;
 
   const debouncedUpdate = useDebounce(async (field, value) => {
+    // Only auto-save if this step has already been persisted
     if (step.id) {
       setIsSaving(true);
       setSaveSuccess(false);
@@ -86,8 +89,28 @@ const AgendaStepItem = memo(function AgendaStepItem({
     }
   }, DEBOUNCE_DELAY);
 
+  const handleSubmitClick = async () => {
+    setIsSubmitting(true);
+    try {
+      await onSubmit(idx);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
-    <div className="p-4 border border-gray-200 rounded-lg bg-gray-50 hover:border-gray-300 transition-colors">
+    <div className={`p-4 border rounded-lg transition-colors ${isPersisted ? 'border-green-200 bg-green-50/30 hover:border-green-300' : 'border-amber-300 bg-amber-50 hover:border-amber-400'}`}>
+      {isPersisted ? (
+        <div className="flex items-center gap-1.5 mb-3 text-xs text-green-700 font-medium">
+          <CheckCircle2 className="h-3.5 w-3.5" />
+          Saved — changes auto-save as you type
+        </div>
+      ) : (
+        <div className="flex items-center gap-1.5 mb-3 text-xs text-amber-700 font-medium">
+          <AlertCircle className="h-3.5 w-3.5" />
+          Unsaved — fill in the fields and click Submit to save
+        </div>
+      )}
       <div className="flex gap-3">
         <div className="flex-1 space-y-3">
           <div className="relative">
@@ -95,9 +118,9 @@ const AgendaStepItem = memo(function AgendaStepItem({
               placeholder="Step Title"
               value={step.title || ''}
               onChange={(e) => {
-                const newTitle = e.target.value;
-                onUpdate(idx, 'title', newTitle);
-                debouncedUpdate('title', newTitle);
+                const v = e.target.value;
+                onUpdate(idx, 'title', v);
+                debouncedUpdate('title', v);
               }}
               className="bg-white"
               aria-label={`Agenda step ${idx + 1} title`}
@@ -113,25 +136,44 @@ const AgendaStepItem = memo(function AgendaStepItem({
             placeholder="Duration (e.g., 15 minutes)"
             value={step.duration || ''}
             onChange={(e) => {
-              const newDuration = e.target.value;
-              onUpdate(idx, 'duration', newDuration);
-              debouncedUpdate('duration', newDuration);
+              const v = e.target.value;
+              onUpdate(idx, 'duration', v);
+              debouncedUpdate('duration', v);
             }}
             className="bg-white"
             aria-label={`Agenda step ${idx + 1} duration`}
           />
         </div>
-        <Button
-          type="button"
-          variant="destructive"
-          size="icon"
-          onClick={onDelete}
-          disabled={!canDelete}
-          className="shrink-0"
-          aria-label={`Delete agenda step ${step.title || idx + 1}`}
-        >
-          <Trash2 className="h-4 w-4" />
-        </Button>
+        <div className="flex flex-col gap-2 shrink-0">
+          {!isPersisted && (
+            <Button
+              type="button"
+              variant="default"
+              size="icon"
+              onClick={handleSubmitClick}
+              disabled={isSubmitting || (!step.title?.trim() && !step.duration?.trim())}
+              className="bg-green-600 hover:bg-green-700 text-white"
+              aria-label={`Submit agenda step ${step.title || idx + 1}`}
+              title="Submit to save"
+            >
+              {isSubmitting ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <Save className="h-4 w-4" />
+              )}
+            </Button>
+          )}
+          <Button
+            type="button"
+            variant="destructive"
+            size="icon"
+            onClick={onDelete}
+            disabled={!canDelete}
+            aria-label={`Delete agenda step ${step.title || idx + 1}`}
+          >
+            <Trash2 className="h-4 w-4" />
+          </Button>
+        </div>
       </div>
     </div>
   );
@@ -140,32 +182,39 @@ const AgendaStepItem = memo(function AgendaStepItem({
 AgendaStepItem.propTypes = {
   step: PropTypes.shape({
     id: PropTypes.string,
+    _tempId: PropTypes.number,
     title: PropTypes.string,
     duration: PropTypes.string,
   }).isRequired,
   idx: PropTypes.number.isRequired,
   onUpdate: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
   canDelete: PropTypes.bool.isRequired,
   experienceService: PropTypes.object.isRequired,
   setError: PropTypes.func.isRequired,
 };
 
 // Sub-component for Exhibit
-const ExhibitItem = memo(function ExhibitItem({ 
-  exhibit, 
-  idx, 
-  onUpdate, 
-  onDelete, 
+const ExhibitItem = memo(function ExhibitItem({
+  exhibit,
+  idx,
+  onUpdate,
+  onDelete,
+  onSubmit,
   canDelete,
   experienceService,
-  setError 
+  setError
 }) {
   const [isSaving, setIsSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
   const [linkError, setLinkError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const isPersisted = !!exhibit.id;
 
   const debouncedUpdate = useDebounce(async (field, value) => {
+    // Only auto-save if this exhibit has already been persisted
     if (exhibit.id) {
       setIsSaving(true);
       setSaveSuccess(false);
@@ -186,14 +235,12 @@ const ExhibitItem = memo(function ExhibitItem({
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // Validate file size
     if (file.size > MAX_FILE_SIZE) {
       setError(`File size must be less than ${MAX_FILE_SIZE / 1024 / 1024}MB`);
-      e.target.value = ''; // Reset input
+      e.target.value = '';
       return;
     }
 
-    // Validate file type
     const validTypes = {
       image: ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'],
       video: ['video/mp4', 'video/webm', 'video/ogg'],
@@ -221,18 +268,37 @@ const ExhibitItem = memo(function ExhibitItem({
   const handleLinkChange = (e) => {
     const newLink = e.target.value;
     setLinkError('');
-    
-    // Validate URL if not empty
+
     if (newLink && !isValidUrl(newLink)) {
       setLinkError('Please enter a valid URL (starting with http:// or https://)');
     }
-    
+
     onUpdate(idx, 'link', newLink);
     debouncedUpdate('link', newLink);
   };
 
+  const handleSubmitClick = async () => {
+    setIsSubmitting(true);
+    try {
+      await onSubmit(idx);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
-    <div className="p-4 border border-gray-200 rounded-lg bg-gray-50 hover:border-gray-300 transition-colors">
+    <div className={`p-4 border rounded-lg transition-colors ${isPersisted ? 'border-green-200 bg-green-50/30 hover:border-green-300' : 'border-amber-300 bg-amber-50 hover:border-amber-400'}`}>
+      {isPersisted ? (
+        <div className="flex items-center gap-1.5 mb-3 text-xs text-green-700 font-medium">
+          <CheckCircle2 className="h-3.5 w-3.5" />
+          Saved — changes auto-save as you type
+        </div>
+      ) : (
+        <div className="flex items-center gap-1.5 mb-3 text-xs text-amber-700 font-medium">
+          <AlertCircle className="h-3.5 w-3.5" />
+          Unsaved — fill in the fields and click Submit to save
+        </div>
+      )}
       <div className="flex gap-3">
         <div className="flex-1 space-y-3">
           <div className="relative">
@@ -240,9 +306,9 @@ const ExhibitItem = memo(function ExhibitItem({
               placeholder="Exhibit Name"
               value={exhibit.name || ''}
               onChange={(e) => {
-                const newName = e.target.value;
-                onUpdate(idx, 'name', newName);
-                debouncedUpdate('name', newName);
+                const v = e.target.value;
+                onUpdate(idx, 'name', v);
+                debouncedUpdate('name', v);
               }}
               required
               className="bg-white"
@@ -255,7 +321,7 @@ const ExhibitItem = memo(function ExhibitItem({
               <CheckCircle2 className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-green-500" />
             )}
           </div>
-          
+
           <select
             value={exhibit.type || 'link'}
             onChange={(e) => {
@@ -297,7 +363,7 @@ const ExhibitItem = memo(function ExhibitItem({
             </div>
           ) : (
             <div>
-              <label 
+              <label
                 className="flex items-center justify-center w-full h-9 px-4 border border-input rounded-md bg-white hover:bg-gray-50 cursor-pointer transition-colors"
                 role="button"
                 tabIndex={0}
@@ -331,17 +397,36 @@ const ExhibitItem = memo(function ExhibitItem({
             </div>
           )}
         </div>
-        <Button
-          type="button"
-          variant="destructive"
-          size="icon"
-          onClick={onDelete}
-          disabled={!canDelete}
-          className="shrink-0"
-          aria-label={`Delete exhibit ${exhibit.name || idx + 1}`}
-        >
-          <Trash2 className="h-4 w-4" />
-        </Button>
+        <div className="flex flex-col gap-2 shrink-0">
+          {!isPersisted && (
+            <Button
+              type="button"
+              variant="default"
+              size="icon"
+              onClick={handleSubmitClick}
+              disabled={isSubmitting || !exhibit.name?.trim()}
+              className="bg-green-600 hover:bg-green-700 text-white"
+              aria-label={`Submit exhibit ${exhibit.name || idx + 1}`}
+              title="Submit to save"
+            >
+              {isSubmitting ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <Save className="h-4 w-4" />
+              )}
+            </Button>
+          )}
+          <Button
+            type="button"
+            variant="destructive"
+            size="icon"
+            onClick={onDelete}
+            disabled={!canDelete}
+            aria-label={`Delete exhibit ${exhibit.name || idx + 1}`}
+          >
+            <Trash2 className="h-4 w-4" />
+          </Button>
+        </div>
       </div>
     </div>
   );
@@ -350,6 +435,7 @@ const ExhibitItem = memo(function ExhibitItem({
 ExhibitItem.propTypes = {
   exhibit: PropTypes.shape({
     id: PropTypes.string,
+    _tempId: PropTypes.number,
     name: PropTypes.string,
     type: PropTypes.string,
     link: PropTypes.string,
@@ -358,6 +444,7 @@ ExhibitItem.propTypes = {
   idx: PropTypes.number.isRequired,
   onUpdate: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
   canDelete: PropTypes.bool.isRequired,
   experienceService: PropTypes.object.isRequired,
   setError: PropTypes.func.isRequired,
@@ -392,7 +479,9 @@ export default function EditExperienceModal({
   validationErrors,
   clearValidationErrors,
   handleAddAgendaStep,
+  handleSubmitAgendaStep,
   handleAddExhibit,
+  handleSubmitExhibit,
   handleSave,
   setError,
   error,
@@ -404,12 +493,12 @@ export default function EditExperienceModal({
   experienceService,
 }) {
   const [isAddingStep, setIsAddingStep] = useState(false);
-  
-  // Handler for agenda step updates (using functional setState to avoid race conditions)
+
+  // Handler for agenda step updates
   const handleAgendaUpdate = useCallback((idx, field, value) => {
     setEditExperienceData(prev => ({
       ...prev,
-      agenda: prev.agenda.map((item, i) => 
+      agenda: prev.agenda.map((item, i) =>
         i === idx ? { ...item, [field]: value } : item
       )
     }));
@@ -417,40 +506,30 @@ export default function EditExperienceModal({
 
   // Handler for agenda step deletion
   const handleAgendaDelete = useCallback(async (idx, step) => {
-    console.log("Attempting to delete agenda step:", step);
-    console.log("Step ID:", step.id);
-    
     if (step.id) {
       try {
-        console.log("Calling delete API for step ID:", step.id);
         await experienceService.deleteAgendaStep(step.id);
-        console.log("Successfully deleted step from API");
       } catch (error) {
         console.error('Failed to delete agenda step:', error);
-        console.error('Error response:', error.response?.data);
         setError(`Failed to delete agenda step: ${error.response?.data?.message || error.message}`);
         return;
       }
-    } else {
-      console.log("Step has no ID, only removing from local state");
     }
-    
+
     setEditExperienceData(prev => ({
       ...prev,
       agenda: prev.agenda.filter((_, i) => i !== idx)
     }));
-    console.log("Updated agenda after deletion");
   }, [setEditExperienceData, experienceService, setError]);
 
-  // Handler for exhibit updates (using functional setState to avoid race conditions)
+  // Handler for exhibit updates
   const handleExhibitUpdate = useCallback((idx, field, value, shouldResetFields = false) => {
     setEditExperienceData(prev => ({
       ...prev,
       exhibits: prev.exhibits.map((item, i) => {
         if (i !== idx) return item;
-        
+
         if (shouldResetFields && field === 'type') {
-          // When changing type, reset file and link
           return {
             ...item,
             type: value,
@@ -481,25 +560,21 @@ export default function EditExperienceModal({
   }, [setEditExperienceData, experienceService, setError]);
 
   // Handler for video admin change
-  // NOTE: Meeting link is now generated at experience creation and stays persistent
-  // Changing the facilitator does NOT regenerate the link
   const handleVideoAdminChange = useCallback((adminId) => {
     setEditExperienceData(prev => ({
       ...prev,
       videoAdminId: adminId,
-      // Meeting link is NOT changed when facilitator changes
     }));
   }, [setEditExperienceData]);
 
   // Handler for regenerating meeting link
-  // Generates a new meeting link independent of facilitator
   const handleRegenerateMeetingLink = useCallback(() => {
     const timestamp = Date.now();
     const newLink = generateFireteamMeetingLink(
       id,
       selectedExperienceToEdit?.id || `edit-${timestamp}`,
-      'system',  // Generic identifier (not tied to any user)
-      fireteam?.title || 'Fireteam Meeting'  // Meeting display name
+      'system',
+      fireteam?.title || 'Fireteam Meeting'
     );
     setEditExperienceData(prev => ({
       ...prev,
@@ -510,11 +585,9 @@ export default function EditExperienceModal({
   // Keyboard shortcuts
   useEffect(() => {
     const handleKeyDown = (e) => {
-      // Escape to close
       if (e.key === 'Escape' && open) {
         onClose();
       }
-      // Ctrl+S or Cmd+S to save
       if ((e.ctrlKey || e.metaKey) && e.key === 's' && open) {
         e.preventDefault();
         handleSave();
@@ -526,6 +599,13 @@ export default function EditExperienceModal({
       return () => window.removeEventListener('keydown', handleKeyDown);
     }
   }, [open, onClose, handleSave]);
+
+  // Count saved and unsaved items
+  const savedAgendaCount = editExperienceData.agenda?.filter(s => s.id).length || 0;
+  const unsavedAgendaCount = editExperienceData.agenda?.filter(s => !s.id).length || 0;
+  const savedExhibitCount = editExperienceData.exhibits?.filter(e => e.id).length || 0;
+  const unsavedExhibitCount = editExperienceData.exhibits?.filter(e => !e.id).length || 0;
+  const totalUnsaved = unsavedAgendaCount + unsavedExhibitCount;
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
@@ -623,7 +703,19 @@ export default function EditExperienceModal({
           {/* Agenda Steps */}
           <div>
             <div className="flex items-center justify-between mb-3">
-              <h3 className="text-base font-semibold text-heading">Agenda Steps</h3>
+              <div className="flex items-center gap-2">
+                <h3 className="text-base font-semibold text-heading">Agenda Steps</h3>
+                {savedAgendaCount > 0 && (
+                  <span className="px-2 py-0.5 text-xs font-medium bg-green-100 text-green-700 rounded-full">
+                    {savedAgendaCount} saved
+                  </span>
+                )}
+                {unsavedAgendaCount > 0 && (
+                  <span className="px-2 py-0.5 text-xs font-medium bg-amber-100 text-amber-700 rounded-full">
+                    {unsavedAgendaCount} unsaved
+                  </span>
+                )}
+              </div>
               <Button
                 type="button"
                 variant="outline"
@@ -632,11 +724,9 @@ export default function EditExperienceModal({
                   if (!selectedExperienceToEdit) return;
                   setIsAddingStep(true);
                   try {
-                    console.log('🔄 [MODAL] User clicked Add Step button');
-                    await handleAddAgendaStep({});
-                    console.log('✅ [MODAL] Agenda step added successfully');
+                    await handleAddAgendaStep();
                   } catch (error) {
-                    console.error('❌ [MODAL] Failed to add agenda step:', error);
+                    console.error('Failed to add agenda step:', error);
                     setError(`Failed to add agenda step: ${error.message}`);
                   } finally {
                     setIsAddingStep(false);
@@ -668,11 +758,12 @@ export default function EditExperienceModal({
               <div className="space-y-3" role="list" aria-label="Agenda steps">
                 {editExperienceData.agenda.map((step, idx) => (
                   <AgendaStepItem
-                    key={step.id || idx}
+                    key={step.id || step._tempId || idx}
                     step={step}
                     idx={idx}
                     onUpdate={handleAgendaUpdate}
                     onDelete={() => handleAgendaDelete(idx, step)}
+                    onSubmit={handleSubmitAgendaStep}
                     canDelete={true}
                     experienceService={experienceService}
                     setError={setError}
@@ -682,19 +773,17 @@ export default function EditExperienceModal({
             ) : (
               <div className="text-center py-8 border-2 border-dashed border-gray-300 rounded-lg bg-gray-50">
                 <p className="text-sm text-gray-500 mb-4">No agenda steps added yet.</p>
-                <Button 
-                  type="button" 
-                  variant="outline" 
-                  size="sm" 
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
                   onClick={async () => {
                     if (!selectedExperienceToEdit) return;
                     setIsAddingStep(true);
                     try {
-                      console.log('🔄 [MODAL] User clicked Add First Step button');
-                      await handleAddAgendaStep({});
-                      console.log('✅ [MODAL] First agenda step added successfully');
+                      await handleAddAgendaStep();
                     } catch (error) {
-                      console.error('❌ [MODAL] Failed to add agenda step:', error);
+                      console.error('Failed to add agenda step:', error);
                       setError(`Failed to add agenda step: ${error.message}`);
                     } finally {
                       setIsAddingStep(false);
@@ -721,7 +810,19 @@ export default function EditExperienceModal({
           {/* Exhibits */}
           <div>
             <div className="flex items-center justify-between mb-3">
-              <h3 className="text-base font-semibold text-heading">Exhibits</h3>
+              <div className="flex items-center gap-2">
+                <h3 className="text-base font-semibold text-heading">Exhibits</h3>
+                {savedExhibitCount > 0 && (
+                  <span className="px-2 py-0.5 text-xs font-medium bg-green-100 text-green-700 rounded-full">
+                    {savedExhibitCount} saved
+                  </span>
+                )}
+                {unsavedExhibitCount > 0 && (
+                  <span className="px-2 py-0.5 text-xs font-medium bg-amber-100 text-amber-700 rounded-full">
+                    {unsavedExhibitCount} unsaved
+                  </span>
+                )}
+              </div>
               <Button
                 type="button"
                 variant="outline"
@@ -743,11 +844,12 @@ export default function EditExperienceModal({
               <div className="space-y-3" role="list" aria-label="Exhibits">
                 {editExperienceData.exhibits.map((exhibit, idx) => (
                   <ExhibitItem
-                    key={exhibit.id || idx}
+                    key={exhibit.id || exhibit._tempId || idx}
                     exhibit={exhibit}
                     idx={idx}
                     onUpdate={handleExhibitUpdate}
                     onDelete={() => handleExhibitDelete(idx, exhibit)}
+                    onSubmit={handleSubmitExhibit}
                     canDelete={true}
                     experienceService={experienceService}
                     setError={setError}
@@ -817,11 +919,17 @@ export default function EditExperienceModal({
         </div>
 
         <DialogFooter>
+          {totalUnsaved > 0 && (
+            <p className="text-xs text-amber-600 mr-auto flex items-center gap-1">
+              <AlertCircle className="h-3.5 w-3.5" />
+              {totalUnsaved} unsaved item{totalUnsaved !== 1 ? 's' : ''} — submit individually or Save Changes will create them
+            </p>
+          )}
           <Button type="button" variant="outline" onClick={onClose}>
             Cancel
           </Button>
-          <Button 
-            type="button" 
+          <Button
+            type="button"
             onClick={handleSave}
             aria-label="Save all changes to this experience"
           >
@@ -833,7 +941,6 @@ export default function EditExperienceModal({
   );
 }
 
-// PropTypes for main component
 EditExperienceModal.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
@@ -849,7 +956,9 @@ EditExperienceModal.propTypes = {
   validationErrors: PropTypes.object.isRequired,
   clearValidationErrors: PropTypes.func.isRequired,
   handleAddAgendaStep: PropTypes.func.isRequired,
+  handleSubmitAgendaStep: PropTypes.func.isRequired,
   handleAddExhibit: PropTypes.func.isRequired,
+  handleSubmitExhibit: PropTypes.func.isRequired,
   handleSave: PropTypes.func.isRequired,
   setError: PropTypes.func.isRequired,
   error: PropTypes.string,
