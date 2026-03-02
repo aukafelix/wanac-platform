@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Sidebar from "../../../../components/dashboardcomponents/sidebar";
 import ClientTopbar from "../../../../components/dashboardcomponents/clienttopbar";
 import {
@@ -35,6 +35,9 @@ function normalizeSessions(raw) {
   });
 }
 
+// Use the same Jitsi domain as the rest of the app
+const JITSI_DOMAIN = process.env.NEXT_PUBLIC_JITSI_DOMAIN || "meet.jit.si";
+
 export default function SessionPage() {
   const [upcomingSessions, setUpcomingSessions] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -44,6 +47,8 @@ export default function SessionPage() {
   const [inviteEmail, setInviteEmail] = useState("");
   const [collapsed, setCollapsed] = useState(false);
   const [user, setUser] = useState(null);
+  const jitsiContainerRef = useRef(null);
+  const jitsiApiRef = useRef(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -71,7 +76,111 @@ export default function SessionPage() {
     fetchSessions();
   }, []);
 
-  const meetingLink = "https://meet.jit.si/wanac-demo-room";
+  const meetingLink = `https://${JITSI_DOMAIN}/wanac-demo-room`;
+
+  const initializeJitsi = () => {
+    if (typeof window === "undefined") return;
+    if (!liveSession) return;
+    if (!jitsiContainerRef.current || !window.JitsiMeetExternalAPI) return;
+
+    try {
+      // Clear any previous instance
+      jitsiContainerRef.current.innerHTML = "";
+
+      const url = new URL(meetingLink);
+      const domain = url.hostname;
+      const pathParts = url.pathname.split("/").filter(Boolean);
+      const roomName = pathParts[pathParts.length - 1] || "";
+
+      const options = {
+        roomName,
+        width: "100%",
+        height: "100%",
+        parentNode: jitsiContainerRef.current,
+        configOverwrite: {
+          startWithAudioMuted: false,
+          startWithVideoMuted: false,
+          enableWelcomePage: false,
+          prejoinPageEnabled: false,
+          disableDeepLinking: true,
+        },
+        userInfo: {
+          displayName: user?.name || "Participant",
+        },
+      };
+
+      jitsiApiRef.current = new window.JitsiMeetExternalAPI(domain, options);
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error("Failed to start Jitsi meeting:", err);
+    }
+  };
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (!liveSession) {
+      // Dispose when closing live session
+      if (jitsiApiRef.current) {
+        try {
+          jitsiApiRef.current.dispose();
+        } catch (err) {
+          // eslint-disable-next-line no-console
+          console.warn("Error disposing Jitsi API:", err);
+        }
+        jitsiApiRef.current = null;
+      }
+      return;
+    }
+
+    const scriptSrc = `https://${JITSI_DOMAIN}/external_api.js`;
+
+    const ensureInitialized = () => {
+      if (window.JitsiMeetExternalAPI) {
+        initializeJitsi();
+      }
+    };
+
+    if (window.JitsiMeetExternalAPI) {
+      initializeJitsi();
+    } else {
+      let script = document.querySelector(`script[src="${scriptSrc}"]`);
+      if (!script) {
+        script = document.createElement("script");
+        script.src = scriptSrc;
+        script.async = true;
+        script.onload = () => {
+          setTimeout(ensureInitialized, 100);
+        };
+        script.onerror = () => {
+          // eslint-disable-next-line no-console
+          console.error("Failed to load Jitsi External API script");
+        };
+        document.head.appendChild(script);
+      } else {
+        const checkApi = setInterval(() => {
+          if (window.JitsiMeetExternalAPI) {
+            clearInterval(checkApi);
+            initializeJitsi();
+          }
+        }, 100);
+        setTimeout(() => clearInterval(checkApi), 5000);
+      }
+    }
+
+    return () => {
+      if (jitsiApiRef.current) {
+        try {
+          jitsiApiRef.current.dispose();
+        } catch (err) {
+          // eslint-disable-next-line no-console
+          console.warn("Error disposing Jitsi API:", err);
+        }
+        jitsiApiRef.current = null;
+      }
+    };
+    // We intentionally depend on liveSession and meetingLink
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [liveSession]);
 
   return (
     <div className="h-screen flex bg-gray-50 font-body">
@@ -255,14 +364,12 @@ export default function SessionPage() {
                       </div>
                     </div>
                   </div>
-                  <iframe
-                    title="Live Video Meeting"
-                    src={meetingLink}
-                    width="100%"
-                    height="400"
-                    allow="camera; microphone; fullscreen"
-                    className="rounded-md border-0"
-                  />
+                  <div className="rounded-md border-0 w-full h-[400px] overflow-hidden">
+                    <div
+                      ref={jitsiContainerRef}
+                      className="w-full h-full rounded-md"
+                    />
+                  </div>
                 </div>
               )}
             </section>

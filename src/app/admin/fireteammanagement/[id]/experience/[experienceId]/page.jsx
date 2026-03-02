@@ -605,7 +605,7 @@ export default function ExperienceDetailPage() {
     return (
       <div className="flex min-h-screen bg-gray-50">
         <AdminSidebar />
-        <main className="flex-1 p-8 ml-16 md:ml-56">
+        <main className="flex-1 p-8">
           <div className="flex justify-center items-center min-h-[50vh]">
             <div className="text-center">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-900 mx-auto mb-4"></div>
@@ -621,7 +621,7 @@ export default function ExperienceDetailPage() {
     return (
       <div className="flex min-h-screen bg-gray-50">
         <AdminSidebar />
-        <main className="flex-1 p-8 ml-16 md:ml-56">
+        <main className="flex-1 p-8">
           <div className="flex justify-center items-center min-h-[50vh]">
             <div className="text-center">
               <p className="text-red-600 text-lg font-medium">Experience not found</p>
@@ -635,7 +635,7 @@ export default function ExperienceDetailPage() {
   return (
     <div className="flex h-screen bg-gray-50 overflow-hidden">
       <AdminSidebar />
-      <main className="flex-1 ml-16 md:ml-56 flex flex-col overflow-hidden">
+      <main className="flex-1 flex flex-col overflow-hidden">
         {/* Header */}
         <div className="bg-gradient-to-r from-blue-900 to-blue-700 text-white py-3 px-4 shadow-lg border-b border-blue-800">
           <div className="flex items-center gap-3">

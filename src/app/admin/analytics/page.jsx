@@ -39,7 +39,7 @@ export default function AdminAnalytics() {
   return (
     <div className="flex min-h-screen bg-gray-50">
       <AdminSidebar />
-      <main className="flex-1 p-8 ml-16 md:ml-56">
+      <main className="flex-1 p-8">
         <div className="mb-8">
           <h1 className="text-2xl font-bold text-[#002147] mb-2">Admin Analytics</h1>
           <p className="text-gray-600">Overview of key metrics for coaches, clients, and sessions.</p>

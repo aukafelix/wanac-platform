@@ -60,6 +60,27 @@ export async function fetchCommunityPosts() {
   return res.data;
 }
 
+// Fetch posts for a single community via GET api/v1/communities/{community_id}
+export async function fetchCommunityPostsByCommunityId(communityId: string | number) {
+  const res = await apiClient.get(`${API_BASE}/communities/${communityId}`);
+  const raw = res.data;
+  const community = raw?.community ?? raw?.data ?? raw;
+  const list = Array.isArray(community?.posts)
+    ? community.posts
+    : Array.isArray(raw?.posts)
+    ? raw.posts
+    : Array.isArray(raw?.posts?.data)
+    ? raw.posts.data
+    : Array.isArray(raw?.data?.posts)
+    ? raw.data.posts
+    : Array.isArray(raw?.data)
+    ? raw.data
+    : Array.isArray(raw)
+    ? raw
+    : [];
+  return list;
+}
+
 // Update a community post by ID
 export async function updateCommunityPost(postId: number, data: any) {
   const res = await apiClient.put(`${API_BASE}/communities/posts/update/${postId}`, data);
@@ -92,12 +113,18 @@ export async function fetchCommunityById(communityId: any) {
 
 // Add a new feed post
 export async function addCommunityFeedPost(post: any) {
-  const res = await apiClient.post('https://api.wanac.org/api/v1/communities/posts/add', post);
+  const res = await apiClient.post(`${API_BASE}/communities/posts/add`, post);
+  return res.data;
+}
+
+// Delete a community post by ID
+export async function deleteCommunityPost(postId: number) {
+  const res = await apiClient.delete(`${API_BASE}/communities/posts/delete/${postId}`);
   return res.data;
 }
 
 // Add a new event
 export async function addEvent(event: any) {
-  const res = await apiClient.post('https://api.wanac.org/api/v1/events/add', event);
+  const res = await apiClient.post(`${API_BASE}/events/add`, event);
   return res.data;
 } 

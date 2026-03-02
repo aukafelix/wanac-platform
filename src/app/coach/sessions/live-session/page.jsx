@@ -1,12 +1,18 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { FaUserPlus, FaCopy } from "react-icons/fa";
+
+// Use the same Jitsi domain as the rest of the app
+const JITSI_DOMAIN = process.env.NEXT_PUBLIC_JITSI_DOMAIN || "meet.jit.si";
 
 export default function LiveSessionPage() {
   const [inviteEmail, setInviteEmail] = useState("");
+  const jitsiContainerRef = useRef(null);
+  const jitsiApiRef = useRef(null);
+
   // Generate a unique Jitsi meeting link on each page load
   const uniqueRoom = `wanac-room-${Math.random().toString(36).substring(2, 10)}-${Date.now()}`;
-  const meetingLink = `https://meet.jit.si/${uniqueRoom}`;
+  const meetingLink = `https://${JITSI_DOMAIN}/${uniqueRoom}`;
 
   const handleCopyLink = () => {
     navigator.clipboard.writeText(meetingLink);
@@ -16,6 +22,111 @@ export default function LiveSessionPage() {
   const handleSendInvite = () => {
     alert(`Invite sent to ${inviteEmail}`);
     setInviteEmail("");
+  };
+
+  const initializeJitsi = () => {
+    if (typeof window === "undefined") return;
+    if (!jitsiContainerRef.current || !window.JitsiMeetExternalAPI) return;
+
+    try {
+      // Clear any previous instance
+      jitsiContainerRef.current.innerHTML = "";
+
+      const url = new URL(meetingLink);
+      const domain = url.hostname;
+      const pathParts = url.pathname.split("/").filter(Boolean);
+      const roomName = pathParts[pathParts.length - 1] || "";
+
+      const options = {
+        roomName,
+        width: "100%",
+        height: "100%",
+        parentNode: jitsiContainerRef.current,
+        configOverwrite: {
+          startWithAudioMuted: false,
+          startWithVideoMuted: false,
+          enableWelcomePage: false,
+          prejoinPageEnabled: false,
+          disableDeepLinking: true,
+        },
+        userInfo: {
+          displayName: "Coach",
+        },
+      };
+
+      jitsiApiRef.current = new window.JitsiMeetExternalAPI(domain, options);
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error("Failed to start Jitsi meeting:", err);
+    }
+  };
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const scriptSrc = `https://${JITSI_DOMAIN}/external_api.js`;
+
+    const ensureInitialized = () => {
+      if (window.JitsiMeetExternalAPI) {
+        initializeJitsi();
+      }
+    };
+
+    if (window.JitsiMeetExternalAPI) {
+      initializeJitsi();
+    } else {
+      let script = document.querySelector(`script[src="${scriptSrc}"]`);
+      if (!script) {
+        script = document.createElement("script");
+        script.src = scriptSrc;
+        script.async = true;
+        script.onload = () => {
+          setTimeout(ensureInitialized, 100);
+        };
+        script.onerror = () => {
+          // eslint-disable-next-line no-console
+          console.error("Failed to load Jitsi External API script");
+        };
+        document.head.appendChild(script);
+      } else {
+        const checkApi = setInterval(() => {
+          if (window.JitsiMeetExternalAPI) {
+            clearInterval(checkApi);
+            initializeJitsi();
+          }
+        }, 100);
+        setTimeout(() => clearInterval(checkApi), 5000);
+      }
+    }
+
+    return () => {
+      if (jitsiApiRef.current) {
+        try {
+          jitsiApiRef.current.dispose();
+        } catch (err) {
+          // eslint-disable-next-line no-console
+          console.warn("Error disposing Jitsi API:", err);
+        }
+        jitsiApiRef.current = null;
+      }
+    };
+    // meetingLink is stable for the lifetime of this component
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleFullscreen = () => {
+    const container = jitsiContainerRef.current;
+    if (!container) return;
+
+    if (container.requestFullscreen) {
+      container.requestFullscreen();
+    } else if (container.webkitRequestFullscreen) {
+      container.webkitRequestFullscreen();
+    } else if (container.mozRequestFullScreen) {
+      container.mozRequestFullScreen();
+    } else if (container.msRequestFullscreen) {
+      container.msRequestFullscreen();
+    }
   };
 
   return (
@@ -65,29 +176,15 @@ export default function LiveSessionPage() {
           </button>
         </div>
 
-        {/* Video iframe preview */}
+        {/* Jitsi video container (External API) */}
         <div className="rounded-xl overflow-hidden border border-gray-200 min-h-[280px] sm:min-h-[400px] h-[50vh] sm:h-[500px] w-full relative">
-          <iframe
-            id="jitsi-iframe"
-            title="Video Call"
-            src={meetingLink}
-            allow="camera; microphone; fullscreen"
+          <div
+            ref={jitsiContainerRef}
             className="w-full h-full"
             style={{ border: 0 }}
           />
           <button
-            onClick={() => {
-              const iframe = document.getElementById('jitsi-iframe');
-              if (iframe && iframe.requestFullscreen) {
-                iframe.requestFullscreen();
-              } else if (iframe && iframe.webkitRequestFullscreen) {
-                iframe.webkitRequestFullscreen();
-              } else if (iframe && iframe.mozRequestFullScreen) {
-                iframe.mozRequestFullScreen();
-              } else if (iframe && iframe.msRequestFullscreen) {
-                iframe.msRequestFullscreen();
-              }
-            }}
+            onClick={handleFullscreen}
             className="absolute top-2 right-2 sm:top-4 sm:right-4 px-3 py-2 text-sm sm:text-base bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition-colors z-10 min-h-[44px]"
           >
             View Full Screen

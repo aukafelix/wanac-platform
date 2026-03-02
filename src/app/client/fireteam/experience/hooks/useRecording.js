@@ -29,15 +29,7 @@ export function useRecording(jitsiApiRef, jitsiReady) {
         // STOP RECORDING
         console.log('🛑 Stopping recording...');
 
-        // Stop Jitsi recording if available
-        try {
-          await jitsiApiRef.current.executeCommand('stopRecording', 'file');
-          console.log('✅ Jitsi recording stopped');
-        } catch (err) {
-          console.warn('⚠️ Could not stop Jitsi recording:', err);
-        }
-
-        // Stop local media recorder
+        // Stop local media recorder (we do not use Jitsi server recording to avoid login prompts)
         if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
           mediaRecorderRef.current.stop();
           console.log('✅ Local recorder stopped');
@@ -46,25 +38,10 @@ export function useRecording(jitsiApiRef, jitsiReady) {
         setIsRecording(false);
         console.log('✅ Recording stopped successfully');
       } else {
-        // START RECORDING
+        // START RECORDING (local MediaRecorder only — no Jitsi server recording = no Gmail/GitHub prompt)
         console.log('🔴 Starting recording...');
 
-        // Start Jitsi recording if available
-        try {
-          await jitsiApiRef.current.executeCommand('startRecording', {
-            mode: 'file',
-            shouldShare: false,
-            rtmpStreamKey: '',
-            rtmpBroadcastID: '',
-            youtubeStreamKey: '',
-            youtubeBroadcastID: '',
-          });
-          console.log('✅ Jitsi recording started (server-side)');
-        } catch (err) {
-          console.warn('⚠️ Jitsi recording not available, using local recording only:', err.message);
-        }
-
-        // Start local media recorder as backup/fallback
+        // Start local media recorder
         try {
           // Get display media (screen + audio) for better quality
           let stream;

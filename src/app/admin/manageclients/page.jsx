@@ -40,7 +40,7 @@ export default function ManageClients() {
   return (
     <div className="flex min-h-screen bg-gray-50">
       <AdminSidebar />
-      <main className="flex-1 p-8 ml-16 md:ml-56">
+      <main className="flex-1 p-8">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
           <div>
             <h1 className="text-2xl font-bold text-[#002147] mb-2">Manage Clients</h1>
