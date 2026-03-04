@@ -42,11 +42,18 @@ export interface AuthResponse {
 
 // Profile Types
 export interface Profile {
-  id: string;
+  id?: string;
   name: string;
   email: string;
-  role: string;
-  // Add other profile fields as needed
+  role?: string;
+  phone?: string;
+  address?: string;
+  city?: string;
+  state?: string;
+  zipCode?: string;
+  country?: string;
+  profile_image?: string | null;
+  profilePic?: string | null;
 }
 
 // Session Types (aligned with API)
