@@ -6,18 +6,22 @@ import { useState, useRef, useEffect } from 'react';
  */
 export function useJitsiMeeting(jitsiContainerId) {
   const jitsiApiRef = useRef(null);
+  const dominantSpeakerIdRef = useRef(null);
+  const participantNamesRef = useRef({});
   const [jitsiReady, setJitsiReady] = useState(false);
   const [participants, setParticipants] = useState([]);
+  const [chatMessages, setChatMessages] = useState([]);
   const [meetingStartTime, setMeetingStartTime] = useState(null);
   const [attendanceLog, setAttendanceLog] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
   /**
-   * Update participants list from Jitsi
+   * Update participants list from Jitsi (preserves speaking state from dominant speaker)
    */
   const updateParticipants = () => {
     if (!jitsiApiRef.current) return;
+    const dominantId = dominantSpeakerIdRef.current;
 
     try {
       const participantsInfo = jitsiApiRef.current.getParticipantsInfo();
@@ -27,8 +31,13 @@ export function useJitsiMeeting(jitsiContainerId) {
         id: p.participantId,
         name: p.displayName || p.formattedDisplayName || 'Anonymous',
         avatarUrl: p.avatarURL || null,
-        speaking: false,
+        speaking: p.participantId === dominantId,
       }));
+
+      participantNamesRef.current = participantsList.reduce((acc, p) => {
+        acc[p.id] = p.name;
+        return acc;
+      }, {});
 
       setParticipants(participantsList);
       console.log('✅ Updated participants:', participantsList);
@@ -112,6 +121,12 @@ export function useJitsiMeeting(jitsiContainerId) {
     try {
       console.log('🎬 Starting Jitsi meeting with domain:', domain, 'room:', roomName);
 
+      // Use current platform user for display name (avoids extra login prompt)
+      let displayName = 'Participant';
+      if (typeof window !== 'undefined') {
+        displayName = localStorage.getItem('user_name') || localStorage.getItem('name') || displayName;
+      }
+
       const containerElement = document.getElementById(jitsiContainerId);
       if (!containerElement) {
         console.log('❌ Container element not found with ID:', jitsiContainerId);
@@ -148,7 +163,10 @@ export function useJitsiMeeting(jitsiContainerId) {
           
           disableDeepLinking: true,
           enableWelcomePage: false,
-          
+
+          // Enable data channel for custom sidebar chat (endpointTextMessageReceived)
+          openBridgeChannel: 'datachannel',
+
           // Enable full Jitsi toolbar with all buttons
           toolbarButtons: [
             'microphone',
@@ -223,19 +241,11 @@ export function useJitsiMeeting(jitsiContainerId) {
           enableClosePage: false,
           
           // ========================================
-          // RECORDING CONFIGURATION - ENABLED
+          // RECORDING: Use local recording only (no Jitsi server = no Gmail/GitHub login)
           // ========================================
-          fileRecordingsEnabled: true,
-          fileRecordingsServiceEnabled: true,
-          fileRecordingsServiceSharingEnabled: true,
-          hiddenDomain: 'recorder.meet.jit.si',
-          
-          // Recording options
-          recordingService: {
-            enabled: true,
-            sharingEnabled: true,
-            hideStorageWarning: false,
-          },
+          fileRecordingsEnabled: false,
+          fileRecordingsServiceEnabled: false,
+          fileRecordingsServiceSharingEnabled: false,
           
           // Dropbox integration (optional)
           dropbox: {
@@ -308,7 +318,7 @@ export function useJitsiMeeting(jitsiContainerId) {
           RECENT_LIST_ENABLED: false,
         },
         userInfo: {
-          displayName: 'Participant',
+          displayName,
         },
       };
 
@@ -395,6 +405,54 @@ export function useJitsiMeeting(jitsiContainerId) {
         updateParticipants();
       });
 
+      // Dominant speaker for Peers tab "speaking" indicator
+      jitsiApiRef.current.addEventListener('dominantSpeakerChanged', (event) => {
+        dominantSpeakerIdRef.current = event?.id ?? event?.participantId ?? null;
+        updateParticipants();
+      });
+
+      // Incoming chat messages (Jitsi built-in group chat via sendChatMessage)
+      const handleIncomingMessage = (event) => {
+        const id = event?.id ?? event?.messageId ?? Date.now();
+        const text = event?.message ?? event?.text ?? event?.eventData?.text ?? '';
+        const senderId = event?.senderId ?? event?.senderInfo?.id ?? event?.senderInfo?.participantId ?? '';
+        const senderName = event?.displayName ?? event?.senderInfo?.displayName ?? event?.senderInfo?.name ?? 'Participant';
+        if (!text) return;
+        const localId = typeof jitsiApiRef.current.getParticipantId === 'function' ? jitsiApiRef.current.getParticipantId() : null;
+        const isOwn = senderId && localId && String(senderId) === String(localId);
+        setChatMessages((prev) => [
+          ...prev,
+          {
+            id: `${id}-${Date.now()}`,
+            sender: senderName,
+            text,
+            timestamp: new Date().toISOString(),
+            isOwn: !!isOwn,
+          },
+        ]);
+      };
+      jitsiApiRef.current.addEventListener('incomingMessage', handleIncomingMessage);
+
+      // Endpoint text messages (data channel - alternative chat channel)
+      jitsiApiRef.current.addEventListener('endpointTextMessageReceived', (event) => {
+        const text = event?.eventData?.text ?? '';
+        const senderId = event?.senderInfo?.id ?? event?.senderInfo?.participantId ?? '';
+        const senderName = participantNamesRef.current[senderId] ?? event?.senderInfo?.displayName ?? 'Participant';
+        if (!text) return;
+        const localId = typeof jitsiApiRef.current.getParticipantId === 'function' ? jitsiApiRef.current.getParticipantId() : null;
+        const isOwn = senderId && localId && String(senderId) === String(localId);
+        setChatMessages((prev) => [
+          ...prev,
+          {
+            id: `ep-${Date.now()}-${Math.random().toString(36).slice(2)}`,
+            sender: senderName,
+            text,
+            timestamp: new Date().toISOString(),
+            isOwn: !!isOwn,
+          },
+        ]);
+      });
+
       // Fallback: Set ready after timeout
       setTimeout(() => {
         if (!jitsiReady && jitsiApiRef.current) {
@@ -435,6 +493,7 @@ export function useJitsiMeeting(jitsiContainerId) {
     // Reset all state
     setJitsiReady(false);
     setParticipants([]);
+    setChatMessages([]);
     setMeetingStartTime(null);
     setAttendanceLog([]);
     setLoading(true);
@@ -487,6 +546,71 @@ export function useJitsiMeeting(jitsiContainerId) {
   };
 
   /**
+   * Send a chat message to the group (all participants) via Jitsi.
+   * Broadcasts via sendEndpointTextMessage to each other participant so everyone receives it in the sidebar.
+   * Also uses sendChatMessage for group chat so it appears in Jitsi's own chat UI if opened.
+   */
+  const sendChatMessage = (text) => {
+    const trimmed = typeof text === 'string' ? text.trim() : '';
+    if (!trimmed) return Promise.resolve();
+
+    const api = jitsiApiRef.current;
+    let displayName = 'You';
+    if (typeof window !== 'undefined') {
+      displayName = localStorage.getItem('user_name') || localStorage.getItem('name') || displayName;
+    }
+
+    const optimisticMessage = {
+      id: `own-${Date.now()}`,
+      sender: displayName,
+      text: trimmed,
+      timestamp: new Date().toISOString(),
+      isOwn: true,
+    };
+    setChatMessages((prev) => [...prev, optimisticMessage]);
+
+    if (!api) return Promise.resolve();
+    try {
+      // Group chat (Jitsi built-in UI) – may trigger incomingMessage on others
+      api.executeCommand('sendChatMessage', trimmed, '', false);
+      // Broadcast to each participant via data channel so our sidebar receives via endpointTextMessageReceived
+      const localId = typeof api.getParticipantId === 'function' ? api.getParticipantId() : null;
+      const participantsInfo = typeof api.getParticipantsInfo === 'function' ? api.getParticipantsInfo() : [];
+      const list = Array.isArray(participantsInfo) ? participantsInfo : [];
+      if (list.forEach) {
+        list.forEach((p) => {
+          const id = p.participantId ?? p.id;
+          if (id && String(id) !== String(localId)) {
+            try {
+              api.executeCommand('sendEndpointTextMessage', id, trimmed);
+            } catch (e) {
+              console.warn('sendEndpointTextMessage failed for', id, e);
+            }
+          }
+        });
+      } else if (participantsInfo && typeof participantsInfo.then === 'function') {
+        participantsInfo.then((arr) => {
+          const list = Array.isArray(arr) ? arr : [];
+          list.forEach((p) => {
+            const id = p.participantId ?? p.id;
+            if (id && String(id) !== String(localId)) {
+              try {
+                api.executeCommand('sendEndpointTextMessage', id, trimmed);
+              } catch (e) {
+                console.warn('sendEndpointTextMessage failed for', id, e);
+              }
+            }
+          });
+        }).catch(() => {});
+      }
+      return Promise.resolve();
+    } catch (err) {
+      console.error('Failed to send chat message:', err);
+      return Promise.reject(err);
+    }
+  };
+
+  /**
    * Cleanup on unmount
    */
   useEffect(() => {
@@ -503,6 +627,8 @@ export function useJitsiMeeting(jitsiContainerId) {
     jitsiApiRef,
     jitsiReady,
     participants,
+    chatMessages,
+    sendChatMessage,
     meetingStartTime,
     attendanceLog,
     loading,

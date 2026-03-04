@@ -15,6 +15,7 @@ import {
   FaUserShield,
   FaUserEdit,
   FaGraduationCap,
+  FaCompass,
 } from 'react-icons/fa';
 import { Menu, X, LogOut } from 'lucide-react';
 import PushPinIcon from '@mui/icons-material/PushPin';
@@ -28,6 +29,8 @@ const adminNavItems = [
   { name: 'Coach Management', href: '/admin/managecoaches', icon: <FaUserTie size={18} /> },
   { name: 'Program Management', href: '/admin/programmanagement', icon: <FaGraduationCap size={18} /> },
   { name: 'Cohort Management', href: '/admin/cohortmanagement', icon: <FaGraduationCap size={18} /> },
+  { name: 'Career Compass Management', href: '/admin/careercompass', icon: <FaCompass size={18} /> },
+  { name: 'Education Compass Management', href: '/admin/educationcompass', icon: <FaCompass size={18} /> },
   { name: 'Fireteam Management', href: '/admin/fireteammanagement', icon: <GroupsIcon fontSize="small" /> },
   { name: 'Community Management', href: '/admin/community', icon: <ForumIcon fontSize="small" /> },
   { name: 'Client Services', href: '/admin/manageclients', icon: <FaUserEdit size={18} /> },

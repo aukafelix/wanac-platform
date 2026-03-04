@@ -21,7 +21,6 @@ const excludedPaths = [
   '/pages/client',
   '/pages/breakoutroom',
   '/pages/coach',
-  '/pages/vsoclaimsupport',
   '/pages/cohortapplication',
 
 ];

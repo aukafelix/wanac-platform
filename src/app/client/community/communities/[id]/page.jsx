@@ -2,7 +2,7 @@
 
 import { useEffect, useState, Suspense } from "react";
 import { useRouter, useParams } from "next/navigation";
-import { fetchCommunityById, addCommunityFeedPost, addEvent } from "../../../../../services/api/community.service";
+import { fetchCommunityById, addCommunityFeedPost, addEvent, fetchCommunityPostsByCommunityId, addCommunityPostComment } from "../../../../../services/api/community.service";
 import { getEvents } from "../../../../../services/api/events.service";
 import Sidebar from "../../../../../../components/dashboardcomponents/sidebar";
 import ClientTopbar from "../../../../../../components/dashboardcomponents/clienttopbar";
@@ -54,6 +54,29 @@ function CommunityDetailPageInner() {
   const [eventsLoading, setEventsLoading] = useState(false);
   const [eventsError, setEventsError] = useState("");
 
+  // Load posts for this community from the API
+  const loadCommunityPosts = async () => {
+    if (!communityId) return;
+    setFeedLoading(true);
+    setFeedError("");
+    try {
+      const list = await fetchCommunityPostsByCommunityId(communityId);
+      const normalized = (Array.isArray(list) ? list : []).map((p) => ({
+        id: p.id,
+        content: p.content ?? p.body ?? "",
+        userName: p.user_name ?? p.userName ?? p.user?.name ?? "Unknown",
+        createdAt: p.created_at ? new Date(p.created_at) : (p.createdAt ? new Date(p.createdAt) : new Date()),
+      }));
+      setFeedPosts(normalized);
+    } catch (err) {
+      console.error("Error loading community posts:", err);
+      setFeedError("Failed to load posts.");
+      setFeedPosts([]);
+    } finally {
+      setFeedLoading(false);
+    }
+  };
+
   // Function to load events for this community
   const loadCommunityEvents = async () => {
     setEventsLoading(true);
@@ -92,6 +115,15 @@ function CommunityDetailPageInner() {
       .then((data) => {
         setCommunity(data);
         setError("");
+        // Posts come from GET api/v1/communities/{id} response (community.posts)
+        const posts = Array.isArray(data?.posts) ? data.posts : [];
+        const normalized = posts.map((p) => ({
+          id: p.id,
+          content: p.content ?? p.body ?? "",
+          userName: p.user_name ?? p.userName ?? p.user?.name ?? "Unknown",
+          createdAt: p.created_at ? new Date(p.created_at) : (p.createdAt ? new Date(p.createdAt) : new Date()),
+        }));
+        setFeedPosts(normalized);
         if (data?.name && communityId) {
           try {
             sessionStorage.setItem("wanacCurrentCommunity", JSON.stringify({ id: communityId, name: data.name }));
@@ -113,7 +145,7 @@ function CommunityDetailPageInner() {
       }
     }
 
-    // Load events for this community
+    // Load events for this community (posts are set from fetchCommunityById response above)
     loadCommunityEvents();
   }, [communityId]);
 
@@ -393,8 +425,16 @@ function CommunityDetailPageInner() {
                       community_id: communityId,
                     };
                     const response = await addCommunityFeedPost(postPayload);
+                    const createdPost = response?.post ?? response?.data ?? response;
+                    const newId = createdPost?.id ?? response?.id;
                     setFeedPosts([
-                      { content: newFeedContent, userName: user.name, createdAt: new Date(), ...response },
+                      {
+                        id: newId,
+                        content: newFeedContent,
+                        userName: user.name,
+                        createdAt: new Date(),
+                        ...(typeof createdPost === "object" ? createdPost : {}),
+                      },
                       ...feedPosts
                     ]);
                     setNewFeedContent("");
@@ -435,7 +475,12 @@ function CommunityDetailPageInner() {
                     <hr className="my-3 border-gray-200" />
 
                     {/* Posts List */}
-              {feedPosts.length === 0 ? (
+              {feedLoading && feedPosts.length === 0 ? (
+                      <div className="text-center py-8">
+                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#002147] mx-auto mb-2"></div>
+                        <p className="text-[10px] text-gray-500">Loading posts...</p>
+                      </div>
+                    ) : feedPosts.length === 0 ? (
                       <div className="text-center border-2 border-dashed border-gray-300 rounded-xl py-8 px-4 bg-gray-50">
                         <div className="flex justify-center mb-3">
                           <div className="p-3 bg-gray-200 rounded-full">
@@ -448,7 +493,7 @@ function CommunityDetailPageInner() {
                     ) : (
                       <div className="space-y-3">
                   {feedPosts.map((post, idx) => (
-                          <div key={idx} className="border border-gray-200 rounded-lg p-3 sm:p-3 bg-gray-50/50 hover:bg-gray-50 active:bg-gray-100 transition-all">
+                          <div key={post.id ?? idx} className="border border-gray-200 rounded-lg p-3 sm:p-3 bg-gray-50/50 hover:bg-gray-50 active:bg-gray-100 transition-all">
                             <div className="flex items-start gap-2.5 mb-2">
                               <div className="w-8 h-8 sm:w-7 sm:h-7 rounded-full bg-[#002147] flex items-center justify-center text-white font-bold text-[11px] sm:text-[10px] shrink-0">
                                 {post.userName?.[0] || "U"}
@@ -487,17 +532,38 @@ function CommunityDetailPageInner() {
                         )}
                         <form
                                 className="flex gap-2"
-                          onSubmit={e => {
+                          onSubmit={async e => {
                             e.preventDefault();
-                            if (!newComment[post.id]?.trim() || !user) return;
-                            setComments(prev => ({
-                              ...prev,
-                              [post.id]: [
-                                ...(prev[post.id] || []),
-                                { content: newComment[post.id], userName: user.name, createdAt: new Date() }
-                              ]
-                            }));
-                            setNewComment(prev => ({ ...prev, [post.id]: "" }));
+                            const content = newComment[post.id]?.trim();
+                            if (!content || !user) return;
+                            const postId = post.id;
+                            if (postId == null) {
+                              setFeedError("Post ID missing. Try refreshing.");
+                              return;
+                            }
+                            try {
+                              const payload = { content, post_id: postId };
+                              const res = await addCommunityPostComment(payload);
+                              const added = res?.comment ?? res?.data ?? res;
+                              const newCommentObj = {
+                                id: added?.id,
+                                content,
+                                userName: user.name,
+                                createdAt: new Date(),
+                                ...(typeof added === "object" ? added : {}),
+                              };
+                              if (added?.created_at) newCommentObj.createdAt = new Date(added.created_at);
+                              if (added?.user_name) newCommentObj.userName = added.user_name;
+                              setComments(prev => ({
+                                ...prev,
+                                [postId]: [...(prev[postId] || []), newCommentObj]
+                              }));
+                              setNewComment(prev => ({ ...prev, [post.id]: "" }));
+                              setFeedError("");
+                            } catch (err) {
+                              console.error("Failed to add comment:", err);
+                              setFeedError("Failed to add comment. Please try again.");
+                            }
                           }}
                         >
                           <input

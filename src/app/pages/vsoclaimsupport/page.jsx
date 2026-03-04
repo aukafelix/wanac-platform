@@ -2,10 +2,8 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 
 const VSOClaimSupportPage = () => {
-  const router = useRouter();
   const [openFaq, setOpenFaq] = useState(null);
 
   const toggleFaq = (index) => {
@@ -41,62 +39,6 @@ const VSOClaimSupportPage = () => {
 
   return (
     <div className="min-h-screen bg-[#faf9f7]">
-      {/* Header Navigation */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
-        {/* Top bar */}
-        <div className="bg-white border-b border-gray-100">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center py-2 text-sm">
-              <div className="flex items-center space-x-4">
-                <select className="bg-transparent border-none text-gray-600 focus:outline-none cursor-pointer">
-                  <option>English</option>
-                </select>
-                <a href="#" className="text-gray-600 hover:text-gray-900 transition-colors">Sign in/Sign up</a>
-                <a href="#" className="text-gray-600 hover:text-gray-900 transition-colors">Customer Support</a>
-              </div>
-              <div className="flex items-center space-x-4">
-                <button className="p-1 text-gray-600 hover:text-gray-900 transition-colors">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                  </svg>
-                </button>
-                <a href="#" className="text-gray-600 hover:text-gray-900 transition-colors">Log in</a>
-                <button className="bg-[#ff5e1a] text-white px-4 py-2 rounded-md hover:bg-[#e54e16] transition-colors">
-                  Join
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Main navigation */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
-            <div className="flex items-center">
-              <Image
-                src="/WANAC N 8 Old Glory.svg"
-                alt="WANAC Logo"
-                width={120}
-                height={40}
-                className="h-8 w-auto cursor-pointer"
-                onClick={() => router.push('/')}
-              />
-            </div>
-            <nav className="hidden md:flex space-x-8">
-              <a href="#" className="text-gray-700 hover:text-[#ff5e1a] font-medium transition-colors">Products</a>
-              <a href="#" className="text-gray-700 hover:text-[#ff5e1a] font-medium transition-colors">Solutions</a>
-              <a href="#" className="text-gray-700 hover:text-[#ff5e1a] font-medium transition-colors">Pricing</a>
-              <a href="#" className="text-gray-700 hover:text-[#ff5e1a] font-medium transition-colors">Resources</a>
-            </nav>
-            <div className="hidden md:flex space-x-4">
-              <button className="bg-[#002147] text-white px-6 py-2 rounded-md hover:bg-[#001530] transition-colors text-sm">
-                Start Claim Check
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
-
       {/* Hero Section */}
       <section className="bg-gradient-to-b from-[#faf9f7] to-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -20,11 +20,13 @@ import {
   ChevronLeft,
 } from "lucide-react";
 
-// Accepts: items [{ name, href, icon }], basePath, title
-export default function SectionSidebar({ items = [], title = "Section", collapsedDefault = false }) {
+// Accepts: items [{ name, href, icon?, sectionId? }], title, collapsedDefault, onSectionSelect?(sectionId), activeSectionId?
+export default function SectionSidebar({ items = [], title = "Section", collapsedDefault = false, onSectionSelect, activeSectionId }) {
   const [collapsed, setCollapsed] = useState(collapsedDefault);
   const [hovered, setHovered] = useState(false);
   const isOpen = !collapsed || (collapsed && hovered);
+
+  const linkClass = `flex items-center gap-2 px-2 py-2 rounded-md text-xs font-medium transition-all ${isOpen ? "" : "justify-center"} text-gray-700 hover:bg-gray-100`;
 
   return (
     <aside
@@ -39,16 +41,32 @@ export default function SectionSidebar({ items = [], title = "Section", collapse
         {isOpen && <h2 className="text-base font-semibold text-gray-800 ml-2">{title}</h2>}
       </div>
       <nav className="flex-1 p-1 space-y-1">
-        {items.map((item) => (
-          <Link
-            key={item.name}
-            href={item.href || "#"}
-            className={`flex items-center gap-2 px-2 py-2 rounded-md text-xs font-medium transition-all ${isOpen ? "" : "justify-center"} text-gray-700 hover:bg-gray-100`}
-          >
-
-            {isOpen ? item.name : null}
-          </Link>
-        ))}
+        {items.map((item) => {
+          const useSelect = onSectionSelect && item.sectionId != null;
+          const isActive = activeSectionId != null && item.sectionId === activeSectionId;
+          const activeClass = isActive ? " bg-[#002147]/10 text-[#002147] font-semibold" : "";
+          if (useSelect) {
+            return (
+              <button
+                key={item.name}
+                type="button"
+                onClick={() => onSectionSelect(item.sectionId)}
+                className={`w-full text-left ${linkClass}${activeClass}`}
+              >
+                {isOpen ? item.name : null}
+              </button>
+            );
+          }
+          return (
+            <Link
+              key={item.name}
+              href={item.href || "#"}
+              className={linkClass}
+            >
+              {isOpen ? item.name : null}
+            </Link>
+          );
+        })}
       </nav>
       <div className={`flex justify-${isOpen ? "end" : "center"} px-2 pb-2`}>
         <button

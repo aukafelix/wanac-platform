@@ -205,36 +205,72 @@ const OurStory = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <h3 className="text-xl font-bold mb-4 text-[#002147]">Our Story</h3>
-              <p className="text-gray-700 mb-4 leading-relaxed">
-                Founded by Jason B.A. Van Camp, WANAC emerged from a vision to bridge 
-                the gap between military service and civilian success. Our organization 
-                was born from the understanding that veterans possess unique strengths 
-                that, when properly channeled, can lead to extraordinary achievements.
-              </p>
-              <p className="text-gray-700 mb-4 leading-relaxed">
-                Since our inception, we have been committed to providing comprehensive 
-                support that addresses the multifaceted challenges veterans face during 
-                their transition to civilian life. Our approach combines practical skills 
-                development with emotional intelligence training and strategic career planning.
-              </p>
-              <p className="text-gray-700 leading-relaxed">
-                Today, WANAC stands as a beacon of hope and transformation, having helped 
-                thousands of veterans and service members successfully navigate their 
-                post-military careers and build meaningful, impactful lives.
-              </p>
-            </div>
-            <div className="relative">
-              <div className="aspect-[4/3] relative overflow-hidden">
+          <div className="grid md:grid-cols-[minmax(0,1.1fr)_minmax(0,1.2fr)] gap-10 lg:gap-14 items-center">
+            {/* Left: 2x2 image grid */}
+            <div className="grid grid-cols-2 grid-rows-2 gap-4 sm:gap-5">
+              <div className="relative aspect-square overflow-hidden">
                 <Image
                   src="/community1.jpg"
-                  alt="WANAC Community"
+                  alt="Veteran community support"
                   fill
                   className="object-cover"
                 />
               </div>
+              <div className="relative aspect-square overflow-hidden">
+                <Image
+                  src="/veterancommunity3.png"
+                  alt="Training and coaching"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              <div className="relative aspect-square overflow-hidden">
+                <Image
+                  src="/high perfomance coaching.jpg"
+                  alt="High performance coaching"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              <div className="relative aspect-square overflow-hidden">
+                <Image
+                  src="/community1.jpg"
+                  alt="WANAC impact"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            </div>
+
+            {/* Right: text content */}
+            <div>
+
+              <p className="text-gray-700 mb-4 leading-relaxed text-sm sm:text-base">
+                WANAC started with a simple realization: the transition out of military
+                service is one of the hardest things a veteran will ever do — and most do it
+                without the structure, coaching, or follow-through they need to succeed.
+              </p>
+
+              <p className="text-gray-700 mb-4 leading-relaxed text-sm sm:text-base">
+                Clarence Narcisse founded WANAC after his own medical separation from the Marine Corps.
+                Like many veterans, he found himself navigating a system that was fragmented by design —
+                benefits in one place, career resources in another, education guidance somewhere else,
+                and no one connecting the dots. TAP gave him information. What it didn’t give him was a
+                plan, a coach, or accountability.
+              </p>
+
+              <p className="text-gray-700 mb-4 leading-relaxed text-sm sm:text-base">
+                That gap became the mission. While pursuing his MBA at UCLA Anderson, Clarence began
+                building what he wished had existed when he separated: an all-in-one transition hub that
+                combines structured coaching, education pathways, career acceleration, entrepreneurship,
+                and VA claims support under one roof.
+              </p>
+
+              <p className="text-gray-700 italic text-sm sm:text-base leading-relaxed border-l-4 border-orange-500 pl-4 mt-4">
+                “Veterans don’t fail because they lack talent or motivation. They struggle because
+                the system around them is overwhelming, disconnected, and short on follow-through.
+                WANAC exists to close that gap.”
+              </p>
             </div>
           </div>
         </div>
@@ -247,14 +283,12 @@ const OurStory = () => {
         
         <div className="max-w-4xl mx-auto relative z-10">
           <h2 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold mb-3 uppercase text-white">
-            Our Mission
+          The vision (forward-looking, aspirational)
           </h2>
           <div className="w-12 h-1 bg-white mx-auto rounded-full mb-6" />
           <p className="text-sm sm:text-base md:text-lg text-gray-200 mb-6 max-w-3xl mx-auto leading-relaxed">
-            To empower transitioning service members, veterans, and professionals by delivering
-            transformative coaching and training that fosters personal growth, professional excellence, and entrepreneurial
-            success. Our innovative programs and resources are carefully designed to enable participants to lead impactful lives in
-            their communities and beyond.
+          Our goal is to become the transition program every service member wants to join before they separate — known for real results, sustained support, 
+          and a community that doesn’t end when the program does. We’re building toward a future where no veteran has to navigate this alone.
           </p>
         </div>
       </section>
@@ -273,11 +307,13 @@ const OurStory = () => {
 
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <p className="text-sm sm:text-base md:text-lg text-gray-700 mb-6 leading-relaxed">
-                In today's rapidly evolving world, the ability to adapt, lead, and inspire others is more important than ever. At WANAC, we cultivate forward-thinking leaders who not only possess strategic insight and adaptability but also excel in emotional intelligence and resilience—key traits of transformative leadership.
+              <p className="text-gray-700 mb-4 leading-relaxed">
+              Most transition programs offer a workshop and wish you well. WANAC takes a different approach. We walk with veterans step by step — through coaching sessions, peer-driven fireteams, and structured pathways — making sure things actually get done. 
+              Applications submitted. Claims filed. Resumes sharpened. Plans in motion.
               </p>
-              <p className="text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed">
-                Our distinctive approach combines rigorous academic insights with real-world experiences, preparing our participants to confidently navigate life's transitions and professional challenges.
+              <p className="text-gray-700 mb-4 leading-relaxed">
+              We combine the camaraderie of a military unit with the tools of a modern coaching platform, 
+              powered by AI that personalizes the experience and keeps veterans on track long after the first session ends.
               </p>
             </div>
             <div className="relative">

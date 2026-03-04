@@ -48,7 +48,6 @@ export default function Navbar({ hideNavbar = false }) {
     '/mycoach',
     '/library',
     '/pages/coach',
-    '/pages/vsoclaimsupport',
   ];
   
   // Check if current path starts with any of the excluded paths

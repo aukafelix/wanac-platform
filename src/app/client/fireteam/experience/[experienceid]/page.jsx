@@ -38,7 +38,6 @@ export default function FireteamExperienceMeeting() {
   const [currentStep, setCurrentStep] = useState(0);
   const [showSlide, setShowSlide] = useState(false); // Start with video view to show Jitsi UI
   const [collapsed, setCollapsed] = useState(true); // Start collapsed by default
-  const [chatMessages, setChatMessages] = useState([]);
   const [showSummaryModal, setShowSummaryModal] = useState(false);
   const [processingSession, setProcessingSession] = useState(false); // Show spinner during session processing
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
@@ -75,6 +74,8 @@ export default function FireteamExperienceMeeting() {
     jitsiApiRef,
     jitsiReady,
     participants,
+    chatMessages,
+    sendChatMessage,
     meetingStartTime,
     attendanceLog,
     loading: jitsiLoading,
@@ -118,7 +119,6 @@ export default function FireteamExperienceMeeting() {
         }
 
         // Reset state for new experience
-        setChatMessages([]);
         setCurrentStep(0);
         setShowSummaryModal(false);
 
@@ -201,15 +201,8 @@ export default function FireteamExperienceMeeting() {
   }, [currentStep]);
 
   const handleSendChatMessage = useCallback((message) => {
-    const newMessage = {
-      id: Date.now(),
-      sender: "You",
-      text: message,
-      timestamp: new Date().toISOString(),
-      isOwn: true,
-    };
-    setChatMessages((prev) => [...prev, newMessage]);
-  }, []);
+    return sendChatMessage(message);
+  }, [sendChatMessage]);
 
   const handleToggleRecording = useCallback(async () => {
     try {
@@ -404,7 +397,7 @@ export default function FireteamExperienceMeeting() {
   );
 
   const participantsForSidebar = useMemo(
-    () => participants.map((p) => ({ id: p.id, name: p.name })),
+    () => participants.map((p) => ({ id: p.id, name: p.name, avatarUrl: p.avatarUrl, speaking: p.speaking })),
     [participants]
   );
 

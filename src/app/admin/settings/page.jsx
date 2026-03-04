@@ -74,7 +74,7 @@ export default function AdminSettings() {
             </div>
           </div>
         </nav>
-        <main className="flex-1 h-0 overflow-y-auto p-8 ml-16 md:ml-56">
+        <main className="flex-1 h-0 overflow-y-auto p-8">
           <div className="mb-8">
             <h1 className="text-2xl font-bold text-[#002147] mb-2 flex items-center gap-2">
               <FaCogs className="text-blue-600" /> Admin Settings
