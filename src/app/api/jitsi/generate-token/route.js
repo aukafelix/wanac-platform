@@ -51,11 +51,7 @@ function buildJaaSPayload({
       },
       features: {
         livestreaming: false,
-<<<<<<< main
-        'outbound-call': false,
-=======
         "outbound-call": false,
->>>>>>> main
         transcription: false,
         recording: false,
       },
