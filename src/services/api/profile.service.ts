@@ -1,5 +1,10 @@
 import { apiClient } from './config';
 import { Profile } from './types';
+import type { AxiosError } from 'axios';
+
+function isAxiosError(err: unknown): err is AxiosError {
+  return !!(err && typeof err === 'object' && 'isAxiosError' in err);
+}
 
 export const profileService = {
   async getProfile(): Promise<Profile> {
@@ -13,14 +18,19 @@ export const profileService = {
     try {
       const response = await apiClient.put<Profile>('/api/v1/profile/update', data);
       return response.data;
-    } catch (err) {
-      const status = err?.response?.status;
+    } catch (error: unknown) {
+      if (!isAxiosError(error)) {
+        throw error;
+      }
+
+      const status = error.response?.status;
       // Common "wrong method" statuses: 404/405/422 (varies by backend)
       if (status === 404 || status === 405 || status === 422) {
         const response = await apiClient.get<Profile>('/api/v1/profile/update', { params: data });
         return response.data;
       }
-      throw err;
+
+      throw error;
     }
   },
 }; 
