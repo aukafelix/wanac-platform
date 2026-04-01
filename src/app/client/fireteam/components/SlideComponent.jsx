@@ -1,7 +1,243 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 export default function Slide({ step, participants = [], experienceTitle = "" }) {
   if (!step) return null;
+
+  // Video slide - plays embedded HTML5 or iframe video
+  if (step.slideType === "video" || step.breakout?.slideType === "video") {
+    const videoData = step.breakout || step.slideData || {};
+    const videoURL = videoData.videoURL || videoData.url || "";
+    const title = step.title || videoData.title || "Video";
+    const duration = videoData.duration || videoData.durationSeconds || "0:00";
+    const isYouTube = videoURL?.includes("youtube.com") || videoURL?.includes("youtu.be");
+    const isVimeo = videoURL?.includes("vimeo.com");
+
+    return (
+      <div className="w-full mx-auto h-[420px] md:h-[520px] lg:h-[620px] flex flex-col items-center justify-center bg-gradient-to-br from-gray-900 to-black rounded-2xl shadow-lg p-6 overflow-hidden">
+        <h2 className="text-white text-xl font-bold mb-4">{title}</h2>
+        <div className="w-full flex-1 bg-black rounded-lg overflow-hidden flex items-center justify-center">
+          {isYouTube ? (
+            <iframe
+              src={videoURL.includes("?") ? videoURL + "&autoplay=1" : videoURL + "?autoplay=1"}
+              width="100%"
+              height="100%"
+              frameBorder="0"
+              allow="autoplay; encrypted-media"
+              allowFullScreen
+              className="w-full h-full"
+            ></iframe>
+          ) : isVimeo ? (
+            <iframe
+              src={videoURL.includes("?") ? videoURL + "&autoplay=1" : videoURL + "?autoplay=1"}
+              width="100%"
+              height="100%"
+              frameBorder="0"
+              allow="autoplay; fullscreen"
+              allowFullScreen
+              className="w-full h-full"
+            ></iframe>
+          ) : videoURL ? (
+            <video
+              src={videoURL}
+              controls
+              autoPlay
+              className="w-full h-full object-contain"
+            />
+          ) : (
+            <div className="flex flex-col items-center justify-center text-gray-400">
+              <svg className="w-16 h-16 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <p>No video URL provided</p>
+            </div>
+          )}
+        </div>
+        <div className="text-gray-400 text-sm mt-4">
+          Duration: {duration}
+        </div>
+      </div>
+    );
+  }
+
+  // Discussion slide - shows discussion prompt with timer and animated border
+  if (step.slideType === "discussion" || step.breakout?.slideType === "discussion") {
+    const discussionData = step.breakout || step.slideData || {};
+    const prompt = step.title || discussionData.prompt || "Discussion Prompt";
+    const backgroundImage = discussionData.backgroundImage || discussionData.imageURL || "";
+    const timeLimit = discussionData.timeLimit || discussionData.durationSeconds || 300;
+    const [timeRemaining, setTimeRemaining] = useState(timeLimit);
+
+    useEffect(() => {
+      const timer = setInterval(() => {
+        setTimeRemaining(prev => (prev > 0 ? prev - 1 : 0));
+      }, 1000);
+      return () => clearInterval(timer);
+    }, []);
+
+    const minutes = Math.floor(timeRemaining / 60);
+    const seconds = timeRemaining % 60;
+
+    return (
+      <div
+        className="w-full mx-auto h-[420px] md:h-[520px] lg:h-[620px] flex items-center justify-center rounded-2xl shadow-lg overflow-hidden relative"
+        style={{
+          backgroundImage: backgroundImage ? \`url(\${backgroundImage})\` : "linear-gradient(to bottom right, rgb(17, 24, 39), rgb(0, 0, 0))",
+          backgroundSize: "cover",
+          backgroundPosition: "center"
+        }}
+      >
+        <div className="absolute inset-0 bg-black/40 z-0"></div>
+        <div className="relative z-10 text-center px-8">
+          <div className="inline-block border-2 border-blue-500 rounded-full p-8 mb-6 animate-pulse shadow-lg">
+            <h2 className="text-white text-3xl md:text-4xl font-bold leading-tight mb-6">
+              {prompt}
+            </h2>
+          </div>
+          <div className="mt-8 bg-white/10 backdrop-blur-sm rounded-lg p-6 inline-block">
+            <p className="text-white text-sm mb-2">Time Remaining</p>
+            <p className="text-white text-4xl font-bold font-mono">
+              {String(minutes).padStart(2, "0")}:{String(seconds).padStart(2, "0")}
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Quiz slide - multiple choice quiz during session
+  if (step.slideType === "quiz" || step.breakout?.slideType === "quiz") {
+    const quizData = step.breakout || step.slideData || {};
+    const question = step.title || quizData.question || "Quiz Question";
+    const options = quizData.options || quizData.answers || [];
+    const [selectedAnswer, setSelectedAnswer] = useState(null);
+    const [submitted, setSubmitted] = useState(false);
+    const [timeRemaining, setTimeRemaining] = useState(quizData.timeLimit || quizData.durationSeconds || 30);
+
+    useEffect(() => {
+      const timer = setInterval(() => {
+        setTimeRemaining(prev => (prev > 0 ? prev - 1 : 0));
+      }, 1000);
+      return () => clearInterval(timer);
+    }, []);
+
+    const handleSubmit = () => {
+      setSubmitted(true);
+    };
+
+    return (
+      <div className="w-full mx-auto h-[420px] md:h-[520px] lg:h-[620px] flex items-center justify-center bg-gradient-to-br from-gray-900 to-black rounded-2xl shadow-lg p-8 overflow-hidden">
+        <div className="w-full max-w-2xl">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-white text-2xl md:text-3xl font-bold">{question}</h2>
+            <div className="bg-blue-600 text-white px-4 py-2 rounded-lg font-bold text-lg">
+              {Math.max(0, timeRemaining)}s
+            </div>
+          </div>
+
+          <div className="space-y-3 mb-6">
+            {options.map((option, index) => {
+              const isSelected = selectedAnswer === index;
+              const isCorrect = submitted && option.isCorrect;
+              const isWrong = submitted && isSelected && !option.isCorrect;
+
+              return (
+                <button
+                  key={index}
+                  onClick={() => !submitted && setSelectedAnswer(index)}
+                  disabled={submitted}
+                  className={`w-full p-4 rounded-lg text-left font-medium transition-all text-lg border-2 \${
+                    isCorrect
+                      ? "bg-green-600 border-green-500 text-white"
+                      : isWrong
+                      ? "bg-red-600 border-red-500 text-white"
+                      : isSelected
+                      ? "bg-blue-600 border-blue-500 text-white"
+                      : "bg-gray-800 border-gray-700 text-gray-200 hover:border-blue-500"
+                  }\`}
+                >
+                  <div className="flex items-center justify-between">
+                    <span>{option.text || option}</span>
+                    {isCorrect && (
+                      <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                    )}
+                    {isWrong && (
+                      <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                      </svg>
+                    )}
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+
+          {!submitted && (
+            <button
+              onClick={handleSubmit}
+              disabled={selectedAnswer === null}
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Submit Answer
+            </button>
+          )}
+
+          {submitted && (
+            <div className="bg-green-600/20 border border-green-600 text-green-200 p-4 rounded-lg text-center">
+              <p className="font-bold">Answer submitted!</p>
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  // Exhibit slide - shows supplementary material (PDF or image) with description
+  if (step.slideType === "exhibit" || step.breakout?.slideType === "exhibit") {
+    const exhibitData = step.breakout || step.slideData || {};
+    const title = step.title || exhibitData.title || "Exhibit";
+    const description = exhibitData.description || exhibitData.caption || "";
+    const mediaURL = exhibitData.mediaURL || exhibitData.url || exhibitData.imageURL || "";
+    const isPDF = mediaURL?.toLowerCase().endsWith(".pdf");
+
+    return (
+      <div className="w-full mx-auto h-[420px] md:h-[520px] lg:h-[620px] flex gap-6 bg-gradient-to-br from-gray-900 to-black rounded-2xl shadow-lg p-6 overflow-hidden">
+        <div className="flex-1 bg-black rounded-lg overflow-hidden flex items-center justify-center">
+          {isPDF ? (
+            <embed
+              src={mediaURL}
+              type="application/pdf"
+              width="100%"
+              height="100%"
+              className="w-full h-full"
+            />
+          ) : mediaURL ? (
+            <img
+              src={mediaURL}
+              alt={title}
+              className="w-full h-full object-contain"
+            />
+          ) : (
+            <div className="flex flex-col items-center justify-center text-gray-400">
+              <svg className="w-16 h-16 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              <p>No media URL provided</p>
+            </div>
+          )}
+        </div>
+
+        <div className="w-80 flex flex-col justify-center text-white">
+          <h2 className="text-2xl font-bold mb-4">{title}</h2>
+          {description && (
+            <p className="text-gray-300 text-sm leading-relaxed">{description}</p>
+          )}
+        </div>
+      </div>
+    );
+  }
 
   // Breakout deck slide rendering (image-first, as in Breakout UI)
   if (step.breakout?.slideImageURL) {
